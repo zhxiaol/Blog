@@ -1,0 +1,15 @@
+
+/404
+/atom.xml
+/about/
+/search/
+/tags/
+/categories/
+/
+/archives/
+/rss.xml
+/sitemap.txt
+
+/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0
+/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6
+/life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life

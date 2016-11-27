@@ -35,8 +35,8 @@ paginate: 20
 #### Site
 title : zhxiaol
 tagline: Java大数据 android
-assets: /assets
-baseurl:zhxiaol.github.io/Blog
+assets: /Blog/assets
+baseurl: /Blog
 
 #### Language
 language: zh-CN    ## blog site languages: en, zh-CN, zh-TW

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>zhxiaol</title>
+ <link href="" rel="self"/>
+ <link href=""/>
+ <updated>2016-11-27T10:37:14+08:00</updated>
+ <id></id>
+ <author>
+   <name>zhxiaol</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>音标学习</title>
+   <link href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0"/>
+   <updated>2016-11-26T00:00:00+08:00</updated>
+   <id>/english/2016/11/26/音标学习</id>
+   <content type="html">&lt;p&gt;æ的发音好难啊，感觉有时候像e，有时候像∧.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>编译运行java文件</title>
+   <link href="/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6"/>
+   <updated>2016-11-26T00:00:00+08:00</updated>
+   <id>/java/2016/11/26/编译运行java文件</id>
+   <content type="html">&lt;p&gt;编译demo.java成demo.class文件&lt;/p&gt;
+
+&lt;pre&gt;
+
+  javac -d . xx.java  
+
+  .代表本地目录
+
+&lt;/pre&gt;
+
+&lt;p&gt;运行demo.class&lt;/p&gt;
+
+&lt;pre&gt;
+
+java 包名.demo
+
+&lt;/pre&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>如何在Mac下安装jekyll</title>
+   <link href="/life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life"/>
+   <updated>2016-11-26T00:00:00+08:00</updated>
+   <id>/life/2016/11/26/安装jekyll-life</id>
+   <content type="html">&lt;h2 id=&quot;主题介绍&quot;&gt;主题介绍&lt;/h2&gt;
+
+&lt;p&gt;好坑，只是想搭建个简单的blog用来记录学习，没想到填了一天的坑。技术真的就像婚前和婚后，回头再看，其实也没啥。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&quot;配置指南&quot;&gt;配置指南&lt;/h2&gt;
+
+&lt;h3 id=&quot;更新gem&quot;&gt;更新gem&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;sudo gem update --system
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;安装jekyll&quot;&gt;安装jekyll&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;sudo gem install jekyll
+
+安装成功后，查看版本
+jekyll -v
+
+遇到的坑，如果安装失败 可以尝试安装到 /usr/local/bin/目录下
+sudo gem install -n /usr/local/bin/ jekyll
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;使用jekyll&quot;&gt;使用jekyll&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;生成博客
+jekyll build
+
+开启本地预览
+jekyll server
+
+这块遇到的坑最深，差点没爬出来
+如果是缺少依赖直接
+sudo gem install xxx
+
+装不上就
+sudo gem install -n /usr/local/bin/ xxx
+
+要求装固定如1.1.0版本就
+sudo gem install -v 1.1.0 xxx
+
+最后要是有多个版本的依赖 可以选择删除一个 或者用
+bundle exec jekyll build
+bundle exec jekyll server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
+ 
+ 
+</feed>
