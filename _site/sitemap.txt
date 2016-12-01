@@ -10,6 +10,9 @@
 /rss.xml
 /sitemap.txt
 
+/java/2016/12/01/String%E7%B1%BB
+/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB
+/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0
 /english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0
 /java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6
 /life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life

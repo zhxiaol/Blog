@@ -8,7 +8,7 @@
     
     
     
-    <title>编译运行java文件 | zhxiaol</title>
+    <title>Object类和Class类 | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="编译运行java文件">
-    <meta property="og:url" content="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6">
+    <meta property="og:title" content="Object类和Class类">
+    <meta property="og:url" content="/Blog/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="编译运行java文件">
+    <meta name="twitter:title" content="Object类和Class类">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" title="编译运行java文件" itemprop="url">编译运行java文件</a>
+      <a href="/Blog/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" title="Object类和Class类" itemprop="url">Object类和Class类</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-26 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-11-26</time>
+    <time datetime="2016-12-01 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-01</time>
     
   </p>
 </header>
@@ -115,23 +115,26 @@
 		
 		</div>
 		
-		<p>编译demo.java成demo.class文件</p>
+		<h2 id="主题介绍">主题介绍</h2>
 
-<pre>
+<p>Object类是所有类的祖宗(直接父类或者间接父类)<br>
+Class类是对象的字节码文件，Class类的父类也是Object</p>
 
-  javac -d . xx.java  
+<!-- more -->
 
-  .代表本地目录
+<h2 id="hashcode">hashCode()</h2>
 
-</pre>
+<p>返回该对象的哈希码值，该方法会根据对象地址来计算<br>
+不同对象的hashCode()一般来说不会相同（亲测String类不同对象hashCode竟然有可能相同,尼玛太神奇了 new String(&quot;abc&quot;)堆内存中的对象和常量池&quot;abc&quot;对象hashCode()相同）。<br>
+同一个对象的hashCode肯定相同</p>
 
-<p>运行demo.class</p>
+<h2 id="getclass">getClass()</h2>
 
-<pre>
+<p>返回对象运行时类，可以通过Class类中的getName()方法获取对象的真实类全名称</p>
 
-java 包名.demo
+<h2 id="tostring">toString()</h2>
 
-</pre>
+<p>return getClass().getName()+&quot;@&quot;+Integer.toHexString(hashCode()); return com.zhxiaol.Person@673a3322</p>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -172,7 +175,7 @@ java 包名.demo
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" data-title="编译运行java文件 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" data-title="Object类和Class类 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -184,18 +187,18 @@ java 包名.demo
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life" title="如何在Mac下安装jekyll">
+ <a href="/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0" title="Java基础复习">
   <strong>上一篇：</strong><br/>
   <span>
-  如何在Mac下安装jekyll</span>
+  Java基础复习</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0"  title="音标学习">
+<a href="/java/2016/12/01/String%E7%B1%BB"  title="String类">
  <strong>下一篇：</strong><br/> 
- <span>音标学习
+ <span>String类
 </span>
 </a>
 </div>

@@ -8,7 +8,7 @@
     
     
     
-    <title>编译运行java文件 | zhxiaol</title>
+    <title>String类 | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="编译运行java文件">
-    <meta property="og:url" content="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6">
+    <meta property="og:title" content="String类">
+    <meta property="og:url" content="/Blog/java/2016/12/01/String%E7%B1%BB">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="编译运行java文件">
+    <meta name="twitter:title" content="String类">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" title="编译运行java文件" itemprop="url">编译运行java文件</a>
+      <a href="/Blog/java/2016/12/01/String%E7%B1%BB" title="String类" itemprop="url">String类</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-26 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-11-26</time>
+    <time datetime="2016-12-01 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-01</time>
     
   </p>
 </header>
@@ -115,24 +115,30 @@
 		
 		</div>
 		
-		<p>编译demo.java成demo.class文件</p>
+		<h2 id="主题介绍">主题介绍</h2>
 
-<pre>
+<p>String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类</p>
+<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc"
+String s2=s1+"d";
+1.会在常量池创建"abc"类
+2.在堆内存创建StringBuild类或StringBuffer类
+3.通过toString 在堆内存创建新的类
+低效且消耗内存
+</code></pre></div>
+<!-- more -->
 
-  javac -d . xx.java  
-
-  .代表本地目录
-
-</pre>
-
-<p>运行demo.class</p>
-
-<pre>
-
-java 包名.demo
-
-</pre>
-  
+<h2 id="常量池优先">常量池优先</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
+String s2="ab"+"c";
+s1==s2(true)
+常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以s1==s2;
+</code></pre></div>
+<h2 id="new-string-quot-abc-quot">new String(&quot;abc&quot;)</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
+String s2=new String("abc")
+s1==s2(flase)
+"abc"在常量池创建对象，s2:"abc"因为常量池中有不会创建，s2:new String("abc")会在堆内存中创建对象，并保存一份"abc"的副本
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -172,7 +178,7 @@ java 包名.demo
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" data-title="编译运行java文件 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -184,21 +190,13 @@ java 包名.demo
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life" title="如何在Mac下安装jekyll">
+ <a href="/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" title="Object类和Class类">
   <strong>上一篇：</strong><br/>
   <span>
-  如何在Mac下安装jekyll</span>
+  Object类和Class类</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0"  title="音标学习">
- <strong>下一篇：</strong><br/> 
- <span>音标学习
-</span>
-</a>
-</div>
 
 </nav>
 

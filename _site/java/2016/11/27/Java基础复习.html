@@ -8,7 +8,7 @@
     
     
     
-    <title>编译运行java文件 | zhxiaol</title>
+    <title>Java基础复习 | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="编译运行java文件">
-    <meta property="og:url" content="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6">
+    <meta property="og:title" content="Java基础复习">
+    <meta property="og:url" content="/Blog/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="编译运行java文件">
+    <meta name="twitter:title" content="Java基础复习">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" title="编译运行java文件" itemprop="url">编译运行java文件</a>
+      <a href="/Blog/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0" title="Java基础复习" itemprop="url">Java基础复习</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-26 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-11-26</time>
+    <time datetime="2016-11-27 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-11-27</time>
     
   </p>
 </header>
@@ -115,23 +115,55 @@
 		
 		</div>
 		
-		<p>编译demo.java成demo.class文件</p>
+		<h2 id="主题介绍">主题介绍</h2>
 
-<pre>
+<p>Java基础看了有10多天了，虽然很简单，还是收获了不少东西，总结几个个人认为重要的知识点</p>
 
-  javac -d . xx.java  
+<!-- more -->
 
-  .代表本地目录
+<h2 id="源码反码补码">源码反码补码</h2>
 
-</pre>
+<p>原码，就是二进制定点表示法<br>
+反码，正数的反码是其本身，负数的反码是符号位不变，对源码逐位取反<br>
+补码，计算机中的二进制数都是以补码的形式存储的，正数的补码是其本身，负数的补码起反码末位+1.</p>
 
-<p>运行demo.class</p>
+<h2 id="控制跳转语句标号">控制跳转语句标号</h2>
 
-<pre>
+<p>标号:标记某个循环对其控制的合法标识</p>
+<div class="highlight"><pre><code class="language-" data-lang=""> outer:while(true){//outer 标号
+  inner:for(;;){
+    if(1==2){
+      continue outer;
+    }else if(1==3){
+      break outer;
+    }else if(1==4){
+      break;
+    }else{
+      return;
+    }
+  }
+}  
 
-java 包名.demo
-
-</pre>
+</code></pre></div>
+<h2 id="方法区-常量池-栈-堆">方法区 常量池 栈 堆</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">class Demo{
+public void static void main(String[] args){
+  Person p=new Person();
+  p.print();
+}
+}
+class Person{
+  public void print(){
+    int a=20;
+  }
+}
+</code></pre></div>
+<p>1.Demo.class的文件加载到方法区（1.2如果该类有静态属性，会在静态区（方法区开辟的内存空间）初始化变量<br>
+1.3如果该类有静态常量，常量会存储在常量池（常量池在方法区之中））<br>
+2.main 方法进栈，Person.class进方法区（执行1.2，1.3）<br>
+3.在堆中开辟空间创建Person,初始化代码块，成员变量，把地址赋值给p,<br>
+4.print方法进栈 局部变量赋值 print方法出栈（成员变量属于对象 存放在堆内存 随着对象消失而消失，局部变量属于方法，存放在栈内存，随着方法结束而消失）<br>
+5.（静态代码块会优先 代码块 成员属性初始化 构造方法 父类。。。。）只是记录要写的内容 未完待续。</p>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -172,7 +204,7 @@ java 包名.demo
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" data-title="编译运行java文件 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0" data-title="Java基础复习 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -184,18 +216,18 @@ java 包名.demo
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/life/2016/11/26/%E5%AE%89%E8%A3%85jekyll-life" title="如何在Mac下安装jekyll">
+ <a href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0" title="音标学习">
   <strong>上一篇：</strong><br/>
   <span>
-  如何在Mac下安装jekyll</span>
+  音标学习</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0"  title="音标学习">
+<a href="/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB"  title="Object类和Class类">
  <strong>下一篇：</strong><br/> 
- <span>音标学习
+ <span>Object类和Class类
 </span>
 </a>
 </div>
