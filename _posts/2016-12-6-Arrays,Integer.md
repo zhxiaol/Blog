@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Arrays
+title: Arrays,Integer
 tags:
 - java
 
@@ -18,3 +18,14 @@ description:
 用的不是冒泡也不是选择，复杂程度令人发指，懒得看，听说效率很高
 ##binarySearch()
 二分法查找，跟自己写的差不多，就是mid=(low+high)>>>1而不是/2 位运算效率更高
+##Integer
+int的包装类，jdk1.5之后添加了自动封箱，和自动拆箱
+new Integer(97)==new Integer(97) flase
+
+Integer i1=97;
+Integer i2=97;
+i1==i2                           true
+
+Integer i1=197;
+Integer i2=197;
+i1==i2                           flase
