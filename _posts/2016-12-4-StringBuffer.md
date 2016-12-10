@@ -8,8 +8,8 @@ categories: java
 description:
 ---
 ##主题介绍
+可变的字符序列，线程安全，有final修饰不能有子类
 char[]数组 初始容量16 每次扩容会容量*2+2 扩容调用System.arrayCopy();
-线程安全，有final修饰不能有子类
 ##length(),capacity()
 StringBuffer sb=new StringBuffer()
 sb.length():实际长度 return count; 0
