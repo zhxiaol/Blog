@@ -8,7 +8,7 @@
     
     
     
-    <title>String类 | zhxiaol</title>
+    <title>Arrays,Integer | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="String类">
-    <meta property="og:url" content="/Blog/java/2016/12/01/String%E7%B1%BB">
+    <meta property="og:title" content="Arrays,Integer">
+    <meta property="og:url" content="/Blog/java/2016/12/06/Arrays,Integer">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="String类">
+    <meta name="twitter:title" content="Arrays,Integer">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/12/01/String%E7%B1%BB" title="String类" itemprop="url">String类</a>
+      <a href="/Blog/java/2016/12/06/Arrays,Integer" title="Arrays,Integer" itemprop="url">Arrays,Integer</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-12-01 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-01</time>
+    <time datetime="2016-12-06 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-06</time>
     
   </p>
 </header>
@@ -115,87 +115,41 @@
 		
 		</div>
 		
-		<h2 id="主题介绍">主题介绍</h2>
+		<h2 id="冒泡排序">冒泡排序</h2>
 
-<p>String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类<br>
-String 类中有一个私有的final的char数组value。<br>
-字符串字面值“abc”也可以看成一个字符串对象（存储在方法区的常量池中）</p>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc"
-String s2=s1+"d";
-1.会在常量池创建"abc"类
-2.在堆内存创建StringBuild类或StringBuffer类
-3.通过toString 在堆内存创建新的类
-低效且消耗内存
-</code></pre></div>
-<!-- more -->
+<p>就是找最大值，把最大值放在依次最右边</p>
 
-<h2 id="常量池优先">常量池优先</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2="ab"+"c";
-s1==s2(true)
-常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以s1==s2;
-</code></pre></div>
-<h2 id="new-string-quot-abc-quot">new String(&quot;abc&quot;)</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2=new String("abc")
-s1==s2(flase)
-"abc"在常量池创建对象，s2:"abc"因为常量池中有不会创建，s2:new String("abc")会在堆内存中创建对象，并保存一份"abc"的副本
-</code></pre></div>
-<h2 id="string类常用方法">String类常用方法</h2>
+<h2 id="选择排序">选择排序</h2>
 
-<h3 id="int-length">int length()</h3>
+<p>就是找最小值，把最小值依次放在最左边</p>
 
-<p>return value.length;</p>
+<h2 id="arrays-tostring">Arrays.toString()</h2>
 
-<h3 id="int-chatat-int-index">int chatAt(int index)</h3>
+<p>创建一个StirngBuild 遍历append<br>
+收获:能用‘[’的时候别用&quot;[&quot;</p>
 
-<p>1.判断下标是否越界，2.return value[index]</p>
+<h2 id="sort">sort()</h2>
 
-<h3 id="int-indexof-char-c">int indexOf(char c)</h3>
+<p>用的不是冒泡也不是选择，复杂程度令人发指，懒得看，听说效率很高</p>
 
-<p>遍历char数组比对每个char,没有返回-1，如果是str 先取出第一个比对，如果找到就逐位比对</p>
+<h2 id="binarysearch">binarySearch()</h2>
 
-<h3 id="string-substring-int-index">String substring(int index)</h3>
+<p>二分法查找，跟自己写的差不多，就是mid=(low+high)&gt;&gt;&gt;1而不是/2 位运算效率更高</p>
 
-<p>从指定位置开始截取子串<br>
-return new Stirng(value,index,value.length);<br>
-new String底层调用的是本地方法System.arrayCopy();从指定位置复制到新数组</p>
+<h2 id="integer">Integer</h2>
 
-<h3 id="byte-getbytes">byte[] getBytes()</h3>
+<p>int的包装类，jdk1.5之后添加了自动封箱，和自动拆箱<br>
+IntegerCache类 缓冲池中有一个长度255的数组存储范围-128~127（存储在常量池）<br>
+如果取值范围在-128~127,自动装箱不会新创建对象，会从常量池中取<br>
+new Integer(97)==new Integer(97) flase</p>
 
-<p>先获得编码方式，然后比较复杂，没详细看=  =</p>
+<p>Integer i1=97;<br>
+Integer i2=97;<br>
+i1==i2                           true</p>
 
-<h3 id="char-tochararray">char[] toCharArray()</h3>
-
-<p>创建一个长度和value一样的char数组result<br>
-调用System.arrcopy(value,0,result,0,value.length)</p>
-
-<h3 id="string-valueof-char-data">String valueOf(char data[])</h3>
-
-<p>return new String(data)<br>
-如果参数是Object return obj.toString();</p>
-
-<h3 id="string-tolowercase-touppercase">String toLowerCase() toUpperCase()</h3>
-
-<p>会先循环看是否有大写字母，如果有跳出循环遍历数组转换</p>
-
-<h3 id="replace-string-odl-string-new">replace(String odl,String new)</h3>
-
-<p>正则表达式</p>
-
-<h3 id="string-trim">String trim();</h3>
-
-<p>1.很机智，从2边while循环看是否是‘ ’，遇见跳出循环<br>
-2.substring(start,end)</p>
-
-<h3 id="compareto-string-str">compareTo(String str);</h3>
-
-<p>依次比较两个字符串ASC码。如果两个字符的ASC码相等则继续后续比较,否则直接返回两个ASC的差值<br>
-&quot;321&quot;compareTo(&quot;1234&quot;)会返回2 如果是比较数字大小要先比较长度</p>
-
-<h3 id="getchars-int-start-int-end-char-c-int-offset">getChars(int start,int end,char c[],int offset)</h3>
-
-<p>当前字符串从start到end-1位置上的字符复制到字符数组c中，并从c的offset处开始存放</p>
+<p>Integer i1=197;<br>
+Integer i2=197;<br>
+i1==i2                           flase</p>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -236,7 +190,7 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/06/Arrays,Integer" data-title="Arrays,Integer | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -248,18 +202,18 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" title="Object类和Class类">
+ <a href="/life/2016/12/05/%E4%BB%8E%E5%A4%B4%E5%BC%80%E5%A7%8B" title="从头开始">
   <strong>上一篇：</strong><br/>
   <span>
-  Object类和Class类</span>
+  从头开始</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/java/2016/12/04/StringBuffer"  title="StringBuffer">
+<a href="/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB"  title="正则表达式和常用类">
  <strong>下一篇：</strong><br/> 
- <span>StringBuffer
+ <span>正则表达式和常用类
 </span>
 </a>
 </div>

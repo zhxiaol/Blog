@@ -8,7 +8,7 @@
     
     
     
-    <title>String类 | zhxiaol</title>
+    <title>正则表达式和常用类 | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="String类">
-    <meta property="og:url" content="/Blog/java/2016/12/01/String%E7%B1%BB">
+    <meta property="og:title" content="正则表达式和常用类">
+    <meta property="og:url" content="/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="String类">
+    <meta name="twitter:title" content="正则表达式和常用类">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/12/01/String%E7%B1%BB" title="String类" itemprop="url">String类</a>
+      <a href="/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" title="正则表达式和常用类" itemprop="url">正则表达式和常用类</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-12-01 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-01</time>
+    <time datetime="2016-12-10 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-10</time>
     
   </p>
 </header>
@@ -115,88 +115,241 @@
 		
 		</div>
 		
-		<h2 id="主题介绍">主题介绍</h2>
+		<h2 id="正则表达式">正则表达式</h2>
 
-<p>String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类<br>
-String 类中有一个私有的final的char数组value。<br>
-字符串字面值“abc”也可以看成一个字符串对象（存储在方法区的常量池中）</p>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc"
-String s2=s1+"d";
-1.会在常量池创建"abc"类
-2.在堆内存创建StringBuild类或StringBuffer类
-3.通过toString 在堆内存创建新的类
-低效且消耗内存
+<table><thead>
+<tr>
+<th style="text-align: left">知识点</th>
+<th style="text-align: left">备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">[abc]</td>
+<td style="text-align: left">a、b 、c</td>
+</tr>
+<tr>
+<td style="text-align: left">[^abc]</td>
+<td style="text-align: left">除了 a、b 、c</td>
+</tr>
+<tr>
+<td style="text-align: left">[a-zA-Z]</td>
+<td style="text-align: left">a到 z 或 A到 Z</td>
+</tr>
+<tr>
+<td style="text-align: left">[0-9]</td>
+<td style="text-align: left">0-9</td>
+</tr>
+<tr>
+<td style="text-align: left">.</td>
+<td style="text-align: left">任何字符</td>
+</tr>
+<tr>
+<td style="text-align: left">\d</td>
+<td style="text-align: left">数字</td>
+</tr>
+<tr>
+<td style="text-align: left">\w</td>
+<td style="text-align: left">单词字符：[a-zA-Z_0-9]</td>
+</tr>
+<tr>
+<td style="text-align: left">?</td>
+<td style="text-align: left">一次或一次也没有</td>
+</tr>
+<tr>
+<td style="text-align: left">*</td>
+<td style="text-align: left">零次或多次</td>
+</tr>
+<tr>
+<td style="text-align: left">{n}</td>
+<td style="text-align: left">恰好 n 次</td>
+</tr>
+<tr>
+<td style="text-align: left">{n,}</td>
+<td style="text-align: left">至少 n 次，但是不超过 m 次</td>
+</tr>
+<tr>
+<td style="text-align: left">(.)\1</td>
+<td style="text-align: left">分组将前面的复制一份AA $1取出复制的</td>
+</tr>
+<tr>
+<td style="text-align: left">split(regex)</td>
+<td style="text-align: left">String类的分割方法</td>
+</tr>
+<tr>
+<td style="text-align: left">replaceAll(regex,s,s2)</td>
+<td style="text-align: left">String类的替换功能</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-" data-lang="">String str="我我我我爱爱爱张张小小小小歪歪歪歪歪";
+String regex="(.)\\1+";
+String s = str.replaceAll(regex, "$1"); //s="我爱张小歪"
 </code></pre></div>
-<!-- more -->
-
-<h2 id="常量池优先">常量池优先</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2="ab"+"c";
-s1==s2(true)
-常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以s1==s2;
+<h2 id="pattern和matcher">Pattern和Matcher</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">Pattern p = Pattern.compile("a*b");
+Matcher m = p.matcher("aaaaab");
+boolean b = m.matches();
+while (m.find()){//查找是否有匹配的
+      m.group();//取出查找到的
+}
 </code></pre></div>
-<h2 id="new-string-quot-abc-quot">new String(&quot;abc&quot;)</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2=new String("abc")
-s1==s2(flase)
-"abc"在常量池创建对象，s2:"abc"因为常量池中有不会创建，s2:new String("abc")会在堆内存中创建对象，并保存一份"abc"的副本
-</code></pre></div>
-<h2 id="string类常用方法">String类常用方法</h2>
+<h2 id="math类">Math类</h2>
 
-<h3 id="int-length">int length()</h3>
+<table><thead>
+<tr>
+<th style="text-align: left">Header One</th>
+<th style="text-align: left">Header Two</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">abs(int a)</td>
+<td style="text-align: left">求绝对值</td>
+</tr>
+<tr>
+<td style="text-align: left">ceil(double a)</td>
+<td style="text-align: left">向上取整</td>
+</tr>
+<tr>
+<td style="text-align: left">floor(double a)</td>
+<td style="text-align: left">向下取整</td>
+</tr>
+<tr>
+<td style="text-align: left">max(int a,int b)</td>
+<td style="text-align: left">取最大值</td>
+</tr>
+<tr>
+<td style="text-align: left">pow(a,b)</td>
+<td style="text-align: left">a的b次幂</td>
+</tr>
+<tr>
+<td style="text-align: left">random()</td>
+<td style="text-align: left">生成一个0-1之间的随机数</td>
+</tr>
+<tr>
+<td style="text-align: left">round(float a)</td>
+<td style="text-align: left">四舍五入</td>
+</tr>
+</tbody></table>
 
-<p>return value.length;</p>
+<h2 id="random类">Random类</h2>
 
-<h3 id="int-chatat-int-index">int chatAt(int index)</h3>
+<p>产生随机数如果用相同的种子创建两个 Random 实例，则对每个实例进行相同的方法调用序列，它们将生成并返回相同的数字序列。</p>
 
-<p>1.判断下标是否越界，2.return value[index]</p>
+<ul>
+<li>Random(long seed) seed种子</li>
+<li>public int nextInt()</li>
+<li>public int nextInt(int n) 生成一个[0,n)的随机数</li>
+</ul>
 
-<h3 id="int-indexof-char-c">int indexOf(char c)</h3>
+<h2 id="system类">System类</h2>
 
-<p>遍历char数组比对每个char,没有返回-1，如果是str 先取出第一个比对，如果找到就逐位比对</p>
+<table><thead>
+<tr>
+<th style="text-align: left">方法</th>
+<th style="text-align: left">备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">gc()</td>
+<td style="text-align: left">垃圾回收，如果回收会调用对象finalize()方法</td>
+</tr>
+<tr>
+<td style="text-align: left">exit(int status)</td>
+<td style="text-align: left">退出进程。status退出状态，0正常退出</td>
+</tr>
+<tr>
+<td style="text-align: left">currentTimeMillis()</td>
+<td style="text-align: left">当前时间毫秒值</td>
+</tr>
+<tr>
+<td style="text-align: left">arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</td>
+<td style="text-align: left">将src数组中的内容从srcPos位置复制到dest数组中，从destPost开始复制length个，非常重要的方法，String类和StringBuffer中很多方法都是从的该方法</td>
+</tr>
+</tbody></table>
 
-<h3 id="string-substring-int-index">String substring(int index)</h3>
+<h2 id="biginteger类，bigdecimal类">BigInteger类，BigDecimal类</h2>
 
-<p>从指定位置开始截取子串<br>
-return new Stirng(value,index,value.length);<br>
-new String底层调用的是本地方法System.arrayCopy();从指定位置复制到新数组</p>
+<p>可以让超过Integer范围内的数据进行运算<br>
+new BigDecimal(Double)一样会失去精度，<br>
+new BigDecimal(String)不会失去精度</p>
 
-<h3 id="byte-getbytes">byte[] getBytes()</h3>
+<table><thead>
+<tr>
+<th style="text-align: left">方法</th>
+<th style="text-align: left">备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">add</td>
+<td style="text-align: left">加</td>
+</tr>
+<tr>
+<td style="text-align: left">subtract</td>
+<td style="text-align: left">减</td>
+</tr>
+<tr>
+<td style="text-align: left">multiply</td>
+<td style="text-align: left">乘</td>
+</tr>
+<tr>
+<td style="text-align: left">divideAndRemainder</td>
+<td style="text-align: left">除 会把结果和余数存放到数组中</td>
+</tr>
+</tbody></table>
 
-<p>先获得编码方式，然后比较复杂，没详细看=  =</p>
+<h2 id="date类">Date类</h2>
 
-<h3 id="char-tochararray">char[] toCharArray()</h3>
+<p>表示特定的瞬间，精确到毫秒。</p>
 
-<p>创建一个长度和value一样的char数组result<br>
-调用System.arrcopy(value,0,result,0,value.length)</p>
+<ul>
+<li>getTime()</li>
+<li>setTime(long time)</li>
+</ul>
 
-<h3 id="string-valueof-char-data">String valueOf(char data[])</h3>
+<h2 id="simpledateformat类">SimpleDateFormat类</h2>
 
-<p>return new String(data)<br>
-如果参数是Object return obj.toString();</p>
+<p>实现日期和字符串的相互转换</p>
 
-<h3 id="string-tolowercase-touppercase">String toLowerCase() toUpperCase()</h3>
+<ul>
+<li>public SimpleDateFormat(String pattern)</li>
+<li>public final String format(Date date)</li>
+<li>public Date parse(String source)</li>
+</ul>
 
-<p>会先循环看是否有大写字母，如果有跳出循环遍历数组转换</p>
+<h2 id="calendar类">Calendar类</h2>
 
-<h3 id="replace-string-odl-string-new">replace(String odl,String new)</h3>
+<p>Calendar 类是一个抽象类，它为特定瞬间与一组诸如 YEAR、MONTH、DAY_OF_MONTH、HOUR 等日历字段之间的转换提供了一些方法，并为操作日历字段（例如获得下星期的日期）提供了一些方法。</p>
 
-<p>正则表达式</p>
-
-<h3 id="string-trim">String trim();</h3>
-
-<p>1.很机智，从2边while循环看是否是‘ ’，遇见跳出循环<br>
-2.substring(start,end)</p>
-
-<h3 id="compareto-string-str">compareTo(String str);</h3>
-
-<p>依次比较两个字符串ASC码。如果两个字符的ASC码相等则继续后续比较,否则直接返回两个ASC的差值<br>
-&quot;321&quot;compareTo(&quot;1234&quot;)会返回2 如果是比较数字大小要先比较长度</p>
-
-<h3 id="getchars-int-start-int-end-char-c-int-offset">getChars(int start,int end,char c[],int offset)</h3>
-
-<p>当前字符串从start到end-1位置上的字符复制到字符数组c中，并从c的offset处开始存放</p>
-  
+<table><thead>
+<tr>
+<th style="text-align: left">方法</th>
+<th style="text-align: left">备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">getInstance()</td>
+<td style="text-align: left">返回子类GregorianCalendar</td>
+</tr>
+<tr>
+<td style="text-align: left">get(int field)</td>
+<td style="text-align: left">返回相应字段的时间</td>
+</tr>
+<tr>
+<td style="text-align: left">add(field,amount)</td>
+<td style="text-align: left">加或者减少指定字段</td>
+</tr>
+<tr>
+<td style="text-align: left">set(year,month,date)</td>
+<td style="text-align: left">修改指定字段</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-" data-lang="">判断是不是闰年
+int year=scanner.nextInt();
+Calendar c=Calendar.getInstance();
+c.set(year,2,1);
+c.add(Calendar.DAY_OF_MONTH,-1);
+int day = c.get(Calendar.DAY_OF_MONTH);
+return day==29;
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -236,7 +389,7 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" data-title="正则表达式和常用类 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -248,18 +401,18 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" title="Object类和Class类">
+ <a href="/java/2016/12/06/Arrays,Integer" title="Arrays,Integer">
   <strong>上一篇：</strong><br/>
   <span>
-  Object类和Class类</span>
+  Arrays,Integer</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/java/2016/12/04/StringBuffer"  title="StringBuffer">
+<a href="/java/2016/12/11/%E9%9B%86%E5%90%88"  title="集合">
  <strong>下一篇：</strong><br/> 
- <span>StringBuffer
+ <span>集合
 </span>
 </a>
 </div>

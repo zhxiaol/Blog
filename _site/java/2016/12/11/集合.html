@@ -8,7 +8,7 @@
     
     
     
-    <title>音标学习 | zhxiaol</title>
+    <title>集合 | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="音标学习">
-    <meta property="og:url" content="/Blog/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0">
+    <meta property="og:title" content="集合">
+    <meta property="og:url" content="/Blog/java/2016/12/11/%E9%9B%86%E5%90%88">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="音标学习">
+    <meta name="twitter:title" content="集合">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0" title="音标学习" itemprop="url">音标学习</a>
+      <a href="/Blog/java/2016/12/11/%E9%9B%86%E5%90%88" title="集合" itemprop="url">集合</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-26 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-11-26</time>
+    <time datetime="2016-12-11 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-11</time>
     
   </p>
 </header>
@@ -115,7 +115,82 @@
 		
 		</div>
 		
-		<p>æ的发音好难啊，感觉有时候像e，有时候像∧.</p>
+		<h2 id="为了画个流程图又填了一天的坑。">为了画个流程图又填了一天的坑。</h2>
+<div class="highlight"><pre><code class="language-mermaid" data-lang="mermaid">graph TB
+
+         stat["开始"]--&gt;d  
+         subgraph 方法区
+         d["Demo.class"]--&gt;m
+         s["Student.class"]
+         end
+
+         subgraph 堆
+         arr["arr数组&lt;br&gt;位置0&lt;br&gt;位置1&lt;br&gt;位置2&lt;br&gt;位置3&lt;br&gt;位置4"]
+         s1["new Student"]---s
+         arr--&gt;|arr0|s1
+         end
+
+         subgraph 栈
+         subgraph Main方法
+         m["Main方法"]--&gt;|进栈|m1
+         m1["Student[]arr=new Student[5]"]  --&gt; arr
+         m1--&gt;m2
+         m2["arr[0]=new Student()"]
+         m2--&gt;arr
+         end
+         end
+</code></pre></div>
+<h2 id="继承体系图">继承体系图</h2>
+<div class="highlight"><pre><code class="language-mermaid" data-lang="mermaid">graph TB
+   Collection---|有序 可以存重复的值|List
+   Collection---|无序 不可以存重复的值|Set
+   List---ArrayList
+   List---LinkedList
+   List---Vector
+   Set---HashSet
+   Set---TreeSet
+</code></pre></div>
+<h2 id="迭代器">迭代器</h2>
+
+<p>整个集合体系的遍历方式都是hasNext()和next()方法</p>
+
+<ul>
+<li>如果想在遍历的过程中添加元素,可以用ListIterator中的add方法
+<code>
+ListIterator lit = list.listIterator();     
+while(lit.hasNext()) {
+String str = (String)lit.next();
+if(str.equals(&quot;world&quot;)) {
+lit.add(&quot;javaee&quot;);
+}
+}
+</code></li>
+<li>Vector迭代
+<code>
+Vector v = new Vector();            
+Enumeration en = v.elements();          //获取枚举
+while(en.hasMoreElements()) {           //判断是否有元素
+System.out.println(en.nextElement());//获取元素
+}
+</code>
+##数组结构和链表结构</li>
+<li>数组
+有下标查询快修改快
+增删中间位置的整体下标都会变 增删慢</li>
+<li>链表
+像自行车链子，每个元素会存储它前面的地址和后面的地址
+所以增删快，查询修改需要从两端开始迭代，所以慢
+##List的三个子类的特点
+ArrayList:
+底层数据结构是数组，查询快，增删慢。
+线程不安全，效率高。
+Vector:
+底层数据结构是数组，查询快，增删慢。
+线程安全，效率低。
+LinkedList:
+底层数据结构是链表，查询慢，增删快。
+线程不安全，效率高。</li>
+</ul>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -132,7 +207,7 @@
   }) %>
   -->
   
-  <a class="article-category-link" href="/Blog/categories/#english">english</a>
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
   
 </div>
 
@@ -146,7 +221,7 @@
   <span></span> <!--<%- tags.join('') %>-->
   
   
-  <a href="/Blog/tags/#english">english</a>
+  <a href="/Blog/tags/#java">java</a>
   
   </div>
 
@@ -156,7 +231,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0" data-title="音标学习 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/11/%E9%9B%86%E5%90%88" data-title="集合 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -168,21 +243,13 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" title="编译运行java文件">
+ <a href="/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" title="正则表达式和常用类">
   <strong>上一篇：</strong><br/>
   <span>
-  编译运行java文件</span>
+  正则表达式和常用类</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0"  title="Java基础复习">
- <strong>下一篇：</strong><br/> 
- <span>Java基础复习
-</span>
-</a>
-</div>
 
 </nav>
 
@@ -211,11 +278,11 @@
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>4</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
 		  
 		
 		  
@@ -236,11 +303,11 @@
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>4</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
 			
 		
 			

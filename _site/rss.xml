@@ -5,16 +5,526 @@
         <description>zhxiaol - zhxiaol</description>
         <link></link>
         <atom:link href="" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Thu, 01 Dec 2016 23:55:01 +0800</lastBuildDate>
-        <pubDate>Thu, 01 Dec 2016 23:55:01 +0800</pubDate>
+        <lastBuildDate>Sun, 11 Dec 2016 21:10:33 +0800</lastBuildDate>
+        <pubDate>Sun, 11 Dec 2016 21:10:33 +0800</pubDate>
         <ttl>60</ttl>
 
+
+        <item>
+                <title>集合</title>
+                <description>&lt;h2 id=&quot;为了画个流程图又填了一天的坑。&quot;&gt;为了画个流程图又填了一天的坑。&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph TB
+
+         stat[&quot;开始&quot;]--&amp;gt;d  
+         subgraph 方法区
+         d[&quot;Demo.class&quot;]--&amp;gt;m
+         s[&quot;Student.class&quot;]
+         end
+
+         subgraph 堆
+         arr[&quot;arr数组&amp;lt;br&amp;gt;位置0&amp;lt;br&amp;gt;位置1&amp;lt;br&amp;gt;位置2&amp;lt;br&amp;gt;位置3&amp;lt;br&amp;gt;位置4&quot;]
+         s1[&quot;new Student&quot;]---s
+         arr--&amp;gt;|arr0|s1
+         end
+
+         subgraph 栈
+         subgraph Main方法
+         m[&quot;Main方法&quot;]--&amp;gt;|进栈|m1
+         m1[&quot;Student[]arr=new Student[5]&quot;]  --&amp;gt; arr
+         m1--&amp;gt;m2
+         m2[&quot;arr[0]=new Student()&quot;]
+         m2--&amp;gt;arr
+         end
+         end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;继承体系图&quot;&gt;继承体系图&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph TB
+   Collection---|有序 可以存重复的值|List
+   Collection---|无序 不可以存重复的值|Set
+   List---ArrayList
+   List---LinkedList
+   List---Vector
+   Set---HashSet
+   Set---TreeSet
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;迭代器&quot;&gt;迭代器&lt;/h2&gt;
+
+&lt;p&gt;整个集合体系的遍历方式都是hasNext()和next()方法&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;如果想在遍历的过程中添加元素,可以用ListIterator中的add方法
+&lt;code&gt;
+ListIterator lit = list.listIterator();     
+while(lit.hasNext()) {
+String str = (String)lit.next();
+if(str.equals(&amp;quot;world&amp;quot;)) {
+lit.add(&amp;quot;javaee&amp;quot;);
+}
+}
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Vector迭代
+&lt;code&gt;
+Vector v = new Vector();            
+Enumeration en = v.elements();          //获取枚举
+while(en.hasMoreElements()) {           //判断是否有元素
+System.out.println(en.nextElement());//获取元素
+}
+&lt;/code&gt;
+##数组结构和链表结构&lt;/li&gt;
+&lt;li&gt;数组
+有下标查询快修改快
+增删中间位置的整体下标都会变 增删慢&lt;/li&gt;
+&lt;li&gt;链表
+像自行车链子，每个元素会存储它前面的地址和后面的地址
+所以增删快，查询修改需要从两端开始迭代，所以慢
+##List的三个子类的特点
+ArrayList:
+底层数据结构是数组，查询快，增删慢。
+线程不安全，效率高。
+Vector:
+底层数据结构是数组，查询快，增删慢。
+线程安全，效率低。
+LinkedList:
+底层数据结构是链表，查询慢，增删快。
+线程不安全，效率高。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>/java/2016/12/11/%E9%9B%86%E5%90%88</link>
+                <guid>/java/2016/12/11/集合</guid>
+                <pubDate>Sun, 11 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
+
+        <item>
+                <title>正则表达式和常用类</title>
+                <description>&lt;h2 id=&quot;正则表达式&quot;&gt;正则表达式&lt;/h2&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;知识点&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;[abc]&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;a、b 、c&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;[^abc]&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;除了 a、b 、c&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;[a-zA-Z]&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;a到 z 或 A到 Z&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;[0-9]&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0-9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;.&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;任何字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;\d&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;数字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;\w&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;单词字符：[a-zA-Z_0-9]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;?&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;一次或一次也没有&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;*&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;零次或多次&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;{n}&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;恰好 n 次&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;{n,}&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;至少 n 次，但是不超过 m 次&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;(.)\1&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;分组将前面的复制一份AA $1取出复制的&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;split(regex)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;String类的分割方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;replaceAll(regex,s,s2)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;String类的替换功能&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;String str=&quot;我我我我爱爱爱张张小小小小歪歪歪歪歪&quot;;
+String regex=&quot;(.)\\1+&quot;;
+String s = str.replaceAll(regex, &quot;$1&quot;); //s=&quot;我爱张小歪&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;pattern和matcher&quot;&gt;Pattern和Matcher&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;Pattern p = Pattern.compile(&quot;a*b&quot;);
+Matcher m = p.matcher(&quot;aaaaab&quot;);
+boolean b = m.matches();
+while (m.find()){//查找是否有匹配的
+      m.group();//取出查找到的
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;math类&quot;&gt;Math类&lt;/h2&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;Header One&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;Header Two&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;abs(int a)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;求绝对值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;ceil(double a)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;向上取整&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;floor(double a)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;向下取整&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;max(int a,int b)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;取最大值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;pow(a,b)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;a的b次幂&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;random()&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;生成一个0-1之间的随机数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;round(float a)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;四舍五入&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2 id=&quot;random类&quot;&gt;Random类&lt;/h2&gt;
+
+&lt;p&gt;产生随机数如果用相同的种子创建两个 Random 实例，则对每个实例进行相同的方法调用序列，它们将生成并返回相同的数字序列。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Random(long seed) seed种子&lt;/li&gt;
+&lt;li&gt;public int nextInt()&lt;/li&gt;
+&lt;li&gt;public int nextInt(int n) 生成一个[0,n)的随机数&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;system类&quot;&gt;System类&lt;/h2&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;方法&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;gc()&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;垃圾回收，如果回收会调用对象finalize()方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;exit(int status)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;退出进程。status退出状态，0正常退出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;currentTimeMillis()&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;当前时间毫秒值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;arraycopy(Object src, int srcPos, Object dest, int destPos, int length)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;将src数组中的内容从srcPos位置复制到dest数组中，从destPost开始复制length个，非常重要的方法，String类和StringBuffer中很多方法都是从的该方法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2 id=&quot;biginteger类，bigdecimal类&quot;&gt;BigInteger类，BigDecimal类&lt;/h2&gt;
+
+&lt;p&gt;可以让超过Integer范围内的数据进行运算&lt;br&gt;
+new BigDecimal(Double)一样会失去精度，&lt;br&gt;
+new BigDecimal(String)不会失去精度&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;方法&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;add&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;加&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;subtract&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;减&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;multiply&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;乘&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;divideAndRemainder&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;除 会把结果和余数存放到数组中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;h2 id=&quot;date类&quot;&gt;Date类&lt;/h2&gt;
+
+&lt;p&gt;表示特定的瞬间，精确到毫秒。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;getTime()&lt;/li&gt;
+&lt;li&gt;setTime(long time)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;simpledateformat类&quot;&gt;SimpleDateFormat类&lt;/h2&gt;
+
+&lt;p&gt;实现日期和字符串的相互转换&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;public SimpleDateFormat(String pattern)&lt;/li&gt;
+&lt;li&gt;public final String format(Date date)&lt;/li&gt;
+&lt;li&gt;public Date parse(String source)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;calendar类&quot;&gt;Calendar类&lt;/h2&gt;
+
+&lt;p&gt;Calendar 类是一个抽象类，它为特定瞬间与一组诸如 YEAR、MONTH、DAY_OF_MONTH、HOUR 等日历字段之间的转换提供了一些方法，并为操作日历字段（例如获得下星期的日期）提供了一些方法。&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;方法&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;getInstance()&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;返回子类GregorianCalendar&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;get(int field)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;返回相应字段的时间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;add(field,amount)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;加或者减少指定字段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;set(year,month,date)&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;修改指定字段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;判断是不是闰年
+int year=scanner.nextInt();
+Calendar c=Calendar.getInstance();
+c.set(year,2,1);
+c.add(Calendar.DAY_OF_MONTH,-1);
+int day = c.get(Calendar.DAY_OF_MONTH);
+return day==29;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+                <link>/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB</link>
+                <guid>/java/2016/12/10/正则表达式和常用类</guid>
+                <pubDate>Sat, 10 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
+
+        <item>
+                <title>Arrays,Integer</title>
+                <description>&lt;h2 id=&quot;冒泡排序&quot;&gt;冒泡排序&lt;/h2&gt;
+
+&lt;p&gt;就是找最大值，把最大值放在依次最右边&lt;/p&gt;
+
+&lt;h2 id=&quot;选择排序&quot;&gt;选择排序&lt;/h2&gt;
+
+&lt;p&gt;就是找最小值，把最小值依次放在最左边&lt;/p&gt;
+
+&lt;h2 id=&quot;arrays-tostring&quot;&gt;Arrays.toString()&lt;/h2&gt;
+
+&lt;p&gt;创建一个StirngBuild 遍历append&lt;br&gt;
+收获:能用‘[’的时候别用&amp;quot;[&amp;quot;&lt;/p&gt;
+
+&lt;h2 id=&quot;sort&quot;&gt;sort()&lt;/h2&gt;
+
+&lt;p&gt;用的不是冒泡也不是选择，复杂程度令人发指，懒得看，听说效率很高&lt;/p&gt;
+
+&lt;h2 id=&quot;binarysearch&quot;&gt;binarySearch()&lt;/h2&gt;
+
+&lt;p&gt;二分法查找，跟自己写的差不多，就是mid=(low+high)&amp;gt;&amp;gt;&amp;gt;1而不是/2 位运算效率更高&lt;/p&gt;
+
+&lt;h2 id=&quot;integer&quot;&gt;Integer&lt;/h2&gt;
+
+&lt;p&gt;int的包装类，jdk1.5之后添加了自动封箱，和自动拆箱&lt;br&gt;
+IntegerCache类 缓冲池中有一个长度255的数组存储范围-128~127（存储在常量池）&lt;br&gt;
+如果取值范围在-128~127,自动装箱不会新创建对象，会从常量池中取&lt;br&gt;
+new Integer(97)==new Integer(97) flase&lt;/p&gt;
+
+&lt;p&gt;Integer i1=97;&lt;br&gt;
+Integer i2=97;&lt;br&gt;
+i1==i2                           true&lt;/p&gt;
+
+&lt;p&gt;Integer i1=197;&lt;br&gt;
+Integer i2=197;&lt;br&gt;
+i1==i2                           flase&lt;/p&gt;
+</description>
+                <link>/java/2016/12/06/Arrays,Integer</link>
+                <guid>/java/2016/12/06/Arrays,Integer</guid>
+                <pubDate>Tue, 06 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
+
+        <item>
+                <title>从头开始</title>
+                <description>&lt;h2 id=&quot;从头开始&quot;&gt;从头开始&lt;/h2&gt;
+
+&lt;p&gt;从初中到现在零零散散学习英语10年了，这10年的学习完全属于没开窍的状态，但凡开始愿意学点，也不至于今天啥也不会，&lt;br&gt;
+过去不曾在乎的，现在要加倍才能追回来，从头开始，从零开始学。马上奔三再从初中的知识开始学起多少有点抹不开面子...&lt;br&gt;
+还好我没脸没皮，来吧！开撸~&lt;/p&gt;
+</description>
+                <link>/life/2016/12/05/%E4%BB%8E%E5%A4%B4%E5%BC%80%E5%A7%8B</link>
+                <guid>/life/2016/12/05/从头开始</guid>
+                <pubDate>Mon, 05 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
+
+        <item>
+                <title>Lesson1</title>
+                <description>&lt;h2 id=&quot;lesson1&quot;&gt;Lesson1&lt;/h2&gt;
+
+&lt;p&gt;Lesson1&lt;br&gt;
+Execuse me?&lt;br&gt;
+listen to the tape then answer this question&lt;br&gt;
+whose handbag is it?&lt;br&gt;
+Execuse me?&lt;br&gt;
+yse?&lt;br&gt;
+Is this your handbag?&lt;br&gt;
+pardon？&lt;br&gt;
+Is this your handbag?&lt;br&gt;
+yes,it is.&lt;br&gt;
+thank you very much&lt;/p&gt;
+
+&lt;h2 id=&quot;lesson3&quot;&gt;Lesson3&lt;/h2&gt;
+
+&lt;p&gt;Listen to the tape then answer this question&lt;br&gt;
+Does the men get his umbrella back?&lt;br&gt;
+my coat and my umbrella please.&lt;br&gt;
+Here is my ticket&lt;br&gt;
+Thank you sir&lt;br&gt;
+Number five&lt;br&gt;
+Here&amp;#39;s is your umbrella and your coat&lt;br&gt;
+This is not my umbrella&lt;br&gt;
+Sorry sir&lt;br&gt;
+Is this your umbrella&lt;br&gt;
+no it isn&amp;#39;t&lt;br&gt;
+is this it&lt;br&gt;
+yes it is&lt;br&gt;
+thank you very much&lt;/p&gt;
+
+&lt;h2 id=&quot;lesson5&quot;&gt;Lesson5&lt;/h2&gt;
+
+&lt;p&gt;Listen to the tape then answer this question&lt;br&gt;
+Is Chang-woo is chinese?&lt;br&gt;
+Good morning&lt;br&gt;
+Good morning,Mr.Blake&lt;br&gt;
+This is Miss Sophie Dupont.&lt;br&gt;
+Sophie is a new student.&lt;br&gt;
+She is French&lt;br&gt;
+Sophie this is Hans.&lt;br&gt;
+He is Greman.&lt;br&gt;
+Nice to meet you&lt;br&gt;
+And this is Naoko&lt;br&gt;
+She is Japanese&lt;br&gt;
+Nice to meet you&lt;br&gt;
+This is Chang-woo&lt;br&gt;
+He is Korean&lt;br&gt;
+Nice to meet you&lt;br&gt;
+and This is Luming&lt;br&gt;
+He is Chinese&lt;br&gt;
+Nice to meet you&lt;br&gt;
+and This XiaoHui&lt;br&gt;
+she is Chinese too&lt;br&gt;
+Nice to meet you&lt;/p&gt;
+
+&lt;h2 id=&quot;lesson6&quot;&gt;Lesson6&lt;/h2&gt;
+
+&lt;p&gt;What make is it?&lt;br&gt;
+This a Volvo(Swedish).&lt;br&gt;
+This a Peugoet(French).&lt;br&gt;
+This a Mercedes(German).&lt;br&gt;
+This a Toyota(Japanese).&lt;br&gt;
+This a Daewoo(Korean).&lt;br&gt;
+This a Mini(English).&lt;br&gt;
+This a Ford(American)&lt;br&gt;
+This a Fiat(Italian)&lt;/p&gt;
+</description>
+                <link>/english/2016/12/05/Lesson1</link>
+                <guid>/english/2016/12/05/Lesson1</guid>
+                <pubDate>Mon, 05 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
+
+        <item>
+                <title>StringBuffer</title>
+                <description>&lt;h2 id=&quot;主题介绍&quot;&gt;主题介绍&lt;/h2&gt;
+
+&lt;p&gt;可变的字符序列，线程安全，有final修饰不能有子类&lt;br&gt;
+char[]数组 初始容量16 每次扩容会容量*2+2 扩容调用System.arrayCopy();&lt;/p&gt;
+
+&lt;h2 id=&quot;length-capacity&quot;&gt;length(),capacity()&lt;/h2&gt;
+
+&lt;p&gt;StringBuffer sb=new StringBuffer()&lt;br&gt;
+sb.length():实际长度 return count; 0&lt;br&gt;
+sb.capacity:理论长度 return value.length;16&lt;/p&gt;
+
+&lt;h2 id=&quot;tostring&quot;&gt;toString()&lt;/h2&gt;
+
+&lt;p&gt;return new String(value,0,count);&lt;br&gt;
+底层还是调用System.arrayCopy(),&lt;br&gt;
+将StringBuffer中的char数组从0，到实际长度count复制给String中的value数组&lt;/p&gt;
+
+&lt;h2 id=&quot;append-string-str&quot;&gt;append(String str)&lt;/h2&gt;
+
+&lt;p&gt;str.getChars(0, len, value, count);&lt;br&gt;
+将String中的字符复制到value数组&lt;/p&gt;
+
+&lt;h2 id=&quot;insert-int-index-string-str&quot;&gt;insert(int index,String str)&lt;/h2&gt;
+
+&lt;p&gt;System.arraycopy(value, offset, value, offset + len, count - offset);&lt;br&gt;
+System.arraycopy(str, 0, value, offset, len);&lt;/p&gt;
+
+&lt;h2 id=&quot;deleteat-int-index-delete-int-start-int-end&quot;&gt;deleteAt(int index),delete(int start,int end)&lt;/h2&gt;
+
+&lt;p&gt;{0,1,2,3} 1-2&lt;br&gt;
+System.arraycopy(value, index+1, value, index, count-index-1);&lt;br&gt;
+count--&lt;br&gt;
+System.arraycopy(value, start+len, value, start, count-end);&lt;br&gt;
+count -= len;&lt;/p&gt;
+
+&lt;h2 id=&quot;replce-int-start-int-end-string-str&quot;&gt;replce(int start,int end,String str)&lt;/h2&gt;
+
+&lt;p&gt;System.arraycopy(value, end, value, start + len, count - end);&lt;br&gt;
+str.getChars(value, start);&lt;/p&gt;
+
+&lt;h2 id=&quot;string-substring-int-start&quot;&gt;String substring(int start)&lt;/h2&gt;
+
+&lt;p&gt;return new String(value, start, end - start);&lt;/p&gt;
+</description>
+                <link>/java/2016/12/04/StringBuffer</link>
+                <guid>/java/2016/12/04/StringBuffer</guid>
+                <pubDate>Sun, 04 Dec 2016 00:00:00 +0800</pubDate>
+        </item>
 
         <item>
                 <title>String类</title>
                 <description>&lt;h2 id=&quot;主题介绍&quot;&gt;主题介绍&lt;/h2&gt;
 
-&lt;p&gt;String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类&lt;/p&gt;
+&lt;p&gt;String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类&lt;br&gt;
+String 类中有一个私有的final的char数组value。&lt;br&gt;
+字符串字面值“abc”也可以看成一个字符串对象（存储在方法区的常量池中）&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;String s1=&quot;abc&quot;
 String s2=s1+&quot;d&quot;;
 1.会在常量池创建&quot;abc&quot;类
@@ -35,7 +545,63 @@ s1==s2(true)
 String s2=new String(&quot;abc&quot;)
 s1==s2(flase)
 &quot;abc&quot;在常量池创建对象，s2:&quot;abc&quot;因为常量池中有不会创建，s2:new String(&quot;abc&quot;)会在堆内存中创建对象，并保存一份&quot;abc&quot;的副本
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;string类常用方法&quot;&gt;String类常用方法&lt;/h2&gt;
+
+&lt;h3 id=&quot;int-length&quot;&gt;int length()&lt;/h3&gt;
+
+&lt;p&gt;return value.length;&lt;/p&gt;
+
+&lt;h3 id=&quot;int-chatat-int-index&quot;&gt;int chatAt(int index)&lt;/h3&gt;
+
+&lt;p&gt;1.判断下标是否越界，2.return value[index]&lt;/p&gt;
+
+&lt;h3 id=&quot;int-indexof-char-c&quot;&gt;int indexOf(char c)&lt;/h3&gt;
+
+&lt;p&gt;遍历char数组比对每个char,没有返回-1，如果是str 先取出第一个比对，如果找到就逐位比对&lt;/p&gt;
+
+&lt;h3 id=&quot;string-substring-int-index&quot;&gt;String substring(int index)&lt;/h3&gt;
+
+&lt;p&gt;从指定位置开始截取子串&lt;br&gt;
+return new Stirng(value,index,value.length);&lt;br&gt;
+new String底层调用的是本地方法System.arrayCopy();从指定位置复制到新数组&lt;/p&gt;
+
+&lt;h3 id=&quot;byte-getbytes&quot;&gt;byte[] getBytes()&lt;/h3&gt;
+
+&lt;p&gt;先获得编码方式，然后比较复杂，没详细看=  =&lt;/p&gt;
+
+&lt;h3 id=&quot;char-tochararray&quot;&gt;char[] toCharArray()&lt;/h3&gt;
+
+&lt;p&gt;创建一个长度和value一样的char数组result&lt;br&gt;
+调用System.arrcopy(value,0,result,0,value.length)&lt;/p&gt;
+
+&lt;h3 id=&quot;string-valueof-char-data&quot;&gt;String valueOf(char data[])&lt;/h3&gt;
+
+&lt;p&gt;return new String(data)&lt;br&gt;
+如果参数是Object return obj.toString();&lt;/p&gt;
+
+&lt;h3 id=&quot;string-tolowercase-touppercase&quot;&gt;String toLowerCase() toUpperCase()&lt;/h3&gt;
+
+&lt;p&gt;会先循环看是否有大写字母，如果有跳出循环遍历数组转换&lt;/p&gt;
+
+&lt;h3 id=&quot;replace-string-odl-string-new&quot;&gt;replace(String odl,String new)&lt;/h3&gt;
+
+&lt;p&gt;正则表达式&lt;/p&gt;
+
+&lt;h3 id=&quot;string-trim&quot;&gt;String trim();&lt;/h3&gt;
+
+&lt;p&gt;1.很机智，从2边while循环看是否是‘ ’，遇见跳出循环&lt;br&gt;
+2.substring(start,end)&lt;/p&gt;
+
+&lt;h3 id=&quot;compareto-string-str&quot;&gt;compareTo(String str);&lt;/h3&gt;
+
+&lt;p&gt;依次比较两个字符串ASC码。如果两个字符的ASC码相等则继续后续比较,否则直接返回两个ASC的差值&lt;br&gt;
+&amp;quot;321&amp;quot;compareTo(&amp;quot;1234&amp;quot;)会返回2 如果是比较数字大小要先比较长度&lt;/p&gt;
+
+&lt;h3 id=&quot;getchars-int-start-int-end-char-c-int-offset&quot;&gt;getChars(int start,int end,char c[],int offset)&lt;/h3&gt;
+
+&lt;p&gt;当前字符串从start到end-1位置上的字符复制到字符数组c中，并从c的offset处开始存放&lt;/p&gt;
+</description>
                 <link>/java/2016/12/01/String%E7%B1%BB</link>
                 <guid>/java/2016/12/01/String类</guid>
                 <pubDate>Thu, 01 Dec 2016 00:00:00 +0800</pubDate>
@@ -124,15 +690,6 @@ class Person{
                 <link>/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0</link>
                 <guid>/java/2016/11/27/Java基础复习</guid>
                 <pubDate>Sun, 27 Nov 2016 00:00:00 +0800</pubDate>
-        </item>
-
-        <item>
-                <title>音标学习</title>
-                <description>&lt;p&gt;æ的发音好难啊，感觉有时候像e，有时候像∧.&lt;/p&gt;
-</description>
-                <link>/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0</link>
-                <guid>/english/2016/11/26/音标学习</guid>
-                <pubDate>Sat, 26 Nov 2016 00:00:00 +0800</pubDate>
         </item>
 
         <item>

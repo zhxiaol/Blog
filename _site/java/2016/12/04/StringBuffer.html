@@ -8,7 +8,7 @@
     
     
     
-    <title>String类 | zhxiaol</title>
+    <title>StringBuffer | zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="String类">
-    <meta property="og:url" content="/Blog/java/2016/12/01/String%E7%B1%BB">
+    <meta property="og:title" content="StringBuffer">
+    <meta property="og:url" content="/Blog/java/2016/12/04/StringBuffer">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="String类">
+    <meta name="twitter:title" content="StringBuffer">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/12/01/String%E7%B1%BB" title="String类" itemprop="url">String类</a>
+      <a href="/Blog/java/2016/12/04/StringBuffer" title="StringBuffer" itemprop="url">StringBuffer</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-12-01 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-01</time>
+    <time datetime="2016-12-04 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-04</time>
     
   </p>
 </header>
@@ -117,85 +117,47 @@
 		
 		<h2 id="主题介绍">主题介绍</h2>
 
-<p>String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类<br>
-String 类中有一个私有的final的char数组value。<br>
-字符串字面值“abc”也可以看成一个字符串对象（存储在方法区的常量池中）</p>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc"
-String s2=s1+"d";
-1.会在常量池创建"abc"类
-2.在堆内存创建StringBuild类或StringBuffer类
-3.通过toString 在堆内存创建新的类
-低效且消耗内存
-</code></pre></div>
-<!-- more -->
+<p>可变的字符序列，线程安全，有final修饰不能有子类<br>
+char[]数组 初始容量16 每次扩容会容量*2+2 扩容调用System.arrayCopy();</p>
 
-<h2 id="常量池优先">常量池优先</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2="ab"+"c";
-s1==s2(true)
-常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以s1==s2;
-</code></pre></div>
-<h2 id="new-string-quot-abc-quot">new String(&quot;abc&quot;)</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2=new String("abc")
-s1==s2(flase)
-"abc"在常量池创建对象，s2:"abc"因为常量池中有不会创建，s2:new String("abc")会在堆内存中创建对象，并保存一份"abc"的副本
-</code></pre></div>
-<h2 id="string类常用方法">String类常用方法</h2>
+<h2 id="length-capacity">length(),capacity()</h2>
 
-<h3 id="int-length">int length()</h3>
+<p>StringBuffer sb=new StringBuffer()<br>
+sb.length():实际长度 return count; 0<br>
+sb.capacity:理论长度 return value.length;16</p>
 
-<p>return value.length;</p>
+<h2 id="tostring">toString()</h2>
 
-<h3 id="int-chatat-int-index">int chatAt(int index)</h3>
+<p>return new String(value,0,count);<br>
+底层还是调用System.arrayCopy(),<br>
+将StringBuffer中的char数组从0，到实际长度count复制给String中的value数组</p>
 
-<p>1.判断下标是否越界，2.return value[index]</p>
+<h2 id="append-string-str">append(String str)</h2>
 
-<h3 id="int-indexof-char-c">int indexOf(char c)</h3>
+<p>str.getChars(0, len, value, count);<br>
+将String中的字符复制到value数组</p>
 
-<p>遍历char数组比对每个char,没有返回-1，如果是str 先取出第一个比对，如果找到就逐位比对</p>
+<h2 id="insert-int-index-string-str">insert(int index,String str)</h2>
 
-<h3 id="string-substring-int-index">String substring(int index)</h3>
+<p>System.arraycopy(value, offset, value, offset + len, count - offset);<br>
+System.arraycopy(str, 0, value, offset, len);</p>
 
-<p>从指定位置开始截取子串<br>
-return new Stirng(value,index,value.length);<br>
-new String底层调用的是本地方法System.arrayCopy();从指定位置复制到新数组</p>
+<h2 id="deleteat-int-index-delete-int-start-int-end">deleteAt(int index),delete(int start,int end)</h2>
 
-<h3 id="byte-getbytes">byte[] getBytes()</h3>
+<p>{0,1,2,3} 1-2<br>
+System.arraycopy(value, index+1, value, index, count-index-1);<br>
+count--<br>
+System.arraycopy(value, start+len, value, start, count-end);<br>
+count -= len;</p>
 
-<p>先获得编码方式，然后比较复杂，没详细看=  =</p>
+<h2 id="replce-int-start-int-end-string-str">replce(int start,int end,String str)</h2>
 
-<h3 id="char-tochararray">char[] toCharArray()</h3>
+<p>System.arraycopy(value, end, value, start + len, count - end);<br>
+str.getChars(value, start);</p>
 
-<p>创建一个长度和value一样的char数组result<br>
-调用System.arrcopy(value,0,result,0,value.length)</p>
+<h2 id="string-substring-int-start">String substring(int start)</h2>
 
-<h3 id="string-valueof-char-data">String valueOf(char data[])</h3>
-
-<p>return new String(data)<br>
-如果参数是Object return obj.toString();</p>
-
-<h3 id="string-tolowercase-touppercase">String toLowerCase() toUpperCase()</h3>
-
-<p>会先循环看是否有大写字母，如果有跳出循环遍历数组转换</p>
-
-<h3 id="replace-string-odl-string-new">replace(String odl,String new)</h3>
-
-<p>正则表达式</p>
-
-<h3 id="string-trim">String trim();</h3>
-
-<p>1.很机智，从2边while循环看是否是‘ ’，遇见跳出循环<br>
-2.substring(start,end)</p>
-
-<h3 id="compareto-string-str">compareTo(String str);</h3>
-
-<p>依次比较两个字符串ASC码。如果两个字符的ASC码相等则继续后续比较,否则直接返回两个ASC的差值<br>
-&quot;321&quot;compareTo(&quot;1234&quot;)会返回2 如果是比较数字大小要先比较长度</p>
-
-<h3 id="getchars-int-start-int-end-char-c-int-offset">getChars(int start,int end,char c[],int offset)</h3>
-
-<p>当前字符串从start到end-1位置上的字符复制到字符数组c中，并从c的offset处开始存放</p>
+<p>return new String(value, start, end - start);</p>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -236,7 +198,7 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="http://localhost:4000/Blog/java/2016/12/04/StringBuffer" data-title="StringBuffer | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -248,18 +210,18 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/12/01/Object%E5%92%8CClass%E7%B1%BB" title="Object类和Class类">
+ <a href="/java/2016/12/01/String%E7%B1%BB" title="String类">
   <strong>上一篇：</strong><br/>
   <span>
-  Object类和Class类</span>
+  String类</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/java/2016/12/04/StringBuffer"  title="StringBuffer">
+<a href="/english/2016/12/05/Lesson1"  title="Lesson1">
  <strong>下一篇：</strong><br/> 
- <span>StringBuffer
+ <span>Lesson1
 </span>
 </a>
 </div>
