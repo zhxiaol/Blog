@@ -7,16 +7,19 @@ tags:
 categories: life
 description: Jacman 是一款扁平化，有着响应式设计的 Jekyll 主题。本站正式使用了 Jacman 主题。Jacman 基于 Jacman 的 Hexo 主题修改而来。你可以前往本站和 Demo 预览更多关于本主题的更多效果。如果你有任何问题或意见欢迎到 GitHub 发表 issue。
 ---
-##主题介绍
+## 主题介绍
 好坑，只是想搭建个简单的blog用来记录学习，没想到填了一天的坑。技术真的就像婚前和婚后，回头再看，其实也没啥。
 
 <!-- more -->
-##配置指南
-###更新gem
+
+## 配置指南
+
+### 更新gem
 ```
 sudo gem update --system
 ```
-###安装jekyll
+
+### 安装jekyll
 ```
 sudo gem install jekyll
 
@@ -26,7 +29,8 @@ jekyll -v
 遇到的坑，如果安装失败 可以尝试安装到 /usr/local/bin/目录下
 sudo gem install -n /usr/local/bin/ jekyll
 ```
-###使用jekyll
+
+### 使用jekyll
 ```
 生成博客
 jekyll build
