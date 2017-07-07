@@ -8,7 +8,7 @@
     
     
     
-    <title>Lesson1 | zhxiaol</title>
+    <title>zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="Lesson1">
-    <meta property="og:url" content="/Blog/english/2016/12/05/Lesson1">
+    <meta property="og:title" content="">
+    <meta property="og:url" content="/Blog/2017/07/07/2017-4-11-Ajax">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Lesson1">
+    <meta name="twitter:title" content="">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/english/2016/12/05/Lesson1" title="Lesson1" itemprop="url">Lesson1</a>
+      <a href="/Blog/2017/07/07/2017-4-11-Ajax" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-12-05 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-05</time>
+    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished"> 发表于 2017-07-07</time>
     
   </p>
 </header>
@@ -115,74 +115,205 @@
 		
 		</div>
 		
-		<h2 id="lesson1">Lesson1</h2>
+		<h2 id="什么是ajax">什么是Ajax</h2>
 
-<p>Lesson1<br>
-Execuse me?<br>
-listen to the tape then answer this question<br>
-whose handbag is it?<br>
-Execuse me?<br>
-yse?<br>
-Is this your handbag?<br>
-pardon？<br>
-Is this your handbag?<br>
-yes,it is.<br>
-thank you very much</p>
+<blockquote>
+<p>Asynchonous JavaScript And Xml<br>
+是一种用于创建更好更快以及交互性更强的web应用程序</p>
 
-<h2 id="lesson3">Lesson3</h2>
+<ul>
+<li>Axja:只刷新布局页面技术
+<code>
+步骤
+|
+|--创建对象 var xmlHttp
+|      |
+|      |-- if(window.XMLHttpRequest){
+|              //IE7+ Firefox Chrome Opera Safari
+|              xmlHttp=new XMLHttpRequest();
+|          }else{
+|              //IE6 IE5
+|              xmlHttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+|          }       
+|
+|--事件处理onreadystatechange
+|    |
+|    |-- xmlHttp.onreadstatechange=function(){
+|           if(xmlHttp.readyState==4&amp;&amp;xmlHttp.status==200){
+|                  alert(xmlHttp.responseText);
+|              }
+|        }
+|
+|--创建连接open(&quot;get|post&quot;,&quot;url?name=tom&quot;,&quot;true|false&quot;)
+|          |
+|          |--请求方式  请求地址 是否异步
+|
+|
+|--发送请求send(content) content参数指定请求的参数或null
+|
+|
+|--设置消息头setRequestHeader(header,value)
+|
+|
+|--属性
+|   |
+|   |--readyState:类型short 只读
+|   |      |
+|   |      |--0:刚初始化
+|   |      |--1:调用open还没调用send
+|   |      |--2:send调用还没收到响应
+|   |      |--3:收到响应头还没收到响应正文
+|   |      |--4:一切都收到了
+|   |          
+|   |--responseText:类型String 只读
+|   |--responseXML: 类型Document 只读
+|   |--status:服务器响应状态码 类型short 只读
+|          |
+|          |--200 服务器响应正常
+|          |--400 无法找到请求的资源
+|          |--403 没有访问权限
+|          |--404 访问的资源不存在
+|          |--500 服务器内部错误
+|
+|
+</code>
+###### 初体验
+```
+//myJs.js
+function getXMLHttpRequest(){
+var xmlHttp;
+if(window.XMLHttpRequest){
+    xmlHttp=new XMLHttpRequest();
+}else {
+    xmlHttp=new ActiveXObject();
+}
+return xmlHttp;
+}</li>
+</ul>
+</blockquote>
 
-<p>Listen to the tape then answer this question<br>
-Does the men get his umbrella back?<br>
-my coat and my umbrella please.<br>
-Here is my ticket<br>
-Thank you sir<br>
-Number five<br>
-Here&#39;s is your umbrella and your coat<br>
-This is not my umbrella<br>
-Sorry sir<br>
-Is this your umbrella<br>
-no it isn&#39;t<br>
-is this it<br>
-yes it is<br>
-thank you very much</p>
+<p>//1.jsp</p>
 
-<h2 id="lesson5">Lesson5</h2>
+<script type="text/javascript" src="js/myJs.js"></script>
 
-<p>Listen to the tape then answer this question<br>
-Is Chang-woo is chinese?<br>
-Good morning<br>
-Good morning,Mr.Blake<br>
-This is Miss Sophie Dupont.<br>
-Sophie is a new student.<br>
-She is French<br>
-Sophie this is Hans.<br>
-He is Greman.<br>
-Nice to meet you<br>
-And this is Naoko<br>
-She is Japanese<br>
-Nice to meet you<br>
-This is Chang-woo<br>
-He is Korean<br>
-Nice to meet you<br>
-and This is Luming<br>
-He is Chinese<br>
-Nice to meet you<br>
-and This XiaoHui<br>
-she is Chinese too<br>
-Nice to meet you</p>
+<script type="text/javascript">
+    window.onload=function(){
+        var req=getXMLHttpRequest();
+        req.onreadystatechange=function(){
+            if(req.readyState==4&&req.status==200){
+                alert(req.responseText);
+            }
+        }
+        req.open("get","${pageContext.request.contextPath}/servlet/servletDemo1",true);
+        req.send(null);
+    }
+</script>
 
-<h2 id="lesson6">Lesson6</h2>
+<p>//servletDemo1<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
+    PrintWriter out = resp.getWriter();<br>
+    out.println(&quot;你好 ajax Asynchonous JavaScript And Xml &quot;);<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+###### 验证用户名
+</code></pre></div>
+<p>//reg.jsp</p>
 
-<p>What make is it?<br>
-This a Volvo(Swedish).<br>
-This a Peugoet(French).<br>
-This a Mercedes(German).<br>
-This a Toyota(Japanese).<br>
-This a Daewoo(Korean).<br>
-This a Mini(English).<br>
-This a Ford(American)<br>
-This a Fiat(Italian)</p>
-  
+<script type="text/javascript" src="js/myJs.js"></script>
+
+<script type="text/javascript">
+    function ckName() {
+        var name=document.getElementsByName("username")[0].value;
+        var xhr=getXMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var msg=document.getElementById("msg");
+                if(xhr.responseText=="true"){
+                    msg.style.color="red";
+                    msg.innerHTML="用户名已存在"
+                }else {
+                    msg.style.color="green";
+                    msg.innerHTML="用户名可以使用"
+                }
+            }
+        }
+        xhr.open("get","${pageContext.request.contextPath}/servlet/ckNameServlet?name="+name);
+        xhr.send(null);
+    }
+</script>
+
+<p>//ckNameServlet<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
+    PrintWriter out = resp.getWriter();<br>
+    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
+    String name = req.getParameter(&quot;name&quot;);<br>
+    if(&quot;tom&quot;.equals(name)){<br>
+        out.print(true);<br>
+    }else {<br>
+        out.print(false);<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## Json对象
+</code></pre></div>
+<p>Json对象使用步骤<br>
+    |<br>
+    |--添加jar<br>
+    |    |<br>
+    |    |--commons-beanutils-1.8.3.jar<br>
+    |    |--commons-collections-3.2.1.jar<br>
+    |    |--commons-lang-2.6.jar<br>
+    |    |--commons-logging-1.1.1.jar<br>
+    |    |--ezmorph-1.0.6.jar<br>
+    |    |--json-lib-2.4-jdk15.jar<br>
+    |<br>
+    |--将Object转换成json字符串<br>
+    |       |<br>
+    |       |--String jsonObjct = JSONObject.fromObject(obj).toString();<br>
+    |<br>
+    |--将list转换成json字符串<br>
+    |       |<br>
+    |       |--String s = JSONArray.fromObject(list).toString();<br>
+    |<br>
+    |--字段过滤<br>
+         |<br>
+         |-- JsonConfig js=new JsonConfig();//排除<br>
+             js.setExcludes(new String[]{&quot;pnum&quot;,&quot;description&quot;,&quot;category&quot;,&quot;id&quot;,&quot;author&quot;});<br>
+             String s=JSONArray.fromObject(list,js).toString();</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>public class JsonTest {<br>
+    @Test<br>
+    public void test1(){<br>
+        Book b=new Book();<br>
+        b.setId(&quot;1001&quot;);<br>
+        b.setName(&quot;盗墓笔记&quot;);<br>
+        b.setPrice(&quot;98.00&quot;);<br>
+        String s = JSONObject.fromObject(b).toString();<br>
+        System.out.println(s);<br>
+    }<br>
+    @Test<br>
+    public void test2(){<br>
+        ArrayList<Book> list = new ArrayList&lt;&gt;();<br>
+        list.add(new Book(&quot;1001&quot;,&quot;盗墓笔记&quot;,&quot;98.00&quot;,&quot;南派三叔&quot;));<br>
+        list.add(new Book(&quot;1002&quot;,&quot;鬼吹灯&quot;,&quot;89.00&quot;,&quot;天下霸唱&quot;));<br>
+        list.add(new Book(&quot;1003&quot;,&quot;诛仙&quot;,&quot;67.00&quot;,&quot;&quot;));<br>
+        String s = JSONArray.fromObject(list).toString();<br>
+        System.out.println(s);<br>
+    }<br>
+    @Test<br>
+    public void test3() throws SQLException {<br>
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
+        List<Book> list = qr.query(&quot;select * from book&quot;, new BeanListHandler<Book>(Book.class));<br>
+        JsonConfig js=new JsonConfig();//排除<br>
+        js.setExcludes(new String[]{&quot;pnum&quot;,&quot;description&quot;,&quot;category&quot;,&quot;id&quot;,&quot;author&quot;});<br>
+        String s=JSONArray.fromObject(list,js).toString();<br>
+        System.out.println(s);<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -198,23 +329,8 @@ This a Fiat(Italian)</p>
   }) %>
   -->
   
-  <a class="article-category-link" href="/Blog/categories/#english">english</a>
-  
 </div>
 
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  <a href="/Blog/tags/#english">english</a>
-  
-  </div>
 
 </div>
 
@@ -222,7 +338,7 @@ This a Fiat(Italian)</p>
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/english/2016/12/05/Lesson1" data-title="Lesson1 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/2017/07/07/2017-4-11-Ajax" data-title="zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -234,18 +350,18 @@ This a Fiat(Italian)</p>
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/12/04/StringBuffer" title="StringBuffer">
+ <a href="/2017/07/07/2017-4-10-%E5%9B%BE%E4%B9%A6%E5%95%86%E5%9F%8E" title="">
   <strong>上一篇：</strong><br/>
   <span>
-  StringBuffer</span>
+  (no title)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/life/2016/12/05/%E4%BB%8E%E5%A4%B4%E5%BC%80%E5%A7%8B"  title="从头开始">
+<a href="/2017/07/07/2017-4-14-Listener%E5%92%8CFilter"  title="">
  <strong>下一篇：</strong><br/> 
- <span>从头开始
+ <span>(no title)
 </span>
 </a>
 </div>
@@ -277,15 +393,15 @@ This a Fiat(Italian)</p>
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#english" title="english">english<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -302,15 +418,15 @@ This a Fiat(Italian)</p>
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#english" title="english">english<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
 			
 		
 		</ul>

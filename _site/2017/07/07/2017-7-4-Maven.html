@@ -1,0 +1,1116 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="">
+    <meta property="og:url" content="/Blog/2017/07/07/2017-7-4-Maven">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/2017/07/07/2017-7-4-Maven" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished"> 发表于 2017-07-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="maven">Maven</h2>
+
+<blockquote>
+<p>项目管理工具</p>
+</blockquote>
+
+<h5 id="什么是maven">什么是maven</h5>
+
+<ul>
+<li>Maven是基于POM（工程对象模型），通过一小段描述来对项目的代码、报告、文件进管理的工具。</li>
+<li>Maven是一个跨平台的项目管理工具，它是使用java开发的，它要依赖于jdk1.6及以上</li>
+<li>Maven主要有两大功能：管理依赖、项目构建。</li>
+<li>依赖指的就是jar包。</li>
+</ul>
+
+<h5 id="什么是构建">什么是构建</h5>
+
+<blockquote>
+<p>清理 编译 测试 报告 打包 部署</p>
+</blockquote>
+
+<h5 id="项目构建的方式">项目构建的方式</h5>
+
+<ul>
+<li>Eclipse
+使用eclipse进行项目构建，相对来说，步骤比较零散，不好操作</li>
+<li>Ant
+它是一个专门的项目构建工具，它可以通过一些配置来完成项目构建，这些配置要明确的告诉ant，源码包在哪？目标class文件应该存放在哪？资源文件应该在哪</li>
+<li>Maven
+它是一个项目管理工具，他也是一个项目构建工具，通过使用maven，可以对项目进行快速简单的构建，它不需要告诉maven很多信息，但是需要安装maven去的规范去进行代码的开发。也就是说maven是有约束的。</li>
+</ul>
+
+<h4 id="maven的安装配置">Maven的安装配置</h4>
+
+<ul>
+<li>下载maven
+官方网站：<a href="http://maven.apache.org">http://maven.apache.org</a></li>
+<li>安装maven
+第一步：安装jdk1.6及以上
+第二步：将maven下载的压缩包进行解压缩
+第三步：配置maven的环境变量MAVEN_HOME
+第四步：配置maven的环境变量PATH
+第五步：测试maven是否安装成功，在系统命令行中执行命令：mvn –v</li>
+<li>配置maven
+在maven中有两个配置文件：用户配置、全局配置（默认）</li>
+<li><p>全局配置<br>
+在maven安装目录的conf里面有一个settings.xml文件，这个文件就是maven的全局配置文件。<br>
+该文件中配置来maven本地仓库的地址<br>
+默认在系统的用户目录下的${user.home}/.m2/repository中，该目录是本地仓库的目录。</p></li>
+<li><p>用户配置<br>
+用户配置文件的地址：~/.m2/settings.xml(Mac一致)，该文件默认是没有，需要将全局配置文件拷贝一份到该目录下。<br>
+重新指定本地仓库地址，如果不指定，则默认是~/.m2/repository目录，如果用户配置文件不存在，则使用全局配置文件的配置。</p></li>
+</ul>
+
+<h4 id="创建maven工程">创建maven工程</h4>
+
+<h5 id="maven工程结构">Maven工程结构</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">Project
+   |--src（源码包）
+   |   |--main（正常的源码包）
+   |   |   |--java（.java文件的目录）
+   |   |   |--resources（资源文件的目录）
+   |   |
+   |   |--test（测试的源码包）
+   |       |--java
+   |       |--resources
+   |       
+   |--target（class文件、报告等信息存储的地方）
+   |--pom.xml（maven工程的描述文件）
+</code></pre></div>
+<h5 id="创建hellomaven工程">创建HelloMaven工程</h5>
+
+<p>第一步：安装maven的工程结构创建helloMaven工程<br>
+第二步：创建HelloMaven.java<br>
+第三步：创建TestHelloMaven.java<br>
+第四步：编辑pom.xml文件</p>
+
+<h4 id="maven命令">Maven命令</h4>
+
+<p>Maven的命令要在pom.xml所在目录中去执行<br>
+|命令|说明|<br>
+|----|----|<br>
+|Mvn compile|编译的命令|<br>
+|Mvn clean|清除命令，清除已经编译好的class文件，具体说清除的是target目录中的文件|<br>
+|Mvn test|测试命令，该命令会将test目录中的源码进行编译|<br>
+|Mvn package|打包命令|<br>
+|Mvn install|安装命令，会将打好的包，安装到本地仓库|<br>
+|Mvn clean compile|先清空再编译|<br>
+|mvn clean test|先执行clean，再执行test，通常应用于测试环节|<br>
+|mvn clean package|先执行clean，再执行package，将项目打包，通常应用于发布前|<br>
+|mvn clean install|先执行clean，再执行install，将项目打包，通常应用于发布前|</p>
+<div class="highlight"><pre><code class="language-" data-lang="">mvn clean package
+    执行过程：
+      清理————清空环境
+      编译————编译源码
+      测试————测试源码
+      打包————将编译的非测试类打包
+
+cmd mvn clean install
+   执行过程：
+      清理————清空环境
+      编译————编译源码
+      测试————测试源码
+      打包————将编译的非测试类打包
+      部署————将打好的包发布到资源仓库中
+</code></pre></div>
+<h5 id="m2eclipse">M2Eclipse</h5>
+
+<ul>
+<li>安装M2Eclipse
+第一步：将目录中的m2e,m2e-extras文件拷贝
+第二步：拷贝到eclipse中的dropins目录
+第三步：查看eclipse中是否安装成功
+第四步：设置maven的安装路径
+第五步：设置maven的用户配置</li>
+</ul>
+
+<h4 id="创建mavenfirst工程-idea">创建MavenFirst工程(IDEA)</h4>
+
+<ul>
+<li>New Project选择Maven 勾选Create from archetype</li>
+<li>选择maven-archetype-quickstart next</li>
+<li>填写groupid(com.itheima.maven) artifactId(MevanFirst)</li>
+<li>shift+commend+a 搜索Maven Project 点击m按钮 输入指令complie test package install
+###### pom.xml
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion></li>
+</ul>
+
+<p><groupId>com.itheima.maven</groupId><br>
+  <artifactId>MavenFirst</artifactId><br>
+  <version>1.0-SNAPSHOT</version><br>
+  <packaging>jar</packaging></p>
+
+<p><name>MavenFirst</name><br>
+  <url><a href="http://maven.apache.org">http://maven.apache.org</a></url></p>
+
+<p><properties><br>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><br>
+  </properties></p>
+
+<p><dependencies><br>
+    <dependency><br>
+      <groupId>junit</groupId><br>
+      <artifactId>junit</artifactId><br>
+      <version>4.9</version><br>
+      <scope>test</scope><br>
+    </dependency><br>
+    <dependency><br>
+      <groupId>junit</groupId><br>
+      <artifactId>junit</artifactId><br>
+      <version>RELEASE</version><br>
+    </dependency><br>
+    <dependency><br>
+      <groupId>junit</groupId><br>
+      <artifactId>junit</artifactId><br>
+      <version>RELEASE</version><br>
+    </dependency><br>
+    <dependency><br>
+      <groupId>junit</groupId><br>
+      <artifactId>junit</artifactId><br>
+      <version>4.12</version><br>
+    </dependency><br>
+  </dependencies><br>
+</project></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+#### 创建MavenSecond工程
+* New Project选择Maven 不勾选Create from archetype
+</code></pre></div>
+<p>//pom.xml<br>
+<dependency><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <artifactId>MavenFirst</artifactId><br>
+    <version>1.0-SNAPSHOT</version><br>
+</dependency></p>
+
+<p>//MavenSecond<br>
+public class MavenSecond {<br>
+    public String sayHello(String name){<br>
+        MavenFirst first = new MavenFirst();<br>
+        return first.sayHello(name);<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+#### Maven的核心概念
+##### 坐标
+在平面几何中坐标（x,y）可以标识平面中唯一的一点。在maven中坐标就是为了定位一个唯一确定的jar包。
+Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构建的统一规范
+拥有了统一规范，就可以把查找工作交给机器
+
+##### Maven坐标主要组成
+* groupId：定义当前Maven组织名称
+* artifactId：定义实际项目名称
+* version：定义当前项目的当前版本
+
+#### 依赖管理
+##### 依赖范围
+其中依赖范围scope 用来控制依赖和编译，测试，运行的classpath的关系. 主要的是三种依赖关系如下：
+* compile： 默认编译依赖范围。对于编译，测试，运行三种classpath都有效
+* test：测试依赖范围。只对于测试classpath有效
+* provided：已提供依赖范围。对于编译，测试的classpath都有效，但对于运行无效。因为由容器已经提供，例如servlet-api
+* runtime:运行时提供。例如:jdbc驱动
+|依赖范围|主代码有效|测试代码有效|运行时有效|例子|
+|-------|-----------------|----------|---------|---|
+|complie|有|有|有|log4j|
+|test|无|有|无|junit|
+|provided|有|有|无|servlet-api|
+|runtime|无|无|有|JDBC DRIVER Implementation|
+
+#### 依赖传递
+B工程依赖A工程，C工程依赖B工程，那么B工程是C工程的直接依赖，A工程是C工程的间接依赖
+
+##### 创建MavenThird工程
+</code></pre></div>
+<p>//pom.xml<br>
+<dependency><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <artifactId>MavenSecond</artifactId><br>
+    <version>1.0-SNAPSHOT</version><br>
+</dependency><br>
+//MavenThird<br>
+public class MavenThird {<br>
+    public String sayHello(String name){<br>
+        MavenSecond second = new MavenSecond();<br>
+        return second.sayHello(name);<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+#### 依赖范围传递
+</code></pre></div>
+<p>MavenThird-------MavenSecond------------MavenFirst<br><br>
+    |        |               |           |<br>
+    |        |                   |           |<br>
+    |    第一直接依赖         第二直接依赖       |<br>
+    |                                        |<br>
+    |                                        |<br>
+    ----------------  间接依赖  ---------------     </p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+总结：
+* 当第二依赖的范围是compile的时候，传递性依赖的范围与第一直接依赖的范围一致。
+* 当第二直接依赖的范围是test的时候，依赖不会得以传递。
+* 当第二依赖的范围是provided的时候，只传递第一直接依赖范围也为provided的依赖，且传递性依赖的范围同样为 provided；
+* 当第二直接依赖的范围是runtime的时候，传递性依赖的范围与第一直接依赖的范围一致，但compile例外，此时传递的依赖范围为runtime；
+
+
+
+##### 依赖冲突
+在maven中存在两种冲突方式：一种是跨pom文件的冲突，一致是同一个pom文件中的冲突。
+
+* 跨pom文件的冲突
+MavenFirst的pom文件中依赖来junit的4.9版本，那边MavenSecond和MavenThird中都是使用了4.9版本。
+如果MavenSecond中重新依赖junit的4.8版本，那么MavenSecond和MavenThird中都是使用了4.8本
+这体现来依赖的就近使用原则。
+
+* 同一个pom文件的冲突 加载从上往下,后面覆盖前面
+
+
+##### 可选依赖
+Optional标签标示该依赖是否可选，默认是false。可以理解为，如果为true，则表示该依赖不会传递下去，如果为false，则会传递下去。
+
+
+
+##### 排除依赖
+Exclusions标签可以排除依赖
+
+
+#### 生命周期
+* Maven有三个生命周期：clean生命周期、default生命周期、site生命周期
+* 生命周期可以理解为项目构建的步骤集合。
+* 生命周期是由多个阶段（Phase）组成。每个阶段都是一个完整的功能，比如mvn clean中的clean就是一个阶段。
+
+##### Clean生命周期
+* pre-clean 执行一些需要在clean之前完成的工作
+* clean 移除所有上一次构建生成的文件
+* post-clean 执行一些需要在clean之后立刻完成的工作
+mvn clean命令，等同于 mvn pre-clean clean。只要执行后面的命令，那么前面的命令都会执行，不需要再重新去输入命令。
+有Clean生命周期，在生命周期又有clean阶段。
+
+##### Default生命周期（重点）
+validate
+generate-sources
+process-sources
+generate-resources
+process-resources 复制并处理资源文件，至目标目录，准备打包。
+compile 编译项目的源代码。
+process-classes
+generate-test-sources
+process-test-sources
+generate-test-resources
+process-test-resources 复制并处理资源文件，至目标测试目录。
+test-compile 编译测试源代码。
+process-test-classes
+test 使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署。
+prepare-package
+package 接受编译好的代码，打包成可发布的格式，如 JAR 。
+pre-integration-test
+integration-test
+post-integration-test
+verify
+install 将包安装至本地仓库，以让其它项目依赖。
+deploy 将最终的包复制到远程的仓库，以让其它开发人员与项目共享。
+在maven中，只要在同一个生命周期，你执行后面的阶段，那么前面的阶段也会被执行，而且不需要额外去输入前面的阶段，这样大大减轻了程序员的工作。
+
+##### Site生命周期
+* pre-site 执行一些需要在生成站点文档之前完成的工作
+* site 生成项目的站点文档
+* post-site 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备
+* site-deploy 将生成的站点文档部署到特定的服务器上
+
+
+
+#### 插件
+插件（plugin），每个插件都能实现一个阶段的功能。Maven的核心是生命周期，但是生命周期相当于主要指定了maven命令执行的流程顺序，而没有真正实现流程的功能，功能是有插件来实现的。
+比如：compile就是一个插件实现的功能。
+##### 编译插件
+</code></pre></div>
+<p><build><br>
+    <plugins><br>
+        <plugin><br>
+            <groupId>org.apache.maven.plugins</groupId><br>
+            <artifactId>maven-compiler-plugin</artifactId><br>
+            <configuration><br>
+                <source>1.7</source><br>
+                <target>1.7</target><br>
+                <encoding>UTF-8</encoding><br>
+            </configuration><br>
+        </plugin><br>
+    </plugins><br>
+</build></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+##### Tomcat插件
+如果使用maven的tomcat插件的话，那么本地则不需要安装tomcat。
+## 创建maven的web工程
+* 第一步：创建maven工程
+* 第二步：main下面创建webapp/WEB-INF/web.xml
+* 第三步: 在pom.xml中配置&amp;lt;packaging&gt;war&amp;lt;/packaging&gt;
+
+##### 使用tomcat插件运行web工程
+默认输入tomcat:run去使用tomcat插件来启动web工程，但是默认的tomcat插件使用的tomcat版本是tomcat6
+而目前主流的tomcat，是使用的tomcat7，需要手动配置tomcat插件
+使用tomcat7来运行web工程，它的命令是：tomcat7:run
+
+##### 继承
+在maven中的继承，指的是pom文件的继承
+
+* 创建父工程
+父工程的packaging为pom
+* 创建子工程
+创建子工程有两种方式：一种是创建一个新的工程为子工程，另一种是修改老的工程为子工程。
+子工程的pom文件
+</code></pre></div>
+<p><parent><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <artifactId>MavenParent</artifactId><br>
+    <version>1.0-SNAPSHOT</version><br>
+</parent></p>
+<div class="highlight"><pre><code class="language-" data-lang="">##### 父工程统一依赖jar包
+在父工程中对jar包进行依赖，在子工程中都会继承此依赖。
+</code></pre></div>
+<p><packaging>pom</packaging><br>
+<dependencies><br>
+    <dependency><br>
+        <groupId>junit</groupId><br>
+        <artifactId>junit</artifactId><br>
+        <version>4.9</version><br>
+    </dependency><br>
+</dependencies></p>
+<div class="highlight"><pre><code class="language-" data-lang="">##### 父工程统一管理版本号
+dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。
+</code></pre></div>
+<p>//父工程<br>
+<dependencyManagement><br>
+    <dependencies><br>
+        <dependency><br>
+            <groupId>junit</groupId><br>
+            <artifactId>junit</artifactId><br>
+            <version>4.9</version><br>
+        </dependency><br>
+    </dependencies><br>
+</dependencyManagement></p>
+
+<p>//子工程<br>
+<dependencies><br>
+    <dependency><br>
+        <groupId>junit</groupId><br>
+        <artifactId>junit</artifactId><br>
+    </dependency><br>
+</dependencies></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+##### 父工程抽取版本号
+</code></pre></div>
+<p><properties><br>
+    <junit.vsersion>4.9</junit.vsersion><br>
+</properties><br>
+<dependencyManagement><br>
+    <dependencies><br>
+        <dependency><br>
+            <groupId>junit</groupId><br>
+            <artifactId>junit</artifactId><br>
+            <version>${junit.vsersion}</version><br>
+        </dependency><br>
+    </dependencies><br>
+</dependencyManagement></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+
+#### 聚合
+在真实项目中，一个项目有表现层、业务层、持久层，
+对于业务层和持久层，它们可以在多个工程中被使用，
+所以一般会将业务层和持久单独创建为java工程，为其他工程依赖。
+
+##### 创建一个聚合工程
+</code></pre></div>
+<p>//MavenWeb2<br>
+<modules><br>
+    <module>../MavenDao</module><br>
+    <module>../MavenService</module><br>
+    <module>../MavenController</module><br>
+</modules></p>
+
+<!--聚合工程打包方式必须是pom-->
+
+<p><packaging>pom</packaging></p>
+
+<p>//MavenDao<br>
+<parent><br>
+    <artifactId>MavenWeb2</artifactId><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <version>1.0-SNAPSHOT</version><br>
+    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
+</parent><br>
+//MavenService<br>
+<parent><br>
+    <artifactId>MavenWeb2</artifactId><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <version>1.0-SNAPSHOT</version><br>
+    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
+</parent><br>
+//MavenController<br>
+<parent><br>
+    <artifactId>MavenWeb2</artifactId><br>
+    <groupId>com.itheima.maven</groupId><br>
+    <version>1.0-SNAPSHOT</version><br>
+    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
+</parent><br>
+<packaging>war</packaging></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+#### Maven仓库管理
+用来统一存储所有Maven共享构建的位置就是仓库。根据Maven坐标定义每个构建在仓库中唯一
+存储路径大致为：groupId/artifactId/version/artifactId-version.packaging
+
+##### 仓库的分类
+* 本地仓库
+默认在~/.m2/repository，如果在用户配置中有配置，则以用户配置的地址为准
+* 远程仓库
+  中央仓库（不包含有版本的jar包）
+  http://repo1.maven.org/maven2
+  私服
+  本地有使用本地,没有私服去中央仓库下载
+
+
+
+
+##### Maven私服安装
+安装Nexus
+为所有来自中央仓库的构建安装提供本地缓存。
+下载网站：http://nexus.sonatype.org/
+
+* 第一步：安装tomcat
+* 第二步：将nexus的war包拷贝到tomcat的webapps下
+* 第三步：启动tomcat
+* 第四步：nexus的本地目录 ~/.m2/
+
+##### 访问Nexus
+访问URL: http://localhost:8080/nexus-2.7.0-06/
+
+默认账号:
+用户名： admin
+密码： admin123
+
+##### Nexus的仓库和仓库组
+
+仓库有4种类型 :
+* group(仓库组)：一组仓库的集合
+* hosted(宿主)：配置第三方仓库 （包括公司内部私服 ）
+* proxy(代理)：私服会对中央仓库进行代理，用户连接私服，私服自动去中央仓库下载jar包或者插件
+* virtual(虚拟)：兼容Maven1 版本的jar或者插件
+
+##### Nexus的仓库和仓库组介绍:
+3rd party: 一个策略为Release的宿主类型仓库，用来部署无法从公共仓库获得的第三方发布版本构建
+Apache Snapshots: 一个策略为Snapshot的代理仓库，用来代理Apache Maven仓库的快照版本构建
+Central: 代理Maven中央仓库
+Central M1 shadow: 代理Maven1 版本 中央仓库
+Codehaus Snapshots: 一个策略为Snapshot的代理仓库，用来代理Codehaus Maven仓库的快照版本构件
+Releases: 一个策略为Release的宿主类型仓库，用来部署组织内部的发布版本构件
+Snapshots: 一个策略为Snapshot的宿主类型仓库，用来部署组织内部的快照版本构件
+Public Repositories:该仓库组将上述所有策略为Release的仓库聚合并通过一致的地址提供服务
+
+
+
+##### 配置所有构建均从私服下载
+</code></pre></div>
+<p>在本地仓库(~/.m2)的setting.xml中配置如下：<br>
+<mirrors><br>
+    <mirror><br>
+       &lt;!--此处配置所有的构建均从私有仓库中下载 <em>代表所有，也可以写central --&gt;<br>
+       <id>nexus</id><br>
+       <mirrorOf></em></mirrorOf><br>
+       <url><a href="http://localhost:8080/nexus-2.7.0-06/content/groups/public/">http://localhost:8080/nexus-2.7.0-06/content/groups/public/</a></url><br>
+    </mirror><br>
+ </mirrors></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+
+
+
+##### 部署构建到Nexus
+* 第一步：Nexus的访问权限控制
+在本地仓库的setting.xml中配置如下：
+</code></pre></div>
+<p><server><br>
+      <id>releases</id><br>
+      <username>admin</username><br>
+      <password>admin123</password><br>
+   </server><br>
+   <server><br>
+      <id>snapshots</id><br>
+      <username>admin</username><br>
+      <password>admin123</password><br>
+   </server></p>
+<div class="highlight"><pre><code class="language-" data-lang="">* 第二步：配置pom文件
+在需要构建的项目中修改pom文件
+</code></pre></div>
+<p><distributionManagement><br>
+      <repository><br>
+         <id>releases</id><br>
+         <name>Internal Releases</name><br>
+         <url><a href="http://localhost:8080/nexus-2.7.0-06/content/repositories/releases/">http://localhost:8080/nexus-2.7.0-06/content/repositories/releases/</a></url><br>
+      </repository><br>
+      <snapshotRepository><br>
+         <id>snapshots</id><br>
+         <name>Internal Snapshots</name><br>
+         <url><a href="http://localhost:8080/nexus-2.7.0-06/content/repositories/snapshots/">http://localhost:8080/nexus-2.7.0-06/content/repositories/snapshots/</a></url><br>
+      </snapshotRepository><br>
+   </distributionManagement></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+* 第三步：执行maven的deploy命令
+</code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/2017/07/07/2017-7-4-Maven" data-title="zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/07/07/2017-7-2-webService02" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/07/2017-7-7-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

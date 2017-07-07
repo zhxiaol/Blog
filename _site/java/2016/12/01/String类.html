@@ -120,20 +120,20 @@
 <p>String 类有final修饰，不能被继承，不能被改变。使用++进行字符串串联底层会创建一个StringBuild或则StringBuffer,通过append()方法串联，最后在通过toString转换成String类<br>
 String 类中有一个私有的final的char数组value。<br>
 字符串字面值“abc”也可以看成一个字符串对象（存储在方法区的常量池中）</p>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc"
-String s2=s1+"d";
-1.会在常量池创建"abc"类
-2.在堆内存创建StringBuild类或StringBuffer类
-3.通过toString 在堆内存创建新的类
-低效且消耗内存
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">s1</span><span class="o">=</span><span class="s">"abc"</span>
+<span class="n">String</span> <span class="n">s2</span><span class="o">=</span><span class="n">s1</span><span class="o">+</span><span class="s">"d"</span><span class="o">;</span>
+<span class="mi">1</span><span class="o">.</span><span class="err">会在常量池创建</span><span class="s">"abc"</span><span class="err">类</span>
+<span class="mi">2</span><span class="o">.</span><span class="err">在堆内存创建</span><span class="n">StringBuild</span><span class="err">类或</span><span class="n">StringBuffer</span><span class="err">类</span>
+<span class="mi">3</span><span class="o">.</span><span class="err">通过</span><span class="n">toString</span> <span class="err">在堆内存创建新的类</span>
+<span class="err">低效且消耗内存</span>
 </code></pre></div>
 <!-- more -->
 
 <h2 id="常量池优先">常量池优先</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
-String s2="ab"+"c";
-s1==s2(true)
-常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以s1==s2;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">s1</span><span class="o">=</span><span class="s">"abc"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">s2</span><span class="o">=</span><span class="s">"ab"</span><span class="o">+</span><span class="s">"c"</span><span class="o">;</span>
+<span class="n">s1</span><span class="o">==</span><span class="n">s2</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+<span class="err">常量会在编译的时候就计算出来，如果常量池有这个对象就不会创建，所以</span><span class="n">s1</span><span class="o">==</span><span class="n">s2</span><span class="o">;</span>
 </code></pre></div>
 <h2 id="new-string-quot-abc-quot">new String(&quot;abc&quot;)</h2>
 <div class="highlight"><pre><code class="language-" data-lang="">String s1="abc";
@@ -143,57 +143,57 @@ s1==s2(flase)
 </code></pre></div>
 <h2 id="string类常用方法">String类常用方法</h2>
 
-<h3 id="int-length">int length()</h3>
+<h4 id="int-length">int length()</h4>
 
 <p>return value.length;</p>
 
-<h3 id="int-chatat-int-index">int chatAt(int index)</h3>
+<h4 id="int-chatat-int-index">int chatAt(int index)</h4>
 
 <p>1.判断下标是否越界，2.return value[index]</p>
 
-<h3 id="int-indexof-char-c">int indexOf(char c)</h3>
+<h4 id="int-indexof-char-c">int indexOf(char c)</h4>
 
 <p>遍历char数组比对每个char,没有返回-1，如果是str 先取出第一个比对，如果找到就逐位比对</p>
 
-<h3 id="string-substring-int-index">String substring(int index)</h3>
+<h4 id="string-substring-int-index">String substring(int index)</h4>
 
 <p>从指定位置开始截取子串<br>
 return new Stirng(value,index,value.length);<br>
 new String底层调用的是本地方法System.arrayCopy();从指定位置复制到新数组</p>
 
-<h3 id="byte-getbytes">byte[] getBytes()</h3>
+<h4 id="byte-getbytes">byte[] getBytes()</h4>
 
 <p>先获得编码方式，然后比较复杂，没详细看=  =</p>
 
-<h3 id="char-tochararray">char[] toCharArray()</h3>
+<h4 id="char-tochararray">char[] toCharArray()</h4>
 
 <p>创建一个长度和value一样的char数组result<br>
 调用System.arrcopy(value,0,result,0,value.length)</p>
 
-<h3 id="string-valueof-char-data">String valueOf(char data[])</h3>
+<h4 id="string-valueof-char-data">String valueOf(char data[])</h4>
 
 <p>return new String(data)<br>
 如果参数是Object return obj.toString();</p>
 
-<h3 id="string-tolowercase-touppercase">String toLowerCase() toUpperCase()</h3>
+<h4 id="string-tolowercase-touppercase">String toLowerCase() toUpperCase()</h4>
 
 <p>会先循环看是否有大写字母，如果有跳出循环遍历数组转换</p>
 
-<h3 id="replace-string-odl-string-new">replace(String odl,String new)</h3>
+<h4 id="replace-string-odl-string-new">replace(String odl,String new)</h4>
 
 <p>正则表达式</p>
 
-<h3 id="string-trim">String trim();</h3>
+<h4 id="string-trim">String trim();</h4>
 
 <p>1.很机智，从2边while循环看是否是‘ ’，遇见跳出循环<br>
 2.substring(start,end)</p>
 
-<h3 id="compareto-string-str">compareTo(String str);</h3>
+<h4 id="compareto-string-str">compareTo(String str);</h4>
 
 <p>依次比较两个字符串ASC码。如果两个字符的ASC码相等则继续后续比较,否则直接返回两个ASC的差值<br>
 &quot;321&quot;compareTo(&quot;1234&quot;)会返回2 如果是比较数字大小要先比较长度</p>
 
-<h3 id="getchars-int-start-int-end-char-c-int-offset">getChars(int start,int end,char c[],int offset)</h3>
+<h4 id="getchars-int-start-int-end-char-c-int-offset">getChars(int start,int end,char c[],int offset)</h4>
 
 <p>当前字符串从start到end-1位置上的字符复制到字符数组c中，并从c的offset处开始存放</p>
   
@@ -236,7 +236,7 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/java/2016/12/01/String%E7%B1%BB" data-title="String类 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -291,15 +291,15 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#english" title="english">english<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -316,15 +316,15 @@ new String底层调用的是本地方法System.arrayCopy();从指定位置复制
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#english" title="english">english<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
 			
 		
 		</ul>

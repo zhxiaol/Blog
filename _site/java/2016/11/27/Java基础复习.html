@@ -130,33 +130,33 @@
 <h2 id="控制跳转语句标号">控制跳转语句标号</h2>
 
 <p>标号:标记某个循环对其控制的合法标识</p>
-<div class="highlight"><pre><code class="language-" data-lang=""> outer:while(true){//outer 标号
-  inner:for(;;){
-    if(1==2){
-      continue outer;
-    }else if(1==3){
-      break outer;
-    }else if(1==4){
-      break;
-    }else{
-      return;
-    }
-  }
-}  
+<div class="highlight"><pre><code class="language-java" data-lang="java"> <span class="nl">outer:</span><span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span><span class="c1">//outer 标号</span>
+  <span class="nl">inner:</span><span class="k">for</span><span class="o">(;;){</span>
+    <span class="k">if</span><span class="o">(</span><span class="mi">1</span><span class="o">==</span><span class="mi">2</span><span class="o">){</span>
+      <span class="k">continue</span> <span class="n">outer</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="mi">1</span><span class="o">==</span><span class="mi">3</span><span class="o">){</span>
+      <span class="k">break</span> <span class="n">outer</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="mi">1</span><span class="o">==</span><span class="mi">4</span><span class="o">){</span>
+      <span class="k">break</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+      <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>  
 
 </code></pre></div>
 <h2 id="方法区-常量池-栈-堆">方法区 常量池 栈 堆</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">class Demo{
-public void static void main(String[] args){
-  Person p=new Person();
-  p.print();
-}
-}
-class Person{
-  public void print(){
-    int a=20;
-  }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Demo</span><span class="o">{</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+  <span class="n">Person</span> <span class="n">p</span><span class="o">=</span><span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(){</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">20</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <p>1.Demo.class的文件加载到方法区（1.2如果该类有静态属性，会在静态区（方法区开辟的内存空间）初始化变量<br>
 1.3如果该类有静态常量，常量会存储在常量池（常量池在方法区之中））<br>
@@ -204,7 +204,7 @@ class Person{
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0" data-title="Java基础复习 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/java/2016/11/27/Java%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0" data-title="Java基础复习 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -216,10 +216,10 @@ class Person{
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/11/26/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8Cjava%E6%96%87%E4%BB%B6" title="编译运行java文件">
+ <a href="/english/2016/11/26/%E9%9F%B3%E6%A0%87%E5%AD%A6%E4%B9%A0" title="音标学习">
   <strong>上一篇：</strong><br/>
   <span>
-  编译运行java文件</span>
+  音标学习</span>
 </a>
 </div>
 
@@ -259,15 +259,15 @@ class Person{
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#english" title="english">english<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -284,15 +284,15 @@ class Person{
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#english" title="english">english<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
 			
 		
 		</ul>

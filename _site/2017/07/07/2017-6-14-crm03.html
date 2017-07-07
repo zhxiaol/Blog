@@ -1,0 +1,939 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="">
+    <meta property="og:url" content="/Blog/2017/07/07/2017-6-14-crm03">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/2017/07/07/2017-6-14-crm03" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished"> 发表于 2017-07-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="课程类别">课程类别</h2>
+
+<h6 id="jsp">jsp</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;s:form namespace="/" action="courseTypeAction_findAll"&gt;
+    &lt;table width="88%" border="0" class="emp_table" style="width:80%;"&gt;
+      &lt;tr&gt;
+        &lt;td width="10%"&gt;课程类别：&lt;/td&gt;
+        &lt;td&gt;&lt;s:textfield name="courseName" size="30"&gt;&lt;/s:textfield&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td &gt;课程简介：&lt;/td&gt;
+        &lt;td &gt;&lt;s:textfield name="remark" size="30" &gt;&lt;/s:textfield&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;  
+        &lt;td &gt;总学时：&lt;/td&gt;
+        &lt;td &gt;
+            &lt;s:textfield name="totalStart" size="12"&gt;&lt;/s:textfield&gt;  
+            至  
+            &lt;s:textfield name="totalEnd" size="12"&gt;&lt;/s:textfield&gt;
+        &lt;/td&gt;
+</code></pre></div>
+<h6 id="修改po类-crmcoursetype">修改PO类 CrmCourseType</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">    //查询条件 -- 一般查询条件都是字符串
+    //1 总学时
+    private String totalStart;
+    private String totalEnd;
+    //2课程费用
+    private String courseCostStart;
+    private String courseCostEnd;
+</code></pre></div>
+<h6 id="action获得条件">action获得条件</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">    /**
+     * 查询所有
+     * @return
+     */
+    public String findAll(){
+        /*1简单查询
+        List&lt;CrmCourseType&gt; allCourseType = this.courseTypeService.findAll();
+        // * 查询结果存在值栈 , jsp 通过“#key”获得
+        ActionContext.getContext().put("allCourseType", allCourseType);
+        */
+
+        /*2 条件查询
+         */
+        List&lt;CrmCourseType&gt; allCourseType = this.courseTypeService.findAll(courseType);
+        ActionContext.getContext().put("allCourseType", allCourseType);
+
+        return "findAll";
+    }
+</code></pre></div>
+<h6 id="service拼凑条件">service拼凑条件</h6>
+
+<blockquote>
+<p>使用StringBuilder 拼凑字符串，所有的条件格式“ and 属性 运算符 ? ”<br>
+    toString 转成字符串<br>
+使用List拼凑实际参数，使用List特性：重复、有序<br>
+    toArray 转成数组<br>
+commons-lang3 提供 StringUtils工具类  </p>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">@Override
+    public List&lt;CrmCourseType&gt; findAll(CrmCourseType courseType) {
+        //1.1 拼凑查询条件
+        StringBuilder builder = new StringBuilder();
+        //1.2 拼凑实际参数 , 可以重复，顺序 --&gt; List
+        List&lt;Object&gt; paramsList = new ArrayList&lt;Object&gt;();
+
+        //2 过滤条件
+        // 2.1 课程类别
+        if(StringUtils.isNotBlank(courseType.getCourseName())){
+            builder.append(" and courseName like ?");
+            paramsList.add("%"+courseType.getCourseName()+"%");
+        }
+        // 2.2 课程简介
+        if(StringUtils.isNotBlank(courseType.getRemark())){
+            builder.append(" and remark like ?");
+            paramsList.add("%"+courseType.getRemark()+"%");
+        }
+        // 2.3 总学时：
+        if(StringUtils.isNotBlank(courseType.getTotalStart())){
+            builder.append(" and total &gt;= ?");
+            paramsList.add(Integer.parseInt(courseType.getTotalStart()));
+        }
+        if(StringUtils.isNotBlank(courseType.getTotalEnd())){
+            builder.append(" and total &lt;= ?");
+            paramsList.add(Integer.parseInt(courseType.getTotalEnd()));
+        }
+        // 2.4课程费用
+        if(StringUtils.isNotBlank(courseType.getCourseCostStart())){
+            builder.append(" and courseCost &gt;= ?");
+            paramsList.add(Double.parseDouble(courseType.getCourseCostStart()));
+        }
+        if(StringUtils.isNotBlank(courseType.getCourseCostEnd())){
+            builder.append(" and courseCost &lt;= ?");
+            paramsList.add(Double.parseDouble(courseType.getCourseCostEnd()));
+        }
+
+
+
+        //3 使用
+        // 条件 , 格式：" and ..? and ..."
+        String condition = builder.toString();
+        // 实际参数
+        Object[] params = paramsList.toArray();
+
+        return courseTypeDao.findAll(condition, params);
+    }
+</code></pre></div>
+<h6 id="dao查询">dao查询</h6>
+
+<blockquote>
+<p>service拼凑查询条件，dao直接使用，通过where 1=1 产生一个恒定条件</p>
+<div class="highlight"><pre><code class="language-" data-lang="">    @Override
+    public List&lt;CrmCourseType&gt; findAll(String condition, Object[] params) {
+        String hql = "from CrmCourseType where 1=1 " + condition;
+        return this.getHibernateTemplate().find(hql , params);
+    }
+</code></pre></div></blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 分页查询
+
+
+
+
+
+
+
+## 课程类别添加或编辑
+&gt; 1.dao ，hibernate 提供 saveOrUpdate()
+    代理主键 uuid
+        如果没有OID，值为null，底层执行save() ，及insert语句
+        如果有OID，有值，底层执行update()，及update语句。
+    查询详情
+&gt; 2.service  需要事务管理器 （add、update、delete、find）
+    addOrEdit
+&gt;3.action 类
+    addOrEditUI 显示jsp
+        如果是更新，需要通过id查询详情  findById()
+    addOrEdit
+        直接保存或更新，注意：如果更新需要传递id值
+&gt; 4.jsp
+    添加，直接显示jsp页面
+    编辑，传递id值，通过id查询，显示jsp页面
+
+
+###### dao
+&gt; 编辑需要查询
+&gt; 添加和编辑直接执行saveOrUpdate
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Override
+public CrmCourseType findById(String courseTypeId) {
+    return this.getHibernateTemplate().get(CrmCourseType.class, courseTypeId);
+}
+
+@Override
+public void saveOrUpdate(CrmCourseType courseType) {
+    this.getHibernateTemplate().saveOrUpdate(courseType);
+}
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">###### service
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Override
+public CrmCourseType findById(String courseTypeId) {
+    return this.courseTypeDao.findById(courseTypeId);
+}
+@Override
+public void addOrEdit(CrmCourseType courseType) {
+    this.courseTypeDao.saveOrUpdate(courseType);
+}
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  action
+&gt;   添加需要显示jsp，不进行查询
+&gt;   更新需要显示jsp，进行查询，使用id进行区分。
+</code></pre></div>
+<p>/**<br>
+     * 添加或编辑显示jsp页面<br>
+     * @return<br>
+     */<br>
+    public String addOrEditUI(){<br>
+        //如果有id就是编辑，编辑需要查询详情<br>
+        if(StringUtils.isNotBlank(this.courseType.getCourseTypeId())){<br>
+            //将查询的详情压入到栈顶，方便标签自动的回显<br>
+            CrmCourseType findCourseType = this.courseTypeService.findById(this.courseType.getCourseTypeId());<br>
+            ActionContext.getContext().getValueStack().push(findCourseType);<br>
+        }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">    return "addOrEditUI";
+}
+
+/**
+ * 添加或编辑 功能
+ * @return
+ */
+public String addOrEdit(){
+    this.courseTypeService.addOrEdit(courseType);
+    return "addOrEdit";
+}
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">##### jsp页面
+&gt; 使用标签进行回显
+&gt; 提供隐藏字段进行更新，添加不需要
+
+</code></pre></div>
+<p><s:form namespace="/" action="courseTypeAction_addOrEdit"><br>
+    &lt;%--隐藏域 ,如果有值，及更新时才显示--%&gt;<br>
+    <s:if test="courseTypeId != null"><br>
+        <s:hidden name="courseTypeId" value="%{courseTypeId}"><a href="/s:hidden">/s:hidden</a><br>
+    <a href="/s:if">/s:if</a><br>
+    <table width="88%" border="0" class="emp_table" style="width:80%;"><br>
+      <tr><br>
+        <td width="10%">课程类别：</td><br>
+        <td width="20%"><s:textfield name="courseName"><a href="/s:textfield">/s:textfield</a></td><br>
+        <td width="8%">总学时：</td><br>
+        <td width="62%"><s:textfield name="total"><a href="/s:textfield">/s:textfield</a></td><br>
+      </tr><br>
+      <tr><br>
+        <td>课程费用：</td><br>
+        <td><s:textfield name="courseCost"><a href="/s:textfield">/s:textfield</a></td><br>
+        <td></td><br>
+        <td></td><br>
+      </tr><br>
+      <tr><br>
+        <td>课程简介：</td><br>
+        <td>&nbsp;</td><br>
+        <td>&nbsp;</td><br>
+        <td>&nbsp;</td><br>
+      </tr><br>
+      <tr><br>
+        <td colspan="4"><br>
+            <s:textarea name="remark" cols="60" rows="10" ><a href="/s:textarea">/s:textarea</a><br>
+        </td><br>
+      </tr><br>
+    </table><br>
+<a href="/s:form">/s:form</a></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+
+
+
+
+
+## BaseAction
+&gt; 1.封装数据
+&gt; 2.所有的service
+&gt; 3.分页
+&gt; 4.值栈简化操作
+
+####    封装数据
+</code></pre></div>
+<p>public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {</p>
+<div class="highlight"><pre><code class="language-" data-lang="">//1 封装数据
+private T t;
+@Override
+public T getModel() {
+    return t;
+}
+// 1.1 实例化t
+public BaseAction() {
+    try {
+        //1 获得T运行时Class
+        ParameterizedType paramType = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class&lt;T&gt; clazz = (Class&lt;T&gt;) paramType.getActualTypeArguments()[0];
+        //2 反射创建实例
+        t = clazz.newInstance();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  service注入
+</code></pre></div>
+<p>//2 spring注入service，多个<br>
+    // * 提供setter方法，让spring进行注入的<br>
+    // * 提供getter方法，让子类可以获得spring注入的对象的。<br>
+    //员工<br>
+    private StaffService staffService;<br>
+    public void setStaffService(StaffService staffService) {<br>
+        this.staffService = staffService;<br>
+    }<br>
+    public StaffService getStaffService() {<br>
+        return staffService;<br>
+    }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">//职务
+private PostService postService;
+public PostService getPostService() {
+    return postService;
+}
+public void setPostService(PostService postService) {
+    this.postService = postService;
+}
+//部门
+private DepartmentService departmentService;
+public DepartmentService getDepartmentService() {
+    return departmentService;
+}
+public void setDepartmentService(DepartmentService departmentService) {
+    this.departmentService = departmentService;
+}
+
+//课程类别
+private CourseTypeService courseTypeService;
+public void setCourseTypeService(CourseTypeService courseTypeService) {
+    this.courseTypeService = courseTypeService;
+}
+public CourseTypeService getCourseTypeService() {
+    return courseTypeService;
+}
+//班级
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  分页
+</code></pre></div>
+<p>//3 分页数据<br>
+    private int pageNum = 1;<br>
+    public void setPageNum(int pageNum) {<br>
+        this.pageNum = pageNum;<br>
+    }<br>
+    public int getPageNum() {<br>
+        return pageNum;<br>
+    }<br>
+    private int pageSize = 2;  //固定值<br>
+    public void setPageSize(int pageSize) {<br>
+        this.pageSize = pageSize;<br>
+    }<br>
+    public int getPageSize() {<br>
+        return pageSize;<br>
+    }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 简化值栈操作
+</code></pre></div>
+<p>//4 简化值栈操作<br>
+    public void push(Object o){<br>
+        ActionContext.getContext().getValueStack().push(o);<br>
+    }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">public void set(String key ,Object o){
+    ActionContext.getContext().getValueStack().set(key, o);
+}
+
+public void put(String key, Object value){
+    ActionContext.getContext().put(key, value);
+}
+
+public void putSession(String key, Object value){
+    ActionContext.getContext().getSession().put(key, value);
+}
+
+public void putApplication(String key, Object value){
+    ActionContext.getContext().getApplication().put(key, value);
+}
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">
+## 上传/下载
+
+###### 班级查询
+</code></pre></div>
+<p>1.dao  --&gt; BaseDao  / BaseDaoImpl<br>
+2.service<br>
+3.spring配置 , 完成BaseAction<br>
+4.action  --&gt; BaseAction</p>
+
+<ol>
+<li>jsp  xml  action
+```</li>
+</ol>
+
+<h6 id="文件上传">文件上传</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">0.通过id查询详情
+1.表单 &lt;form method="post"  enctype="multipart/form-data"&gt;
+            &lt;input type="file" name="schedule"&gt;
+2.action类
+    private File schedule;  // 内容
+    private String scheduleFileName;    // 文件名
+    private String scheduleContentType; // 类型
+    提供setter方法即可
+3.将课表保存到硬盘，将路径、文件名、更新时间  更新到数据库
+
+4.拦截器设置
+&lt;!-- 给拦截器栈中的某一个拦截器注入内容时，
+                    格式：拦截器.属性 = 值
+                --&gt;
+                &lt;interceptor-ref name="defaultStack"&gt;
+                    &lt;param name="fileUpload.allowedExtensions"&gt;.xls,.xlsx&lt;/param&gt;
+                &lt;/interceptor-ref&gt;
+
+</code></pre></div>
+<h6 id="下载">下载</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">struts.xml result 提供stream类型
+    inputName  设置InputStream 获得 属性值，需要提供getter方法
+    contentDisposition 设置  attachment;filename=${imageFileName} 获得文件名称
+</code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/2017/07/07/2017-6-14-crm03" data-title="zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/07/07/2017-6-12-crm02" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/07/2017-6-17-JQuery01"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

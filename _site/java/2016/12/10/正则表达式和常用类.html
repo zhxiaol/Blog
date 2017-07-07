@@ -180,17 +180,17 @@
 <td style="text-align: left">String类的替换功能</td>
 </tr>
 </tbody></table>
-<div class="highlight"><pre><code class="language-" data-lang="">String str="我我我我爱爱爱张张小小小小歪歪歪歪歪";
-String regex="(.)\\1+";
-String s = str.replaceAll(regex, "$1"); //s="我爱张小歪"
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">str</span><span class="o">=</span><span class="s">"我我我我爱爱爱张张小小小小歪歪歪歪歪"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">regex</span><span class="o">=</span><span class="s">"(.)\\1+"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="n">regex</span><span class="o">,</span> <span class="s">"$1"</span><span class="o">);</span> <span class="c1">//s="我爱张小歪"</span>
 </code></pre></div>
 <h2 id="pattern和matcher">Pattern和Matcher</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">Pattern p = Pattern.compile("a*b");
-Matcher m = p.matcher("aaaaab");
-boolean b = m.matches();
-while (m.find()){//查找是否有匹配的
-      m.group();//取出查找到的
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Pattern</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">"a*b"</span><span class="o">);</span>
+<span class="n">Matcher</span> <span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="s">"aaaaab"</span><span class="o">);</span>
+<span class="kt">boolean</span> <span class="n">b</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="na">matches</span><span class="o">();</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">find</span><span class="o">()){</span><span class="c1">//查找是否有匹配的</span>
+      <span class="n">m</span><span class="o">.</span><span class="na">group</span><span class="o">();</span><span class="c1">//取出查找到的</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="math类">Math类</h2>
 
@@ -342,13 +342,13 @@ new BigDecimal(String)不会失去精度</p>
 <td style="text-align: left">修改指定字段</td>
 </tr>
 </tbody></table>
-<div class="highlight"><pre><code class="language-" data-lang="">判断是不是闰年
-int year=scanner.nextInt();
-Calendar c=Calendar.getInstance();
-c.set(year,2,1);
-c.add(Calendar.DAY_OF_MONTH,-1);
-int day = c.get(Calendar.DAY_OF_MONTH);
-return day==29;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="err">判断是不是闰年</span>
+<span class="kt">int</span> <span class="n">year</span><span class="o">=</span><span class="n">scanner</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+<span class="n">Calendar</span> <span class="n">c</span><span class="o">=</span><span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+<span class="n">c</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">year</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Calendar</span><span class="o">.</span><span class="na">DAY_OF_MONTH</span><span class="o">,-</span><span class="mi">1</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">day</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Calendar</span><span class="o">.</span><span class="na">DAY_OF_MONTH</span><span class="o">);</span>
+<span class="k">return</span> <span class="n">day</span><span class="o">==</span><span class="mi">29</span><span class="o">;</span>
 </code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
@@ -389,7 +389,7 @@ return day==29;
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" data-title="正则表达式和常用类 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" data-title="正则表达式和常用类 | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -410,7 +410,7 @@ return day==29;
 
 
 <div class="next">
-<a href="/java/2016/12/11/%E9%9B%86%E5%90%88"  title="集合">
+<a href="/java/2016/12/11/%E9%9B%86%E5%90%88list"  title="集合">
  <strong>下一篇：</strong><br/> 
  <span>集合
 </span>
@@ -444,15 +444,15 @@ return day==29;
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#english" title="english">english<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -469,15 +469,15 @@ return day==29;
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#english" title="english">english<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
 			
 		
 		</ul>

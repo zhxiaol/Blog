@@ -1,0 +1,1377 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="">
+    <meta property="og:url" content="/Blog/2017/07/07/2017-6-2-Spring03">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/2017/07/07/2017-6-2-Spring03" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished"> 发表于 2017-07-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="事务管理介绍">事务管理介绍</h2>
+
+<h6 id="导入jar包">导入jar包</h6>
+
+<blockquote>
+<p>transaction  --&gt;  tx</p>
+</blockquote>
+
+<h2 id="三个顶级接口">三个顶级接口</h2>
+
+<blockquote>
+<p>PlatformTransactionManager  平台事务管理器，spring要管理事务，必须使用事务管理器<br>
+    进行事务配置时，必须配置事务管理器。<br>
+TransactionDefinition：事务详情（事务定义、事务属性），spring用于确定事务具体详情，<br>
+    例如：隔离级别、是否只读、超时时间 等<br>
+    进行事务配置时，必须配置详情。spring将配置项封装到该对象实例。<br>
+TransactionStatus：事务状态，spring用于记录当前事务运行状态。例如：是否有保存点，事务是否完成。<br>
+    spring底层根据状态进行相应操作。</p>
+</blockquote>
+
+<p>PlatformTransactionManager  事务管理器</p>
+
+<blockquote>
+<p>导入jar包：需要时平台事务管理器的实现类</p>
+
+<p>常见的事务管理器<br>
+    DataSourceTransactionManager  ，jdbc开发时事务管理器，采用JdbcTemplate<br>
+    HibernateTransactionManager，hibernate开发时事务管理器，整合hibernate</p>
+</blockquote>
+
+<h6 id="api详解">api详解</h6>
+
+<blockquote>
+<p>TransactionStatus getTransaction(TransactionDefinition definition) ，事务管理器 通过“事务详情”，获得“事务状态”，从而管理事务。<br>
+void commit(TransactionStatus status)  根据状态提交<br>
+void rollback(TransactionStatus status) 根据状态回滚</p>
+</blockquote>
+
+<h2 id="transactiondefinition">TransactionDefinition</h2>
+
+<blockquote>
+<p>传播行为：在两个业务之间如何共享事务。</p>
+
+<p>PROPAGATION_REQUIRED , required , 必须  【默认值】<br>
+    支持当前事务，A如果有事务，B将使用该事务。<br>
+    如果A没有事务，B将创建一个新的事务。<br>
+PROPAGATION_SUPPORTS ，supports ，支持<br>
+    支持当前事务，A如果有事务，B将使用该事务。<br>
+    如果A没有事务，B将以非事务执行。<br>
+PROPAGATION_MANDATORY，mandatory ，强制<br>
+    支持当前事务，A如果有事务，B将使用该事务。<br>
+    如果A没有事务，B将抛异常。<br>
+PROPAGATION_REQUIRES_NEW ， requires_new ，必须新的<br>
+    如果A有事务，将A的事务挂起，B创建一个新的事务<br>
+    如果A没有事务，B创建一个新的事务<br>
+PROPAGATION_NOT_SUPPORTED ，not_supported ,不支持<br>
+    如果A有事务，将A的事务挂起，B将以非事务执行<br>
+    如果A没有事务，B将以非事务执行<br>
+PROPAGATION_NEVER ，never，从不<br>
+    如果A有事务，B将抛异常<br>
+    如果A没有事务，B将以非事务执行<br>
+PROPAGATION_NESTED ，nested ，嵌套<br>
+    A和B底层采用保存点机制，形成嵌套事务。</p>
+</blockquote>
+
+<p>掌握：PROPAGATION_REQUIRED、PROPAGATION_REQUIRES_NEW、PROPAGATION_NESTED</p>
+
+<h2 id="案例：转账">案例：转账</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">public interface AccountService {
+    //转账
+    public void transfer(String outer, String inner, int money);
+}
+
+public interface AccountDao {
+    //汇款
+    void out(String outer, int money);
+    //收款
+    void in(String in, int money);
+}
+
+//applicationContext.xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
+    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
+        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
+        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
+        &lt;property name="user" value="root"/&gt;
+        &lt;property name="password" value="root"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
+        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
+        &lt;property name="dao" ref="accountDao"/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+
+public class TestApp {
+    @Test
+    public void demo01(){
+        String path="applicationContext.xml";
+        ApplicationContext appcontext = new ClassPathXmlApplicationContext(path);
+        AccountService service= (AccountService) appcontext.getBean("accountService");
+        service.transfer("jack","rose",1000);
+    }
+}
+</code></pre></div>
+<h2 id="手动管理事">手动管理事</h2>
+
+<blockquote>
+<p>spring底层使用 TransactionTemplate 事务模板进行操作。<br>
+操作</p>
+<div class="highlight"><pre><code class="language-" data-lang="">1.service 需要获得 TransactionTemplate
+2.spring 配置模板，并注入给service
+3.模板需要注入事务管理器
+4.配置事务管理器：DataSourceTransactionManager ，需要注入DataSource
+</code></pre></div></blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
+    @Override
+    public void out(String outer, int money) {
+        this.getJdbcTemplate().update("update account set money = money - ? where username = ?",money,outer);
+    }
+
+    @Override
+    public void in(String in, int money) {
+        this.getJdbcTemplate().update("update account set money = money + ? where username = ?",money,in);
+    }
+}
+
+
+
+
+//applicationContext.xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
+    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
+        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
+        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
+        &lt;property name="user" value="root"/&gt;
+        &lt;property name="password" value="root"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
+        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
+        &lt;property name="dao" ref="accountDao"/&gt;
+        &lt;property name="transactionTemplate" ref="transactionTemplate"/&gt;
+    &lt;/bean&gt;
+    &lt;!--创建模板--&gt;
+    &lt;bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate"&gt;
+        &lt;property name="transactionManager" ref="transactionManager"/&gt;
+    &lt;/bean&gt;
+    &lt;!--配置事务管理器 事务从Connection获得，连接从连接池获取--&gt;
+    &lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre></div>
+<h2 id="工厂bean-生成代理：半自动">工厂bean 生成代理：半自动</h2>
+
+<blockquote>
+<p>spring提供 管理事务的代理工厂bean TransactionProxyFactoryBean<br>
+getBean() 获得代理对象<br>
+spring 配置一个代理</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
+    @Override
+    public void out(String outer, int money) {
+        this.getJdbcTemplate().update("update account set money = money - ? where username = ?",money,outer);
+    }
+    @Override
+    public void in(String in, int money) {
+        this.getJdbcTemplate().update("update account set money = money + ? where username = ?",money,in);
+    }
+}
+
+
+public class AccountServiceImpl implements AccountService {
+    private AccountDao dao;
+
+    public void setDao(AccountDao dao) {
+        this.dao = dao;
+    }
+
+    @Override
+    public void transfer(String outer, String inner, int money) {
+        dao.out(outer,money);
+        int i=10/0;
+        dao.in(inner,money);
+    }
+}
+
+
+public class TestApp {
+    @Test
+    public void demo01(){
+        String path="applicationContext.xml";
+        ApplicationContext appcontext = new ClassPathXmlApplicationContext(path);
+        AccountService service= (AccountService) appcontext.getBean("proxyAccountService");
+        service.transfer("jack","ross",1000);
+    }
+}
+
+
+//beans.xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
+    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
+        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
+        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
+        &lt;property name="user" value="root"/&gt;
+        &lt;property name="password" value="root"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
+        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
+        &lt;property name="dao" ref="accountDao"/&gt;
+    &lt;/bean&gt;
+    &lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;/bean&gt;
+    &lt;!--service代理对象
+    target:目标类
+    proxyInterfaces:接口
+    transactionAttributes:事务属性(事务详情)
+    prop key:那些方法使用当前事务
+    prop text:用于事务详情
+    格式:PROPAGATION,ISOLATION,readOnly,-Exception,+Exception
+         传播行为       事务级别   是否只读   异常回滚   异常提交
+    --&gt;
+    &lt;bean id="proxyAccountService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+        &lt;property name="target" ref="accountService"/&gt;
+        &lt;property name="proxyInterfaces" value="com.itheima.service.AccountService"/&gt;
+        &lt;property name="transactionManager" ref="transactionManager"/&gt;
+        &lt;property name="transactionAttributes"&gt;
+            &lt;props&gt;
+                &lt;prop key="transfer"&gt;PROPAGATION_REQUIRED,ISOLATION_DEFAULT,+ java.lang.ArithmeticException&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre></div>
+<h2 id="aop配置事务">AOP配置事务</h2>
+<div class="highlight"><pre><code class="language-" data-lang=""><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xmlns:tx=</span><span class="s">"http://www.springframework.org/schema/tx"</span>
+       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"</span>
+       <span class="err">http://www.springframework.org/schema/beans</span>
+       <span class="err">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+       <span class="err">http://www.springframework.org/schema/context</span>
+       <span class="err">http://www.springframework.org/schema/context/spring-context.xsd</span>
+       <span class="err">http://www.springframework.org/schema/aop</span>
+       <span class="err">http://www.springframework.org/schema/aop/spring-aop.xsd</span>
+       <span class="err">http://www.springframework.org/schema/tx</span>
+       <span class="err">http://www.springframework.org/schema/tx/spring-tx.xsd"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountDao"</span> <span class="na">class=</span><span class="s">"com.itheima.dao.impl.AccountDaoImpl"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span> <span class="na">class=</span><span class="s">"com.itheima.service.impl.AccountServiceImpl"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dao"</span> <span class="na">ref=</span><span class="s">"accountDao"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"txManager"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="c">&lt;!--事务通知 在aop筛选基础上，对ABC三个确定使用什么样的事务，列如:AC读写，B只读
+       &lt;tx:attributes&gt; 用于配置事务详情(属性)
+       &lt;tx:method name=""/&gt; 详情具体配置
+       propagation:传播行为
+       isolation:隔离级别
+   --&gt;</span>
+    <span class="nt">&lt;tx:advice</span> <span class="na">id=</span><span class="s">"txAdvice"</span> <span class="na">transaction-manager=</span><span class="s">"txManager"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;tx:attributes&gt;</span>
+            <span class="nt">&lt;tx:method</span> <span class="na">name=</span><span class="s">"transfer"</span> <span class="na">propagation=</span><span class="s">"REQUIRED"</span> <span class="na">isolation=</span><span class="s">"DEFAULT"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/tx:attributes&gt;</span>
+    <span class="nt">&lt;/tx:advice&gt;</span>
+    <span class="nt">&lt;aop:config</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">"txAdvice"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.itheima.service..*.*(..))"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/aop:config&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div>
+<h2 id="aop配置基于注解【掌握】">AOP配置基于注解【掌握】</h2>
+
+<blockquote>
+<p>1.配置事务管理器，将并事务管理器交予spring<br>
+2.在目标类或目标方法添加注解即可 @Transactional</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">
+&lt;!-- 4 事务管理 --&gt;
+    &lt;!-- 4.1 事务管理器 --&gt;
+    &lt;bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+        &lt;property name="dataSource" ref="dataSource"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 4.2 将管理器交予spring
+        * transaction-manager 配置事务管理器
+        * proxy-target-class
+            true ： 底层强制使用cglib 代理
+    --&gt;
+    &lt;tx:annotation-driven transaction-manager="txManager"/&gt;
+
+2.3.5.2 service 层
+@Transactional
+public class AccountServiceImpl implements AccountService {
+
+2.3.5.3 事务详情配置
+
+
+@Transactional(propagation=Propagation.REQUIRED , isolation = Isolation.DEFAULT)
+public class AccountServiceImpl implements AccountService {
+
+</code></pre></div>
+<h2 id="整合junit">整合Junit</h2>
+
+<blockquote>
+<p>导入jar包<br>
+    基本 ：4+1<br>
+    测试：spring-test...jar</p>
+
+<p>1.让Junit通知spring加载配置文件<br>
+2.让spring容器自动进行注入</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+public class TestApp {
+    @Autowired
+    private AccountService accountService;//与junit整合，不需要spring xml扫描配置
+    @Test
+    public void demo01(){
+        accountService.transfer("jack","ross",1000);
+    }
+}
+</code></pre></div>
+<h2 id="整合web">整合web</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">
+0.导入jar包
+    spring-web.jar
+
+1.tomcat启动加载配置文件
+    servlet --&gt; init(ServletConfig) --&gt; &lt;load-on-startup&gt;2
+    filter --&gt; init(FilterConfig)  --&gt; web.xml注册过滤器自动调用初始化
+    listener --&gt; ServletContextListener --&gt; servletContext对象监听【】
+    spring提供监听器 ContextLoaderListener  --&gt; web.xml  &lt;listener&gt;&lt;listener-class&gt;....
+        如果只配置监听器，默认加载xml位置：/WEB-INF/applicationContext.xml
+
+2.确定配置文件位置，通过系统初始化参数
+    ServletContext 初始化参数 web.xml  
+        &lt;context-param&gt;
+            &lt;param-name&gt;contextConfigLocation
+            &lt;param-value&gt;classpath:applicationContext.xml
+
+  &lt;!-- 确定配置文件位置 --&gt;
+  &lt;context-param&gt;
+    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+  &lt;/context-param&gt;
+
+  &lt;!-- 配置spring 监听器，加载xml配置文件 --&gt;
+  &lt;listener&gt;
+    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+
+3.从servletContext作用域 获得spring容器 （了解）
+    // 从application作用域（ServletContext）获得spring容器
+        //方式1： 手动从作用域获取
+        ApplicationContext applicationContext =
+                (ApplicationContext) this.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        //方式2：通过工具获取
+        ApplicationContext apppApplicationContext2 =
+                WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());      
+
+</code></pre></div>
+<h2 id="ssh整合">SSH整合</h2>
+
+<h6 id="jar整合">jar整合</h6>
+
+<p>struts：2.3.15.3<br>
+hibernate : 3.6.10<br>
+spring: 3.2.0</p>
+
+<h6 id="struts">struts</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">struts-2.3.15.3\apps\struts2-blank\WEB-INF\lib
+模板技术  ，一般用于页面静态化
+freemarker：扩展名：*.ftl
+velocity ：扩展名  *.vm
+</code></pre></div>
+<h6 id="spring">spring</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">基础：4+1 ， beans、core、context、expression ， commons-logging (struts已经导入)
+AOP：aop联盟、spring aop 、aspect规范、spring aspect
+db：jdbc、tx
+测试：test
+web开发：spring web
+
+驱动：mysql
+连接池：c3p0
+
+整合hibernate：spring orm
+
+</code></pre></div>
+<h6 id="hibernate">hibernate</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">hibernate3.jar          核心
+ \lib\required          必须
+
+\lib\jpa                jpa规范 （java persistent api 持久api），hibernate注解开发 @Entity @Id 等
+
+整合log4j
+    导入 log4j...jar (struts已经导入)
+    整合（过渡）：slf4j-log4j12-1.7.5.jar
+
+二级缓存
+    核心：ehcache-1.5.0.jar
+    依赖：
+        backport-util-concurrent-2.1.jar
+        commons-logging  (存在)
+</code></pre></div>
+<h6 id="整合包">整合包</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">spring整合hibernate： spring orm
+struts 整合spring：struts2-spring-plugin-2.3.15.3.jar
+</code></pre></div>
+<p>删除重复jar包</p>
+
+<p>5.2 spring整合hibernate：有hibernate.cfg.xml<br>
+5.2.1   创建表<br>
+create table t_user(<br>
+  id int primary key auto_increment,<br>
+  username varchar(50),<br>
+  password varchar(32),<br>
+  age int<br>
+);</p>
+
+<h2 id="po-类">PO 类</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">
+//javabean
+public class User {
+    private Integer id;
+    private String username;
+    private String password;
+    private Integer age;
+//映射文件
+&lt;!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;
+&lt;hibernate-mapping&gt;
+    &lt;class name="com.itheima.domain.User" table="t_user"&gt;
+        &lt;id name="id"&gt;
+            &lt;generator class="native"&gt;&lt;/generator&gt;
+        &lt;/id&gt;
+        &lt;property name="username"&gt;&lt;/property&gt;
+        &lt;property name="password"&gt;&lt;/property&gt;
+        &lt;property name="age"&gt;&lt;/property&gt;
+    &lt;/class&gt;
+
+&lt;/hibernate-mapping&gt;
+
+//dao层
+//spring提供 HibernateTemplate 用于操作PO对象，类似Hibernate Session对象。
+
+public class UserDaoImpl implements UserDao {
+
+    //需要spring注入模板
+    private HibernateTemplate hibernateTemplate;
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
+    }
+
+    @Override
+    public void save(User user) {
+        this.hibernateTemplate.save(user);
+    }
+
+}
+
+//service层
+
+public class UserServiceImpl implements UserService {
+
+    private UserDao userDao;
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    @Override
+    public void register(User user) {
+        userDao.save(user);
+    }
+
+}
+
+
+
+// hibernate.cfg.xml
+&lt;session-factory&gt;
+        &lt;!-- 1基本4项 --&gt;
+        &lt;property name="hibernate.connection.driver_class"&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name="hibernate.connection.url"&gt;jdbc:mysql:///ee19_spring_day03&lt;/property&gt;
+        &lt;property name="hibernate.connection.username"&gt;root&lt;/property&gt;
+        &lt;property name="hibernate.connection.password"&gt;1234&lt;/property&gt;
+
+        &lt;!-- 2 配置方言 --&gt;
+        &lt;property name="hibernate.dialect"&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
+
+        &lt;!-- 3 sql语句 --&gt;
+        &lt;property name="hibernate.show_sql"&gt;true&lt;/property&gt;
+        &lt;property name="hibernate.format_sql"&gt;true&lt;/property&gt;
+
+        &lt;!-- 4 自动生成表(一般没用) --&gt;
+        &lt;property name="hibernate.hbm2ddl.auto"&gt;update&lt;/property&gt;
+
+        &lt;!-- 5本地线程绑定 --&gt;
+        &lt;property name="hibernate.current_session_context_class"&gt;thread&lt;/property&gt;
+
+        &lt;!-- 导入映射文件 --&gt;
+        &lt;mapping resource="com/itheima/domain/User.hbm.xml"/&gt;
+
+    &lt;/session-factory&gt;
+
+//applicationContext.xml
+//  添加命名空间
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd"&gt;
+
+//加载hibernate配置文件
+&lt;!-- 1 加载hibenrate.cfg.xml 获得SessionFactory
+        * configLocation确定配置文件位置
+    --&gt;
+    &lt;bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"&gt;
+        &lt;property name="configLocation" value="classpath:hibernate.cfg.xml"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 2创建模板
+        * 底层使用session，session 有sessionFactory获得
+    --&gt;
+    &lt;bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate"&gt;
+        &lt;property name="sessionFactory" ref="sessionFactory"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+//dao和service
+&lt;!-- 3 dao --&gt;
+    &lt;bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl"&gt;
+        &lt;property name="hibernateTemplate" ref="hibernateTemplate"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 4 service --&gt;
+    &lt;bean id="userService" class="com.itheima.service.impl.UserServiceImpl"&gt;
+        &lt;property name="userDao" ref="userDao"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+&lt;!-- 5 事务管理 --&gt;
+    &lt;!-- 5.1 事务管理器 ：HibernateTransactionManager --&gt;
+    &lt;bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" &gt;
+        &lt;property name="sessionFactory" ref="sessionFactory"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 5.2 事务详情 ，给ABC进行具体事务设置 --&gt;
+    &lt;tx:advice id="txAdvice" transaction-manager="txManager"&gt;
+        &lt;tx:attributes&gt;
+            &lt;tx:method name="register"/&gt;
+        &lt;/tx:attributes&gt;
+    &lt;/tx:advice&gt;
+    &lt;!-- 5.3 AOP编程，ABCD 筛选 ＡＢＣ  --&gt;
+    &lt;aop:config&gt;
+        &lt;aop:advisor advice-ref="txAdvice" pointcut="execution(* com.itheima.service..*.*(..))"/&gt;
+    &lt;/aop:config&gt;
+
+// 测试
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:applicationContext.xml")
+public class TestApp {
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    public void demo01(){
+        User user = new User();
+        user.setUsername("jack");
+        user.setPassword("1234");
+        user.setAge(18);
+
+        userService.register(user);
+    }
+}
+</code></pre></div>
+<h6 id="spring整合hibernate：没有hibernate-cfg-xml-【】">spring整合hibernate：没有hibernate.cfg.xml 【】</h6>
+
+<blockquote>
+<p>删除hibernate.cfg.xml文件，但需要保存文件内容，将其配置spring中<br>
+修改dao层，继承HibernateDaoSupport</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">// 修改spring，配置SessionFactory
+&lt;!-- 1.1加载properties文件 --&gt;
+    &lt;!-- 1.2 配置数据源 --&gt;
+    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
+        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"&gt;&lt;/property&gt;
+        &lt;property name="jdbcUrl" value="jdbc:mysql:///ee19_spring_day03"&gt;&lt;/property&gt;
+        &lt;property name="user" value="root"&gt;&lt;/property&gt;
+        &lt;property name="password" value="1234"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 1.3配置 LocalSessionFactoryBean，获得SessionFactory
+        * configLocation确定配置文件位置
+            &lt;property name="configLocation" value="classpath:hibernate.cfg.xml"&gt;&lt;/property&gt;
+        1)dataSource 数据源
+        2)hibernateProperties hibernate其他配置项
+        3) 导入映射文件
+            mappingLocations ，确定映射文件位置，需要“classpath:” ,支持通配符 【】
+                &lt;property name="mappingLocations" value="classpath:com/itheima/domain/User.hbm.xml"&gt;&lt;/property&gt;
+                &lt;property name="mappingLocations" value="classpath:com/itheima/domain/*.hbm.xml"&gt;&lt;/property&gt;
+            mappingResources ，加载执行映射文件，从src下开始 。不支持通配符*
+                &lt;property name="mappingResources" value="com/itheima/domain/User.hbm.xml"&gt;&lt;/property&gt;
+            mappingDirectoryLocations ，加载指定目录下的，所有配置文件
+                &lt;property name="mappingDirectoryLocations" value="classpath:com/itheima/domain/"&gt;&lt;/property&gt;
+            mappingJarLocations ， 从jar包中获得映射文件
+    --&gt;
+    &lt;bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"&gt;
+        &lt;property name="dataSource" ref="dataSource"&gt;&lt;/property&gt;
+        &lt;property name="hibernateProperties"&gt;
+            &lt;props&gt;
+                &lt;prop key="hibernate.dialect"&gt;org.hibernate.dialect.MySQL5Dialect&lt;/prop&gt;
+                &lt;prop key="hibernate.show_sql"&gt;true&lt;/prop&gt;
+                &lt;prop key="hibernate.format_sql"&gt;true&lt;/prop&gt;
+                &lt;prop key="hibernate.hbm2ddl.auto"&gt;update&lt;/prop&gt;
+                &lt;prop key="hibernate.current_session_context_class"&gt;thread&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+        &lt;property name="mappingLocations" value="classpath:com/itheima/domain/*.hbm.xml"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+
+// 修改dao，使用HibernateDaoSupport
+// 继承HibernateDaoSupport
+// 底层需要SessionFactory，自动创建HibernateTemplate模板
+public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
+
+    @Override
+    public void save(User user) {
+        this.getHibernateTemplate().save(user);
+    }
+
+}
+// spring 删除模板，给dao注入SessionFactory
+    &lt;!-- 3 dao --&gt;
+    &lt;bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl"&gt;
+        &lt;property name="sessionFactory" ref="sessionFactory"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+</code></pre></div>
+<h2 id="struts整合spring：spring创建action">struts整合spring：spring创建action</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">1.编写action类，并将其配置给spring ，spring可以注入service
+2.编写struts.xml
+3.表单jsp页面
+4.web.xml 配置
+    1.确定配置文件contextConfigLocation
+    2.配置监听器 ContextLoaderListener
+    3.配置前端控制器 StrutsPrepareAndExecuteFitler
+
+// action类
+// 通用
+public class UserAction extends ActionSupport implements ModelDriven&lt;User&gt; {
+
+    //1 封装数据
+    private User user = new User();
+
+    @Override
+    public User getModel() {
+        return user;
+    }
+
+    //2 service
+    private UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+// 功能
+/**
+     * 注册
+     * @return
+     */
+    public String register(){
+        userService.register(user);
+        return "success";
+    }
+
+// spring配置
+&lt;!-- 6 配置action --&gt;
+    &lt;bean id="userAction" class="com.itheima.web.action.UserAction" scope="prototype"&gt;
+        &lt;property name="userService" ref="userService"&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+//  struts配置
+&lt;struts&gt;
+    &lt;!-- 开发模式 --&gt;
+    &lt;constant name="struts.devMode" value="true" /&gt;
+
+    &lt;package name="default" namespace="/" extends="struts-default"&gt;
+        &lt;!-- 底层自动从spring容器中通过名称获得内容， getBean("userAction") --&gt;
+        &lt;action name="userAction_*" class="userAction" method="{1}"&gt;
+            &lt;result name="success"&gt;/messag.jsp&lt;/result&gt;
+        &lt;/action&gt;
+    &lt;/package&gt;
+&lt;/struts&gt;
+
+//  jsp表单
+&lt;form action="${pageContext.request.contextPath}/userAction_register" method="post"&gt;
+        用户名：&lt;input type="text" name="username"/&gt; &lt;br/&gt;
+        密码：&lt;input type="password" name="password"/&gt; &lt;br/&gt;
+        年龄：&lt;input type="text" name="age"/&gt; &lt;br/&gt;
+        &lt;input type="submit" /&gt;
+    &lt;/form&gt;
+
+// 配置web.xml
+&lt;!-- 1 确定spring xml位置 --&gt;
+  &lt;context-param&gt;
+    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+  &lt;/context-param&gt;
+  &lt;!-- 2 spring监听器 --&gt;
+  &lt;listener&gt;
+    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+  &lt;!-- 3 struts 前端控制器 --&gt;
+  &lt;filter&gt;
+    &lt;filter-name&gt;struts2&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter&lt;/filter-class&gt;
+  &lt;/filter&gt;
+  &lt;filter-mapping&gt;
+    &lt;filter-name&gt;struts2&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+  &lt;/filter-mapping&gt;
+
+//  struts整合spring：struts创建action
+//  删除spring action配置
+//  struts &lt;action class="全限定类名"&gt;
+
+&lt;package name="default" namespace="/" extends="struts-default"&gt;
+        &lt;!-- 底层自动从spring容器中通过名称获得内容， getBean("userAction") --&gt;
+        &lt;action name="userAction_*" class="com.itheima.web.action.UserAction" method="{1}"&gt;
+            &lt;result name="success"&gt;/messag.jsp&lt;/result&gt;
+        &lt;/action&gt;
+</code></pre></div>
+<h2 id="struts整合spring：struts创建action">struts整合spring：struts创建action</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">    删除spring action配置
+    struts &lt;action class="全限定类名"&gt;
+
+&lt;package name="default" namespace="/" extends="struts-default"&gt;
+        &lt;!-- 底层自动从spring容器中通过名称获得内容， getBean("userAction") --&gt;
+        &lt;action name="userAction_*" class="com.itheima.web.action.UserAction" method="{1}"&gt;
+            &lt;result name="success"&gt;/messag.jsp&lt;/result&gt;
+        &lt;/action&gt;
+    &lt;/package&gt;
+
+    要求：Action类中，必须提供service名称与 spring配置文件一致。（如果名称一样，将自动注入）
+
+
+分析：
+1. struts 配置文件
+    default.properties  ,常量配置文件
+    struts-default.xml ，默认核心配置文件
+    struts-plugins.xml ，插件配置文件
+    struts.xml，自定义核心配置文件
+    常量的使用，后面配置项，将覆盖前面的。
+2.default.properties  ，此配置文件中确定 按照【名称】自动注入
+    /org/apache/struts2/default.properties
+
+3. struts-plugins.xml ,struts整合spring
+
+        &lt;constant name="struts.objectFactory" value="spring" /&gt;
+    struts的action将有spring创建
+
+总结，之后action有spring创建，并按照名称自动注入
+
+</code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/2017/07/07/2017-6-2-Spring03" data-title="zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/07/07/2017-6-19-Oracle01" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/07/2017-6-25-Oracle02"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

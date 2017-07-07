@@ -8,7 +8,7 @@
     
     
     
-    <title>集合 | zhxiaol</title>
+    <title>zhxiaol</title>
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="集合">
-    <meta property="og:url" content="/Blog/java/2016/12/11/%E9%9B%86%E5%90%88">
+    <meta property="og:title" content="">
+    <meta property="og:url" content="/Blog/2017/07/07/2017-3-23-servlet">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="集合">
+    <meta name="twitter:title" content="">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2016/12/11/%E9%9B%86%E5%90%88" title="集合" itemprop="url">集合</a>
+      <a href="/Blog/2017/07/07/2017-3-23-servlet" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2016-12-11 00:00:00 +0800" itemprop="datePublished"> 发表于 2016-12-11</time>
+    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished"> 发表于 2017-07-07</time>
     
   </p>
 </header>
@@ -115,83 +115,224 @@
 		
 		</div>
 		
-		<h2 id="为了画个流程图又填了一天的坑。">为了画个流程图又填了一天的坑。</h2>
-<div class="highlight"><pre><code class="language-mermaid" data-lang="mermaid">graph TB
+		<h2 id="servlet">Servlet</h2>
 
-         stat["开始"]--&gt;d  
-         subgraph 方法区
-         d["Demo.class"]--&gt;m
-         s["Student.class"]
-         end
+<blockquote>
+<p>servlet 是运行在web服务器的小型java程序。servlet通常通过HTTP接受和响应来自web客户端的请求</p>
+</blockquote>
 
-         subgraph 堆
-         arr["arr数组&lt;br&gt;位置0&lt;br&gt;位置1&lt;br&gt;位置2&lt;br&gt;位置3&lt;br&gt;位置4"]
-         s1["new Student"]---s
-         arr--&gt;|arr0|s1
-         end
-
-         subgraph 栈
-         subgraph Main方法
-         m["Main方法"]--&gt;|进栈|m1
-         m1["Student[]arr=new Student[5]"]  --&gt; arr
-         m1--&gt;m2
-         m2["arr[0]=new Student()"]
-         m2--&gt;arr
-         end
-         end
+<p>1.创建一个实现servlet的实列</p>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo1 implements Servlet{}
 </code></pre></div>
-<h2 id="继承体系图">继承体系图</h2>
-<div class="highlight"><pre><code class="language-mermaid" data-lang="mermaid">graph TB
-   Collection---|有序 可以存重复的值|List
-   Collection---|无序 不可以存重复的值|Set
-   List---ArrayList
-   List---LinkedList
-   List---Vector
-   Set---HashSet
-   Set---TreeSet
+<p>2.配置web.xml</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;!--创建一个servlet实列--&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.itheima.servlet.ServletDemo1&lt;/servlet-class&gt;
+    &lt;!--服务器启动时就创建--&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;!--给servlet提供(映射)一个可供客户端访问的URI--&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/demo1&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
 </code></pre></div>
-<h2 id="迭代器">迭代器</h2>
+<h2 id="servlet运行过程">servlet运行过程</h2>
+<div class="highlight"><pre><code class="language-sequence" data-lang="sequence">客户端-&gt; tomcat:1.http://localhost:8080/ demo
+tomcat--&gt; web.xml:2.找到默认项目下的&lt;url-pattern&gt;/demo1
+web.xml--&gt; tomcat:3.返回对应的&lt;servlet-class&gt;ServletDemo1
+tomcat--&gt; servletDemo1:4.创建ServletDemo1实列
+tomcat--&gt; servletDemo1:5.调用init()方法
+tomcat--&gt; servletDemo1:6.调用service()方法
+servletDemo1--&gt;客户端:7.将信息响应给客户端
+tomcat--&gt; servletDemo1:8.调用distory()方法
+</code></pre></div>
+<h2 id="servlet-生命周期">servlet 生命周期</h2>
 
-<p>整个集合体系的遍历方式都是hasNext()和next()方法</p>
+<blockquote>
+<p>实例化 --&gt; 初始化 --&gt; 服务 --&gt; 销毁<br>
+出生:（实列化--初始化）第一次访问就出生了（默认情况）<br>
+活着: (服务)应用活着，servlet就活着<br>
+死亡: (销毁)应用卸载了 servlet就销毁</p>
+</blockquote>
 
-<ul>
-<li>如果想在遍历的过程中添加元素,可以用ListIterator中的add方法
-<code>
-ListIterator lit = list.listIterator();     
-while(lit.hasNext()) {
-String str = (String)lit.next();
-if(str.equals(&quot;world&quot;)) {
-lit.add(&quot;javaee&quot;);
+<h2 id="genericservlet-适配器模式">GenericServlet(适配器模式)</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo2 extends GenericServlet {
+    @Override
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+            System.out.println("service");
+    }
 }
+</code></pre></div>
+<h2 id="httpservlet-模板方法设计模式">HttpServlet(模板方法设计模式)</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo3 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("******doGet*********");
+        System.out.println(req.getRemoteAddr());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("******doPost*********");
+    }
 }
-</code></li>
-<li>Vector迭代
-<code>
-Vector v = new Vector();            
-Enumeration en = v.elements();          //获取枚举
-while(en.hasMoreElements()) {           //判断是否有元素
-System.out.println(en.nextElement());//获取元素
+</code></pre></div>
+<h2 id="servlet的一些细节">servlet的一些细节</h2>
+
+<blockquote>
+<p>一个servlet可以对应多个映射<br>
+优先级 绝对匹配--&gt;/开头匹配--&gt;扩展名匹配<br>
+如果url-pattern的值是/,表示执行的默认映射。所有资源都是servlet</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/abc/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/abc<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>*.do<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></div>
+<h2 id="servlet的线程安全">Servlet的线程安全</h2>
+
+<p>解决线程安全的问题的最佳方法，不要写全局变量，写局部变量</p>
+
+<h2 id="servletconfig">ServletConfig</h2>
+
+<p>获取配置文件的信息，获取servletContext对象</p>
+<div class="highlight"><pre><code class="language-" data-lang="">@Override
+public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    this.config=config;
 }
-</code>
-##数组结构和链表结构</li>
-<li>数组
-有下标查询快修改快
-增删中间位置的整体下标都会变 增删慢</li>
-<li>链表
-像自行车链子，每个元素会存储它前面的地址和后面的地址
-所以增删快，查询修改需要从两端开始迭代，所以慢
-##List的三个子类的特点
-ArrayList:
-底层数据结构是数组，查询快，增删慢。
-线程不安全，效率高。
-Vector:
-底层数据结构是数组，查询快，增删慢。
-线程安全，效率低。
-LinkedList:
-底层数据结构是链表，查询慢，增删快。
-线程不安全，效率高。</li>
-</ul>
-  
+</code></pre></div></blockquote>
+
+<p>@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    String e1 = config.getInitParameter(&quot;encoding&quot;);<br>
+    String e2 = getServletConfig().getInitParameter(&quot;encoding&quot;);<br>
+    String e3 = this.getInitParameter(&quot;encoding&quot;);<br>
+    System.out.println(e1);<br>
+    System.out.println(e2);<br>
+    System.out.println(e3);<br>
+}<br>
+// web.xml<br>
+<servlet><br>
+    <servlet-name>ServletDemo5</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo5</servlet-class><br>
+    <init-param><br>
+        <param-name>encoding</param-name><br>
+        <param-value>utf-8</param-value><br>
+    </init-param><br>
+</servlet></p>
+<div class="highlight"><pre><code class="language-" data-lang="">## ServletContext
+&gt; 代表整个应用，一个应用只有一个servletContext对象，单实例.
+&gt; 域对象:在一定范围内(当前应用),使多个Servlet共享数据。
+|常用方法|备注|
+|------|-----|
+|void setAttribute(String name,Object value)|向ServletContext对象map中添加数据
+|Object getAttribute(String name)|从ServletContext对象的map中取数据|
+|void removeAttibute(String name)|根据name移出数据|
+###### 共享数据
+</code></pre></div>
+<p>//ServletDemo6<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    application.setAttribute(&quot;name&quot;,&quot;tom&quot;);<br>
+    System.out.println(&quot;存储name=tom&quot;);<br>
+}<br>
+//ServletDemo7<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    String name = (String) application.getAttribute(&quot;name&quot;);<br>
+    System.out.println(&quot;name:&quot;+name);<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 获取全局配置信息
+</code></pre></div>
+<p>//ServletDemo7<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    String e = application.getInitParameter(&quot;encoding&quot;);<br>
+    System.out.println(&quot;encoding:&quot;+e);<br>
+}<br>
+//web.xml<br>
+<context-param><br>
+    <param-name>encoding</param-name><br>
+    <param-value>utf-8</param-value><br>
+</context-param></p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 获取资源路径
+String getRealPath(String path);//根据资源名称得到资源的绝对路径
+&gt; 可以得到当前应用任何位置的任何资源
+</code></pre></div>
+<p>//在WEB-INF/a.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/a.properties&quot;);<br>
+Properties properties = new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String value = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(value);</p>
+
+<p>//在src/b.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/classes/b.properties&quot;);<br>
+Properties properties=new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String value = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(value);</p>
+
+<p>//在src/com.itheima.servlet/c.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/classess/com/itheima/servlet/c.properties&quot;);<br>
+Properties properties = new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String key = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(key);</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## Servlet转发
+&gt; 一次请求响应
+</code></pre></div>
+<p>//ServletDemo9<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    System.out.println(&quot;我要办事&quot;);<br>
+    System.out.println(&quot;你的事我办不了，我可以帮你找人办&quot;);<br>
+    ServletContext application = this.getServletContext();<br>
+    RequestDispatcher rd = application.getRequestDispatcher(&quot;/demo10&quot;);<br>
+    rd.forward(req,resp);<br>
+    System.out.println(&quot;事办完了&quot;);<br>
+}<br>
+//ServletDemo10<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    System.out.println(&quot;这个事我能办&quot;);<br>
+}<br>
+//web.xml<br>
+<servlet><br>
+    <servlet-name>ServletDemo9</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo9</servlet-class><br>
+</servlet><br>
+<servlet-mapping><br>
+    <servlet-name>ServletDemo9</servlet-name><br>
+    <url-pattern>/demo9</url-pattern><br>
+</servlet-mapping><br>
+<servlet><br>
+    <servlet-name>ServletDemo10</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo10</servlet-class><br>
+</servlet><br>
+<servlet-mapping><br>
+    <servlet-name>ServletDemo10</servlet-name><br>
+    <url-pattern>/demo10</url-pattern><br>
+</servlet-mapping></p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -207,23 +348,8 @@ LinkedList:
   }) %>
   -->
   
-  <a class="article-category-link" href="/Blog/categories/#java">java</a>
-  
 </div>
 
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  <a href="/Blog/tags/#java">java</a>
-  
-  </div>
 
 </div>
 
@@ -231,7 +357,7 @@ LinkedList:
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://localhost:4000/Blog/java/2016/12/11/%E9%9B%86%E5%90%88" data-title="集合 | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/2017/07/07/2017-3-23-servlet" data-title="zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -243,13 +369,21 @@ LinkedList:
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" title="正则表达式和常用类">
+ <a href="/2017/07/07/2017-3-14-xml&tomcat" title="">
   <strong>上一篇：</strong><br/>
   <span>
-  正则表达式和常用类</span>
+  (no title)</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2017/07/07/2017-3-26-httpServletRequest%E5%92%8CHpptServletResposnse"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -278,15 +412,15 @@ LinkedList:
 		<ul>
 		
 		  
-			<li><a href="/Blog/categories/#life" title="life">life<sup>2</sup></a></li>
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>8</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#english" title="english">english<sup>1</sup></a></li>
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
 		  
 		
 		</ul>
@@ -303,15 +437,15 @@ LinkedList:
 			
 		
 			
-				<li><a href="/Blog/tags/#life" title="life">life<sup>2</sup></a></li>
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>8</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
 			
 		
 			
-				<li><a href="/Blog/tags/#english" title="english">english<sup>1</sup></a></li>
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
 			
 		
 		</ul>
