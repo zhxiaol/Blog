@@ -4,7 +4,7 @@
  <title>zhxiaol</title>
  <link href="" rel="self"/>
  <link href=""/>
- <updated>2017-07-07T15:23:21+08:00</updated>
+ <updated>2017-07-07T15:51:10+08:00</updated>
  <id></id>
  <author>
    <name>zhxiaol</name>
@@ -565,18 +565,18 @@
 &lt;h4 id=&quot;创建maven工程&quot;&gt;创建maven工程&lt;/h4&gt;
 
 &lt;h5 id=&quot;maven工程结构&quot;&gt;Maven工程结构&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（源码包）&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（正常的源码包）&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;文件的目录）&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（资源文件的目录）&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Project&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（源码包）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（正常的源码包）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;文件的目录）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（资源文件的目录）&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（测试的源码包）&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（测试的源码包）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;java&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resources&lt;/span&gt;
    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       
-   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;文件、报告等信息存储的地方）&lt;/span&gt;
-   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;xml&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maven&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;工程的描述文件）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;文件、报告等信息存储的地方）&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xml&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maven&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;工程的描述文件）&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;创建hellomaven工程&quot;&gt;创建HelloMaven工程&lt;/h5&gt;
 
@@ -599,14 +599,14 @@
 |mvn clean test|先执行clean，再执行test，通常应用于测试环节|&lt;br&gt;
 |mvn clean package|先执行clean，再执行package，将项目打包，通常应用于发布前|&lt;br&gt;
 |mvn clean install|先执行clean，再执行install，将项目打包，通常应用于发布前|&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;mvn&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clean&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;mvn&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clean&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;package&lt;/span&gt;
     &lt;span class=&quot;err&quot;&gt;执行过程：&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;清理————清空环境&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;编译————编译源码&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;测试————测试源码&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;打包————将编译的非测试类打包&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mvn&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mvn&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;clean&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt;
    &lt;span class=&quot;err&quot;&gt;执行过程：&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;清理————清空环境&lt;/span&gt;
       &lt;span class=&quot;err&quot;&gt;编译————编译源码&lt;/span&gt;
@@ -631,69 +631,70 @@
 &lt;li&gt;New Project选择Maven 勾选Create from archetype&lt;/li&gt;
 &lt;li&gt;选择maven-archetype-quickstart next&lt;/li&gt;
 &lt;li&gt;填写groupid(com.itheima.maven) artifactId(MevanFirst)&lt;/li&gt;
-&lt;li&gt;shift+commend+a 搜索Maven Project 点击m按钮 输入指令complie test package install
-###### pom.xml
-```xml
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;&lt;/li&gt;
+&lt;li&gt;shift+commend+a 搜索Maven Project 点击m按钮 输入指令complie test package install&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;groupId&gt;com.itheima.maven&lt;/groupId&gt;&lt;br&gt;
-  &lt;artifactId&gt;MavenFirst&lt;/artifactId&gt;&lt;br&gt;
-  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;&lt;br&gt;
-  &lt;packaging&gt;jar&lt;/packaging&gt;&lt;/p&gt;
+&lt;h6 id=&quot;pom-xml&quot;&gt;pom.xml&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;project&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:xsi=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;modelVersion&amp;gt;&lt;/span&gt;4.0.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/modelVersion&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;&lt;name&gt;MavenFirst&lt;/name&gt;&lt;br&gt;
-  &lt;url&gt;&lt;a href=&quot;http://maven.apache.org&quot;&gt;http://maven.apache.org&lt;/a&gt;&lt;/url&gt;&lt;/p&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.itheima.maven&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;MavenFirst&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.0-SNAPSHOT&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;packaging&amp;gt;&lt;/span&gt;jar&lt;span class=&quot;nt&quot;&gt;&amp;lt;/packaging&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;&lt;properties&gt;&lt;br&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;&lt;br&gt;
-  &lt;/properties&gt;&lt;/p&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt;MavenFirst&lt;span class=&quot;nt&quot;&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;url&amp;gt;&lt;/span&gt;http://maven.apache.org&lt;span class=&quot;nt&quot;&gt;&amp;lt;/url&amp;gt;&lt;/span&gt;
 
-&lt;p&gt;&lt;dependencies&gt;&lt;br&gt;
-    &lt;dependency&gt;&lt;br&gt;
-      &lt;groupId&gt;junit&lt;/groupId&gt;&lt;br&gt;
-      &lt;artifactId&gt;junit&lt;/artifactId&gt;&lt;br&gt;
-      &lt;version&gt;4.9&lt;/version&gt;&lt;br&gt;
-      &lt;scope&gt;test&lt;/scope&gt;&lt;br&gt;
-    &lt;/dependency&gt;&lt;br&gt;
-    &lt;dependency&gt;&lt;br&gt;
-      &lt;groupId&gt;junit&lt;/groupId&gt;&lt;br&gt;
-      &lt;artifactId&gt;junit&lt;/artifactId&gt;&lt;br&gt;
-      &lt;version&gt;RELEASE&lt;/version&gt;&lt;br&gt;
-    &lt;/dependency&gt;&lt;br&gt;
-    &lt;dependency&gt;&lt;br&gt;
-      &lt;groupId&gt;junit&lt;/groupId&gt;&lt;br&gt;
-      &lt;artifactId&gt;junit&lt;/artifactId&gt;&lt;br&gt;
-      &lt;version&gt;RELEASE&lt;/version&gt;&lt;br&gt;
-    &lt;/dependency&gt;&lt;br&gt;
-    &lt;dependency&gt;&lt;br&gt;
-      &lt;groupId&gt;junit&lt;/groupId&gt;&lt;br&gt;
-      &lt;artifactId&gt;junit&lt;/artifactId&gt;&lt;br&gt;
-      &lt;version&gt;4.12&lt;/version&gt;&lt;br&gt;
-    &lt;/dependency&gt;&lt;br&gt;
-  &lt;/dependencies&gt;&lt;br&gt;
-&lt;/project&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;project.build.sourceEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span class=&quot;nt&quot;&gt;&amp;lt;/project.build.sourceEncoding&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
 
-#### 创建MavenSecond工程
-* New Project选择Maven 不勾选Create from archetype
-```java
-//pom.xml
-&amp;lt;dependency&amp;gt;
-    &amp;lt;groupId&amp;gt;com.itheima.maven&amp;lt;/groupId&amp;gt;
-    &amp;lt;artifactId&amp;gt;MavenFirst&amp;lt;/artifactId&amp;gt;
-    &amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt;
-&amp;lt;/dependency&amp;gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;scope&amp;gt;&lt;/span&gt;test&lt;span class=&quot;nt&quot;&gt;&amp;lt;/scope&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;RELEASE&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;RELEASE&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.12&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/project&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;创建mavensecond工程&quot;&gt;创建MavenSecond工程&lt;/h4&gt;
 
-//MavenSecond
-public class MavenSecond {
-    public String sayHello(String name){
-        MavenFirst first = new MavenFirst();
-        return first.sayHello(name);
-    }
-}
+&lt;ul&gt;
+&lt;li&gt;New Project选择Maven 不勾选Create from archetype&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//pom.xml&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dependency&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;itheima&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maven&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/groupId&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MavenFirst&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/artifactId&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;SNAPSHOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/version&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/dependency&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//MavenSecond&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MavenSecond&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;MavenFirst&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MavenFirst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;maven的核心概念&quot;&gt;Maven的核心概念&lt;/h4&gt;
 
@@ -783,7 +784,7 @@ Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;依赖范围传递&quot;&gt;依赖范围传递&lt;/h4&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;MavenThird&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-------&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MavenSecond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;------------&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MavenFirst&lt;/span&gt;                            
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;MavenThird&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-------&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MavenSecond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;------------&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MavenFirst&lt;/span&gt;                            
     &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;               &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;                   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;第一直接依赖&lt;/span&gt;         &lt;span class=&quot;err&quot;&gt;第二直接依赖&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
@@ -920,63 +921,61 @@ deploy 将最终的包复制到远程的仓库，以让其它开发人员与项�
 父工程的packaging为pom&lt;/li&gt;
 &lt;li&gt;创建子工程
 创建子工程有两种方式：一种是创建一个新的工程为子工程，另一种是修改老的工程为子工程。
-子工程的pom文件
-&lt;code&gt;xml
-&amp;lt;parent&amp;gt;
-&amp;lt;groupId&amp;gt;com.itheima.maven&amp;lt;/groupId&amp;gt;
-&amp;lt;artifactId&amp;gt;MavenParent&amp;lt;/artifactId&amp;gt;
-&amp;lt;version&amp;gt;1.0-SNAPSHOT&amp;lt;/version&amp;gt;
-&amp;lt;/parent&amp;gt;
-&lt;/code&gt;
-##### 父工程统一依赖jar包
-在父工程中对jar包进行依赖，在子工程中都会继承此依赖。
-&lt;code&gt;xml
-&amp;lt;packaging&amp;gt;pom&amp;lt;/packaging&amp;gt;
-&amp;lt;dependencies&amp;gt;
-&amp;lt;dependency&amp;gt;
-    &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt;
-    &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt;
-    &amp;lt;version&amp;gt;4.9&amp;lt;/version&amp;gt;
-&amp;lt;/dependency&amp;gt;
-&amp;lt;/dependencies&amp;gt;
-&lt;/code&gt;
-##### 父工程统一管理版本号
-dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。
-```xml
-//父工程
-&lt;dependencyManagement&gt;
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;junit&lt;/groupId&gt;
-        &lt;artifactId&gt;junit&lt;/artifactId&gt;
-        &lt;version&gt;4.9&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-&lt;/dependencyManagement&gt;&lt;/li&gt;
+子工程的pom文件&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;groupId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;itheima&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;maven&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/groupId&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;artifactId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MavenParent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/artifactId&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;SNAPSHOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/version&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/parent&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;父工程统一依赖jar包&quot;&gt;父工程统一依赖jar包&lt;/h5&gt;
 
-&lt;p&gt;//子工程&lt;br&gt;
-&lt;dependencies&gt;&lt;br&gt;
-    &lt;dependency&gt;&lt;br&gt;
-        &lt;groupId&gt;junit&lt;/groupId&gt;&lt;br&gt;
-        &lt;artifactId&gt;junit&lt;/artifactId&gt;&lt;br&gt;
-    &lt;/dependency&gt;&lt;br&gt;
-&lt;/dependencies&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;
-##### 父工程抽取版本号
-```xml
-&amp;lt;properties&amp;gt;
-    &amp;lt;junit.vsersion&amp;gt;4.9&amp;lt;/junit.vsersion&amp;gt;
-&amp;lt;/properties&amp;gt;
-&amp;lt;dependencyManagement&amp;gt;
-    &amp;lt;dependencies&amp;gt;
-        &amp;lt;dependency&amp;gt;
-            &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt;
-            &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt;
-            &amp;lt;version&amp;gt;${junit.vsersion}&amp;lt;/version&amp;gt;
-        &amp;lt;/dependency&amp;gt;
-    &amp;lt;/dependencies&amp;gt;
-&amp;lt;/dependencyManagement&amp;gt;
+&lt;p&gt;在父工程中对jar包进行依赖，在子工程中都会继承此依赖。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;packaging&amp;gt;&lt;/span&gt;pom&lt;span class=&quot;nt&quot;&gt;&amp;lt;/packaging&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;父工程统一管理版本号&quot;&gt;父工程统一管理版本号&lt;/h5&gt;
+
+&lt;p&gt;dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;//父工程
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencyManagement&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencyManagement&amp;gt;&lt;/span&gt;
+
+//子工程
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;父工程抽取版本号&quot;&gt;父工程抽取版本号&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;junit.vsersion&amp;gt;&lt;/span&gt;4.9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/junit.vsersion&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencyManagement&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${junit.vsersion}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependencyManagement&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;聚合&quot;&gt;聚合&lt;/h4&gt;
 
@@ -4949,102 +4948,102 @@ jquery 默认使用jsonp&lt;/p&gt;
    <content type="html">&lt;h2 id=&quot;jquery介绍&quot;&gt;jQuery介绍&lt;/h2&gt;
 
 &lt;h6 id=&quot;js类库&quot;&gt;JS类库&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;JavaScript 库封装了很多预定义的对象和实用函数。能帮助使用者建立有高难度交互客户端页面, 并且兼容各大浏览器。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;JavaScript&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;库封装了很多预定义的对象和实用函数。能帮助使用者建立有高难度交互客户端页面&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;并且兼容各大浏览器。&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6 id=&quot;当前流行的-javascript-库有：&quot;&gt;当前流行的 JavaScript 库有：&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-document&quot; data-lang=&quot;document&quot;&gt;jQuery ，最流行
-EXT_JS，2.0开始收费
-Dojo ，很多js单独文件，优化：打包。（常见：开发小图标，一张图片）
-Prototype，对js扩展，框架开发。
-YUI(Yahoo! User Interface) ，taobao之前使用。
-淘宝UI：http://docs.kissyui.com/
-Bootstrap，来自 Twitter，是目前很受欢迎的前端框架Bootstrap 是基于 HTML、CSS、JAVASCRIPT 的，它简洁灵活，使得 Web 开发更加快捷。基于jQuery 一个UI工具
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，最流行&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;EXT_JS&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;开始收费&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Dojo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，很多&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;单独文件，优化：打包。（常见：开发小图标，一张图片）&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Prototype&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，对&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;扩展，框架开发。&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;YUI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Yahoo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Interface&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;taobao&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;之前使用。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;淘宝&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//docs.kissyui.com/&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Bootstrap&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，来自&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Twitter&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，是目前很受欢迎的前端框架&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Bootstrap&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;是基于&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JAVASCRIPT&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;的，它简洁灵活，使得&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Web&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;开发更加快捷。基于&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;一个&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;工具&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6 id=&quot;jquery介绍&quot;&gt;jQuery介绍&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-doc&quot; data-lang=&quot;doc&quot;&gt;JQuery是继prototype之后又一个优秀的Javascript库。它是轻量级的js库 ，它兼容CSS3，还兼容各种浏览器（IE 6.0+, FF 1.5+, Safari 2.0+, Opera 9.0+），jQuery2.0及后续版本将不再支持IE6/7/8浏览器。jQuery使用户能更方便地处理HTML（标准通用标记语言下的一个应用）、events、实现动画效果，并且方便地为网站提供AJAX交互。jQuery还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。jQuery能够使用户的html页面保持代码和html内容分离，也就是说，不用再在html里面插入一堆js来调用命令了，只需要定义id即可。
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;JQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;是继&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;之后又一个优秀的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Javascript&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;库。它是轻量级的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;库&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，它兼容&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CSS3&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，还兼容各种浏览器（&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;IE&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;FF&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Safari&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Opera&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;9.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;），&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;及后续版本将不再支持&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;IE6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;浏览器。&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;使用户能更方便地处理&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（标准通用标记语言下的一个应用）、&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、实现动画效果，并且方便地为网站提供&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AJAX&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;交互。&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;还有一个比较大的优势是，它的文档说明很全，而且各种应用也说得很详细，同时还有许多成熟的插件可供选择。&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;能够使用户的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;页面保持代码和&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;内容分离，也就是说，不用再在&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;里面插入一堆&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;来调用命令了，只需要定义&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;即可。&lt;/span&gt;
 
-轻量级：依赖程序少，占用的资源的少
-特点：js代码和html代码分离
-jQuery已经成为最流行的javascript库，在世界前10000个访问最多的网站中，有超过55%在使用jQuery。
-由美国人John Resig在2006年1月发布
-jQuery是免费、开源的
-jQuery分类：
-    WEB版本：我们主要学习研究
-    UI版本：集成了UI组件
-    mobile版本：针对移动端开发
-    qunit版本：用于js测试的
+&lt;span class=&quot;err&quot;&gt;轻量级：依赖程序少，占用的资源的少&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;特点：&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;代码和&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;代码分离&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;已经成为最流行的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;库，在世界前&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;个访问最多的网站中，有超过&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;在使用&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;由美国人&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Resig&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;在&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2006&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;年&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;月发布&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;是免费、开源的&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;分类：&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;WEB&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;版本：我们主要学习研究&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;版本：集成了&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;UI&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;组件&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;mobile&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;版本：针对移动端开发&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;qunit&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;版本：用于&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;测试的&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6 id=&quot;优点&quot;&gt;优点&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;核心理念是write less,do more(写得更少,做得更多)
-轻量级：源码1.11.js大小是286kb，压缩班1.11.min.js大小是94.1k。如果使用GZIP压缩更小。
-兼容各种浏览器 (IE 6.0+, FF 1.5+, Safari 2.0+, Opera 9.0+）
-jQuery的语法设计可以使开发者更加便捷
-例如操作文档对象、选择DOM元素、制作动画效果、事件处理、使用Ajax以及其他功能
-jQuery能够使用户的html页面保持代码和html内容分离
-不用再在html里面插入一堆js来调用命令了，只需要定义id即可
-jQuery提供API让开发者编写插件，有许多成熟的插件可供选择
-文档说明很全
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;err&quot;&gt;核心理念是&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;less&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;more&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;写得更少&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;做得更多&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;轻量级：源码&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;大小是&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;286&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kb&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，压缩班&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;大小是&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;94.1&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。如果使用&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GZIP&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;压缩更小。&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;兼容各种浏览器&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;IE&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;FF&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Safari&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Opera&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;9.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;的语法设计可以使开发者更加便捷&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;例如操作文档对象、选择&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DOM&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;元素、制作动画效果、事件处理、使用&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Ajax&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;以及其他功能&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;能够使用户的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;页面保持代码和&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;内容分离&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;不用再在&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;里面插入一堆&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;来调用命令了，只需要定义&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;即可&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;提供&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;API&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;让开发者编写插件，有许多成熟的插件可供选择&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;文档说明很全&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&quot;基本语法&quot;&gt;基本语法&lt;/h2&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot; data-lang=&quot;JavaScript&quot;&gt;//jQuery语法
-    &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
-        //js 执行时，有加载顺序
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//jQuery语法&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//js 执行时，有加载顺序&lt;/span&gt;
 
-        /* jQuery获得数据
+        &lt;span class=&quot;cm&quot;&gt;/* jQuery获得数据
          * * 语法：$(&quot;选择器&quot;)   == jQuery(&quot;选择器&quot;)
          *
-         */
+         */&lt;/span&gt;
 
-        var username = $(&quot;#username&quot;);
-        // * val()函数 用于获得 value属性的值
-        alert(username.val());
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#username&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// * val()函数 用于获得 value属性的值&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
 
-    &amp;lt;/script&amp;gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// jQuery对象和dom对象转换&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//1 使用javascript获得value值&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;username&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//alert(username.value);&lt;/span&gt;
 
-// jQuery对象和dom对象转换
-&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
-        //1 使用javascript获得value值
-        var username = document.getElementById(&quot;username&quot;);
-        //alert(username.value);
+        &lt;span class=&quot;c1&quot;&gt;//2 将 dom对象 转换 jQuery对象&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// * 语法：$(dom对象)&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// * 建议：jQuery对象变量名，建议为$开头&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$username&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;//      alert($username.val());&lt;/span&gt;
 
-        //2 将 dom对象 转换 jQuery对象
-        // * 语法：$(dom对象)
-        // * 建议：jQuery对象变量名，建议为$开头
-        var $username = $(username);
-//      alert($username.val());
-
-        //3 将 jQuery对象 转换 dom对象
-        //3.1 jQuery对象内部使用【数组】存放所有的数据，可以数组的下标获取（索引）
-        var username2 = $username[0];
-        alert(username2.value);
-        //3.2 jQuery提供函数 get() 转换成dom对象
-        var username3 = $username.get(0);
-        alert(username3.value);
-    &amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        &lt;span class=&quot;c1&quot;&gt;//3 将 jQuery对象 转换 dom对象&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//3.1 jQuery对象内部使用【数组】存放所有的数据，可以数组的下标获取（索引）&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;username2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;username2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//3.2 jQuery提供函数 get() 转换成dom对象&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;username3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;username3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&quot;选择器&quot;&gt;选择器&lt;/h2&gt;
 
 &lt;h6 id=&quot;基本选择器&quot;&gt;基本选择器&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;基本选择器
-        |
-        |--#id
-        |       |--id选择器
-        |       |--&amp;lt;xxx id=&quot;&quot;&amp;gt; 通过id值获得元素
-        |
-        |--element
-        |       |--标签选择器，
-        |       |--&amp;lt;xxx&amp;gt; 通过标签名获得元素
-        |
-        |--.class
-        |       |--类选择器，
-        |       |--&amp;lt;xxx class=&quot;&quot;&amp;gt; 通过class值获得元素
-        |
-        |--s1,s2,...
-        |       |--多选择器
-        |       |--将多个选择器的结果添加一个数组中
-        |
-        |-- *
-        |    |--所有
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;err&quot;&gt;基本选择器&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;选择器&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xxx&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;通过&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;值获得元素&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;element&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;标签选择器，&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xxx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;通过标签名获得元素&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;类选择器，&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xxx&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;通过&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;值获得元素&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,...&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;多选择器&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;将多个选择器的结果添加一个数组中&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|--&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;所有&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
              &lt;span class=&quot;c1&quot;&gt;//javascript 通过页面加载成功 window.onload = function (){}&lt;/span&gt;
@@ -5069,10 +5068,10 @@ jQuery提供API让开发者编写插件，有许多成熟的插件可供选择
  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6 id=&quot;层级&quot;&gt;层级&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;A  B ，获得A元素内部所有的B后代元素。（爷孙）
-A &amp;gt; B ，获得A元素内部所有的B子元素。（父子）
-A + B ，获得A元素后面的第一个兄弟B。（兄弟）
-A ~ B ，获得A元素后面的所有的兄弟B。（兄弟）
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，获得&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;元素内部所有的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;后代元素。（爷孙）&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，获得&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;元素内部所有的&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;子元素。（父子）&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，获得&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;元素后面的第一个兄弟&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。（兄弟）&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;，获得&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;元素后面的所有的兄弟&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。（兄弟）&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
          &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
                  &lt;span class=&quot;c1&quot;&gt;//选择 body内的所有div元素.&lt;/span&gt;
@@ -5249,8 +5248,8 @@ A ~ B ，获得A元素后面的所有的兄弟B。（兄弟）
  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h6 id=&quot;可见性过滤&quot;&gt;可见性过滤&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;:hidden 隐藏。特指 &amp;lt;xxx style=&quot;display:none;&quot;&amp;gt;  ，获得 &amp;lt;input type=&quot;hidden&quot;&amp;gt;
-:visible    可见（默认）
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;隐藏。特指&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xxx&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;display:none;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;，获得&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;hidden&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;visible&lt;/span&gt;    &lt;span class=&quot;err&quot;&gt;可见（默认）&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
         &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
                 &lt;span class=&quot;c1&quot;&gt;//选取所有可见的div元素&lt;/span&gt;
@@ -5608,14 +5607,32 @@ A ~ B ，获得A元素后面的所有的兄弟B。（兄弟）
 &lt;h6 id=&quot;文档处理&quot;&gt;文档处理&lt;/h6&gt;
 
 &lt;ul&gt;
-&lt;li&gt;内部插入
-|表达式|备注|
-|------|---|
-|A.append(B)  | 将B插入到A的内部后面（之后的串联操作，操作A）|
-|A.prepend(B) | 将B插入到A的内部前面 |
-|A.appendTo(B)| 将A插入到B的内部后面 （之后的串联操作，操作A）|
-|A.prependTo(B) | 将A插入到B的内部前面 |&lt;/li&gt;
+&lt;li&gt;内部插入&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A.append(B)&lt;/td&gt;
+&lt;td&gt;将B插入到A的内部后面（之后的串联操作，操作A）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A.prepend(B)&lt;/td&gt;
+&lt;td&gt;将B插入到A的内部前面&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A.appendTo(B)&lt;/td&gt;
+&lt;td&gt;将A插入到B的内部后面 （之后的串联操作，操作A）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A.prependTo(B)&lt;/td&gt;
+&lt;td&gt;将A插入到B的内部前面&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
           &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
                 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$tj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#tj&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -5682,12 +5699,24 @@ detach() 删除当前对象。如果之后再使用，元素本身保留，绑�
     even ：指示事件处理函数是否会被复制。V1.5以上版本默认值是：false&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;替换
-|表达式|备注|
-|-----|----|
-|A.replaceWith(B) | 使用A将B替换掉 |
-|A.replaceAll(B) | 使用B将A替换掉 |&lt;/li&gt;
+&lt;li&gt;替换&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A.replaceWith(B)&lt;/td&gt;
+&lt;td&gt;使用A将B替换掉&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;A.replaceAll(B)&lt;/td&gt;
+&lt;td&gt;使用B将A替换掉&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;//$(&quot;p&quot;).replaceWith(&quot;&amp;lt;a href='#'&amp;gt;点我啊&amp;lt;/a&amp;gt;&amp;lt;br/&amp;gt;&quot;)&lt;/span&gt;
         &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;a href='#'&amp;gt;点我啊&amp;lt;/a&amp;gt;&amp;lt;br/&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replaceAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;p&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;

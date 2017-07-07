@@ -118,16 +118,16 @@
 <h2 id="mac卸载mysql">mac卸载mysql</h2>
 
 <p>打开终端，全部拷贝下面的内容，回车</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html">cd ~/
-sudo rm /usr/local/mysql
-sudo rm -rf /usr/local/var/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/StartupItems/MySQLCOM
-sudo rm -rf /Library/PreferencePanes/My*
-vim /etc/hostconfig and removed the line MYSQLCOM=-YES-rm -rf ~/Library/PreferencePanes/My*
-sudo rm -rf /Library/Receipts/mysql*
-sudo rm -rf /Library/Receipts/MySQL*
-sudo rm -rf /var/db/receipts/com.mysql.*
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="o">~</span><span class="sr">/</span><span class="err">
+</span><span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">mysql</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="kd">var</span><span class="sr">/mysq</span><span class="err">l
+</span><span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">mysql</span><span class="o">*</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">Library</span><span class="o">/</span><span class="nx">StartupItems</span><span class="o">/</span><span class="nx">MySQLCOM</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">Library</span><span class="o">/</span><span class="nx">PreferencePanes</span><span class="o">/</span><span class="nx">My</span><span class="o">*</span>
+<span class="nx">vim</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">hostconfig</span> <span class="nx">and</span> <span class="nx">removed</span> <span class="nx">the</span> <span class="nx">line</span> <span class="nx">MYSQLCOM</span><span class="o">=-</span><span class="nx">YES</span><span class="o">-</span><span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">~</span><span class="sr">/Library/</span><span class="nx">PreferencePanes</span><span class="o">/</span><span class="nx">My</span><span class="o">*</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">Library</span><span class="o">/</span><span class="nx">Receipts</span><span class="o">/</span><span class="nx">mysql</span><span class="o">*</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="nx">Library</span><span class="o">/</span><span class="nx">Receipts</span><span class="o">/</span><span class="nx">MySQL</span><span class="o">*</span>
+<span class="nx">sudo</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="o">/</span><span class="kd">var</span><span class="sr">/db/</span><span class="nx">receipts</span><span class="o">/</span><span class="nx">com</span><span class="p">.</span><span class="nx">mysql</span><span class="p">.</span><span class="o">*</span>
 </code></pre></div></blockquote>
 
         
@@ -628,23 +628,23 @@ sudo rm -rf /var/db/receipts/com.mysql.*
 <h6 id="什么是css">什么是css</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">层叠样式表，css是对html进行样式修饰语言
 层叠：就是层层覆盖叠加，如果不同的css样式对同一html标签进行修饰，样式有冲突的部分应用优先级高的，不冲突的部分共同作用
-样式表：就是css属性样式的集合  
+样式表：就是css属性样式的集合
 </code></pre></div>
 <h6 id="css的作用">css的作用</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">修饰html的 使其html样式更加好看
 提高样式代码的复用性
-html的内容与样式相分离 便于后期维护  
+html的内容与样式相分离 便于后期维护
 </code></pre></div>
 <h6 id="内嵌样式">内嵌样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"color:red;font-size: 100px;"</span><span class="nt">&gt;</span>你好啊 小朋友<span class="nt">&lt;/div&gt;</span>1
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"color:red;font-size: 100px;"</span><span class="o">&gt;</span><span class="err">你好啊</span> <span class="err">小朋友</span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">1
+</span></code></pre></div>
 <h6 id="内部样式">内部样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
-   <span class="nt">div</span><span class="p">{</span><span class="nl">color</span><span class="p">:</span><span class="no">red</span><span class="p">;</span><span class="nl">font-size</span><span class="p">:</span> <span class="m">100px</span><span class="p">;}</span>
-<span class="nt">&lt;/style&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">style</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+   <span class="nx">div</span><span class="p">{</span><span class="nl">color</span><span class="p">:</span><span class="nx">red</span><span class="p">;</span><span class="nx">font</span><span class="o">-</span><span class="nx">size</span><span class="err">:</span> <span class="mi">100</span><span class="nx">px</span><span class="p">;}</span>
+<span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="外部样式">外部样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"demo1.css"</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"demo1.css"</span><span class="o">/&gt;</span>
 </code></pre></div>
 <h6 id="import方式">@import方式</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">&lt;style type="text/css"&gt;

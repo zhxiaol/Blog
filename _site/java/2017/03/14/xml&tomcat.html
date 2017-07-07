@@ -135,7 +135,7 @@
 dtd 外部dtd 本地文件:&lt;!DOCUTYPE students SYSTEM &quot;student.dtd&quot;&gt;
 dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quot; &quot;student.dtd&quot;&gt;
 ##### student.dtd
-<code>xml
+<code>javascript
 &lt;!ELEMENT students (student*)&gt;&lt;!-- 根标签 student可以出现0至多个--&gt;
 &lt;!ELEMENT student (name,age,sex)&gt;&lt;!--student标签要出现的内容，顺序--&gt;
 &lt;!ELEMENT name (#PCDATA)&gt;&lt;!-- name标签中可以写文本--&gt;
@@ -144,7 +144,7 @@ dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quo
 &lt;!ATTLIST student number ID #REQUIRED&gt;&lt;!-- student里面可以写属性 属性名称ID --&gt;
 </code>
 ##### student.xml
-<code>xml
+<code>javascript
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
 &lt;!DOCTYPE students SYSTEM &quot;student.dtd&quot;&gt;
 &lt;students&gt;
@@ -202,7 +202,7 @@ dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quo
 
 <p><a href="/xsd:schema">/xsd:schema</a></p>
 <div class="highlight"><pre><code class="language-" data-lang="">##### student.xml
-```xml
+```javascript
 &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;students xmlns="http://www.itcast.cn/xml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -213,13 +213,13 @@ xsi:schemaLocation="http://www.itcast.cn/xml  student.xsd"&gt;
     &lt;sex&gt;男&lt;/sex&gt;
 &lt;/student&gt;
 &lt;/students&gt;
-</code></pre></div><div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">"http://xmlns.jcp.org/xml/ns/javaee"</span>
-     <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
-     <span class="na">xsi:schemaLocation=</span><span class="s">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span>
-     <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/web-app&gt;</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://xmlns.jcp.org/xml/ns/javaee"</span>
+     <span class="nl">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span>
+     <span class="nl">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span>
+     <span class="nx">version</span><span class="o">=</span><span class="s2">"3.1"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/web-app</span><span class="err">&gt;
+</span></code></pre></div>
 <h2 id="xml解析">xml解析</h2>
 
 <ul>
@@ -334,51 +334,51 @@ System.out.println(node.getText());
 <p>tomcat目录/conf/server.xml 第70行 &lt;Conector port=&quot;8081&quot;/&gt;</p>
 
 <h2 id="tomcat主要目录">Tomcat主要目录</h2>
-<div class="highlight"><pre><code class="language-html" data-lang="html">Tomcat主要目录
-|
-|--bin 可执行文件
-|   |
-|   |--start.sh 启动tomcat
-|   |--shutdown.sh  关闭tomcat
-|
-|--conf 配置文件
-|   |
-|   |--server.xml
-|   |--Catalina
-|         |
-|         |--localhost 配置虚拟目录
-|
-|--lib tomcat运行时依赖的jar包
-|
-|--logs tomcat运行时产生的日志文件
-|
-|--temp tomcat运行时的临时文件
-|
-|--webapps 存放应用的目录
-|
-|--work tomcat运行时的工作目录
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Tomcat</span><span class="err">主要目录</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">bin</span> <span class="err">可执行文件</span>
+<span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|--</span><span class="nx">start</span><span class="p">.</span><span class="nx">sh</span> <span class="err">启动</span><span class="nx">tomcat</span>
+<span class="o">|</span>   <span class="o">|--</span><span class="nx">shutdown</span><span class="p">.</span><span class="nx">sh</span>  <span class="err">关闭</span><span class="nx">tomcat</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">conf</span> <span class="err">配置文件</span>
+<span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|--</span><span class="nx">server</span><span class="p">.</span><span class="nx">xml</span>
+<span class="o">|</span>   <span class="o">|--</span><span class="nx">Catalina</span>
+<span class="o">|</span>         <span class="o">|</span>
+<span class="o">|</span>         <span class="o">|--</span><span class="nx">localhost</span> <span class="err">配置虚拟目录</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">lib</span> <span class="nx">tomcat</span><span class="err">运行时依赖的</span><span class="nx">jar</span><span class="err">包</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">logs</span> <span class="nx">tomcat</span><span class="err">运行时产生的日志文件</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">temp</span> <span class="nx">tomcat</span><span class="err">运行时的临时文件</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">webapps</span> <span class="err">存放应用的目录</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">work</span> <span class="nx">tomcat</span><span class="err">运行时的工作目录</span>
 </code></pre></div></blockquote>
 
 <h2 id="标准javaweb应用的目录结构">标准JavaWeb应用的目录结构</h2>
-<div class="highlight"><pre><code class="language-html" data-lang="html">webapp
-|
-|---xx.html
-|
-|---css
-|   |--myStyle.css
-|
-|---js
-|    |--myjs.js
-|
-|---WEB-INF 固定写法 此目录不能被外部直接访问
-  |
-  |--classes    程序代码.class
-  |     |--xxx.class
-  |
-  |--lib  应用需要的jar
-  |   |--xxx.jar
-  |
-  |--web.xml  应用配置信息
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">webapp</span>
+<span class="o">|</span>
+<span class="o">|---</span><span class="nx">xx</span><span class="p">.</span><span class="nx">html</span>
+<span class="o">|</span>
+<span class="o">|---</span><span class="nx">css</span>
+<span class="o">|</span>   <span class="o">|--</span><span class="nx">myStyle</span><span class="p">.</span><span class="nx">css</span>
+<span class="o">|</span>
+<span class="o">|---</span><span class="nx">js</span>
+<span class="o">|</span>    <span class="o">|--</span><span class="nx">myjs</span><span class="p">.</span><span class="nx">js</span>
+<span class="o">|</span>
+<span class="o">|---</span><span class="nx">WEB</span><span class="o">-</span><span class="nx">INF</span> <span class="err">固定写法</span> <span class="err">此目录不能被外部直接访问</span>
+  <span class="o">|</span>
+  <span class="o">|--</span><span class="nx">classes</span>    <span class="err">程序代码</span><span class="p">.</span><span class="kr">class</span>
+  <span class="o">|</span>     <span class="o">|--</span><span class="nx">xxx</span><span class="p">.</span><span class="kr">class</span>
+  <span class="o">|</span>
+  <span class="o">|--</span><span class="nx">lib</span>  <span class="err">应用需要的</span><span class="nx">jar</span>
+  <span class="o">|</span>   <span class="o">|--</span><span class="nx">xxx</span><span class="p">.</span><span class="nx">jar</span>
+  <span class="o">|</span>
+  <span class="o">|--</span><span class="nx">web</span><span class="p">.</span><span class="nx">xml</span>  <span class="err">应用配置信息</span>
 </code></pre></div>
 <h2 id="集成tomcat和自动部署">集成Tomcat和自动部署</h2>
 
@@ -428,40 +428,40 @@ Project Structure &gt;&gt; Modules &gt;&gt; Dependencies &gt;&gt; +(libraries/to
 <blockquote>
 <p>URL:统一资源定位符(网址)<br>
 URI:统一资源标识符</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html">URL统一资源定位符http://localhost:8080/myapp.index.html
---------------------------------------------------------------------
-http://[协议]                                         
-|                                                   
-|--localhost:[主机]                                          
-  |                                         
-  |--8080[端口]                                               
-    |                                       
-    |--/myapp/index.html[URI资源标识符]
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">URL</span><span class="err">统一资源定位符</span><span class="nx">http</span><span class="err">:</span><span class="c1">//localhost:8080/myapp.index.html</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="nx">http</span><span class="err">:</span><span class="c1">//[协议]                                         </span>
+<span class="o">|</span>                                                   
+<span class="o">|--</span><span class="nx">localhost</span><span class="err">:</span><span class="p">[</span><span class="err">主机</span><span class="p">]</span>                                          
+  <span class="o">|</span>                                         
+  <span class="o">|--</span><span class="mi">8080</span><span class="p">[</span><span class="err">端口</span><span class="p">]</span>                                               
+    <span class="o">|</span>                                       
+    <span class="o">|--</span><span class="sr">/myapp/i</span><span class="nx">ndex</span><span class="p">.</span><span class="nx">html</span><span class="p">[</span><span class="nx">URI</span><span class="err">资源标识符</span><span class="p">]</span>
 </code></pre></div></blockquote>
 
 <h2 id="虚拟目录">虚拟目录</h2>
-<div class="highlight"><pre><code class="language-html" data-lang="html">Tomcat目录
-|
-|--conf
-|    |--Catalina(方式一:推荐使用，无需重启服务器)
-|    |      |
- |      |--localhost
- |              |
- |              |--添加myapp.xml
- |                      |
- |                      |--<span class="nt">&lt;Context</span> <span class="na">docBase=</span><span class="s">"D:\myApp"</span><span class="nt">/&gt;</span>
- |
- |--server.xml(方式二:不推荐使用，需重启服务器)
-    |
-    |--<span class="nt">&lt;Host&gt;</span> 标签内添加配置
-      |
-      |--添加<span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">""</span> <span class="na">docBase=</span><span class="s">""</span><span class="nt">&gt;&lt;/Context&gt;</span>       
-            |
-            |-- path:虚拟目录，docBase:实际目录
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Tomcat</span><span class="err">目录</span>
+<span class="o">|</span>
+<span class="o">|--</span><span class="nx">conf</span>
+<span class="o">|</span>    <span class="o">|--</span><span class="nx">Catalina</span><span class="p">(</span><span class="err">方式一:推荐使用，无需重启服务器</span><span class="p">)</span>
+<span class="o">|</span>    <span class="o">|</span>      <span class="o">|</span>
+ <span class="o">|</span>      <span class="o">|--</span><span class="nx">localhost</span>
+ <span class="o">|</span>              <span class="o">|</span>
+ <span class="o">|</span>              <span class="o">|--</span><span class="err">添加</span><span class="nx">myapp</span><span class="p">.</span><span class="nx">xml</span>
+ <span class="o">|</span>                      <span class="o">|</span>
+ <span class="o">|</span>                      <span class="o">|--&lt;</span><span class="nx">Context</span> <span class="nx">docBase</span><span class="o">=</span><span class="s2">"D:\myApp"</span><span class="o">/&gt;</span>
+ <span class="o">|</span>
+ <span class="o">|--</span><span class="nx">server</span><span class="p">.</span><span class="nx">xml</span><span class="p">(</span><span class="err">方式二:不推荐使用，需重启服务器</span><span class="p">)</span>
+    <span class="o">|</span>
+    <span class="o">|--&lt;</span><span class="nx">Host</span><span class="o">&gt;</span> <span class="err">标签内添加配置</span>
+      <span class="o">|</span>
+      <span class="o">|--</span><span class="err">添加</span><span class="o">&lt;</span><span class="nx">Context</span> <span class="nx">path</span><span class="o">=</span><span class="s2">""</span> <span class="nx">docBase</span><span class="o">=</span><span class="s2">""</span><span class="o">&gt;&lt;</span><span class="sr">/Context&gt;      </span><span class="err"> 
+</span>            <span class="o">|</span>
+            <span class="o">|--</span> <span class="nx">path</span><span class="err">:虚拟目录，</span><span class="nx">docBase</span><span class="err">:实际目录</span>
 </code></pre></div>
 <h5 id="myapp-xml">myapp.xml</h5>
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;Context</span> <span class="na">docBase=</span><span class="s">"D:\myApp"</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">Context</span> <span class="nx">docBase</span><span class="o">=</span><span class="s2">"D:\myApp"</span><span class="o">/&gt;</span>
 </code></pre></div>
 <h2 id="默认主页">默认主页</h2>
 

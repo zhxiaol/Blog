@@ -120,23 +120,23 @@
 <h6 id="什么是css">什么是css</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">层叠样式表，css是对html进行样式修饰语言
 层叠：就是层层覆盖叠加，如果不同的css样式对同一html标签进行修饰，样式有冲突的部分应用优先级高的，不冲突的部分共同作用
-样式表：就是css属性样式的集合  
+样式表：就是css属性样式的集合
 </code></pre></div>
 <h6 id="css的作用">css的作用</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">修饰html的 使其html样式更加好看
 提高样式代码的复用性
-html的内容与样式相分离 便于后期维护  
+html的内容与样式相分离 便于后期维护
 </code></pre></div>
 <h6 id="内嵌样式">内嵌样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"color:red;font-size: 100px;"</span><span class="nt">&gt;</span>你好啊 小朋友<span class="nt">&lt;/div&gt;</span>1
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"color:red;font-size: 100px;"</span><span class="o">&gt;</span><span class="err">你好啊</span> <span class="err">小朋友</span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">1
+</span></code></pre></div>
 <h6 id="内部样式">内部样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
-   <span class="nt">div</span><span class="p">{</span><span class="nl">color</span><span class="p">:</span><span class="no">red</span><span class="p">;</span><span class="nl">font-size</span><span class="p">:</span> <span class="m">100px</span><span class="p">;}</span>
-<span class="nt">&lt;/style&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">style</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+   <span class="nx">div</span><span class="p">{</span><span class="nl">color</span><span class="p">:</span><span class="nx">red</span><span class="p">;</span><span class="nx">font</span><span class="o">-</span><span class="nx">size</span><span class="err">:</span> <span class="mi">100</span><span class="nx">px</span><span class="p">;}</span>
+<span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="外部样式">外部样式</h6>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"demo1.css"</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"demo1.css"</span><span class="o">/&gt;</span>
 </code></pre></div>
 <h6 id="import方式">@import方式</h6>
 <div class="highlight"><pre><code class="language-" data-lang="">&lt;style type="text/css"&gt;
@@ -298,7 +298,7 @@ margin:
 <p>===============================================================================<br>
 javascript笔记</p>
 
-<p>一、js的简介 <br>
+<p>一、js的简介<br>
     1、js是什么<br>
         js是可以嵌入到html中，是 基于对象 和 事件驱动 的 脚本语言<br>
         特点：<br>
@@ -309,7 +309,7 @@ javascript笔记</p>
         (1)js能动态的修改(增删)html和css的代码<br>
         (2)能动态的校验数据</p>
 <div class="highlight"><pre><code class="language-" data-lang="">3、js历史及组成
-    ECMAScript  BOM(浏览器对象模型)  DOM(文档对象模型) 
+    ECMAScript  BOM(浏览器对象模型)  DOM(文档对象模型)
 4、js被引入的方式
     (1)内嵌脚本
         &lt;input type="button" value="button" onclick="alert('xxx')" /&gt;           
@@ -362,7 +362,7 @@ javascript笔记</p>
 3、引用数据类型
     java:   Object obj = new Object();
     js:     var obj = new Object();
-            var num = new Number(); 
+            var num = new Number();
 
 4、运算符
     (1)赋值运算符

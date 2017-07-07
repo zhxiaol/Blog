@@ -103,7 +103,7 @@ public class ServletDemo4 extends HttpServlet {
     }
 ```
 ###### login.html
-```html
+```javascript
 <body>
     <form action="#" method="post">
     用户名:<input type="text" name="username"><br/>

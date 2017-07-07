@@ -19,7 +19,7 @@ description: xml&tomcat
 dtd 外部dtd 本地文件:<!DOCUTYPE students SYSTEM "student.dtd">
 dtd 外部dtd 网络文件:<!DOCUTYPE students PUBLIC  "名称空间" "student.dtd">
 ##### student.dtd
-```xml
+```javascript
 <!ELEMENT students (student*)><!-- 根标签 student可以出现0至多个-->
 <!ELEMENT student (name,age,sex)><!--student标签要出现的内容，顺序-->
 <!ELEMENT name (#PCDATA)><!-- name标签中可以写文本-->
@@ -28,7 +28,7 @@ dtd 外部dtd 网络文件:<!DOCUTYPE students PUBLIC  "名称空间" "student.d
 <!ATTLIST student number ID #REQUIRED><!-- student里面可以写属性 属性名称ID -->
 ```
 ##### student.xml
-```xml
+```javascript
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE students SYSTEM "student.dtd">
 <students>
@@ -86,7 +86,7 @@ dtd 外部dtd 网络文件:<!DOCUTYPE students PUBLIC  "名称空间" "student.d
 </xsd:schema>
 ```
 ##### student.xml
-```xml
+```javascript
 <?xml version="1.0" encoding="UTF-8" ?>
 <students xmlns="http://www.itcast.cn/xml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -98,7 +98,7 @@ xsi:schemaLocation="http://www.itcast.cn/xml  student.xsd">
 </student>
 </students>
 ```
-```xml
+```javascript
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -218,7 +218,7 @@ http://tomcat.apache.org/ 下载tomcat tar.gz版本 解压拷贝到/usr/local/�
 ## 修改tomcat端口
 > tomcat目录/conf/server.xml 第70行 &lt;Conector port="8081"/&gt;
 ## Tomcat主要目录
-```html
+```javascript
 Tomcat主要目录
 |
 |--bin 可执行文件
@@ -245,7 +245,7 @@ Tomcat主要目录
 ```
 
 ## 标准JavaWeb应用的目录结构
-```html
+```javascript
 webapp
 |
 |---xx.html
@@ -297,7 +297,7 @@ Project Structure >> Modules >> Dependencies >> +(libraries/tomcat) +jars or dir
 ##URI和URI
 > URL:统一资源定位符(网址)
 > URI:统一资源标识符
-```html
+```javascript
 URL统一资源定位符http://localhost:8080/myapp.index.html
 --------------------------------------------------------------------
 http://[协议]											
@@ -310,7 +310,7 @@ http://[协议]
 ```
 
 ## 虚拟目录
-```html
+```javascript
 Tomcat目录
 |
 |--conf
@@ -331,7 +331,7 @@ Tomcat目录
             |--	path:虚拟目录，docBase:实际目录
 ```
 ##### myapp.xml
-```xml
+```javascript
 <?xml version="1.0" encoding="utf-8"?>
 <Context docBase="D:\myApp"/>
 ```

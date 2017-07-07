@@ -172,18 +172,18 @@
 <h4 id="创建maven工程">创建maven工程</h4>
 
 <h5 id="maven工程结构">Maven工程结构</h5>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Project</span>
-   <span class="o">|--</span><span class="n">src</span><span class="err">（源码包）</span>
-   <span class="o">|</span>   <span class="o">|--</span><span class="n">main</span><span class="err">（正常的源码包）</span>
-   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="n">java</span><span class="err">（</span><span class="o">.</span><span class="na">java</span><span class="err">文件的目录）</span>
-   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="n">resources</span><span class="err">（资源文件的目录）</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Project</span>
+   <span class="o">|--</span><span class="nx">src</span><span class="err">（源码包）</span>
+   <span class="o">|</span>   <span class="o">|--</span><span class="nx">main</span><span class="err">（正常的源码包）</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="nx">java</span><span class="err">（</span><span class="p">.</span><span class="nx">java</span><span class="err">文件的目录）</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="nx">resources</span><span class="err">（资源文件的目录）</span>
    <span class="o">|</span>   <span class="o">|</span>
-   <span class="o">|</span>   <span class="o">|--</span><span class="n">test</span><span class="err">（测试的源码包）</span>
-   <span class="o">|</span>       <span class="o">|--</span><span class="n">java</span>
-   <span class="o">|</span>       <span class="o">|--</span><span class="n">resources</span>
+   <span class="o">|</span>   <span class="o">|--</span><span class="nx">test</span><span class="err">（测试的源码包）</span>
+   <span class="o">|</span>       <span class="o">|--</span><span class="nx">java</span>
+   <span class="o">|</span>       <span class="o">|--</span><span class="nx">resources</span>
    <span class="o">|</span>       
-   <span class="o">|--</span><span class="n">target</span><span class="err">（</span><span class="n">class</span><span class="err">文件、报告等信息存储的地方）</span>
-   <span class="o">|--</span><span class="n">pom</span><span class="o">.</span><span class="na">xml</span><span class="err">（</span><span class="n">maven</span><span class="err">工程的描述文件）</span>
+   <span class="o">|--</span><span class="nx">target</span><span class="err">（</span><span class="kr">class</span><span class="err">文件、报告等信息存储的地方）</span>
+   <span class="o">|--</span><span class="nx">pom</span><span class="p">.</span><span class="nx">xml</span><span class="err">（</span><span class="nx">maven</span><span class="err">工程的描述文件）</span>
 </code></pre></div>
 <h5 id="创建hellomaven工程">创建HelloMaven工程</h5>
 
@@ -206,14 +206,14 @@
 |mvn clean test|先执行clean，再执行test，通常应用于测试环节|<br>
 |mvn clean package|先执行clean，再执行package，将项目打包，通常应用于发布前|<br>
 |mvn clean install|先执行clean，再执行install，将项目打包，通常应用于发布前|</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">mvn</span> <span class="n">clean</span> <span class="kn">package</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">mvn</span> <span class="nx">clean</span> <span class="kr">package</span>
     <span class="err">执行过程：</span>
       <span class="err">清理————清空环境</span>
       <span class="err">编译————编译源码</span>
       <span class="err">测试————测试源码</span>
       <span class="err">打包————将编译的非测试类打包</span>
 
-<span class="n">cmd</span> <span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
+<span class="nx">cmd</span> <span class="nx">mvn</span> <span class="nx">clean</span> <span class="nx">install</span>
    <span class="err">执行过程：</span>
       <span class="err">清理————清空环境</span>
       <span class="err">编译————编译源码</span>
@@ -238,69 +238,70 @@
 <li>New Project选择Maven 勾选Create from archetype</li>
 <li>选择maven-archetype-quickstart next</li>
 <li>填写groupid(com.itheima.maven) artifactId(MevanFirst)</li>
-<li>shift+commend+a 搜索Maven Project 点击m按钮 输入指令complie test package install
-###### pom.xml
-```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion></li>
+<li>shift+commend+a 搜索Maven Project 点击m按钮 输入指令complie test package install</li>
 </ul>
 
-<p><groupId>com.itheima.maven</groupId><br>
-  <artifactId>MavenFirst</artifactId><br>
-  <version>1.0-SNAPSHOT</version><br>
-  <packaging>jar</packaging></p>
+<h6 id="pom-xml">pom.xml</h6>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-<p><name>MavenFirst</name><br>
-  <url><a href="http://maven.apache.org">http://maven.apache.org</a></url></p>
+  <span class="nt">&lt;groupId&gt;</span>com.itheima.maven<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>MavenFirst<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
 
-<p><properties><br>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><br>
-  </properties></p>
+  <span class="nt">&lt;name&gt;</span>MavenFirst<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span>
 
-<p><dependencies><br>
-    <dependency><br>
-      <groupId>junit</groupId><br>
-      <artifactId>junit</artifactId><br>
-      <version>4.9</version><br>
-      <scope>test</scope><br>
-    </dependency><br>
-    <dependency><br>
-      <groupId>junit</groupId><br>
-      <artifactId>junit</artifactId><br>
-      <version>RELEASE</version><br>
-    </dependency><br>
-    <dependency><br>
-      <groupId>junit</groupId><br>
-      <artifactId>junit</artifactId><br>
-      <version>RELEASE</version><br>
-    </dependency><br>
-    <dependency><br>
-      <groupId>junit</groupId><br>
-      <artifactId>junit</artifactId><br>
-      <version>4.12</version><br>
-    </dependency><br>
-  </dependencies><br>
-</project></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
 
-#### 创建MavenSecond工程
-* New Project选择Maven 不勾选Create from archetype
-```java
-//pom.xml
-&lt;dependency&gt;
-    &lt;groupId&gt;com.itheima.maven&lt;/groupId&gt;
-    &lt;artifactId&gt;MavenFirst&lt;/artifactId&gt;
-    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-&lt;/dependency&gt;
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.9<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.12<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</code></pre></div>
+<h4 id="创建mavensecond工程">创建MavenSecond工程</h4>
 
-//MavenSecond
-public class MavenSecond {
-    public String sayHello(String name){
-        MavenFirst first = new MavenFirst();
-        return first.sayHello(name);
-    }
-}
+<ul>
+<li>New Project选择Maven 不勾选Create from archetype</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//pom.xml</span>
+<span class="o">&lt;</span><span class="nx">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">groupId</span><span class="o">&gt;</span><span class="nx">com</span><span class="p">.</span><span class="nx">itheima</span><span class="p">.</span><span class="nx">maven</span><span class="o">&lt;</span><span class="sr">/groupId</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">artifactId</span><span class="o">&gt;</span><span class="nx">MavenFirst</span><span class="o">&lt;</span><span class="sr">/artifactId</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">-</span><span class="nx">SNAPSHOT</span><span class="o">&lt;</span><span class="sr">/version</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dependency</span><span class="err">&gt;
+</span>
+<span class="c1">//MavenSecond</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MavenSecond</span> <span class="p">{</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nb">String</span> <span class="nx">name</span><span class="p">){</span>
+        <span class="nx">MavenFirst</span> <span class="nx">first</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MavenFirst</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nx">first</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="maven的核心概念">Maven的核心概念</h4>
 
@@ -390,7 +391,7 @@ Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构
 <span class="o">}</span>
 </code></pre></div>
 <h4 id="依赖范围传递">依赖范围传递</h4>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">MavenThird</span><span class="o">-------</span><span class="n">MavenSecond</span><span class="o">------------</span><span class="n">MavenFirst</span>                            
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">MavenThird</span><span class="o">-------</span><span class="nx">MavenSecond</span><span class="o">------------</span><span class="nx">MavenFirst</span>                            
     <span class="o">|</span>        <span class="o">|</span>               <span class="o">|</span>           <span class="o">|</span>
     <span class="o">|</span>        <span class="o">|</span>                   <span class="o">|</span>           <span class="o">|</span>
     <span class="o">|</span>    <span class="err">第一直接依赖</span>         <span class="err">第二直接依赖</span>       <span class="o">|</span>
@@ -527,63 +528,61 @@ deploy 将最终的包复制到远程的仓库，以让其它开发人员与项�
 父工程的packaging为pom</li>
 <li>创建子工程
 创建子工程有两种方式：一种是创建一个新的工程为子工程，另一种是修改老的工程为子工程。
-子工程的pom文件
-<code>xml
-&lt;parent&gt;
-&lt;groupId&gt;com.itheima.maven&lt;/groupId&gt;
-&lt;artifactId&gt;MavenParent&lt;/artifactId&gt;
-&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-&lt;/parent&gt;
-</code>
-##### 父工程统一依赖jar包
-在父工程中对jar包进行依赖，在子工程中都会继承此依赖。
-<code>xml
-&lt;packaging&gt;pom&lt;/packaging&gt;
-&lt;dependencies&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;junit&lt;/groupId&gt;
-    &lt;artifactId&gt;junit&lt;/artifactId&gt;
-    &lt;version&gt;4.9&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code>
-##### 父工程统一管理版本号
-dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。
-```xml
-//父工程
-<dependencyManagement>
-<dependencies>
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.9</version>
-    </dependency>
-</dependencies>
-</dependencyManagement></li>
+子工程的pom文件</li>
 </ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">parent</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">groupId</span><span class="o">&gt;</span><span class="nx">com</span><span class="p">.</span><span class="nx">itheima</span><span class="p">.</span><span class="nx">maven</span><span class="o">&lt;</span><span class="sr">/groupId</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">artifactId</span><span class="o">&gt;</span><span class="nx">MavenParent</span><span class="o">&lt;</span><span class="sr">/artifactId</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">-</span><span class="nx">SNAPSHOT</span><span class="o">&lt;</span><span class="sr">/version</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/parent</span><span class="err">&gt;
+</span></code></pre></div>
+<h5 id="父工程统一依赖jar包">父工程统一依赖jar包</h5>
 
-<p>//子工程<br>
-<dependencies><br>
-    <dependency><br>
-        <groupId>junit</groupId><br>
-        <artifactId>junit</artifactId><br>
-    </dependency><br>
-</dependencies></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-##### 父工程抽取版本号
-```xml
-&lt;properties&gt;
-    &lt;junit.vsersion&gt;4.9&lt;/junit.vsersion&gt;
-&lt;/properties&gt;
-&lt;dependencyManagement&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;junit&lt;/groupId&gt;
-            &lt;artifactId&gt;junit&lt;/artifactId&gt;
-            &lt;version&gt;${junit.vsersion}&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-&lt;/dependencyManagement&gt;
+<p>在父工程中对jar包进行依赖，在子工程中都会继承此依赖。</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;packaging&gt;</span>pom<span class="nt">&lt;/packaging&gt;</span>
+<span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>4.9<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div>
+<h5 id="父工程统一管理版本号">父工程统一管理版本号</h5>
+
+<p>dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//父工程
+<span class="nt">&lt;dependencyManagement&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>4.9<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/dependencyManagement&gt;</span>
+
+//子工程
+<span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div>
+<h5 id="父工程抽取版本号">父工程抽取版本号</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;junit.vsersion&gt;</span>4.9<span class="nt">&lt;/junit.vsersion&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;dependencyManagement&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${junit.vsersion}<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/dependencyManagement&gt;</span>
 </code></pre></div>
 <h4 id="聚合">聚合</h4>
 
