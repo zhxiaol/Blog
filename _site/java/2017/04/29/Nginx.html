@@ -122,7 +122,7 @@
 特点:占有内存少，并发能力强</p>
 
 <h2 id="mac-配置nginx">mac 配置Nginx</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">mac配置Ngix
+<div class="highlight"><pre><code class="language-html" data-lang="html">mac配置Ngix
     |
     |--安装Nginx
     |     |
@@ -133,7 +133,7 @@
     |           |--conf目录
     |               |--server.xml
     |                    |--注意修改端口不要冲突
-    |                    |--&lt;Engine name="Catalina" defaultHost="localhost" jvmRoute="tomcat2"&gt;
+    |                    |--<span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">"Catalina"</span> <span class="na">defaultHost=</span><span class="s">"localhost"</span> <span class="na">jvmRoute=</span><span class="s">"tomcat2"</span><span class="nt">&gt;</span>
     |
     |--负载均衡配置
     |      |--Nginx目录
@@ -163,44 +163,42 @@
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ## 共享session
-</code></pre></div>
-<p>session共享<br>
-    |<br>
-    |<br>
-    |--第一种:<br>
-    |    以负载均衡服务器本身提供的session共享策略<br>
-    |    每种服务期的配置是不一样的并且nginx本身是没有的<br>
-    |<br>
-    |--第二种:<br>
-    |    利用web容器本身的session共享策略来配置共享<br>
-    |    适合weblogic,tomcat有缺陷，浪费带宽<br>
-    |         |<br>
-    |         |--tomcat目录<br>
-    |               |--conf<br>
-    |                   |--server.xml<br>
-    |                   |    |--1.取消Engine标签里面的 Cluster注释<br><br>
-    |                   |<br>
-    |                   |--web.xml<br>
-    |                        |--2.添加<distributable/><br>
-    |--第三种:<br>
-    |    tomcat集群+redis的Session共享配置方法</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>虚拟目录<br>
-    |<br>
-    |--tomcat目录<br>
-         |<br>
-         |--conf<br>
-             |<br>
-             |--Catalina<br>
-                  |<br>
-                  |--localhost<br>
-                        |<br>
-                        |--添加ROOT.xml 文件名称就是访问路径<br>
-                             |<br>
-                             |--&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-                                <Context docBase="/zhxiaol/java/learnspace/Learn47/web"/></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+```html
+session共享
+    |
+    |
+    |--第一种:
+    |    以负载均衡服务器本身提供的session共享策略
+    |    每种服务期的配置是不一样的并且nginx本身是没有的
+    |
+    |--第二种:
+    |    利用web容器本身的session共享策略来配置共享
+    |    适合weblogic,tomcat有缺陷，浪费带宽
+    |         |
+    |         |--tomcat目录
+    |               |--conf
+    |                   |--server.xml
+    |                   |    |--1.取消Engine标签里面的 Cluster注释         
+    |                   |
+    |                   |--web.xml
+    |                        |--2.添加&lt;distributable/&gt;
+    |--第三种:
+    |    tomcat集群+redis的Session共享配置方法
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html">虚拟目录
+    |
+    |--tomcat目录
+         |
+         |--conf
+             |
+             |--Catalina
+                  |
+                  |--localhost
+                        |
+                        |--添加ROOT.xml 文件名称就是访问路径
+                             |
+                             |--<span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+                                <span class="nt">&lt;Context</span> <span class="na">docBase=</span><span class="s">"/zhxiaol/java/learnspace/Learn47/web"</span><span class="nt">/&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -353,9 +351,10 @@
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

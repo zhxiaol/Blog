@@ -152,7 +152,7 @@ stmt.close();
 conn.close();
 </code>
 ## java.sql.DriverManager
-<code>
+<code>java
 注册驱动
 DriverManage.registDriver(Driver driver) 不建议使用(1.导致驱动被注册2次,2.强烈依赖jar包)
 加载驱动 Class.froNmae(&quot;com.mysql.jdbc.Driver&quot;); Driver里面有静态代码块注册驱动
@@ -181,7 +181,7 @@ Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/
 ResultSet getResultSet()。
 </code>
 ## java.sql.ResultSet
-<code>
+<code>java
 封装结果集
 提供一个游标，默认游标在第一行之前
 调用next()方法，游标向下移动一行
@@ -195,7 +195,7 @@ boolean previous()
 boolean afterLast()将游标移动到末尾，最后一行之后
 boolean beforeFirst() 移动到开头，第一行之前
 </code>
-<code>
+<code>java
 Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
 Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
 Statement stmt=conn.createStatement();
@@ -216,7 +216,7 @@ stmt.close();
 conn.close();
 </code>
 ## 释放资源
-<code>
+<code>java
 Connection conn=null;
 Statement stmt=null;
 ResultSet rs=null;
@@ -252,7 +252,7 @@ if(rs!=null){
 }
 </code>
 ## CRUD
-```
+```java
 public class DBUtils {
 private static String driverClass;
 private static String url;
@@ -310,14 +310,14 @@ public static void closeAll(ResultSet rs, Statement stmt,Connection conn){
 &gt; 性能高
 &gt; 会把SQL语句先编译
 &gt; 过滤用户输入 的关键字
-</code></pre></div>
-<p>conn=DBUtils.getConnection();<br>
-String sql=&quot;select * from users where name=? and password=?&quot;;<br>
-stmt=conn.prepareStatement(sql);<br>
-stmt.setString(1,name);<br>
-stmt.setString(2,password);<br>
-rs=stmt.executeQuery();</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+```java
+conn=DBUtils.getConnection();
+String sql="select * from users where name=? and password=?";
+stmt=conn.prepareStatement(sql);
+stmt.setString(1,name);
+stmt.setString(2,password);
+rs=stmt.executeQuery();
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -369,10 +369,10 @@ rs=stmt.executeQuery();</p>
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/java/2017/02/23/mysql" title="mysql">
+ <a href="/2017/02/23/mysql02" title="Mysql02">
   <strong>上一篇：</strong><br/>
   <span>
-  mysql</span>
+  Mysql02</span>
 </a>
 </div>
 
@@ -470,9 +470,10 @@ rs=stmt.executeQuery();</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

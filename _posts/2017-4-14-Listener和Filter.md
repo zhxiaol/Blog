@@ -8,7 +8,7 @@ categories: java
 description: Listener和Filter
 ---
 ## javaweb常见监听
-```
+```html
 监听域对象创建销毁
 	|
 	|--监听ServletContext创建和销毁
@@ -54,7 +54,7 @@ description: Listener和Filter
 ```
 
 ## 创建监听器步骤
-```
+```html
 创建监听器步骤
 	|
 	|--创建一个类，实现指定的监听器接口
@@ -69,7 +69,7 @@ description: Listener和Filter
     |
 ```
 ##### ServletRequestListener
-```
+```java
 public class MyServletRequestListener implements ServletRequestListener {
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
@@ -83,7 +83,7 @@ public class MyServletRequestListener implements ServletRequestListener {
 }
 ```
 ###### ServletRequestAttributeListener
-```
+```java
 public class MyRequestAttributeListener implements ServletRequestAttributeListener{
     @Override
     public void attributeAdded(ServletRequestAttributeEvent srae) {
@@ -102,7 +102,7 @@ public class MyRequestAttributeListener implements ServletRequestAttributeListen
 }
 ```
 ###### HttpSessionBindingListener
-```
+```java
 public class User implements HttpSessionBindingListener,Serializable{
     private String name;
     private int age;
@@ -119,7 +119,7 @@ public class User implements HttpSessionBindingListener,Serializable{
 }
 ```
 ###### 定时移出session
-```
+```java
 //myServletContextListener
 public class MyServletContextListener implements ServletContextListener {
     @Override
@@ -164,7 +164,7 @@ public class MySessionListener implements HttpSessionListener {
 ```
 ## Filter
 > javaweb中的过滤器可以拦截所有访问web资源的请求或响应操作
-```
+```html
 Filter使用步骤
 	 |
 	 |--创建一个类实现Filter接口
@@ -210,7 +210,7 @@ Filter使用步骤
      				|--INCLUDE 拦截包含请求
 ```
 ###### Filter
-```
+```java
 //MyFilter
 public class MyFilter implements Filter {
     @Override
@@ -239,7 +239,7 @@ public class MyFilter implements Filter {
 > + 获取Filter初始化参数
 > + 获取ServletContext对象
 ###### FilterConfig
-```
+```java
 public class MyFilterConfigTest implements Filter {
     private FilterConfig filterConfig;
 
@@ -258,7 +258,7 @@ public class MyFilterConfigTest implements Filter {
 }
 ```
 ###### Filter配置
-```
+```xml
 <filter>
     <filter-name>MyFilter3</filter-name>
     <filter-class>com.itheima.filter.MyFilter3</filter-class>
@@ -286,7 +286,7 @@ public class MyFilterConfigTest implements Filter {
 ## MD5加密
 > mysql md5加密 update 表名 set 字段名 = md5(字段名);
 ###### java md5加密
-```
+```java
 public static String md5(String plainText){
     byte[]secretBytes=null;
     try {
@@ -302,7 +302,7 @@ public static String md5(String plainText){
 }
 ```
 ###### 自动登录
-```
+```java
 //LoginServlet
 public class LoginServlet extends HttpServlet {
     @Override
@@ -371,7 +371,7 @@ public class AutoLoginFilter implements Filter {
 ```
 
 ###### 全局编码过滤
-```
+```java
 public class GlobarFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

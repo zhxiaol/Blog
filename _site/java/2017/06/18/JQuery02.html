@@ -288,7 +288,7 @@
 <td>获得所有的父元素。AB</td>
 </tr>
 </tbody></table>
-<div class="highlight"><pre><code class="language-" data-lang="">closest和parents的主要区别是：
+<div class="highlight"><pre><code class="language-html" data-lang="html">closest和parents的主要区别是：
 1，前者从当前元素开始匹配寻找，后者从父元素开始匹配寻找；
 2，前者逐级向上查找，直到发现匹配的元素后就停止了，后者一直向上查找直到根元素，然后把这些元素放进一个临时集合中，再用给定的选择器表达式去过滤；
 3，前者返回0或1个元素，后者可能包含0个，1个，或者多个元素。
@@ -367,30 +367,30 @@
 
     A.children().children().end() .end()  
     A   孩子   孙子     孩子  A
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">&lt;script type="text/javascript"&gt;
-    $(document).ready(function () {
-        //选择 id=one和two 的div"  id="b1"
-        $("#b1").click(function () {
-           // $("#one,#two").css("background-color","#ff9599")
-            $("#one").add($("#two")).css("background-color","#ff9599")
-        })
-        //选择id=one 所有的孩子，以及one自己"  id="b2"
-        $("#b2").click(function () {
-            $("#one").children().andSelf().css("background-color","#90ffa1")
-        })
-        //选择id=one 所有的孩子，设置颜色为红，设置one自己为黄"  id="b3"
-        $("#b3").click(function () {
-            $("#one").children().css("background-color","red").end().css("background-color","yellow")
-            //$("#one").children().css("background-color","red").parent().css("background-color","yellow")
-           // $("#one").css("background-color","yellow").children().css("background-color","red")
-        })
-        //获得id=two 子节点个数"  id="b4"
-        $("#b4").click(function () {
-            alert($("#two").contents().length)
-        })
-    })
-  &lt;/script&gt;
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//选择 id=one和two 的div"  id="b1"</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#b1"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+           <span class="c1">// $("#one,#two").css("background-color","#ff9599")</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">"#one"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#two"</span><span class="p">)).</span><span class="nx">css</span><span class="p">(</span><span class="s2">"background-color"</span><span class="p">,</span><span class="s2">"#ff9599"</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="c1">//选择id=one 所有的孩子，以及one自己"  id="b2"</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#b2"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">"#one"</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">andSelf</span><span class="p">().</span><span class="nx">css</span><span class="p">(</span><span class="s2">"background-color"</span><span class="p">,</span><span class="s2">"#90ffa1"</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="c1">//选择id=one 所有的孩子，设置颜色为红，设置one自己为黄"  id="b3"</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#b3"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">"#one"</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">css</span><span class="p">(</span><span class="s2">"background-color"</span><span class="p">,</span><span class="s2">"red"</span><span class="p">).</span><span class="nx">end</span><span class="p">().</span><span class="nx">css</span><span class="p">(</span><span class="s2">"background-color"</span><span class="p">,</span><span class="s2">"yellow"</span><span class="p">)</span>
+            <span class="c1">//$("#one").children().css("background-color","red").parent().css("background-color","yellow")</span>
+           <span class="c1">// $("#one").css("background-color","yellow").children().css("background-color","red")</span>
+        <span class="p">})</span>
+        <span class="c1">//获得id=two 子节点个数"  id="b4"</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">"#b4"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#two"</span><span class="p">).</span><span class="nx">contents</span><span class="p">().</span><span class="nx">length</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
+  <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="qq分组">qq分组</h6>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
         <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
@@ -603,34 +603,35 @@ mouseleave 鼠标移出。js mouseout
     <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
 </span></code></pre></div>
 <h2 id="页面加载">页面加载</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">
-方式1：标准api
-$(document).ready(function(){
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">
+<span class="err">方式</span><span class="mi">1</span><span class="err">：标准</span><span class="nx">api</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
 
-});
-等效
-jQuery(document).ready( fn );
+<span class="p">});</span>
+<span class="err">等效</span>
+<span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">);</span>
 
-方式2：简化版
-$(function(){
-});
-登录
-jQuery(function(){
-});
+<span class="err">方式</span><span class="mi">2</span><span class="err">：简化版</span>
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="p">});</span>
+<span class="err">登录</span>
+<span class="nx">jQuery</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="p">});</span>
 
-源码分析（了解）
-步骤一：回顾js 函数创建
-    方式1：function abc(){};   abc();
-    方式2：var abc = function(){} ;   abc();
-    $( fn )  == jQuery( fn )  == new jQuery.fn.init( fn )
+<span class="err">源码分析（了解）</span>
+<span class="err">步骤一：回顾</span><span class="nx">js</span> <span class="err">函数创建</span>
+    <span class="err">方式</span><span class="mi">1</span><span class="err">：</span><span class="kd">function</span> <span class="nx">abc</span><span class="p">(){};</span>   <span class="nx">abc</span><span class="p">();</span>
+    <span class="err">方式</span><span class="mi">2</span><span class="err">：</span><span class="kd">var</span> <span class="nx">abc</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){}</span> <span class="p">;</span>   <span class="nx">abc</span><span class="p">();</span>
+    <span class="nx">$</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>  <span class="o">==</span> <span class="nx">jQuery</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>  <span class="o">==</span> <span class="k">new</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>
 
-步骤二： init( fn )  --&gt;  rootjQuery.ready( fn )
+<span class="err">步骤二：</span> <span class="nx">init</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>  <span class="o">--&gt;</span>  <span class="nx">rootjQuery</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>
 
 
-步骤三：
+<span class="err">步骤三：</span>
 
-    总结：
-        $( fn )  --&gt; init( fn )  --&gt; jQuery(document).ready( fn )
+    <span class="err">总结：</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>  <span class="o">--&gt;</span> <span class="nx">init</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>  <span class="o">--&gt;</span> <span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span> <span class="nx">fn</span> <span class="p">)</span>
+
 </code></pre></div>
 <h2 id="事件绑定">事件绑定</h2>
 
@@ -845,7 +846,7 @@ jQuery(function(){
 <p>ajax ：异步请求，浏览器地址栏不改变，进行局部刷新。</p>
 
 <h6 id="ajax-流程分析">ajax 流程分析</h6>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div></blockquote>
+<div class="highlight"><pre><code class="language-html" data-lang="html"></code></pre></div></blockquote>
 
 <p>jQuery程序             ajax引擎          服务器<br>
     |                       |               |<br>
@@ -1223,9 +1224,10 @@ jquery 默认使用jsonp</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

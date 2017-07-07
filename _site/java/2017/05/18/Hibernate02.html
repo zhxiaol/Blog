@@ -132,7 +132,7 @@
 <li>session.evict(obj) 移除对象和数据库的关联</li>
 <li>Hibernate会自动将持久化状态对象的变化同步到数据库中</li>
 <li>持久态的id是不允许修改的
-```
+```java
 @Test
 public void fun1(){
 Session session = HibernateUtils.openSession();
@@ -243,353 +243,358 @@ Hibernate中存在两种缓存
 session缓存：就是session对象中存在的缓存，缓存中存在的持久化状态 map&lt;Serializable,Object&gt;
 快照:get方法。数据库取得数据时一式两份 缓存和快照 将缓存返回 当update时候比对快照是否做了修改。如果自己创建的对象， 没有快照 close的时候执行update语句更新
 持久化状态:本质就是存在缓存中的对象，就是持久化状态。
-</code></pre></div>
-<p>public void fun1(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    User u1 = (User) session.get(User.class, 2);<br>
-    User u2 = (User) session.get(User.class, 2);//再次查找不会执行语句，会从缓存中查找<br>
-    User u3 = (User) session.get(User.class, 2);<br>
-    System.out.println(u1==u2);<br>
-    System.out.println(u1==u3);<br>
-    session.getTransaction().commit();<br>
-    session.close();<br>
-}<br>
-@Test<br>
-public void fun2(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    User u1 = (User) session.get(User.class, 2);<br>
-    session.update(u1);<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-@Test<br>
-public void fun3(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    User u1 = new User();<br>
-    u1.setId(2);<br>
-    u1.setName(&quot;擎天柱&quot;);<br>
-    u1.setPassword(&quot;1234&quot;);<br>
-    session.update(u1);<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-public void fun4(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    User user = (User) session.get(User.class, 2);<br>
-    user.setName(&quot;张三&quot;);<br>
-    session.update(user);<br>
-    user.setName(&quot;李四&quot;);<br>
-    session.update(user);<br>
-    user.setName(&quot;赵六&quot;);<br>
-    session.update(user);<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">#### 一级缓存细节
-1. HQL语句批量查询时，查询结果是否进入缓存，再次查询会比对缓存对象是否需要封装成对象
-1. SQL查询 如果把查询结果封装到对象中，放入缓存结果了
-1. criterira 会将查询结果放入一级缓存，再次查询会比对缓存对象是否需要封装成对象
-</code></pre></div>
-<p>//HQL语句批量查询时，查询结果是否进入缓存，不会使用一级缓存<br>
-@Test<br>
-public void fun2(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    List<User> list1 = session.createQuery(&quot;from User&quot;).list();<br>
-    List<User> list2 = session.createQuery(&quot;from User&quot;).list();<br>
-    List<User> list3 = session.createQuery(&quot;from User&quot;).list();<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-//HQL语句批量查询时，查询结果是否进入缓存 结果会放入缓存中<br>
-//HQL查询是否会使用一级缓存,HQL不会使用一级缓存<br>
-@Test<br>
-public void fun3(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    List<User> list1 = session.createQuery(&quot;from User&quot;).list();<br>
-    User user = (User) session.get(User.class, 2);<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-//SQL查询 如果把查询结果封装到对象中，放入缓存结果了。<br>
-@Test<br>
-public void fun4(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    List<User> list1 = session.createSQLQuery(&quot;select * from t_user&quot;).addEntity(User.class).list();<br>
-    User user = (User) session.get(User.class, 2);<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-//不封装成对象不会放入一级缓存<br>
-@Test<br>
-public void fun5(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    List list1 = session.createSQLQuery(&quot;select * from t_user&quot;).list();<br>
-    User user = (User) session.get(User.class, 2);<br>
-    ts.commit();<br>
-    session.close();<br>
-}<br>
-//criterira 会将查询结果放入一级缓存，但是查询不会使用一级缓存</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 一对多
-</code></pre></div>
-<!--表达一对多集合-->
-
-<p><set name="orders" inverse="true">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;<br>
-    <key column="cid"></key>&lt;!--外键的值--&gt;<br>
-    <one-to-many class="Order"/>&lt;!--对应关系--&gt;<br>
-</set></p>
-
-<p><many-to-one name="customer" class="Customer" column="cid"/></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>//Customer<br>
-public class Customer implements Serializable {<br>
-    private Integer cid;<br>
-    private String name;<br>
-    private Set<Order> orders=new HashSet&lt;&gt;();<br>
-}<br>
-//Customer.hbm.xml<br>
-<hibernate-mapping package="com.itheima.domain"><br>
-    <class name="Customer" table="t_customer" dynamic-insert="true" dynamic-update="true"><br>
-        <id name="cid" column="cid" type="int"><br>
-            <generator class="native"></generator><br>
-        </id><br>
-        <property name="name" column="name" type="string"></property><br>
-        &lt;!--表达一对多集合--&gt;<br>
-        <set name="orders" inverse="true">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;<br>
-            <key column="cid"></key>&lt;!--外键的值--&gt;<br>
-            <one-to-many class="Order"/>&lt;!--对应关系--&gt;<br>
-        </set><br>
-    </class><br>
-</hibernate-mapping></p>
-
-<p>//Order.java<br>
-public class Order {<br>
-    private Integer id;<br>
-    private String name;<br>
-    private Customer customer=new Customer();<br>
-}</p>
-
-<p>//Order.hbm.xml<br>
-<hibernate-mapping package="com.itheima.domain"><br>
-    <class name="Order" table="t_order"><br>
-        <id name="id" column="id" type="int"><br>
-            <generator class="native" /><br>
-        </id><br>
-        <property name="name" column="name" type="string"/><br>
-        <many-to-one name="customer" class="Customer" column="cid"/><br>
-    </class><br>
-</hibernate-mapping></p>
-
-<p>//demo1.java<br>
-public class Demo1 {<br>
-    //指定关系游其中一方来维护，另一方不维护，有外键的一方来维护<br>
-    @Test<br>
-    public void fun1(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c=new Customer();<br>
-        c.setName(&quot;tom&quot;);<br>
-        Order o1=new Order();<br>
-        o1.setName(&quot;肥皂&quot;);<br>
-        Order o2=new Order();<br>
-        o2.setName(&quot;蜡烛&quot;);<br>
-//        c.getOrders().add(o1);//维护关系<br>
-//        c.getOrders().add(o2);//维护关系<br>
-        o1.setCustomer(c);//维护关系<br>
-        o2.setCustomer(c);//维护关系<br>
-        session.save(c);<br>
-        session.save(o1);<br>
-        session.save(o2);<br>
-        ts.commit();<br>
-        session.close();<br>
-    }<br>
-    //删除用户时，会先移除Customer中引用的外键，然后再删除customer<br>
-    //维护一方的对象,会自动维护另一方的关系<br>
-    @Test<br>
-    public void fun2(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c = (Customer) session.get(Customer.class, 2);<br>
-        if(c!=null) {<br>
-            Set<Order> orders = c.getOrders();<br>
-            for (Order o : orders) {<br>
-                o.setCustomer(null);<br>
-            }<br>
-            session.delete(c);<br>
-            ts.commit();<br>
-            session.close();<br>
-        }<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>表达一对多关系<br>
-    |<br>
-    |--Bean.hbm.xml<br>
-            |<br>
-            |--<set></set>标签<br>
-                 |<br>
-                 |--name:关系的字段名<br>
-                 |--inverse:是否放弃维护外键<br>
-                 |--cascade:<br>
-                 |      |<br>
-                 |      |--save-update:级联保存和修改<br>
-                 |      |--delete:级联删除<br>
-                 |      |--delete-orphan:孤儿删除 当没有任何外键引用Order时，Order 会被删除<br>
-                 |      |--all:save-update和delete整合<br>
-                 |      |--all-delete-orphan:save-update,delete和delete-orphan整合<br>
-                 |<br>
-                 |<br>
-                 |--<key></key>标签<br>
-                 |      |<br>
-                 |      |--cloumn:外键字段<br>
-                 |<br>
-                 |--<one-to-many/>一对多关系<br>
-                        |<br>
-                        |--class:对应的javaBean</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>//Demo2.java<br>
- //增<br>
-    //我们希望在保存Customer时,自动将未保存的Orders当中的Order保存<br>
-    //cascade: save-update<br>
-    @Test<br>
-    public void fun1(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c=new Customer();<br>
-        c.setName(&quot;tom&quot;);<br>
-        Order o1=new Order();<br>
-        o1.setName(&quot;肥皂&quot;);<br>
-        Order o2=new Order();<br>
-        o2.setName(&quot;蜡烛&quot;);<br>
-        c.getOrders().add(o1);<br>
-        c.getOrders().add(o2);<br>
-//        o1.setCustomer(c);//维护关系<br>
-//        o2.setCustomer(c);//维护关系<br>
-        session.save(c);<br>
-        ts.commit();<br>
-        session.close();<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//增
-//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存
-//cascade: save-update
+```java
+public void fun1(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    User u1 = (User) session.get(User.class, 2);
+    User u2 = (User) session.get(User.class, 2);//再次查找不会执行语句，会从缓存中查找
+    User u3 = (User) session.get(User.class, 2);
+    System.out.println(u1==u2);
+    System.out.println(u1==u3);
+    session.getTransaction().commit();
+    session.close();
+}
 @Test
 public void fun2(){
     Session session = HibernateUtils.openSession();
     Transaction ts = session.beginTransaction();
-    Customer c = (Customer) session.get(Customer.class, 3);
-    if(c!=null){
-        Set&lt;Order&gt; orders = c.getOrders();
-        for(Order o:orders){
-            o.setName("哇哈哈");
-        }
-    }
-    ts.commit();//因为设置级联修改,自动将订单的修改保存到数据
+    User u1 = (User) session.get(User.class, 2);
+    session.update(u1);
+    ts.commit();
     session.close();
 }
-
-//cascade: delete
-//删除Customer时 ,会将Customer下的订单一并删除
-//inverse : false   6条sql语句
-//inverse : true    5条sql语句 比上面少一条维护外键
 @Test
 public void fun3(){
     Session session = HibernateUtils.openSession();
     Transaction ts = session.beginTransaction();
-    Customer c = (Customer) session.get(Customer.class, 8);
-    session.delete(c);
+    User u1 = new User();
+    u1.setId(2);
+    u1.setName("擎天柱");
+    u1.setPassword("1234");
+    session.update(u1);
     ts.commit();
     session.close();
 }
-
-/**
- * cascade:delete
- * 操作的两方值都为delete
- * 需要注意:千万不要在两方都配置级删除，删除任何一方，会导致整个关系链对象全部删除
- */
-@Test
 public void fun4(){
     Session session = HibernateUtils.openSession();
     Transaction ts = session.beginTransaction();
-    Order o = (Order) session.get(Order.class, 13);
-    session.delete(o);//delete删除当前order
-                      //找到所有关联的Customer 删除
-                      //删除Customer会删除关联的所有的order再删除Customer
+    User user = (User) session.get(User.class, 2);
+    user.setName("张三");
+    session.update(user);
+    user.setName("李四");
+    session.update(user);
+    user.setName("赵六");
+    session.update(user);
     ts.commit();
     session.close();
 }
 </code></pre></div>
-<p>//demo3.java<br>
-public class Demo3 {<br>
-    //cascade:delete-orphan 孤儿删除 当没有任何外键引用Order时，Order 会被删除<br>
-    @Test<br>
-    public void fun1(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c = (Customer) session.get(Customer.class, 12);<br>
-        Iterator<Order> it = c.getOrders().iterator();//获得所有用户下的订单,将订单移出集合 维护关系<br>
-        while (it.hasNext()){<br>
-            it.next();<br>
-            it.remove();<br>
-        }<br>
-        ts.commit();<br>
-        session.close();<br>
-    }<br>
-}</p>
+<h4 id="一级缓存细节">一级缓存细节</h4>
 
-<p>//Demo4.java<br>
-public class Demo4 {<br>
-    @Test<br>
-    //cascade:all-delete-orhan=save-update+delete+delete-orphan<br>
-    public void fun1(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c=new Customer();<br>
-        c.setName(&quot;tom&quot;);<br>
-        Order o1=new Order();<br>
-        o1.setName(&quot;肥皂&quot;);<br>
-        Order o2=new Order();<br>
-        o2.setName(&quot;蜡烛&quot;);<br>
-        c.getOrders().add(o1);<br>
-        c.getOrders().add(o2);<br>
-        session.save(c);<br>
-        ts.commit();<br>
-        session.close();<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Test
+<ol>
+<li>HQL语句批量查询时，查询结果是否进入缓存，再次查询会比对缓存对象是否需要封装成对象</li>
+<li>SQL查询 如果把查询结果封装到对象中，放入缓存结果了</li>
+<li>criterira 会将查询结果放入一级缓存，再次查询会比对缓存对象是否需要封装成对象
+<code>java
+//HQL语句批量查询时，查询结果是否进入缓存，不会使用一级缓存
+@Test
 public void fun2(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    Customer c = (Customer) session.get(Customer.class, 14);
-    session.delete(c);
-    ts.commit();
-    session.close();
+Session session = HibernateUtils.openSession();
+Transaction ts = session.beginTransaction();
+List&lt;User&gt; list1 = session.createQuery(&quot;from User&quot;).list();
+List&lt;User&gt; list2 = session.createQuery(&quot;from User&quot;).list();
+List&lt;User&gt; list3 = session.createQuery(&quot;from User&quot;).list();
+ts.commit();
+session.close();
 }
-
+//HQL语句批量查询时，查询结果是否进入缓存 结果会放入缓存中
+//HQL查询是否会使用一级缓存,HQL不会使用一级缓存
 @Test
 public void fun3(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    Customer c = (Customer) session.get(Customer.class, 15);
-    Iterator&lt;Order&gt; it = c.getOrders().iterator();
-    while (it.hasNext()){
-        it.next();
-        it.remove();
-    }
-    ts.commit();
-    session.close();
+Session session = HibernateUtils.openSession();
+Transaction ts = session.beginTransaction();
+List&lt;User&gt; list1 = session.createQuery(&quot;from User&quot;).list();
+User user = (User) session.get(User.class, 2);
+ts.commit();
+session.close();
 }
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+//SQL查询 如果把查询结果封装到对象中，放入缓存结果了。
+@Test
+public void fun4(){
+Session session = HibernateUtils.openSession();
+Transaction ts = session.beginTransaction();
+List&lt;User&gt; list1 = session.createSQLQuery(&quot;select * from t_user&quot;).addEntity(User.class).list();
+User user = (User) session.get(User.class, 2);
+ts.commit();
+session.close();
+}
+//不封装成对象不会放入一级缓存
+@Test
+public void fun5(){
+Session session = HibernateUtils.openSession();
+Transaction ts = session.beginTransaction();
+List list1 = session.createSQLQuery(&quot;select * from t_user&quot;).list();
+User user = (User) session.get(User.class, 2);
+ts.commit();
+session.close();
+}
+//criterira 会将查询结果放入一级缓存，但是查询不会使用一级缓存
+</code>
+## 一对多
+```xml
+&lt;!--表达一对多集合--&gt;
+<set name="orders" inverse="true">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;
+<key column="cid"></key>&lt;!--外键的值--&gt;
+<one-to-many class="Order"/>&lt;!--对应关系--&gt;
+</set></li>
+</ol>
+
+<p><many-to-one name="customer" class="Customer" column="cid"/></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+```javascript
+//Customer
+public class Customer implements Serializable {
+    private Integer cid;
+    private String name;
+    private Set&lt;Order&gt; orders=new HashSet&lt;&gt;();
+}
+//Customer.hbm.xml
+&lt;hibernate-mapping package="com.itheima.domain"&gt;
+    &lt;class name="Customer" table="t_customer" dynamic-insert="true" dynamic-update="true"&gt;
+        &lt;id name="cid" column="cid" type="int"&gt;
+            &lt;generator class="native"&gt;&lt;/generator&gt;
+        &lt;/id&gt;
+        &lt;property name="name" column="name" type="string"&gt;&lt;/property&gt;
+        &lt;!--表达一对多集合--&gt;
+        &lt;set name="orders" inverse="true"&gt;&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;
+            &lt;key column="cid"&gt;&lt;/key&gt;&lt;!--外键的值--&gt;
+            &lt;one-to-many class="Order"/&gt;&lt;!--对应关系--&gt;
+        &lt;/set&gt;
+    &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+
+
+//Order.java
+public class Order {
+    private Integer id;
+    private String name;
+    private Customer customer=new Customer();
+}
+
+
+//Order.hbm.xml
+&lt;hibernate-mapping package="com.itheima.domain"&gt;
+    &lt;class name="Order" table="t_order"&gt;
+        &lt;id name="id" column="id" type="int"&gt;
+            &lt;generator class="native" /&gt;
+        &lt;/id&gt;
+        &lt;property name="name" column="name" type="string"/&gt;
+        &lt;many-to-one name="customer" class="Customer" column="cid"/&gt;
+    &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+
+
+//demo1.java
+public class Demo1 {
+    //指定关系游其中一方来维护，另一方不维护，有外键的一方来维护
+    @Test
+    public void fun1(){
+        Session session = HibernateUtils.openSession();
+        Transaction ts = session.beginTransaction();
+        Customer c=new Customer();
+        c.setName("tom");
+        Order o1=new Order();
+        o1.setName("肥皂");
+        Order o2=new Order();
+        o2.setName("蜡烛");
+//        c.getOrders().add(o1);//维护关系
+//        c.getOrders().add(o2);//维护关系
+        o1.setCustomer(c);//维护关系
+        o2.setCustomer(c);//维护关系
+        session.save(c);
+        session.save(o1);
+        session.save(o2);
+        ts.commit();
+        session.close();
+    }
+    //删除用户时，会先移除Customer中引用的外键，然后再删除customer
+    //维护一方的对象,会自动维护另一方的关系
+    @Test
+    public void fun2(){
+        Session session = HibernateUtils.openSession();
+        Transaction ts = session.beginTransaction();
+        Customer c = (Customer) session.get(Customer.class, 2);
+        if(c!=null) {
+            Set&lt;Order&gt; orders = c.getOrders();
+            for (Order o : orders) {
+                o.setCustomer(null);
+            }
+            session.delete(c);
+            ts.commit();
+            session.close();
+        }
+    }
+}
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html">表达一对多关系
+    |
+    |--Bean.hbm.xml
+            |
+            |--<span class="nt">&lt;set&gt;&lt;/set&gt;</span>标签
+                 |
+                 |--name:关系的字段名
+                 |--inverse:是否放弃维护外键
+                 |--cascade:
+                 |      |
+                 |      |--save-update:级联保存和修改
+                 |      |--delete:级联删除
+                 |      |--delete-orphan:孤儿删除 当没有任何外键引用Order时，Order 会被删除
+                 |      |--all:save-update和delete整合
+                 |      |--all-delete-orphan:save-update,delete和delete-orphan整合
+                 |
+                 |
+                 |--<span class="nt">&lt;key&gt;&lt;/key&gt;</span>标签
+                 |      |
+                 |      |--cloumn:外键字段
+                 |
+                 |--<span class="nt">&lt;one-to-many/&gt;</span>一对多关系
+                        |
+                        |--class:对应的javaBean
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//Demo2.java</span>
+ <span class="c1">//增</span>
+    <span class="c1">//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存</span>
+    <span class="c1">//cascade: save-update</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span><span class="o">=</span><span class="k">new</span> <span class="n">Customer</span><span class="o">();</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"tom"</span><span class="o">);</span>
+        <span class="n">Order</span> <span class="n">o1</span><span class="o">=</span><span class="k">new</span> <span class="n">Order</span><span class="o">();</span>
+        <span class="n">o1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"肥皂"</span><span class="o">);</span>
+        <span class="n">Order</span> <span class="n">o2</span><span class="o">=</span><span class="k">new</span> <span class="n">Order</span><span class="o">();</span>
+        <span class="n">o2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"蜡烛"</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">o1</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">o2</span><span class="o">);</span>
+<span class="c1">//        o1.setCustomer(c);//维护关系</span>
+<span class="c1">//        o2.setCustomer(c);//维护关系</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">//增</span>
+    <span class="c1">//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存</span>
+    <span class="c1">//cascade: save-update</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun2</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">c</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">Set</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span> <span class="n">orders</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">();</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">Order</span> <span class="nl">o:</span><span class="n">orders</span><span class="o">){</span>
+                <span class="n">o</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"哇哈哈"</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span><span class="c1">//因为设置级联修改,自动将订单的修改保存到数据</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">//cascade: delete</span>
+    <span class="c1">//删除Customer时 ,会将Customer下的订单一并删除</span>
+    <span class="c1">//inverse : false   6条sql语句</span>
+    <span class="c1">//inverse : true    5条sql语句 比上面少一条维护外键</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun3</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * cascade:delete
+     * 操作的两方值都为delete
+     * 需要注意:千万不要在两方都配置级删除，删除任何一方，会导致整个关系链对象全部删除
+     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun4</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Order</span> <span class="n">o</span> <span class="o">=</span> <span class="o">(</span><span class="n">Order</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Order</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">13</span><span class="o">);</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">o</span><span class="o">);</span><span class="c1">//delete删除当前order</span>
+                          <span class="c1">//找到所有关联的Customer 删除</span>
+                          <span class="c1">//删除Customer会删除关联的所有的order再删除Customer</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="c1">//demo3.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo3</span> <span class="o">{</span>
+    <span class="c1">//cascade:delete-orphan 孤儿删除 当没有任何外键引用Order时，Order 会被删除</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span><span class="c1">//获得所有用户下的订单,将订单移出集合 维护关系</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
+            <span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+            <span class="n">it</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Demo4.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo4</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="c1">//cascade:all-delete-orhan=save-update+delete+delete-orphan</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span><span class="o">=</span><span class="k">new</span> <span class="n">Customer</span><span class="o">();</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"tom"</span><span class="o">);</span>
+        <span class="n">Order</span> <span class="n">o1</span><span class="o">=</span><span class="k">new</span> <span class="n">Order</span><span class="o">();</span>
+        <span class="n">o1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"肥皂"</span><span class="o">);</span>
+        <span class="n">Order</span> <span class="n">o2</span><span class="o">=</span><span class="k">new</span> <span class="n">Order</span><span class="o">();</span>
+        <span class="n">o2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"蜡烛"</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">o1</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">o2</span><span class="o">);</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun2</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">14</span><span class="o">);</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun3</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">getOrders</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
+            <span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+            <span class="n">it</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -742,9 +747,10 @@ public void fun3(){
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -135,7 +135,7 @@ batch()批处理</li>
 用于定义select 结果集</li>
 <li>DBUtils类
 关闭资源，事务管理
-<code>
+<code>html
 使用步骤
 |
 |--导入jar包
@@ -176,7 +176,7 @@ batch()批处理</li>
 |
 |--使用DBUtils释放资源     
 </code>
-```
+```java
 @Test
 public void testSelect1()throws Exception{
 QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
@@ -235,143 +235,146 @@ public void testBatch()throws Exception{<br>
     }<br>
     qr.batch(&quot;insert into users(name,password,email,birthday) values(?,?,?,?)&quot;,params);<br>
 }</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>public class TsetResultSetHandler {<br>
-    @Test<br>
-    public void test1()throws Exception {<br>
-        QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());<br>
-        //ArrayHandler:把每一行数据封装到Object[]里面<br>
-        Object[] arr = qr.query(&quot;select * from users where id = ?&quot;, new ArrayHandler(), 16);<br>
-        System.out.println(Arrays.toString(arr));<br>
-    }<br>
-    @Test<br>
-    public void test2()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        //每个Object[]是一条数据<br>
-        List<Object[]> list = qr.query(&quot;select * from users&quot;, new ArrayListHandler());<br>
-        for(Object[]os:list){<br>
-            System.out.println(Arrays.toString(os));<br>
-        }<br>
-    }<br>
-    @Test<br>
-    public void test3()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        List<Object> list = qr.query(&quot;select name,password from users&quot;, new ColumnListHandler(2));<br>
-        for(Object o:list){<br>
-            System.out.println(o);<br>
-        }<br>
-    }<br>
-    @Test<br>
-    public void test4()throws  Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        Map<Object, Map<String, Object>&gt; maps = qr.query(&quot;select * from users&quot;, new KeyedHandler(1));<br>
-        for(Map.Entry<Object,Map<String,Object>&gt; map:maps.entrySet()){<br>
-            System.out.println(map.getKey()+&quot;:&quot;+map.getValue());<br>
-        }<br>
-    }<br>
-    @Test<br>
-    public void test5()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        Map<String, Object> map = qr.query(&quot;select * from users&quot;, new MapHandler());<br>
-        System.out.println(map);<br>
-    }<br>
-    @Test<br>
-    public void test6()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        List<Map<String, Object>&gt; list = qr.query(&quot;select * from users&quot;, new MapListHandler());<br>
-        for(Map<String,Object> map:list){<br>
-            System.out.println(map);<br>
-        }<br>
-    }<br>
-    @Test<br>
-    public void test7()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        Object o = qr.query(&quot;select name,password from users where id=?&quot;, new ScalarHandler(1),8);<br>
-        System.out.println(o);<br>
-    }<br>
-    @Test<br>
-    public void test8()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        User u = qr.query(&quot;select * from users where id = ?&quot;, new BeanHandler<User>(User.class), 8);<br>
-        System.out.println(u);<br>
-    }<br>
-    @Test<br>
-    public void test9()throws Exception{<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        List<User> list = qr.query(&quot;select * from users&quot;, new BeanListHandler<User>(User.class));<br>
-        for(User u:list){<br>
-            System.out.println(u);<br>
-        }<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## ThreadLocal 线程局部变量
-&gt; 里面有个 static的 map集合，map的key值是Thred.currentThread() 当前线程
-&gt; 同一个线程可以取到，不同的线程取不到
+<div class="highlight"><pre><code class="language-" data-lang="">```java
+public class TsetResultSetHandler {
+    @Test
+    public void test1()throws Exception {
+        QueryRunner qr = new QueryRunner(C3P0Util.getDataSource());
+        //ArrayHandler:把每一行数据封装到Object[]里面
+        Object[] arr = qr.query("select * from users where id = ?", new ArrayHandler(), 16);
+        System.out.println(Arrays.toString(arr));
+    }
+    @Test
+    public void test2()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        //每个Object[]是一条数据
+        List&lt;Object[]&gt; list = qr.query("select * from users", new ArrayListHandler());
+        for(Object[]os:list){
+            System.out.println(Arrays.toString(os));
+        }
+    }
+    @Test
+    public void test3()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        List&lt;Object&gt; list = qr.query("select name,password from users", new ColumnListHandler(2));
+        for(Object o:list){
+            System.out.println(o);
+        }
+    }
+    @Test
+    public void test4()throws  Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        Map&lt;Object, Map&lt;String, Object&gt;&gt; maps = qr.query("select * from users", new KeyedHandler(1));
+        for(Map.Entry&lt;Object,Map&lt;String,Object&gt;&gt; map:maps.entrySet()){
+            System.out.println(map.getKey()+":"+map.getValue());
+        }
+    }
+    @Test
+    public void test5()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        Map&lt;String, Object&gt; map = qr.query("select * from users", new MapHandler());
+        System.out.println(map);
+    }
+    @Test
+    public void test6()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        List&lt;Map&lt;String, Object&gt;&gt; list = qr.query("select * from users", new MapListHandler());
+        for(Map&lt;String,Object&gt; map:list){
+            System.out.println(map);
+        }
+    }
+    @Test
+    public void test7()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        Object o = qr.query("select name,password from users where id=?", new ScalarHandler(1),8);
+        System.out.println(o);
+    }
+    @Test
+    public void test8()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        User u = qr.query("select * from users where id = ?", new BeanHandler&lt;User&gt;(User.class), 8);
+        System.out.println(u);
+    }
+    @Test
+    public void test9()throws Exception{
+        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+        List&lt;User&gt; list = qr.query("select * from users", new BeanListHandler&lt;User&gt;(User.class));
+        for(User u:list){
+            System.out.println(u);
+        }
+    }
+}
 </code></pre></div>
-<p>ThreadLocal t1=new ThreadLocal();<br>
-t1.set(&quot;线程局部变量&quot;);<br>
-new Thread(){<br>
-    @Override<br>
-    public void run() {<br>
-        System.out.println(Thread.currentThread().getName()+&quot;:&quot;+t1.get());<br>
-    }<br>
-}.start();<br>
-System.out.println(Thread.currentThread().getName()+&quot;:&quot;+t1.get());</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 转账
+<h2 id="threadlocal-线程局部变量">ThreadLocal 线程局部变量</h2>
+
+<blockquote>
+<p>里面有个 static的 map集合，map的key值是Thred.currentThread() 当前线程<br>
+同一个线程可以取到，不同的线程取不到</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ThreadLocal</span> <span class="n">t1</span><span class="o">=</span><span class="k">new</span> <span class="n">ThreadLocal</span><span class="o">();</span>
+<span class="n">t1</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">"线程局部变量"</span><span class="o">);</span>
+<span class="k">new</span> <span class="nf">Thread</span><span class="o">(){</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">":"</span><span class="o">+</span><span class="n">t1</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}.</span><span class="na">start</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">":"</span><span class="o">+</span><span class="n">t1</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
 </code></pre></div>
-<p>//ManagerThreadLocal<br>
-public class ManagerThreadLocal {<br>
-    private static ThreadLocal<Connection>tl=new ThreadLocal&lt;&gt;();<br>
-    public static Connection getConnection(){<br>
-        Connection conn=tl.get();<br>
-        if(conn==null) {<br>
-            conn = C3P0Util.getConnection(&quot;day13&quot;);<br>
-            tl.set(conn);<br>
-        }<br>
-        return conn;<br>
-    }<br>
-    //开始事务<br>
-    public static void startTransacation(){<br>
-        try {<br>
-            getConnection().setAutoCommit(false);<br>
-        } catch (SQLException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-    //提交事务<br>
-    public static void commit(){<br>
-        try {<br>
-            getConnection().commit();<br>
-        } catch (SQLException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-    //回滚事务<br>
-    public static void rollback(){<br>
-        try {<br>
-            getConnection().rollback();<br>
-        } catch (SQLException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-    public static void release(){<br>
-        try {<br>
-            getConnection().close();<br>
-            tl.remove();<br>
-        } catch (SQLException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-}<br>
-//AccountDaoImpl<br>
-public class AccountDaoImpl implements AccountDao {<br>
-    @Override<br>
-    @Deprecated<br>
-    public void updateAccount(String fromName, String toName, double money) throws SQLException {<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource(&quot;day13&quot;));<br>
-        qr.update(&quot;update account set money=money-? where name=?&quot;,money,fromName);<br>
-        qr.update(&quot;update account set money=money+? where name=?&quot;,money,toName);<br>
-    }</p>
+<h6 id="转账">转账</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//ManagerThreadLocal</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ManagerThreadLocal</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span><span class="n">tl</span><span class="o">=</span><span class="k">new</span> <span class="n">ThreadLocal</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(){</span>
+        <span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span><span class="n">tl</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">C3P0Util</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="s">"day13"</span><span class="o">);</span>
+            <span class="n">tl</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//开始事务</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">startTransacation</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">getConnection</span><span class="o">().</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//提交事务</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">commit</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">getConnection</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//回滚事务</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">rollback</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">getConnection</span><span class="o">().</span><span class="na">rollback</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">release</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">getConnection</span><span class="o">().</span><span class="na">close</span><span class="o">();</span>
+            <span class="n">tl</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//AccountDaoImpl</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountDaoImpl</span> <span class="kd">implements</span> <span class="n">AccountDao</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="nd">@Deprecated</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="n">String</span> <span class="n">fromName</span><span class="o">,</span> <span class="n">String</span> <span class="n">toName</span><span class="o">,</span> <span class="kt">double</span> <span class="n">money</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day13"</span><span class="o">));</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money=money-? where name=?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">fromName</span><span class="o">);</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money=money+? where name=?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">toName</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">@Override
 public void updateAccount(Account account) throws SQLException {
     QueryRunner qr=new QueryRunner();
@@ -568,9 +571,10 @@ public class Test {<br>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

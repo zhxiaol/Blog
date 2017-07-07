@@ -172,7 +172,7 @@
 <h4 id="创建maven工程">创建maven工程</h4>
 
 <h5 id="maven工程结构">Maven工程结构</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">Project
+<div class="highlight"><pre><code class="language-html" data-lang="html">Project
    |--src（源码包）
    |   |--main（正常的源码包）
    |   |   |--java（.java文件的目录）
@@ -206,7 +206,7 @@
 |mvn clean test|先执行clean，再执行test，通常应用于测试环节|<br>
 |mvn clean package|先执行clean，再执行package，将项目打包，通常应用于发布前|<br>
 |mvn clean install|先执行clean，再执行install，将项目打包，通常应用于发布前|</p>
-<div class="highlight"><pre><code class="language-" data-lang="">mvn clean package
+<div class="highlight"><pre><code class="language-html" data-lang="html">mvn clean package
     执行过程：
       清理————清空环境
       编译————编译源码
@@ -286,219 +286,281 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
 #### 创建MavenSecond工程
 * New Project选择Maven 不勾选Create from archetype
+```java
+//pom.xml
+&lt;dependency&gt;
+    &lt;groupId&gt;com.itheima.maven&lt;/groupId&gt;
+    &lt;artifactId&gt;MavenFirst&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+
+//MavenSecond
+public class MavenSecond {
+    public String sayHello(String name){
+        MavenFirst first = new MavenFirst();
+        return first.sayHello(name);
+    }
+}
 </code></pre></div>
-<p>//pom.xml<br>
-<dependency><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <artifactId>MavenFirst</artifactId><br>
-    <version>1.0-SNAPSHOT</version><br>
-</dependency></p>
+<h4 id="maven的核心概念">Maven的核心概念</h4>
 
-<p>//MavenSecond<br>
-public class MavenSecond {<br>
-    public String sayHello(String name){<br>
-        MavenFirst first = new MavenFirst();<br>
-        return first.sayHello(name);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-#### Maven的核心概念
-##### 坐标
-在平面几何中坐标（x,y）可以标识平面中唯一的一点。在maven中坐标就是为了定位一个唯一确定的jar包。
-Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构建的统一规范
-拥有了统一规范，就可以把查找工作交给机器
+<h5 id="坐标">坐标</h5>
 
-##### Maven坐标主要组成
-* groupId：定义当前Maven组织名称
-* artifactId：定义实际项目名称
-* version：定义当前项目的当前版本
+<p>在平面几何中坐标（x,y）可以标识平面中唯一的一点。在maven中坐标就是为了定位一个唯一确定的jar包。<br>
+Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构建的统一规范<br>
+拥有了统一规范，就可以把查找工作交给机器</p>
 
-#### 依赖管理
-##### 依赖范围
-其中依赖范围scope 用来控制依赖和编译，测试，运行的classpath的关系. 主要的是三种依赖关系如下：
-* compile： 默认编译依赖范围。对于编译，测试，运行三种classpath都有效
-* test：测试依赖范围。只对于测试classpath有效
-* provided：已提供依赖范围。对于编译，测试的classpath都有效，但对于运行无效。因为由容器已经提供，例如servlet-api
-* runtime:运行时提供。例如:jdbc驱动
-|依赖范围|主代码有效|测试代码有效|运行时有效|例子|
-|-------|-----------------|----------|---------|---|
-|complie|有|有|有|log4j|
-|test|无|有|无|junit|
-|provided|有|有|无|servlet-api|
-|runtime|无|无|有|JDBC DRIVER Implementation|
+<h5 id="maven坐标主要组成">Maven坐标主要组成</h5>
 
-#### 依赖传递
-B工程依赖A工程，C工程依赖B工程，那么B工程是C工程的直接依赖，A工程是C工程的间接依赖
+<ul>
+<li>groupId：定义当前Maven组织名称</li>
+<li>artifactId：定义实际项目名称</li>
+<li>version：定义当前项目的当前版本</li>
+</ul>
 
-##### 创建MavenThird工程
+<h4 id="依赖管理">依赖管理</h4>
+
+<h5 id="依赖范围">依赖范围</h5>
+
+<p>其中依赖范围scope 用来控制依赖和编译，测试，运行的classpath的关系. 主要的是三种依赖关系如下：</p>
+
+<ul>
+<li>compile： 默认编译依赖范围。对于编译，测试，运行三种classpath都有效</li>
+<li>test：测试依赖范围。只对于测试classpath有效</li>
+<li>provided：已提供依赖范围。对于编译，测试的classpath都有效，但对于运行无效。因为由容器已经提供，例如servlet-api</li>
+<li>runtime:运行时提供。例如:jdbc驱动</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>依赖范围</th>
+<th>主代码有效</th>
+<th>测试代码有效</th>
+<th>运行时有效</th>
+<th>例子</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>complie</td>
+<td>有</td>
+<td>有</td>
+<td>有</td>
+<td>log4j</td>
+</tr>
+<tr>
+<td>test</td>
+<td>无</td>
+<td>有</td>
+<td>无</td>
+<td>junit</td>
+</tr>
+<tr>
+<td>provided</td>
+<td>有</td>
+<td>有</td>
+<td>无</td>
+<td>servlet-api</td>
+</tr>
+<tr>
+<td>runtime</td>
+<td>无</td>
+<td>无</td>
+<td>有</td>
+<td>JDBC DRIVER Implementation</td>
+</tr>
+</tbody></table>
+
+<h4 id="依赖传递">依赖传递</h4>
+
+<p>B工程依赖A工程，C工程依赖B工程，那么B工程是C工程的直接依赖，A工程是C工程的间接依赖</p>
+
+<h5 id="创建maventhird工程">创建MavenThird工程</h5>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//pom.xml</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">maven</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">MavenSecond</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<span class="c1">//MavenThird</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MavenThird</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="n">MavenSecond</span> <span class="n">second</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MavenSecond</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">second</span><span class="o">.</span><span class="na">sayHello</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>//pom.xml<br>
-<dependency><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <artifactId>MavenSecond</artifactId><br>
-    <version>1.0-SNAPSHOT</version><br>
-</dependency><br>
-//MavenThird<br>
-public class MavenThird {<br>
-    public String sayHello(String name){<br>
-        MavenSecond second = new MavenSecond();<br>
-        return second.sayHello(name);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-#### 依赖范围传递
+<h4 id="依赖范围传递">依赖范围传递</h4>
+<div class="highlight"><pre><code class="language-" data-lang="">MavenThird-------MavenSecond------------MavenFirst                            
+    |        |               |           |
+    |        |                   |           |
+    |    第一直接依赖         第二直接依赖       |
+    |                                        |
+    |                                        |
+    ----------------  间接依赖  ---------------     
 </code></pre></div>
-<p>MavenThird-------MavenSecond------------MavenFirst<br><br>
-    |        |               |           |<br>
-    |        |                   |           |<br>
-    |    第一直接依赖         第二直接依赖       |<br>
-    |                                        |<br>
-    |                                        |<br>
-    ----------------  间接依赖  ---------------     </p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-总结：
-* 当第二依赖的范围是compile的时候，传递性依赖的范围与第一直接依赖的范围一致。
-* 当第二直接依赖的范围是test的时候，依赖不会得以传递。
-* 当第二依赖的范围是provided的时候，只传递第一直接依赖范围也为provided的依赖，且传递性依赖的范围同样为 provided；
-* 当第二直接依赖的范围是runtime的时候，传递性依赖的范围与第一直接依赖的范围一致，但compile例外，此时传递的依赖范围为runtime；
+<p>总结：</p>
 
+<ul>
+<li>当第二依赖的范围是compile的时候，传递性依赖的范围与第一直接依赖的范围一致。</li>
+<li>当第二直接依赖的范围是test的时候，依赖不会得以传递。</li>
+<li>当第二依赖的范围是provided的时候，只传递第一直接依赖范围也为provided的依赖，且传递性依赖的范围同样为 provided；</li>
+<li>当第二直接依赖的范围是runtime的时候，传递性依赖的范围与第一直接依赖的范围一致，但compile例外，此时传递的依赖范围为runtime；</li>
+</ul>
 
+<h5 id="依赖冲突">依赖冲突</h5>
 
-##### 依赖冲突
-在maven中存在两种冲突方式：一种是跨pom文件的冲突，一致是同一个pom文件中的冲突。
+<p>在maven中存在两种冲突方式：一种是跨pom文件的冲突，一致是同一个pom文件中的冲突。</p>
 
-* 跨pom文件的冲突
-MavenFirst的pom文件中依赖来junit的4.9版本，那边MavenSecond和MavenThird中都是使用了4.9版本。
-如果MavenSecond中重新依赖junit的4.8版本，那么MavenSecond和MavenThird中都是使用了4.8本
-这体现来依赖的就近使用原则。
+<ul>
+<li><p>跨pom文件的冲突<br>
+MavenFirst的pom文件中依赖来junit的4.9版本，那边MavenSecond和MavenThird中都是使用了4.9版本。<br>
+如果MavenSecond中重新依赖junit的4.8版本，那么MavenSecond和MavenThird中都是使用了4.8本<br>
+这体现来依赖的就近使用原则。</p></li>
+<li><p>同一个pom文件的冲突 加载从上往下,后面覆盖前面</p></li>
+</ul>
 
-* 同一个pom文件的冲突 加载从上往下,后面覆盖前面
+<h5 id="可选依赖">可选依赖</h5>
 
+<p>Optional标签标示该依赖是否可选，默认是false。可以理解为，如果为true，则表示该依赖不会传递下去，如果为false，则会传递下去。</p>
 
-##### 可选依赖
-Optional标签标示该依赖是否可选，默认是false。可以理解为，如果为true，则表示该依赖不会传递下去，如果为false，则会传递下去。
+<h5 id="排除依赖">排除依赖</h5>
 
+<p>Exclusions标签可以排除依赖</p>
 
+<h4 id="生命周期">生命周期</h4>
 
-##### 排除依赖
-Exclusions标签可以排除依赖
+<ul>
+<li>Maven有三个生命周期：clean生命周期、default生命周期、site生命周期</li>
+<li>生命周期可以理解为项目构建的步骤集合。</li>
+<li>生命周期是由多个阶段（Phase）组成。每个阶段都是一个完整的功能，比如mvn clean中的clean就是一个阶段。</li>
+</ul>
 
+<h5 id="clean生命周期">Clean生命周期</h5>
 
-#### 生命周期
-* Maven有三个生命周期：clean生命周期、default生命周期、site生命周期
-* 生命周期可以理解为项目构建的步骤集合。
-* 生命周期是由多个阶段（Phase）组成。每个阶段都是一个完整的功能，比如mvn clean中的clean就是一个阶段。
-
-##### Clean生命周期
-* pre-clean 执行一些需要在clean之前完成的工作
-* clean 移除所有上一次构建生成的文件
-* post-clean 执行一些需要在clean之后立刻完成的工作
+<ul>
+<li>pre-clean 执行一些需要在clean之前完成的工作</li>
+<li>clean 移除所有上一次构建生成的文件</li>
+<li>post-clean 执行一些需要在clean之后立刻完成的工作
 mvn clean命令，等同于 mvn pre-clean clean。只要执行后面的命令，那么前面的命令都会执行，不需要再重新去输入命令。
-有Clean生命周期，在生命周期又有clean阶段。
+有Clean生命周期，在生命周期又有clean阶段。</li>
+</ul>
 
-##### Default生命周期（重点）
-validate
-generate-sources
-process-sources
-generate-resources
-process-resources 复制并处理资源文件，至目标目录，准备打包。
-compile 编译项目的源代码。
-process-classes
-generate-test-sources
-process-test-sources
-generate-test-resources
-process-test-resources 复制并处理资源文件，至目标测试目录。
-test-compile 编译测试源代码。
-process-test-classes
-test 使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署。
-prepare-package
-package 接受编译好的代码，打包成可发布的格式，如 JAR 。
-pre-integration-test
-integration-test
-post-integration-test
-verify
-install 将包安装至本地仓库，以让其它项目依赖。
-deploy 将最终的包复制到远程的仓库，以让其它开发人员与项目共享。
-在maven中，只要在同一个生命周期，你执行后面的阶段，那么前面的阶段也会被执行，而且不需要额外去输入前面的阶段，这样大大减轻了程序员的工作。
+<h5 id="default生命周期（重点）">Default生命周期（重点）</h5>
 
-##### Site生命周期
-* pre-site 执行一些需要在生成站点文档之前完成的工作
-* site 生成项目的站点文档
-* post-site 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备
-* site-deploy 将生成的站点文档部署到特定的服务器上
+<p>validate<br>
+generate-sources<br>
+process-sources<br>
+generate-resources<br>
+process-resources 复制并处理资源文件，至目标目录，准备打包。<br>
+compile 编译项目的源代码。<br>
+process-classes<br>
+generate-test-sources<br>
+process-test-sources<br>
+generate-test-resources<br>
+process-test-resources 复制并处理资源文件，至目标测试目录。<br>
+test-compile 编译测试源代码。<br>
+process-test-classes<br>
+test 使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署。<br>
+prepare-package<br>
+package 接受编译好的代码，打包成可发布的格式，如 JAR 。<br>
+pre-integration-test<br>
+integration-test<br>
+post-integration-test<br>
+verify<br>
+install 将包安装至本地仓库，以让其它项目依赖。<br>
+deploy 将最终的包复制到远程的仓库，以让其它开发人员与项目共享。<br>
+在maven中，只要在同一个生命周期，你执行后面的阶段，那么前面的阶段也会被执行，而且不需要额外去输入前面的阶段，这样大大减轻了程序员的工作。</p>
 
+<h5 id="site生命周期">Site生命周期</h5>
 
+<ul>
+<li>pre-site 执行一些需要在生成站点文档之前完成的工作</li>
+<li>site 生成项目的站点文档</li>
+<li>post-site 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备</li>
+<li>site-deploy 将生成的站点文档部署到特定的服务器上</li>
+</ul>
 
-#### 插件
-插件（plugin），每个插件都能实现一个阶段的功能。Maven的核心是生命周期，但是生命周期相当于主要指定了maven命令执行的流程顺序，而没有真正实现流程的功能，功能是有插件来实现的。
-比如：compile就是一个插件实现的功能。
-##### 编译插件
+<h4 id="插件">插件</h4>
+
+<p>插件（plugin），每个插件都能实现一个阶段的功能。Maven的核心是生命周期，但是生命周期相当于主要指定了maven命令执行的流程顺序，而没有真正实现流程的功能，功能是有插件来实现的。<br>
+比如：compile就是一个插件实现的功能。</p>
+
+<h5 id="编译插件">编译插件</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;source&gt;</span>1.7<span class="nt">&lt;/source&gt;</span>
+                <span class="nt">&lt;target&gt;</span>1.7<span class="nt">&lt;/target&gt;</span>
+                <span class="nt">&lt;encoding&gt;</span>UTF-8<span class="nt">&lt;/encoding&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
 </code></pre></div>
-<p><build><br>
-    <plugins><br>
-        <plugin><br>
-            <groupId>org.apache.maven.plugins</groupId><br>
-            <artifactId>maven-compiler-plugin</artifactId><br>
-            <configuration><br>
-                <source>1.7</source><br>
-                <target>1.7</target><br>
-                <encoding>UTF-8</encoding><br>
-            </configuration><br>
-        </plugin><br>
-    </plugins><br>
-</build></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+<h5 id="tomcat插件">Tomcat插件</h5>
 
-##### Tomcat插件
-如果使用maven的tomcat插件的话，那么本地则不需要安装tomcat。
-## 创建maven的web工程
-* 第一步：创建maven工程
-* 第二步：main下面创建webapp/WEB-INF/web.xml
-* 第三步: 在pom.xml中配置&amp;lt;packaging&gt;war&amp;lt;/packaging&gt;
+<p>如果使用maven的tomcat插件的话，那么本地则不需要安装tomcat。</p>
 
-##### 使用tomcat插件运行web工程
-默认输入tomcat:run去使用tomcat插件来启动web工程，但是默认的tomcat插件使用的tomcat版本是tomcat6
-而目前主流的tomcat，是使用的tomcat7，需要手动配置tomcat插件
-使用tomcat7来运行web工程，它的命令是：tomcat7:run
+<h2 id="创建maven的web工程">创建maven的web工程</h2>
 
-##### 继承
-在maven中的继承，指的是pom文件的继承
+<ul>
+<li>第一步：创建maven工程</li>
+<li>第二步：main下面创建webapp/WEB-INF/web.xml</li>
+<li>第三步: 在pom.xml中配置&lt;packaging&gt;war&lt;/packaging&gt;</li>
+</ul>
 
-* 创建父工程
-父工程的packaging为pom
-* 创建子工程
+<h5 id="使用tomcat插件运行web工程">使用tomcat插件运行web工程</h5>
+
+<p>默认输入tomcat:run去使用tomcat插件来启动web工程，但是默认的tomcat插件使用的tomcat版本是tomcat6<br>
+而目前主流的tomcat，是使用的tomcat7，需要手动配置tomcat插件<br>
+使用tomcat7来运行web工程，它的命令是：tomcat7:run</p>
+
+<h5 id="继承">继承</h5>
+
+<p>在maven中的继承，指的是pom文件的继承</p>
+
+<ul>
+<li>创建父工程
+父工程的packaging为pom</li>
+<li>创建子工程
 创建子工程有两种方式：一种是创建一个新的工程为子工程，另一种是修改老的工程为子工程。
 子工程的pom文件
-</code></pre></div>
-<p><parent><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <artifactId>MavenParent</artifactId><br>
-    <version>1.0-SNAPSHOT</version><br>
-</parent></p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 父工程统一依赖jar包
+<code>xml
+&lt;parent&gt;
+&lt;groupId&gt;com.itheima.maven&lt;/groupId&gt;
+&lt;artifactId&gt;MavenParent&lt;/artifactId&gt;
+&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/parent&gt;
+</code>
+##### 父工程统一依赖jar包
 在父工程中对jar包进行依赖，在子工程中都会继承此依赖。
-</code></pre></div>
-<p><packaging>pom</packaging><br>
-<dependencies><br>
-    <dependency><br>
-        <groupId>junit</groupId><br>
-        <artifactId>junit</artifactId><br>
-        <version>4.9</version><br>
-    </dependency><br>
-</dependencies></p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 父工程统一管理版本号
+<code>xml
+&lt;packaging&gt;pom&lt;/packaging&gt;
+&lt;dependencies&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.9&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code>
+##### 父工程统一管理版本号
 dependencyManagement标签管理的依赖，其实没有真正依赖，它只是管理依赖的版本。
-</code></pre></div>
-<p>//父工程<br>
-<dependencyManagement><br>
-    <dependencies><br>
-        <dependency><br>
-            <groupId>junit</groupId><br>
-            <artifactId>junit</artifactId><br>
-            <version>4.9</version><br>
-        </dependency><br>
-    </dependencies><br>
-</dependencyManagement></p>
+```xml
+//父工程
+<dependencyManagement>
+<dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.9</version>
+    </dependency>
+</dependencies>
+</dependencyManagement></li>
+</ul>
 
 <p>//子工程<br>
 <dependencies><br>
@@ -509,165 +571,165 @@ dependencyManagement标签管理的依赖，其实没有真正依赖，它只是
 </dependencies></p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ##### 父工程抽取版本号
+```xml
+&lt;properties&gt;
+    &lt;junit.vsersion&gt;4.9&lt;/junit.vsersion&gt;
+&lt;/properties&gt;
+&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;${junit.vsersion}&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
 </code></pre></div>
-<p><properties><br>
-    <junit.vsersion>4.9</junit.vsersion><br>
-</properties><br>
-<dependencyManagement><br>
-    <dependencies><br>
-        <dependency><br>
-            <groupId>junit</groupId><br>
-            <artifactId>junit</artifactId><br>
-            <version>${junit.vsersion}</version><br>
-        </dependency><br>
-    </dependencies><br>
-</dependencyManagement></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+<h4 id="聚合">聚合</h4>
 
+<p>在真实项目中，一个项目有表现层、业务层、持久层，<br>
+对于业务层和持久层，它们可以在多个工程中被使用，<br>
+所以一般会将业务层和持久单独创建为java工程，为其他工程依赖。</p>
 
-#### 聚合
-在真实项目中，一个项目有表现层、业务层、持久层，
-对于业务层和持久层，它们可以在多个工程中被使用，
-所以一般会将业务层和持久单独创建为java工程，为其他工程依赖。
+<h5 id="创建一个聚合工程">创建一个聚合工程</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//MavenWeb2
+<span class="nt">&lt;modules&gt;</span>
+    <span class="nt">&lt;module&gt;</span>../MavenDao<span class="nt">&lt;/module&gt;</span>
+    <span class="nt">&lt;module&gt;</span>../MavenService<span class="nt">&lt;/module&gt;</span>
+    <span class="nt">&lt;module&gt;</span>../MavenController<span class="nt">&lt;/module&gt;</span>
+<span class="nt">&lt;/modules&gt;</span>
+<span class="c">&lt;!--聚合工程打包方式必须是pom--&gt;</span>
+<span class="nt">&lt;packaging&gt;</span>pom<span class="nt">&lt;/packaging&gt;</span>
 
-##### 创建一个聚合工程
+//MavenDao
+<span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>MavenWeb2<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.itheima.maven<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;relativePath&gt;</span>../MavenWeb2/pom.xml<span class="nt">&lt;/relativePath&gt;</span>
+<span class="nt">&lt;/parent&gt;</span>
+//MavenService
+<span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>MavenWeb2<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.itheima.maven<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;relativePath&gt;</span>../MavenWeb2/pom.xml<span class="nt">&lt;/relativePath&gt;</span>
+<span class="nt">&lt;/parent&gt;</span>
+//MavenController
+<span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>MavenWeb2<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.itheima.maven<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;relativePath&gt;</span>../MavenWeb2/pom.xml<span class="nt">&lt;/relativePath&gt;</span>
+<span class="nt">&lt;/parent&gt;</span>
+<span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
 </code></pre></div>
-<p>//MavenWeb2<br>
-<modules><br>
-    <module>../MavenDao</module><br>
-    <module>../MavenService</module><br>
-    <module>../MavenController</module><br>
-</modules></p>
+<h4 id="maven仓库管理">Maven仓库管理</h4>
 
-<!--聚合工程打包方式必须是pom-->
+<p>用来统一存储所有Maven共享构建的位置就是仓库。根据Maven坐标定义每个构建在仓库中唯一<br>
+存储路径大致为：groupId/artifactId/version/artifactId-version.packaging</p>
 
-<p><packaging>pom</packaging></p>
+<h5 id="仓库的分类">仓库的分类</h5>
 
-<p>//MavenDao<br>
-<parent><br>
-    <artifactId>MavenWeb2</artifactId><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <version>1.0-SNAPSHOT</version><br>
-    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
-</parent><br>
-//MavenService<br>
-<parent><br>
-    <artifactId>MavenWeb2</artifactId><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <version>1.0-SNAPSHOT</version><br>
-    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
-</parent><br>
-//MavenController<br>
-<parent><br>
-    <artifactId>MavenWeb2</artifactId><br>
-    <groupId>com.itheima.maven</groupId><br>
-    <version>1.0-SNAPSHOT</version><br>
-    <relativePath>../MavenWeb2/pom.xml</relativePath><br>
-</parent><br>
-<packaging>war</packaging></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+<ul>
+<li>本地仓库
+默认在~/.m2/repository，如果在用户配置中有配置，则以用户配置的地址为准</li>
+<li>远程仓库
+中央仓库（不包含有版本的jar包）
+<a href="http://repo1.maven.org/maven2">http://repo1.maven.org/maven2</a>
+私服
+本地有使用本地,没有私服去中央仓库下载</li>
+</ul>
 
-#### Maven仓库管理
-用来统一存储所有Maven共享构建的位置就是仓库。根据Maven坐标定义每个构建在仓库中唯一
-存储路径大致为：groupId/artifactId/version/artifactId-version.packaging
+<h5 id="maven私服安装">Maven私服安装</h5>
 
-##### 仓库的分类
-* 本地仓库
-默认在~/.m2/repository，如果在用户配置中有配置，则以用户配置的地址为准
-* 远程仓库
-  中央仓库（不包含有版本的jar包）
-  http://repo1.maven.org/maven2
-  私服
-  本地有使用本地,没有私服去中央仓库下载
+<p>安装Nexus<br>
+为所有来自中央仓库的构建安装提供本地缓存。<br>
+下载网站：<a href="http://nexus.sonatype.org/">http://nexus.sonatype.org/</a></p>
 
+<ul>
+<li>第一步：安装tomcat</li>
+<li>第二步：将nexus的war包拷贝到tomcat的webapps下</li>
+<li>第三步：启动tomcat</li>
+<li>第四步：nexus的本地目录 ~/.m2/</li>
+</ul>
 
+<h5 id="访问nexus">访问Nexus</h5>
 
+<p>访问URL: <a href="http://localhost:8080/nexus-2.7.0-06/">http://localhost:8080/nexus-2.7.0-06/</a></p>
 
-##### Maven私服安装
-安装Nexus
-为所有来自中央仓库的构建安装提供本地缓存。
-下载网站：http://nexus.sonatype.org/
+<p>默认账号:<br>
+用户名： admin<br>
+密码： admin123</p>
 
-* 第一步：安装tomcat
-* 第二步：将nexus的war包拷贝到tomcat的webapps下
-* 第三步：启动tomcat
-* 第四步：nexus的本地目录 ~/.m2/
+<h5 id="nexus的仓库和仓库组">Nexus的仓库和仓库组</h5>
 
-##### 访问Nexus
-访问URL: http://localhost:8080/nexus-2.7.0-06/
+<p>仓库有4种类型 :</p>
 
-默认账号:
-用户名： admin
-密码： admin123
+<ul>
+<li>group(仓库组)：一组仓库的集合</li>
+<li>hosted(宿主)：配置第三方仓库 （包括公司内部私服 ）</li>
+<li>proxy(代理)：私服会对中央仓库进行代理，用户连接私服，私服自动去中央仓库下载jar包或者插件</li>
+<li>virtual(虚拟)：兼容Maven1 版本的jar或者插件</li>
+</ul>
 
-##### Nexus的仓库和仓库组
+<h5 id="nexus的仓库和仓库组介绍">Nexus的仓库和仓库组介绍:</h5>
 
-仓库有4种类型 :
-* group(仓库组)：一组仓库的集合
-* hosted(宿主)：配置第三方仓库 （包括公司内部私服 ）
-* proxy(代理)：私服会对中央仓库进行代理，用户连接私服，私服自动去中央仓库下载jar包或者插件
-* virtual(虚拟)：兼容Maven1 版本的jar或者插件
+<p>3rd party: 一个策略为Release的宿主类型仓库，用来部署无法从公共仓库获得的第三方发布版本构建<br>
+Apache Snapshots: 一个策略为Snapshot的代理仓库，用来代理Apache Maven仓库的快照版本构建<br>
+Central: 代理Maven中央仓库<br>
+Central M1 shadow: 代理Maven1 版本 中央仓库<br>
+Codehaus Snapshots: 一个策略为Snapshot的代理仓库，用来代理Codehaus Maven仓库的快照版本构件<br>
+Releases: 一个策略为Release的宿主类型仓库，用来部署组织内部的发布版本构件<br>
+Snapshots: 一个策略为Snapshot的宿主类型仓库，用来部署组织内部的快照版本构件<br>
+Public Repositories:该仓库组将上述所有策略为Release的仓库聚合并通过一致的地址提供服务</p>
 
-##### Nexus的仓库和仓库组介绍:
-3rd party: 一个策略为Release的宿主类型仓库，用来部署无法从公共仓库获得的第三方发布版本构建
-Apache Snapshots: 一个策略为Snapshot的代理仓库，用来代理Apache Maven仓库的快照版本构建
-Central: 代理Maven中央仓库
-Central M1 shadow: 代理Maven1 版本 中央仓库
-Codehaus Snapshots: 一个策略为Snapshot的代理仓库，用来代理Codehaus Maven仓库的快照版本构件
-Releases: 一个策略为Release的宿主类型仓库，用来部署组织内部的发布版本构件
-Snapshots: 一个策略为Snapshot的宿主类型仓库，用来部署组织内部的快照版本构件
-Public Repositories:该仓库组将上述所有策略为Release的仓库聚合并通过一致的地址提供服务
-
-
-
-##### 配置所有构建均从私服下载
+<h5 id="配置所有构建均从私服下载">配置所有构建均从私服下载</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">在本地仓库(~/.m2)的setting.xml中配置如下：
+<span class="nt">&lt;mirrors&gt;</span>
+    <span class="nt">&lt;mirror&gt;</span>
+       <span class="c">&lt;!--此处配置所有的构建均从私有仓库中下载 *代表所有，也可以写central --&gt;</span>
+       <span class="nt">&lt;id&gt;</span>nexus<span class="nt">&lt;/id&gt;</span>
+       <span class="nt">&lt;mirrorOf&gt;</span>*<span class="nt">&lt;/mirrorOf&gt;</span>
+       <span class="nt">&lt;url&gt;</span>http://localhost:8080/nexus-2.7.0-06/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/mirror&gt;</span>
+ <span class="nt">&lt;/mirrors&gt;</span>
 </code></pre></div>
-<p>在本地仓库(~/.m2)的setting.xml中配置如下：<br>
-<mirrors><br>
-    <mirror><br>
-       &lt;!--此处配置所有的构建均从私有仓库中下载 <em>代表所有，也可以写central --&gt;<br>
-       <id>nexus</id><br>
-       <mirrorOf></em></mirrorOf><br>
-       <url><a href="http://localhost:8080/nexus-2.7.0-06/content/groups/public/">http://localhost:8080/nexus-2.7.0-06/content/groups/public/</a></url><br>
-    </mirror><br>
- </mirrors></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+<h5 id="部署构建到nexus">部署构建到Nexus</h5>
 
-
-
-
-##### 部署构建到Nexus
-* 第一步：Nexus的访问权限控制
+<ul>
+<li>第一步：Nexus的访问权限控制
 在本地仓库的setting.xml中配置如下：
-</code></pre></div>
-<p><server><br>
-      <id>releases</id><br>
-      <username>admin</username><br>
-      <password>admin123</password><br>
-   </server><br>
-   <server><br>
-      <id>snapshots</id><br>
-      <username>admin</username><br>
-      <password>admin123</password><br>
-   </server></p>
-<div class="highlight"><pre><code class="language-" data-lang="">* 第二步：配置pom文件
-在需要构建的项目中修改pom文件
-</code></pre></div>
-<p><distributionManagement><br>
-      <repository><br>
-         <id>releases</id><br>
-         <name>Internal Releases</name><br>
-         <url><a href="http://localhost:8080/nexus-2.7.0-06/content/repositories/releases/">http://localhost:8080/nexus-2.7.0-06/content/repositories/releases/</a></url><br>
-      </repository><br>
-      <snapshotRepository><br>
-         <id>snapshots</id><br>
-         <name>Internal Snapshots</name><br>
-         <url><a href="http://localhost:8080/nexus-2.7.0-06/content/repositories/snapshots/">http://localhost:8080/nexus-2.7.0-06/content/repositories/snapshots/</a></url><br>
-      </snapshotRepository><br>
-   </distributionManagement></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-* 第三步：执行maven的deploy命令
-</code></pre></div>  
+<code>xml
+&lt;server&gt;
+  &lt;id&gt;releases&lt;/id&gt;
+  &lt;username&gt;admin&lt;/username&gt;
+  &lt;password&gt;admin123&lt;/password&gt;
+&lt;/server&gt;
+&lt;server&gt;
+  &lt;id&gt;snapshots&lt;/id&gt;
+  &lt;username&gt;admin&lt;/username&gt;
+  &lt;password&gt;admin123&lt;/password&gt;
+&lt;/server&gt;
+</code></li>
+<li><p>第二步：配置pom文件<br>
+在需要构建的项目中修改pom文件</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;distributionManagement&gt;</span>
+  <span class="nt">&lt;repository&gt;</span>
+     <span class="nt">&lt;id&gt;</span>releases<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;name&gt;</span>Internal Releases<span class="nt">&lt;/name&gt;</span>
+     <span class="nt">&lt;url&gt;</span>http://localhost:8080/nexus-2.7.0-06/content/repositories/releases/<span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;/repository&gt;</span>
+  <span class="nt">&lt;snapshotRepository&gt;</span>
+     <span class="nt">&lt;id&gt;</span>snapshots<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;name&gt;</span>Internal Snapshots<span class="nt">&lt;/name&gt;</span>
+     <span class="nt">&lt;url&gt;</span>http://localhost:8080/nexus-2.7.0-06/content/repositories/snapshots/<span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;/snapshotRepository&gt;</span>
+<span class="nt">&lt;/distributionManagement&gt;</span>
+</code></pre></div></li>
+<li><p>第三步：执行maven的deploy命令</p></li>
+</ul>
+  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -820,9 +882,10 @@ Public Repositories:该仓库组将上述所有策略为Release的仓库聚合�
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

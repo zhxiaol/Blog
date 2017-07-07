@@ -122,21 +122,21 @@
 </blockquote>
 
 <p>1.创建一个实现servlet的实列</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo1 implements Servlet{}
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">ServletDemo1</span> <span class="kr">implements</span> <span class="nx">Servlet</span><span class="p">{}</span>
 </code></pre></div>
 <p>2.配置web.xml</p>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;!--创建一个servlet实列--&gt;
-&lt;servlet&gt;
-    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;com.itheima.servlet.ServletDemo1&lt;/servlet-class&gt;
-    &lt;!--服务器启动时就创建--&gt;
-    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-&lt;/servlet&gt;
-&lt;!--给servlet提供(映射)一个可供客户端访问的URI--&gt;
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;/demo1&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="c">&lt;!--创建一个servlet实列--&gt;</span>
+<span class="nt">&lt;servlet&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo1<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>com.itheima.servlet.ServletDemo1<span class="nt">&lt;/servlet-class&gt;</span>
+    <span class="c">&lt;!--服务器启动时就创建--&gt;</span>
+    <span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="c">&lt;!--给servlet提供(映射)一个可供客户端访问的URI--&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo1<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/demo1<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
 </code></pre></div>
 <h2 id="servlet运行过程">servlet运行过程</h2>
 <div class="highlight"><pre><code class="language-sequence" data-lang="sequence">客户端-&gt; tomcat:1.http://localhost:8080/ demo
@@ -158,26 +158,26 @@ tomcat--&gt; servletDemo1:8.调用distory()方法
 </blockquote>
 
 <h2 id="genericservlet-适配器模式">GenericServlet(适配器模式)</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo2 extends GenericServlet {
-    @Override
-    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
-            System.out.println("service");
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletDemo2</span> <span class="kd">extends</span> <span class="n">GenericServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">service</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">ServletResponse</span> <span class="n">res</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"service"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="httpservlet-模板方法设计模式">HttpServlet(模板方法设计模式)</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo3 extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("******doGet*********");
-        System.out.println(req.getRemoteAddr());
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletDemo3</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"******doGet*********"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getRemoteAddr</span><span class="o">());</span>
+    <span class="o">}</span>
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("******doPost*********");
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"******doPost*********"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="servlet的一些细节">servlet的一些细节</h2>
 
@@ -209,11 +209,11 @@ tomcat--&gt; servletDemo1:8.调用distory()方法
 <h2 id="servletconfig">ServletConfig</h2>
 
 <p>获取配置文件的信息，获取servletContext对象</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-public void init(ServletConfig config) throws ServletException {
-    super.init(config);
-    this.config=config;
-}
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Override</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">init</span><span class="p">(</span><span class="nx">ServletConfig</span> <span class="nx">config</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">config</span><span class="o">=</span><span class="nx">config</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></blockquote>
 
 <p>@Override<br>
@@ -237,51 +237,56 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 <div class="highlight"><pre><code class="language-" data-lang="">## ServletContext
 &gt; 代表整个应用，一个应用只有一个servletContext对象，单实例.
 &gt; 域对象:在一定范围内(当前应用),使多个Servlet共享数据。
+
 |常用方法|备注|
 |------|-----|
 |void setAttribute(String name,Object value)|向ServletContext对象map中添加数据
 |Object getAttribute(String name)|从ServletContext对象的map中取数据|
 |void removeAttibute(String name)|根据name移出数据|
 ###### 共享数据
+```java
+//ServletDemo6
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    ServletContext application = this.getServletContext();
+    application.setAttribute("name","tom");
+    System.out.println("存储name=tom");
+}
+//ServletDemo7
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    ServletContext application = this.getServletContext();
+    String name = (String) application.getAttribute("name");
+    System.out.println("name:"+name);
+}
 </code></pre></div>
-<p>//ServletDemo6<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    ServletContext application = this.getServletContext();<br>
-    application.setAttribute(&quot;name&quot;,&quot;tom&quot;);<br>
-    System.out.println(&quot;存储name=tom&quot;);<br>
-}<br>
-//ServletDemo7<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    ServletContext application = this.getServletContext();<br>
-    String name = (String) application.getAttribute(&quot;name&quot;);<br>
-    System.out.println(&quot;name:&quot;+name);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 获取全局配置信息
-</code></pre></div>
-<p>//ServletDemo7<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    ServletContext application = this.getServletContext();<br>
-    String e = application.getInitParameter(&quot;encoding&quot;);<br>
-    System.out.println(&quot;encoding:&quot;+e);<br>
-}<br>
-//web.xml<br>
-<context-param><br>
-    <param-name>encoding</param-name><br>
-    <param-value>utf-8</param-value><br>
-</context-param></p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 获取资源路径
-String getRealPath(String path);//根据资源名称得到资源的绝对路径
-&gt; 可以得到当前应用任何位置的任何资源
-</code></pre></div>
-<p>//在WEB-INF/a.properties<br>
-String path = this.getServletContext().getRealPath(&quot;/WEB-INF/a.properties&quot;);<br>
-Properties properties = new Properties();<br>
-properties.load(new FileInputStream(path));<br>
-String value = properties.getProperty(&quot;key&quot;);<br>
-System.out.println(value);</p>
+<h6 id="获取全局配置信息">获取全局配置信息</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//ServletDemo7</span>
+<span class="err">@</span><span class="nx">Override</span>
+<span class="kr">protected</span> <span class="k">void</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">resp</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
+    <span class="nx">ServletContext</span> <span class="nx">application</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">();</span>
+    <span class="nb">String</span> <span class="nx">e</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">getInitParameter</span><span class="p">(</span><span class="s2">"encoding"</span><span class="p">);</span>
+    <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"encoding:"</span><span class="o">+</span><span class="nx">e</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">//web.xml</span>
+<span class="o">&lt;</span><span class="nx">context</span><span class="o">-</span><span class="nx">param</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">encoding</span><span class="o">&lt;</span><span class="sr">/param-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">value</span><span class="o">&gt;</span><span class="nx">utf</span><span class="o">-</span><span class="mi">8</span><span class="o">&lt;</span><span class="sr">/param-value</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/context-param</span><span class="err">&gt;
+</span></code></pre></div>
+<h6 id="获取资源路径">获取资源路径</h6>
+
+<p>String getRealPath(String path);//根据资源名称得到资源的绝对路径</p>
+
+<blockquote>
+<p>可以得到当前应用任何位置的任何资源</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//在WEB-INF/a.properties</span>
+<span class="nb">String</span> <span class="nx">path</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">().</span><span class="nx">getRealPath</span><span class="p">(</span><span class="s2">"/WEB-INF/a.properties"</span><span class="p">);</span>
+<span class="nx">Properties</span> <span class="nx">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Properties</span><span class="p">();</span>
+<span class="nx">properties</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="k">new</span> <span class="nx">FileInputStream</span><span class="p">(</span><span class="nx">path</span><span class="p">));</span>
+<span class="nb">String</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">properties</span><span class="p">.</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">"key"</span><span class="p">);</span>
+<span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+</code></pre></div></blockquote>
 
 <p>//在src/b.properties<br>
 String path = this.getServletContext().getRealPath(&quot;/WEB-INF/classes/b.properties&quot;);<br>
@@ -299,40 +304,40 @@ System.out.println(key);</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ## Servlet转发
 &gt; 一次请求响应
-</code></pre></div>
-<p>//ServletDemo9<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    System.out.println(&quot;我要办事&quot;);<br>
-    System.out.println(&quot;你的事我办不了，我可以帮你找人办&quot;);<br>
-    ServletContext application = this.getServletContext();<br>
-    RequestDispatcher rd = application.getRequestDispatcher(&quot;/demo10&quot;);<br>
-    rd.forward(req,resp);<br>
-    System.out.println(&quot;事办完了&quot;);<br>
-}<br>
-//ServletDemo10<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    System.out.println(&quot;这个事我能办&quot;);<br>
-}<br>
-//web.xml<br>
-<servlet><br>
-    <servlet-name>ServletDemo9</servlet-name><br>
-    <servlet-class>com.itheima.servlet.ServletDemo9</servlet-class><br>
-</servlet><br>
-<servlet-mapping><br>
-    <servlet-name>ServletDemo9</servlet-name><br>
-    <url-pattern>/demo9</url-pattern><br>
-</servlet-mapping><br>
-<servlet><br>
-    <servlet-name>ServletDemo10</servlet-name><br>
-    <servlet-class>com.itheima.servlet.ServletDemo10</servlet-class><br>
-</servlet><br>
-<servlet-mapping><br>
-    <servlet-name>ServletDemo10</servlet-name><br>
-    <url-pattern>/demo10</url-pattern><br>
-</servlet-mapping></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+```javascript
+//ServletDemo9
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    System.out.println("我要办事");
+    System.out.println("你的事我办不了，我可以帮你找人办");
+    ServletContext application = this.getServletContext();
+    RequestDispatcher rd = application.getRequestDispatcher("/demo10");
+    rd.forward(req,resp);
+    System.out.println("事办完了");
+}
+//ServletDemo10
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    System.out.println("这个事我能办");
+}
+//web.xml
+&lt;servlet&gt;
+    &lt;servlet-name&gt;ServletDemo9&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.itheima.servlet.ServletDemo9&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ServletDemo9&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/demo9&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;ServletDemo10&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.itheima.servlet.ServletDemo10&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ServletDemo10&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/demo10&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -485,9 +490,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

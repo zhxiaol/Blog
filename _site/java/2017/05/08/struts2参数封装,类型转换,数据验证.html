@@ -121,14 +121,14 @@
 
 <blockquote>
 <p>静态注入是struts-default.xml中的staticparams拦截器实现的</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//Demo1Action
-public class Demo1Action extends ActionSupport {
-    private String username;
-    private int age;
-    public String addUser(){
-        System.out.println("username:"+username+" age:"+age);
-        return null;
-    }
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Demo1Action</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo1Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">username</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="kr">int</span> <span class="nx">age</span><span class="p">;</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">addUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"username:"</span><span class="o">+</span><span class="nx">username</span><span class="o">+</span><span class="s2">" age:"</span><span class="o">+</span><span class="nx">age</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">public String getUsername() {
     return username;
@@ -159,51 +159,55 @@ public void setAge(int age) {
 <div class="highlight"><pre><code class="language-" data-lang="">###### 动态参数封装第一种方式
 &gt; 数据模型与动作类在一起 表单中的name必须后set后面的名称一致
 &gt;是struts-default.xml中的params拦截器实现的
+```java
+//Demo2Action
+public class Demo2Action extends ActionSupport {
+    private String username;
+    private int age;
+    public String addUser(){
+        System.out.println("username:"+username+" age:"+age);
+        return null;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+
+//stutus.xml
+&lt;action name="action2" class="com.itheima.web.action.Demo2Action" method="addUser"&gt;
+&lt;/action&gt;
+
+
+//addUser2.jsp
+&lt;form action="${pageContext.request.contextPath}/action2.action" method="post"&gt;
+    用户名:&lt;input type="text" name="username"&gt;&lt;br/&gt;
+    年龄:&lt;input type="text" name="age"&gt;&lt;br/&gt;
+    &lt;input type="submit" value="提交"&gt;
+&lt;/form&gt;
 </code></pre></div>
-<p>//Demo2Action<br>
-public class Demo2Action extends ActionSupport {<br>
-    private String username;<br>
-    private int age;<br>
-    public String addUser(){<br>
-        System.out.println(&quot;username:&quot;+username+&quot; age:&quot;+age);<br>
-        return null;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public String getUsername() {
-    return username;
-}
+<h6 id="动态参数封装第二种方式">动态参数封装第二种方式</h6>
 
-public void setUsername(String username) {
-    this.username = username;
-}
-
-public int getAge() {
-    return age;
-}
-
-public void setAge(int age) {
-    this.age = age;
-}
-</code></pre></div>
-<p>}</p>
-
-<p>//stutus.xml<br>
-<action name="action2" class="com.itheima.web.action.Demo2Action" method="addUser"><br>
-</action></p>
-
-<p>//addUser2.jsp</p>
-
-<form action="${pageContext.request.contextPath}/action2.action" method="post">
-    用户名:<input type="text" name="username"><br/>
-    年龄:<input type="text" name="age"><br/>
-    <input type="submit" value="提交">
-</form>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 动态参数封装第二种方式
-&gt; 先调用getUser()判断没有对象如果没有创建对象setUser(),再调用getUser().set参数
-</code></pre></div>
-<p>//User<br>
-public class User implements Serializable {<br>
-    private String username;<br>
-    private int age;</p>
+<blockquote>
+<p>先调用getUser()判断没有对象如果没有创建对象setUser(),再调用getUser().set参数</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//User</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+</code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">public String getUsername() {
     return username;
 }
@@ -257,241 +261,233 @@ public void setUser(User user) {
 *  2.实现接口中的抽象方法
 *  3.在使用模型驱动的时候，数据模型必须由我们实例化
 &gt;是有一个ModelDriven的拦截器实现的
-</code></pre></div>
-<p>//Demo4Action<br>
-public class Demo4Action extends ActionSupport implements ModelDriven<User> {<br>
-    private User user=new User();//使用模型驱动，必须自己实例化<br>
-    public String addUser(){<br>
-        System.out.println(user.getUsername()+&quot;,&quot;+user.getAge());<br>
-        return null;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public User getUser() {
-    System.out.println("getUser");
-    return user;
+```javascript
+//Demo4Action
+public class Demo4Action extends ActionSupport implements ModelDriven&lt;User&gt; {
+    private User user=new User();//使用模型驱动，必须自己实例化
+    public String addUser(){
+        System.out.println(user.getUsername()+","+user.getAge());
+        return null;
+    }
+
+    public User getUser() {
+        System.out.println("getUser");
+        return user;
+    }
+
+    public void setUser(User user) {
+        System.out.println("setUser");
+        this.user = user;
+    }
+
+    @Override
+    public User getModel() {
+        return user;
+    }
 }
+//struts.xml
+&lt;action name="action4" class="com.itheima.web.action.Demo4Action" method="addUser"&gt;&lt;/action&gt;
 
-public void setUser(User user) {
-    System.out.println("setUser");
-    this.user = user;
-}
-
-@Override
-public User getModel() {
-    return user;
-}
+//addUser4.jsp
+&lt;form action="${pageContext.request.contextPath}/action4.action" method="post"&gt;
+    用户名:&lt;input type="text" name="username"&gt;&lt;br/&gt;
+    年龄:&lt;input type="text" name="age"&gt;&lt;br/&gt;
+    &lt;input type="submit" value="提交"&gt;
+&lt;/form&gt;
 </code></pre></div>
-<p>}<br>
-//struts.xml<br>
-<action name="action4" class="com.itheima.web.action.Demo4Action" method="addUser"></action></p>
-
-<p>//addUser4.jsp</p>
-
-<form action="${pageContext.request.contextPath}/action4.action" method="post">
-    用户名:<input type="text" name="username"><br/>
-    年龄:<input type="text" name="age"><br/>
-    <input type="submit" value="提交">
-</form>
-<div class="highlight"><pre><code class="language-" data-lang="">## 类型转换器
+<h2 id="类型转换器">类型转换器</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">类型转换器使用步骤
+      |
+      |--编写一个类实现strutsTypeConverter
+      |
+      |--实现接口抽象方法
+      |
+      |--申明类型转换器
+      |      |
+      |      |--局部类型转换
+      |      |      |
+      |      |      |--局部类型转换器的格式,文件名为:类名-conversion.properties
+      |      |      |
+      |      |      |--局部类型转换器的声明，声明方式是以使用的属性名称作为Key，以类型转换器的全类名作为value
+      |      |
+      |      |
+      |      |--全局类型转换
+      |             |
+      |             |--全局类型转换器文件名的命名规范 xwork-conversion.properites.文件放到路径的根路径
+      |             |
+      |             |--全局类型转换器声明，声明方式以使用数据类型为key,以类型转换器全类名为value
+      |
+      |
+      |--转换失败异常处理
+              |
+              |--action里面添加<span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"input"</span><span class="nt">&gt;&lt;/result&gt;</span>
 </code></pre></div>
-<p>类型转换器使用步骤<br>
-      |<br>
-      |--编写一个类实现strutsTypeConverter<br>
-      |<br>
-      |--实现接口抽象方法<br>
-      |<br>
-      |--申明类型转换器<br>
-      |      |<br>
-      |      |--局部类型转换<br>
-      |      |      |<br>
-      |      |      |--局部类型转换器的格式,文件名为:类名-conversion.properties<br>
-      |      |      |<br>
-      |      |      |--局部类型转换器的声明，声明方式是以使用的属性名称作为Key，以类型转换器的全类名作为value<br>
-      |      |<br>
-      |      |<br>
-      |      |--全局类型转换<br>
-      |             |<br>
-      |             |--全局类型转换器文件名的命名规范 xwork-conversion.properites.文件放到路径的根路径<br>
-      |             |<br>
-      |             |--全局类型转换器声明，声明方式以使用数据类型为key,以类型转换器全类名为value<br>
-      |<br>
-      |<br>
-      |--转换失败异常处理<br>
-              |<br>
-              |--action里面添加<result name="input"></result></p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 类型转换器示例
+<h6 id="类型转换器示例">类型转换器示例</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//MyTypeConveter</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MyTypeConverter</span> <span class="kr">extends</span> <span class="nx">StrutsTypeConverter</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">DateFormat</span> <span class="nx">format</span><span class="o">=</span><span class="k">new</span> <span class="nx">SimpleDateFormat</span><span class="p">(</span><span class="s2">"MM/dd/yyyy"</span><span class="p">);</span>
+    <span class="cm">/**
+     * 把字符串转换成日期
+     * @param map context OGNL的上下对象，展示不用
+     * @param strings 要转换的数据
+     * @param aClass 目标类型
+     * @return
+     */</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">Object</span> <span class="nx">convertFromString</span><span class="p">(</span><span class="nx">Map</span> <span class="nx">map</span><span class="p">,</span> <span class="nb">String</span><span class="p">[]</span> <span class="nx">strings</span><span class="p">,</span> <span class="nx">Class</span> <span class="nx">aClass</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">strings</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="nx">strings</span><span class="p">.</span><span class="nx">length</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">aClass</span> <span class="o">==</span> <span class="nx">java</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nb">Date</span><span class="p">.</span><span class="kr">class</span><span class="p">){</span>
+                <span class="nb">String</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nx">format</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ParseException</span> <span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">e</span><span class="p">.</span><span class="nx">printStackTrace</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//把日期转化成字符串</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">convertToString</span><span class="p">(</span><span class="nx">Map</span> <span class="nx">map</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">o</span> <span class="k">instanceof</span> <span class="nb">Date</span><span class="p">){</span>
+                <span class="nx">format</span><span class="p">.</span><span class="nx">format</span><span class="p">((</span><span class="nb">Date</span><span class="p">)</span><span class="nx">o</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">//com.itheima.domain.User</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">User</span> <span class="kr">implements</span> <span class="nx">Serializable</span><span class="p">{</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">username</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">password</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nb">Date</span> <span class="nx">birthday</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">hobby</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="kr">boolean</span> <span class="nx">married</span><span class="p">;</span>
+<span class="c1">//get set方法...</span>
+<span class="p">}</span>
+
+<span class="c1">//com/ithei/domain/User-conversion.properties</span>
+<span class="err">#局部类型转换器的格式</span><span class="p">,</span><span class="err">文件名为类名</span><span class="o">-</span><span class="nx">conversion</span><span class="p">.</span><span class="nx">properties</span>
+<span class="err">#局部类型转换器的声明，声明方式是以使用的属性名称作为</span><span class="nx">Key</span><span class="err">，以类型转换器的全类名作为</span><span class="nx">value</span>
+<span class="nx">birthday</span><span class="o">=</span><span class="nx">com</span><span class="p">.</span><span class="nx">itheima</span><span class="p">.</span><span class="nx">web</span><span class="p">.</span><span class="nx">converter</span><span class="p">.</span><span class="nx">MyTypeConverter</span>
+
+<span class="c1">//src/xwork-conversion.properties</span>
+<span class="err">#全局类型转换器文件名的命名规范</span> <span class="nx">xwork</span><span class="o">-</span><span class="nx">conversion</span><span class="p">.</span><span class="nx">properites</span><span class="p">.</span><span class="err">文件放到路径的根路径</span>
+<span class="err">#全局类型转换器声明，声明方式以使用数据类型为</span><span class="nx">key</span><span class="p">,</span><span class="err">以类型转换器全类名为</span><span class="nx">value</span>
+<span class="nx">java</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nb">Date</span><span class="o">=</span><span class="nx">com</span><span class="p">.</span><span class="nx">itheima</span><span class="p">.</span><span class="nx">web</span><span class="p">.</span><span class="nx">converter</span><span class="p">.</span><span class="nx">MyTypeConverter</span>
 </code></pre></div>
-<p>//MyTypeConveter<br>
-public class MyTypeConverter extends StrutsTypeConverter {<br>
-    private DateFormat format=new SimpleDateFormat(&quot;MM/dd/yyyy&quot;);<br>
-    /**<br>
-     * 把字符串转换成日期<br>
-     * @param map context OGNL的上下对象，展示不用<br>
-     * @param strings 要转换的数据<br>
-     * @param aClass 目标类型<br>
-     * @return<br>
-     */<br>
-    @Override<br>
-    public Object convertFromString(Map map, String[] strings, Class aClass) {<br>
-        if(strings!=null&amp;&amp;strings.length&gt;0){<br>
-            if(aClass == java.util.Date.class){<br>
-                String str = strings[0];<br>
-                try {<br>
-                    return format.parse(str);<br>
-                } catch (ParseException e) {<br>
-                    e.printStackTrace();<br>
-                }<br>
-            }<br>
-        }<br>
-        return null;<br>
-    }<br>
-    //把日期转化成字符串<br>
-    @Override<br>
-    public String convertToString(Map map, Object o) {<br>
-            if(o instanceof Date){<br>
-                format.format((Date)o);<br>
-            }<br>
-        return null;<br>
-    }<br>
-}</p>
+<h2 id="struts2的表单标签使用">struts2的表单标签使用</h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//导入
+<span class="err">&lt;</span>%@ taglib uri="/struts-tags" prefix="s" %&gt;
+<span class="nt">&lt;s:head&gt;&lt;/s:head&gt;</span><span class="c">&lt;!--错误信息会变红，数据回现--&gt;</span>
+<span class="nt">&lt;s:fielderror/&gt;</span><span class="c">&lt;!--字段错误--&gt;</span>
+<span class="nt">&lt;s:actionerror/&gt;</span><span class="c">&lt;!--动作错误--&gt;</span>
+<span class="err">&lt;</span>%--struts2的from标签，它提供了和原始html表单标签几乎一致的属性
+    action:请求的地址，直接写动作名称，不用写contextpath
+    method:请求方式，在这里不用写。默认post
+    enctype:表单编码的MIME类型
+--%&gt;
+<span class="nt">&lt;s:form</span> <span class="na">action=</span><span class="s">"register.action"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--是否是必要字段(页面有*)/*的位置--&gt;</span>
+    <span class="nt">&lt;s:textfield</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">label=</span><span class="s">"用户名"</span> <span class="na">requiredLabel=</span><span class="s">"true"</span> <span class="na">requiredPosition=</span><span class="s">"left"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--showpassword 密码是否回现--&gt;</span>
+           <span class="nt">&lt;s:password</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">label=</span><span class="s">"密码"</span> <span class="na">showPassword=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;s:textfield</span> <span class="na">name=</span><span class="s">"birthday"</span> <span class="na">label=</span><span class="s">"生日"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;s:submit</span> <span class="na">value=</span><span class="s">"注册"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/s:form&gt;</span>
 
-<p>//com.itheima.domain.User<br>
-public class User implements Serializable{<br>
-    private String username;<br>
-    private String password;<br>
-    private Date birthday;<br>
-    private String hobby;<br>
-    private boolean married;<br>
-//get set方法...<br>
-}</p>
-
-<p>//com/ithei/domain/User-conversion.properties</p>
-
-<h1 id="局部类型转换器的格式-文件名为类名-conversion-properties">局部类型转换器的格式,文件名为类名-conversion.properties</h1>
-
-<h1 id="局部类型转换器的声明，声明方式是以使用的属性名称作为key，以类型转换器的全类名作为value">局部类型转换器的声明，声明方式是以使用的属性名称作为Key，以类型转换器的全类名作为value</h1>
-
-<p>birthday=com.itheima.web.converter.MyTypeConverter</p>
-
-<p>//src/xwork-conversion.properties</p>
-
-<h1 id="全局类型转换器文件名的命名规范-xwork-conversion-properites-文件放到路径的根路径">全局类型转换器文件名的命名规范 xwork-conversion.properites.文件放到路径的根路径</h1>
-
-<h1 id="全局类型转换器声明，声明方式以使用数据类型为key-以类型转换器全类名为value">全局类型转换器声明，声明方式以使用数据类型为key,以类型转换器全类名为value</h1>
-
-<p>java.util.Date=com.itheima.web.converter.MyTypeConverter</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## struts2的表单标签使用
+//user.properties
+#错误提示信息 文件上在类的目录里面 命名:类名.properties
+#格式invalid.fieldvalue.属性名=错误信息
+invalid.fieldvalue.birthday=\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u751f\u65e5\u683c\u5f0f:yyyy-MM-dd
 </code></pre></div>
-<p>//导入<br>
-&lt;%@ taglib uri=&quot;/struts-tags&quot; prefix=&quot;s&quot; %&gt;<br>
-<s:head><a href="/s:head">/s:head</a>&lt;!--错误信息会变红，数据回现--&gt;<br>
-<s:fielderror/>&lt;!--字段错误--&gt;<br>
-<s:actionerror/>&lt;!--动作错误--&gt;<br>
-&lt;%--struts2的from标签，它提供了和原始html表单标签几乎一致的属性<br>
-    action:请求的地址，直接写动作名称，不用写contextpath<br>
-    method:请求方式，在这里不用写。默认post<br>
-    enctype:表单编码的MIME类型<br>
---%&gt;<br>
-<s:form action="register.action"><br>
-    &lt;!--是否是必要字段(页面有<em>)/</em>的位置--&gt;<br>
-    <s:textfield name="username" label="用户名" requiredLabel="true" requiredPosition="left"/><br>
-    &lt;!--showpassword 密码是否回现--&gt;<br>
-           <s:password name="password" label="密码" showPassword="true"/><br>
-    <s:textfield name="birthday" label="生日"/><br>
-    <s:submit value="注册"/><br>
-<a href="/s:form">/s:form</a></p>
+<h2 id="数据验证和编程式验证">数据验证和编程式验证</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">编程式验证
+    |
+    |--动作必须继承ActionSupport
+    |
+    |--解决验证所有的动作
+    |       |
+    |       |--第一种方式 不需要验证的动作添加@SkipValidation注解
+    |       |               |
+    |       |               |
+    |       |               |-- 重写validate()方法（会在动作方法执行之前进行验证）
+    |       |                           |
+    |       |                           |--struts提供中了一个Map<span class="err">&lt;</span>表单的字段名,错误提示&gt;
+    |       |                                    |
+    |       |                                    |--往map里面添加错误提示
+    |       |                                    |
+    |       |                                    |--addFieldError(fieldName,errorMessage);
+    |       |
+    |       |
+    |       |--第二种方式 定义验证方法的名称 validate+动作名称(首字母大写)       
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserAction</span> <span class="kd">extends</span> <span class="n">ActionSupport</span> <span class="kd">implements</span> <span class="n">ModelDriven</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">getModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">user</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">register</span><span class="o">(){</span>
+        <span class="n">IUserService</span> <span class="n">us</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceImpl</span><span class="o">();</span>
+        <span class="n">User</span> <span class="n">u</span> <span class="o">=</span> <span class="n">us</span><span class="o">.</span><span class="na">findUserByUsername</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">());</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">u</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="s">"exists"</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">us</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">SUCCESS</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">NONE</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nd">@SkipValidation</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">findAll</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//重写了validate方法，会对这个类所有的方法验证</span>
+    <span class="c1">//解决验证所有方法的问题</span>
+    <span class="c1">//第一种方式 @SkipValidation</span>
+    <span class="c1">//第二种方式 定义验证方法的名称 validate+动作名称(首字母大写)</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">())){</span>
+            <span class="n">addFieldError</span><span class="o">(</span><span class="s">"username"</span><span class="o">,</span><span class="s">"用户名不能为空"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//第二种方式</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validateRegister</span><span class="o">(){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">())){</span>
+            <span class="n">addFieldError</span><span class="o">(</span><span class="s">"username"</span><span class="o">,</span><span class="s">"用户名不能为空"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-<p>//user.properties</p>
 
-<h1 id="错误提示信息-文件上在类的目录里面-命名-类名-properties">错误提示信息 文件上在类的目录里面 命名:类名.properties</h1>
-
-<h1 id="格式invalid-fieldvalue-属性名-错误信息">格式invalid.fieldvalue.属性名=错误信息</h1>
-
-<p>invalid.fieldvalue.birthday=\u8bf7\u8f93\u5165\u6b63\u786e\u7684\u751f\u65e5\u683c\u5f0f:yyyy-MM-dd</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 数据验证和编程式验证
+<span class="o">}</span>
 </code></pre></div>
-<p>编程式验证<br>
-    |<br>
-    |--动作必须继承ActionSupport<br>
-    |<br>
-    |--解决验证所有的动作<br>
-    |       |<br>
-    |       |--第一种方式 不需要验证的动作添加@SkipValidation注解<br>
-    |       |               |<br>
-    |       |               |<br>
-    |       |               |-- 重写validate()方法（会在动作方法执行之前进行验证）<br>
-    |       |                           |<br>
-    |       |                           |--struts提供中了一个Map&lt;表单的字段名,错误提示&gt;<br>
-    |       |                                    |<br>
-    |       |                                    |--往map里面添加错误提示<br>
-    |       |                                    |<br>
-    |       |                                    |--addFieldError(fieldName,errorMessage);<br>
-    |       |<br>
-    |       |<br>
-    |       |--第二种方式 定义验证方法的名称 validate+动作名称(首字母大写)       </p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>public class UserAction extends ActionSupport implements ModelDriven<User> {<br>
-    private User user=new User();<br>
-    @Override<br>
-    public User getModel() {<br>
-        return user;<br>
-    }<br>
-    public String register(){<br>
-        IUserService us=new UserServiceImpl();<br>
-        User u = us.findUserByUsername(user.getUsername());<br>
-        if(u!=null){<br>
-            return &quot;exists&quot;;<br>
-        }<br>
-        int result = us.register(user);<br>
-        if(result&gt;0){<br>
-            return SUCCESS;<br>
-        }else {<br>
-            return NONE;<br>
-        }<br>
-    }<br>
-    @SkipValidation<br>
-    public String findAll(){<br>
-        return SUCCESS;<br>
-    }<br>
-    //重写了validate方法，会对这个类所有的方法验证<br>
-    //解决验证所有方法的问题<br>
-    //第一种方式 @SkipValidation<br>
-    //第二种方式 定义验证方法的名称 validate+动作名称(首字母大写)<br>
-    @Override<br>
-    public void validate() {<br>
-        if(StringUtils.isEmpty(user.getUsername())){<br>
-            addFieldError(&quot;username&quot;,&quot;用户名不能为空&quot;);<br>
-        }<br>
-    }<br>
-    //第二种方式<br>
-    public void validateRegister(){<br>
-        if(StringUtils.isEmpty(user.getUsername())){<br>
-            addFieldError(&quot;username&quot;,&quot;用户名不能为空&quot;);<br>
-        }<br>
-    }</p>
+<h2 id="声明式验证器基于字段的验证">声明式验证器基于字段的验证</h2>
 
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 声明式验证器基于字段的验证
-&gt; 通过编写验证规则的xml文件,需要验证时，编写xml。不要验证，就不写
-&gt; 所有动作验证:在动作所在的包中，建立一个ActionClassName-validation.xml的文件
-&gt; 指定动作验证:在动作所在的包中,简历一个ActionClassName-动作名称-validation.xml
-&gt; struts2提供的验证器在xwork-core-xxx.jar 根包/validator/validatos/default.xml
-</code></pre></div>
-<p>//UserAction-validation.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;!DOCTYPE validators PUBLIC<br>
-        &quot;-//Apache Struts//XWork Validator 1.0.3//EN&quot;<br>
-        &quot;<a href="http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd%22%3E">http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd&quot;&gt;</a><br>
-<validators><br>
-    &lt;!--基于字段的声明式验证--&gt;<br>
-    <field name="user.username"><br>
-        &lt;!--struts2框架为我们继承了很多内置的验证器,requirestring验证是否为空,并去除左右空格--&gt;<br>
-        <field-validator type="requiredstring"><br>
-            <message>用户名必须存在</message><br>
-        </field-validator><br>
-    </field><br>
-</validators></p>
+<blockquote>
+<p>通过编写验证规则的xml文件,需要验证时，编写xml。不要验证，就不写<br>
+所有动作验证:在动作所在的包中，建立一个ActionClassName-validation.xml的文件<br>
+指定动作验证:在动作所在的包中,简历一个ActionClassName-动作名称-validation.xml<br>
+struts2提供的验证器在xwork-core-xxx.jar 根包/validator/validatos/default.xml</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//UserAction-validation.xml
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd"&gt;</span>
+<span class="nt">&lt;validators&gt;</span>
+    <span class="c">&lt;!--基于字段的声明式验证--&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">"user.username"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--struts2框架为我们继承了很多内置的验证器,requirestring验证是否为空,并去除左右空格--&gt;</span>
+        <span class="nt">&lt;field-validator</span> <span class="na">type=</span><span class="s">"requiredstring"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;message&gt;</span>用户名必须存在<span class="nt">&lt;/message&gt;</span>
+        <span class="nt">&lt;/field-validator&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+<span class="nt">&lt;/validators&gt;</span>
+</code></pre></div></blockquote>
 
 <p>//UserAction-register-validation.xml<br>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
@@ -512,93 +508,93 @@ public class User implements Serializable{<br>
     </validator><br>
 </validators></p>
 <div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>//StudentAction<br>
-public class StudentAction extends ActionSupport implements ModelDriven<Student> {<br>
-    private Student student=new Student();</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-public Student getModel() {
-    return student;
-}
-public String addStudent(){
-    return SUCCESS;
+```java
+//StudentAction
+public class StudentAction extends ActionSupport implements ModelDriven&lt;Student&gt; {
+    private Student student=new Student();
+
+    @Override
+    public Student getModel() {
+        return student;
+    }
+    public String addStudent(){
+        return SUCCESS;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }
 
-public Student getStudent() {
-    return student;
-}
-
-public void setStudent(Student student) {
-    this.student = student;
-}
-</code></pre></div>
-<p>}</p>
-
-<p>//StudentAction-addStudent-validation.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;!DOCTYPE validators PUBLIC<br>
-        &quot;-//Apache Struts//XWork Validator 1.0.3//EN&quot;<br>
-        &quot;<a href="http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd%22%3E">http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd&quot;&gt;</a><br>
-<validators><br>
-    <field name="student.username"><br>
-        <field-validator type="requiredstring"><br>
-            <message>请输入用户名</message><br>
-        </field-validator><br>
-    </field><br>
-    <field name="student.age"><br>
-        <field-validator type="int"><br>
-            &lt;!--使用注入的方式，设置最大值和最小值--&gt;<br>
-            <param name="min">18</param><br>
-            <param name="max">100</param><br>
-            <message>请输入18-100之间的整数</message><br>
-        </field-validator><br>
-    </field><br>
-    <field name="student.email"><br>
-        <field-validator type="email"><br>
-            <message>请输入正确的邮箱格式</message><br>
-        </field-validator><br>
-    </field><br>
-    <field name="student.password"><br>
-        <field-validator type="requiredstring"><br>
-            <param name="trim">false</param><br>
-            <message>请输入密码</message><br>
-        </field-validator><br>
-        <field-validator type="stringlength"><br>
-            <param name="minLength">3</param><br>
-            <param name="maxLength">8</param><br>
-            <message>密码长度3-8位</message><br>
-        </field-validator><br>
-    </field><br>
-    &lt;!--确认密码和密码必须一致，所以要使用基于验证器的验证--&gt;<br>
-    <validator type="expression"><br>
-        <param name="expression"><br>
-            &lt;![CDATA[<br>
-            password==repassword<br>
-            ]]&gt;<br>
-        </param><br>
-        <message>两次密码必须一致</message><br>
-    </validator><br>
-    <field name="student.score"><br>
-        <field-validator type="regex"><br>
-            <param name="regex"><br>
-                \d+<br>
-            </param><br>
-            <message>请输入正确的成绩</message><br>
-        </field-validator><br>
-    </field><br>
-    <field name="student.url"><br>
-        <field-validator type="url"><br>
-            <message>请输入正确的url</message><br>
-        </field-validator><br>
-    </field><br>
-    <field name="student.gender"><br>
-        &lt;!--必须不去空格--&gt;<br>
-        <field-validator type="required"><br>
-            <message>请选择性别</message><br>
-        </field-validator><br>
-    </field><br>
-</validators></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+//StudentAction-addStudent-validation.xml
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd"&gt;
+&lt;validators&gt;
+    &lt;field name="student.username"&gt;
+        &lt;field-validator type="requiredstring"&gt;
+            &lt;message&gt;请输入用户名&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;field name="student.age"&gt;
+        &lt;field-validator type="int"&gt;
+            &lt;!--使用注入的方式，设置最大值和最小值--&gt;
+            &lt;param name="min"&gt;18&lt;/param&gt;
+            &lt;param name="max"&gt;100&lt;/param&gt;
+            &lt;message&gt;请输入18-100之间的整数&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;field name="student.email"&gt;
+        &lt;field-validator type="email"&gt;
+            &lt;message&gt;请输入正确的邮箱格式&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;field name="student.password"&gt;
+        &lt;field-validator type="requiredstring"&gt;
+            &lt;param name="trim"&gt;false&lt;/param&gt;
+            &lt;message&gt;请输入密码&lt;/message&gt;
+        &lt;/field-validator&gt;
+        &lt;field-validator type="stringlength"&gt;
+            &lt;param name="minLength"&gt;3&lt;/param&gt;
+            &lt;param name="maxLength"&gt;8&lt;/param&gt;
+            &lt;message&gt;密码长度3-8位&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;!--确认密码和密码必须一致，所以要使用基于验证器的验证--&gt;
+    &lt;validator type="expression"&gt;
+        &lt;param name="expression"&gt;
+            &lt;![CDATA[
+            password==repassword
+            ]]&gt;
+        &lt;/param&gt;
+        &lt;message&gt;两次密码必须一致&lt;/message&gt;
+    &lt;/validator&gt;
+    &lt;field name="student.score"&gt;
+        &lt;field-validator type="regex"&gt;
+            &lt;param name="regex"&gt;
+                \d+
+            &lt;/param&gt;
+            &lt;message&gt;请输入正确的成绩&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;field name="student.url"&gt;
+        &lt;field-validator type="url"&gt;
+            &lt;message&gt;请输入正确的url&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+    &lt;field name="student.gender"&gt;
+        &lt;!--必须不去空格--&gt;
+        &lt;field-validator type="required"&gt;
+            &lt;message&gt;请选择性别&lt;/message&gt;
+        &lt;/field-validator&gt;
+    &lt;/field&gt;
+&lt;/validators&gt;
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -751,9 +747,10 @@ public void setStudent(Student student) {
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

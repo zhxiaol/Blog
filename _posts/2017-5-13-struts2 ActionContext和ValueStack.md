@@ -11,6 +11,7 @@ description: struts2 ActionContext和ValueStack
 > 在每次动作执行之前核心控制器StrutsPrepareAndExecuteFilter都会创建ActionContext和ValueStack对象，且每次访问都会创建
 ValueStatck 是个list集合
 ActionContext是一个Map<String,Map>
+
 |key|value|
 |----|------|
 |applicaton|map|
@@ -19,7 +20,7 @@ ActionContext是一个Map<String,Map>
 |attr|map|
 ## ActionContext的存取
 > OGNL取值  #key+名称
-```
+```javascript
 public class Demo1Action extends ActionSupport {
     @Override
     public String execute() throws Exception {
@@ -55,6 +56,7 @@ public class Demo1Action extends ActionSupport {
 > 从栈顶查找，查找到就不找了
 > 获取指定位置的属性 [index].属性名
 > setValue(expr,value) expr使用#就存到ContextMap中，没有就存到ValueStack中，在valuestack中找到第一个name赋值，如果不到就报错
+
 |方法|备注|
 |----|----|
 |ActionContext.getContext().getValueStack()|获得ValueStack对象|
@@ -71,7 +73,7 @@ public class Demo1Action extends ActionSupport {
 |&lt;s:property/>|默认取栈顶元素|
 
 
-```
+```javascript
 public class Demo2Action extends ActionSupport {
     @Override
     public String execute() throws Exception {
@@ -128,7 +130,7 @@ demo2.jsp
 ## struts2对el表达式的改变
 EL 查找顺序: page--request--session--application
 struts2 el表达式查找顺序: page scope --- request scope ---valueStack --- contextMap --- session scope ---application scope
-```
+```javascript
 public class Demo3Action extends ActionSupport{
     private String name="动作类中的name";
 
@@ -167,7 +169,7 @@ OGNL表达式:<s:property value="name"/>
 |有var属性|把var的值当作key,把当前元素作为value,存到ActionContext这个大Map中|
 |无var属性|把当前遍历的元素压入栈顶|
 |status属性|遍历时的一些计数信息，也是存在到ActionContext的map中 .index索引 .count计数|
-```
+```javascript
 public class Demo4Action extends ActionSupport {
     private List<Student> students;
     @Override
@@ -240,7 +242,7 @@ public class Demo4Action extends ActionSupport {
 |b.{^#this }|过滤第一个符合条件的元素，如：users.{^#this.age > 19}|
 |c.{\$#this }|过滤最后一个符合条件的元素,如:users.{$#this.age > 19}|
 |students.{name}|只取指定的字段|
-```
+```xml
 <hr/>
 <table width="500px" border="1" align="center">
     <tr>
@@ -296,7 +298,7 @@ public class Demo4Action extends ActionSupport {
 > 把普通字符串当成OGNL <s:textfield value="%{username}"/>
 
 ## checkboxlist
-```
+```javascript
 public class Demo6Action extends ActionSupport {
     //初始化表单的爱好列表
     private String[] hobbyarr=new String[]{"吃饭","睡觉","敲代码"};
@@ -380,7 +382,7 @@ public class Demo7Action extends ActionSupport implements ModelDriven<Customer> 
 ```
 ## 表单重复提交
 ###### 模拟原理
-```
+```javascript
 @WebServlet("/servlet/LoginServlet.servlet")
 public class LoginServlet extends HttpServlet {
     @Override
@@ -413,7 +415,7 @@ public class LoginServlet extends HttpServlet {
 }
 ```
 
-```
+```javascript
 //login.jsp login2.jsp
 <body>
   <s:form action="login.action">

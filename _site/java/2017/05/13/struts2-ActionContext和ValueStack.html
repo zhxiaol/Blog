@@ -120,31 +120,51 @@
 <blockquote>
 <p>在每次动作执行之前核心控制器StrutsPrepareAndExecuteFilter都会创建ActionContext和ValueStack对象，且每次访问都会创建<br>
 ValueStatck 是个list集合<br>
-ActionContext是一个Map<String,Map><br>
-|key|value|<br>
-|----|------|<br>
-|applicaton|map|<br>
-|session|map|<br>
-|request|map|<br>
-|attr|map|</p>
+ActionContext是一个Map<String,Map></p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>applicaton</td>
+<td>map</td>
+</tr>
+<tr>
+<td>session</td>
+<td>map</td>
+</tr>
+<tr>
+<td>request</td>
+<td>map</td>
+</tr>
+<tr>
+<td>attr</td>
+<td>map</td>
+</tr>
+</tbody></table>
 
 <h2 id="actioncontext的存取">ActionContext的存取</h2>
 
+<blockquote>
 <p>OGNL取值  #key+名称</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo1Action extends ActionSupport {
-    @Override
-    public String execute() throws Exception {
-        ActionContext context = ActionContext.getContext();//从当前线程局部变量获得
-        context.put("contextMap","helloContextMap");
-        Map&lt;String,Object&gt;sessionAttribute= (Map&lt;String, Object&gt;) context.get("session");
-        sessionAttribute.put("name1","张三");
-        context.getSession().put("name2","李四");
-        ServletActionContext.getRequest().getSession().putValue("name3","王五");
-        context.getApplication().put("name1","刘亦菲");
-        ServletActionContext.getServletContext().setAttribute("name2","周芷若");
-        return SUCCESS;
-    }
-}
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo1Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">execute</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="nx">ActionContext</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">ActionContext</span><span class="p">.</span><span class="nx">getContext</span><span class="p">();</span><span class="c1">//从当前线程局部变量获得</span>
+        <span class="nx">context</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s2">"contextMap"</span><span class="p">,</span><span class="s2">"helloContextMap"</span><span class="p">);</span>
+        <span class="nx">Map</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="nb">Object</span><span class="o">&gt;</span><span class="nx">sessionAttribute</span><span class="o">=</span> <span class="p">(</span><span class="nx">Map</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span> <span class="nb">Object</span><span class="o">&gt;</span><span class="p">)</span> <span class="nx">context</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"session"</span><span class="p">);</span>
+        <span class="nx">sessionAttribute</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s2">"name1"</span><span class="p">,</span><span class="s2">"张三"</span><span class="p">);</span>
+        <span class="nx">context</span><span class="p">.</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">put</span><span class="p">(</span><span class="s2">"name2"</span><span class="p">,</span><span class="s2">"李四"</span><span class="p">);</span>
+        <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getRequest</span><span class="p">().</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">putValue</span><span class="p">(</span><span class="s2">"name3"</span><span class="p">,</span><span class="s2">"王五"</span><span class="p">);</span>
+        <span class="nx">context</span><span class="p">.</span><span class="nx">getApplication</span><span class="p">().</span><span class="nx">put</span><span class="p">(</span><span class="s2">"name1"</span><span class="p">,</span><span class="s2">"刘亦菲"</span><span class="p">);</span>
+        <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">().</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"name2"</span><span class="p">,</span><span class="s2">"周芷若"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></blockquote>
 
 <p>//demo1.jsp<br>
@@ -166,6 +186,7 @@ ActionContext是一个Map<String,Map><br>
 &gt; 从栈顶查找，查找到就不找了
 &gt; 获取指定位置的属性 [index].属性名
 &gt; setValue(expr,value) expr使用#就存到ContextMap中，没有就存到ValueStack中，在valuestack中找到第一个name赋值，如果不到就报错
+
 |方法|备注|
 |----|----|
 |ActionContext.getContext().getValueStack()|获得ValueStack对象|
@@ -182,372 +203,442 @@ ActionContext是一个Map<String,Map><br>
 |&amp;lt;s:property/&gt;|默认取栈顶元素|
 
 
-</code></pre></div>
-<p>public class Demo2Action extends ActionSupport {<br>
-    @Override<br>
-    public String execute() throws Exception {<br>
-        HttpServletRequest request = ServletActionContext.getRequest();<br>
-        ValueStack vs1 = (ValueStack) request.getAttribute(&quot;struts.valueStack&quot;);<br>
-        System.out.println(vs1.hashCode());<br>
-        Map<String, Object> req = (Map<String, Object>) ActionContext.getContext().get(&quot;request&quot;);<br>
-        ValueStack vs2 = (ValueStack) req.get(&quot;struts.valueStack&quot;);<br>
-        System.out.println(vs2.hashCode());<br>
-        ValueStack vs = ActionContext.getContext().getValueStack();<br>
-        System.out.println(vs.hashCode());<br>
-        vs.push(new Student(&quot;戴斯特&quot;,21));<br>
-        vs.push(new Student(&quot;戴斯特2&quot;,23));<br>
-        //setValue(expr,value) expr使用#就存到ContextMap中，没有就存到ValueStack中<br>
-        vs.setValue(&quot;#name&quot;,&quot;张三&quot;);<br>
-        vs.setValue(&quot;name&quot;,&quot;李四&quot;);//在valuestack中找到第一个name赋值，如果不到就报错<br>
-        /**<br>
-         * set(String key,Object o)<br>
-         * String key:map的key<br>
-         * Object o:map的value<br>
-         * 如果栈顶是一个Map元素,直接把key作为map的key,把Object作为map的value.存入栈顶<br>
-         * 如果栈顶不是一个map,创建一个map对象，把key作为map的Key,把Object作为map的value亚入栈顶<br>
-         *<br>
-         */<br>
-        vs.set(&quot;s1&quot;,new Student(&quot;王五&quot;,18));<br>
-        vs.push(new Student(&quot;test&quot;,23));<br>
-        vs.push(new Student(&quot;test2&quot;,23));<br>
-        System.out.println(vs.getRoot());<br>
-        return SUCCESS;<br>
-    }<br>
-}</p>
-
-<p>demo2.jsp<br>
-<body><br>
-    <s:debug><a href="/s:debug">/s:debug</a><br>
-    &lt;!--只能取元素的属性 取对象属性时不写 从下标位置开始往下查找#--&gt;<br>
-    <s:property value="name"/><br>
-    <s:property value="[1].name"/><br>
-    <s:property value="[2].name"/><br>
-    <s:property value="[3].name"/><br>
-    <s:property value="[4].name"/><br>
-    <s:property value="[2].s1.name"/><br>
-    <s:property/><br>
-    &lt;%//模拟原理:其实全是ValueStack的findValue和findString<br>
-        ValueStack vs= ActionContext.getContext().getValueStack();<br>
-        Object obj=vs.findValue(&quot;name&quot;);<br>
-        out.print(&quot;<br/>---------------------<br/>&quot;);<br>
-        out.print(obj);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">%&gt;
-</code></pre></div>
-<p></body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## struts2对el表达式的改变
-EL 查找顺序: page--request--session--application
-struts2 el表达式查找顺序: page scope --- request scope ---valueStack --- contextMap --- session scope ---application scope
-</code></pre></div>
-<p>public class Demo3Action extends ActionSupport{<br>
-    private String name=&quot;动作类中的name&quot;;</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public String getName() {
-    return name;
+```javascript
+public class Demo2Action extends ActionSupport {
+    @Override
+    public String execute() throws Exception {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        ValueStack vs1 = (ValueStack) request.getAttribute("struts.valueStack");
+        System.out.println(vs1.hashCode());
+        Map&lt;String, Object&gt; req = (Map&lt;String, Object&gt;) ActionContext.getContext().get("request");
+        ValueStack vs2 = (ValueStack) req.get("struts.valueStack");
+        System.out.println(vs2.hashCode());
+        ValueStack vs = ActionContext.getContext().getValueStack();
+        System.out.println(vs.hashCode());
+        vs.push(new Student("戴斯特",21));
+        vs.push(new Student("戴斯特2",23));
+        //setValue(expr,value) expr使用#就存到ContextMap中，没有就存到ValueStack中
+        vs.setValue("#name","张三");
+        vs.setValue("name","李四");//在valuestack中找到第一个name赋值，如果不到就报错
+        /**
+         * set(String key,Object o)
+         * String key:map的key
+         * Object o:map的value
+         * 如果栈顶是一个Map元素,直接把key作为map的key,把Object作为map的value.存入栈顶
+         * 如果栈顶不是一个map,创建一个map对象，把key作为map的Key,把Object作为map的value亚入栈顶
+         *
+         */
+        vs.set("s1",new Student("王五",18));
+        vs.push(new Student("test",23));
+        vs.push(new Student("test2",23));
+        System.out.println(vs.getRoot());
+        return SUCCESS;
+    }
 }
 
-public void setName(String name) {
-    this.name = name;
-}
 
-@Override
-public String execute() throws Exception {
-    HttpServletRequest request = ServletActionContext.getRequest();
-    //request.setAttribute("name","请求域中的name");
-    ServletContext applicaton = ServletActionContext.getServletContext();
-    applicaton.setAttribute("name","应用域中的name");
-    ActionContext context = ActionContext.getContext();
-    context.put("name","actionContext的name");
-    return SUCCESS;
-}
+demo2.jsp
+&lt;body&gt;
+    &lt;s:debug&gt;&lt;/s:debug&gt;
+    &lt;!--只能取元素的属性 取对象属性时不写 从下标位置开始往下查找#--&gt;
+    &lt;s:property value="name"/&gt;
+    &lt;s:property value="[1].name"/&gt;
+    &lt;s:property value="[2].name"/&gt;
+    &lt;s:property value="[3].name"/&gt;
+    &lt;s:property value="[4].name"/&gt;
+    &lt;s:property value="[2].s1.name"/&gt;
+    &lt;s:property/&gt;
+    &lt;%//模拟原理:其实全是ValueStack的findValue和findString
+        ValueStack vs= ActionContext.getContext().getValueStack();
+        Object obj=vs.findValue("name");
+        out.print("&lt;br/&gt;---------------------&lt;br/&gt;");
+        out.print(obj);
+
+    %&gt;
+&lt;/body&gt;
 </code></pre></div>
-<p>}</p>
+<h2 id="struts2对el表达式的改变">struts2对el表达式的改变</h2>
 
-<p>//demo3.jsp<br>
-EL表达式:${name }&lt;!--pageContext.findAttribute(&#39;name&#39;)--&gt;<br>
-<br/><br>
-OGNL表达式:<s:property value="name"/><br>
-<s:debug/></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## s:iterator
-|属性|备注|
-|-----|-----|
-|value属性|要遍历的集合，是OGNLB表达式|
-|有var属性|把var的值当作key,把当前元素作为value,存到ActionContext这个大Map中|
-|无var属性|把当前遍历的元素压入栈顶|
-|status属性|遍历时的一些计数信息，也是存在到ActionContext的map中 .index索引 .count计数|
+<p>EL 查找顺序: page--request--session--application<br>
+struts2 el表达式查找顺序: page scope --- request scope ---valueStack --- contextMap --- session scope ---application scope</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo3Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span><span class="p">{</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"动作类中的name"</span><span class="p">;</span>
+
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setName</span><span class="p">(</span><span class="nb">String</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">execute</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="nx">HttpServletRequest</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getRequest</span><span class="p">();</span>
+        <span class="c1">//request.setAttribute("name","请求域中的name");</span>
+        <span class="nx">ServletContext</span> <span class="nx">applicaton</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">();</span>
+        <span class="nx">applicaton</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="s2">"应用域中的name"</span><span class="p">);</span>
+        <span class="nx">ActionContext</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">ActionContext</span><span class="p">.</span><span class="nx">getContext</span><span class="p">();</span>
+        <span class="nx">context</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="s2">"actionContext的name"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">//demo3.jsp</span>
+<span class="nx">EL</span><span class="err">表达式:</span><span class="nx">$</span><span class="p">{</span><span class="nx">name</span> <span class="p">}</span><span class="c">&lt;!--</span><span class="nx">pageContext</span><span class="p">.</span><span class="nx">findAttribute</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+<span class="nx">OGNL</span><span class="err">表达式:</span><span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"name"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">debug</span><span class="o">/&gt;</span>
 </code></pre></div>
-<p>public class Demo4Action extends ActionSupport {<br>
-    private List<Student> students;<br>
-    @Override<br>
-    public String execute() throws Exception {<br>
-        students=new ArrayList&lt;&gt;();<br>
-        students.add(new Student(&quot;张三&quot;,13));<br>
-        students.add(new Student(&quot;李四&quot;,14));<br>
-        students.add(new Student(&quot;王五&quot;,15));<br>
-        students.add(new Student(&quot;赵六&quot;,16));<br>
-        return SUCCESS;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public List&lt;Student&gt; getStudents() {
-    return students;
-}
+<h2 id="s-iterator">s:iterator</h2>
 
-public void setStudents(List&lt;Student&gt; students) {
-    this.students = students;
-}
+<table><thead>
+<tr>
+<th>属性</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value属性</td>
+<td>要遍历的集合，是OGNLB表达式</td>
+</tr>
+<tr>
+<td>有var属性</td>
+<td>把var的值当作key,把当前元素作为value,存到ActionContext这个大Map中</td>
+</tr>
+<tr>
+<td>无var属性</td>
+<td>把当前遍历的元素压入栈顶</td>
+</tr>
+<tr>
+<td>status属性</td>
+<td>遍历时的一些计数信息，也是存在到ActionContext的map中 .index索引 .count计数</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo4Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Student</span><span class="o">&gt;</span> <span class="nx">students</span><span class="p">;</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">execute</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="nx">students</span><span class="o">=</span><span class="k">new</span> <span class="nx">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="nx">students</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="s2">"张三"</span><span class="p">,</span><span class="mi">13</span><span class="p">));</span>
+        <span class="nx">students</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="s2">"李四"</span><span class="p">,</span><span class="mi">14</span><span class="p">));</span>
+        <span class="nx">students</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="s2">"王五"</span><span class="p">,</span><span class="mi">15</span><span class="p">));</span>
+        <span class="nx">students</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="s2">"赵六"</span><span class="p">,</span><span class="mi">16</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Student</span><span class="o">&gt;</span> <span class="nx">getStudents</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">students</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setStudents</span><span class="p">(</span><span class="nx">List</span><span class="o">&lt;</span><span class="nx">Student</span><span class="o">&gt;</span> <span class="nx">students</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">students</span> <span class="o">=</span> <span class="nx">students</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//demo4.jsp</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"500px"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">序号</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">姓名</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">年龄</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>        <span class="o">&lt;%--</span>
+        <span class="nx">value</span><span class="err">属性:要遍历的集合，是</span><span class="nx">OGNLB</span><span class="err">表达式</span>
+        <span class="kd">var</span><span class="err">属性:如果写了该属性:把</span><span class="kd">var</span><span class="err">的值当作一个</span><span class="nx">key</span><span class="p">,</span><span class="err">把当前遍历的元素作为</span><span class="nx">value</span><span class="p">,</span><span class="err">存到</span><span class="nx">ActionContext</span><span class="err">这个大</span><span class="nx">Map</span><span class="err">中</span>
+               <span class="err">如果不写</span>
+        <span class="o">--%&gt;</span>
+        <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">iterator</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"students"</span> <span class="kd">var</span><span class="o">=</span><span class="s2">"s"</span> <span class="nx">status</span><span class="o">=</span><span class="s2">"vs"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"#vs.index"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"#s.name"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"#s.age"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/s:iterator</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">hr</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"500px"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">序号</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">姓名</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="err">年龄</span><span class="o">&lt;</span><span class="sr">/th</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>        <span class="o">&lt;%--</span>
+        <span class="nx">value</span><span class="err">属性:要遍历的集合，是</span><span class="nx">OGNLB</span><span class="err">表达式</span>
+        <span class="kd">var</span><span class="err">属性:如果写了该属性:把</span><span class="kd">var</span><span class="err">的值当作一个</span><span class="nx">key</span><span class="p">,</span><span class="err">把当前遍历的元素作为</span><span class="nx">value</span><span class="p">,</span><span class="err">存到</span><span class="nx">ActionContext</span><span class="err">这个大</span><span class="nx">Map</span><span class="err">中</span>
+               <span class="err">如果不写</span> <span class="err">把当前遍历的元素压入栈顶</span>
+        <span class="o">--%&gt;</span>
+        <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">iterator</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"students"</span> <span class="nx">status</span><span class="o">=</span><span class="s2">"vs"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"#vs.count"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"name"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">property</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"age"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/s:iterator</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">debug</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="添加过滤条件">添加过滤条件</h2>
+
+<table><thead>
+<tr>
+<th>表达式</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>a.{?#this }</td>
+<td>过滤所有符合条件的集合，如:users.{?#this.age &gt; 19}</td>
+</tr>
+<tr>
+<td>b.{^#this }</td>
+<td>过滤第一个符合条件的元素，如：users.{^#this.age &gt; 19}</td>
+</tr>
+<tr>
+<td>c.{\$#this }</td>
+<td>过滤最后一个符合条件的元素,如:users.{$#this.age &gt; 19}</td>
+</tr>
+<tr>
+<td>students.{name}</td>
+<td>只取指定的字段</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;hr/&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">"500px"</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;</span>序号<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>姓名<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>年龄<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;s:iterator</span> <span class="na">value=</span><span class="s">"students.{?#this.age&gt;21}"</span> <span class="na">status=</span><span class="s">"vs"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;tr&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"#vs.count"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"age"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+        <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;/s:iterator&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="err">&lt;</span>%--OGNL 指定输出内容--%&gt;
+<span class="nt">&lt;hr/&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">"500px"</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;</span>序号<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>姓名<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>年龄<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;s:iterator</span> <span class="na">value=</span><span class="s">"students.{name}"</span> <span class="na">status=</span><span class="s">"vs"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;tr&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"#vs.count"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+            <span class="nt">&lt;td&gt;&lt;s:property</span> <span class="na">value=</span><span class="s">"age"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+        <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;/s:iterator&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
 </code></pre></div>
-<p>}</p>
+<h2 id="struts2中的一些其他标签">struts2中的一些其他标签</h2>
 
-<p>//demo4.jsp<br>
-<body><br>
-    <table width="500px" border="1" align="center"><br>
-        <tr><br>
-            <th>序号</th><br>
-            <th>姓名</th><br>
-            <th>年龄</th><br>
-        </tr><br>
-        &lt;%--<br>
-        value属性:要遍历的集合，是OGNLB表达式<br>
-        var属性:如果写了该属性:把var的值当作一个key,把当前遍历的元素作为value,存到ActionContext这个大Map中<br>
-               如果不写<br>
-        --%&gt;<br>
-        <s:iterator value="students" var="s" status="vs"><br>
-            <tr><br>
-                <td><s:property value="#vs.index"/></td><br>
-                <td><s:property value="#s.name"/></td><br>
-                <td><s:property value="#s.age"/></td><br>
-            </tr><br>
-        <a href="/s:iterator">/s:iterator</a><br>
-    </table><br>
-    <hr/><br>
-    <table width="500px" border="1" align="center"><br>
-        <tr><br>
-            <th>序号</th><br>
-            <th>姓名</th><br>
-            <th>年龄</th><br>
-        </tr><br>
-        &lt;%--<br>
-        value属性:要遍历的集合，是OGNLB表达式<br>
-        var属性:如果写了该属性:把var的值当作一个key,把当前遍历的元素作为value,存到ActionContext这个大Map中<br>
-               如果不写 把当前遍历的元素压入栈顶<br>
-        --%&gt;<br>
-        <s:iterator value="students" status="vs"><br>
-            <tr><br>
-                <td><s:property value="#vs.count"/></td><br>
-                <td><s:property value="name"/></td><br>
-                <td><s:property value="age"/></td><br>
-            </tr><br>
-        <a href="/s:iterator">/s:iterator</a><br>
-    </table><br>
-    <s:debug/><br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 添加过滤条件
-|表达式|备注|
-|-------|------|
-|a.{?#this }|过滤所有符合条件的集合，如:users.{?#this.age &gt; 19}|
-|b.{^#this }|过滤第一个符合条件的元素，如：users.{^#this.age &gt; 19}|
-|c.{\$#this }|过滤最后一个符合条件的元素,如:users.{$#this.age &gt; 19}|
-|students.{name}|只取指定的字段|
-</code></pre></div>
-<hr/>
+<table><thead>
+<tr>
+<th>标签</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&lt;s:set var=&quot;str&quot; value=&quot;&#39;test&#39;&quot;/&gt;</td>
+<td>存入ActionContext map中 var作为key value为表达式</td>
+</tr>
+<tr>
+<td>&lt;s:action name=&quot;action1&quot; executeResult=&quot;true&quot;/&gt;</td>
+<td>name指定一个动作名称,executeResult 是否执行动作，结果包含</td>
+</tr>
+<tr>
+<td>&lt;s:if test=&quot;#grade==&#39;D&#39;&quot;&gt;差<a href="/s:if">/s:if</a></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;s:elseif test=&quot;#grade==&#39;C&#39;&quot;&gt;中<a href="/s:elseif">/s:elseif</a></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;s:else&gt;其他<a href="/s:else">/s:else</a></td>
+<td></td>
+</tr>
+<tr>
+<td>&lt;s:url value=&quot;action1&quot;/&gt;</td>
+<td>直接把取值输出到页面</td>
+</tr>
+<tr>
+<td>&lt;s:url action=&quot;action1&quot;/&gt;</td>
+<td>把请求地址输出到页面</td>
+</tr>
+<tr>
+<td>&lt;s:url action=&quot;action1&quot; var=&quot;url&quot;/&gt;</td>
+<td>存入到ActionContext map中</td>
+</tr>
+</tbody></table>
 
-<table width="500px" border="1" align="center">
-    <tr>
-        <th>序号</th>
-        <th>姓名</th>
-        <th>年龄</th>
-    </tr>
-    <s:iterator value="students.{?#this.age>21}" status="vs">
-        <tr>
-            <td><s:property value="#vs.count"/></td>
-            <td><s:property value="name"/></td>
-            <td><s:property value="age"/></td>
-        </tr>
-    </s:iterator>
-</table>
+<h5 id=">\</h5>
 
-<p>&lt;%--OGNL 指定输出内容--%&gt;</p>
+<blockquote>
+<p>在contextMap中key时使用,例如:<s:property value="#name"/><br>
+OGNL中创建map对象使用,例如:&lt;s:radio list=&quot;#{&#39;male&#39;:&quot;男&quot;,&#39;female&#39;:&#39;女&#39;}&quot;</p>
 
-<hr/>
+<h5 id=">\$</h5>
 
-<table width="500px" border="1" align="center">
-    <tr>
-        <th>序号</th>
-        <th>姓名</th>
-        <th>年龄</th>
-    </tr>
-    <s:iterator value="students.{name}" status="vs">
-        <tr>
-            <td><s:property value="#vs.count"/></td>
-            <td><s:property value="name"/></td>
-            <td><s:property value="age"/></td>
-        </tr>
-    </s:iterator>
-</table>
-<div class="highlight"><pre><code class="language-" data-lang="">## struts2中的一些其他标签
-|标签|备注|
-|----|----|
-|&amp;lt;s:set var="str" value="'test'"/&gt;|存入ActionContext map中 var作为key value为表达式|
-|&amp;lt;s:action name="action1" executeResult="true"/&gt;|name指定一个动作名称,executeResult 是否执行动作，结果包含|
-|&amp;lt;s:if test="#grade=='D'"&gt;差&lt;/s:if&gt;|
-|&amp;lt;s:elseif test="#grade=='C'"&gt;中&lt;/s:elseif&gt;|
-|&amp;lt;s:else&gt;其他&lt;/s:else&gt;|
-|&amp;lt;s:url value="action1"/&gt;|直接把取值输出到页面|
-|&amp;lt;s:url action="action1"/&gt;|把请求地址输出到页面|
-|&amp;lt;s:url action="action1" var="url"/&gt;|存入到ActionContext map中|
+<p>在jsp中使用EL表达时使用,列如${name}<br>
+在xml配置文件中,编写OGNL表达式使用,假如文件下载,文件名编码<br>
+     struts.xml---${@java.net.URLEncoder.encode(filename)}</p>
 
-##### \#
-&gt; 在contextMap中key时使用,例如:&lt;s:property value="#name"/&gt;
-&gt; OGNL中创建map对象使用,例如:&lt;s:radio list="#{'male':"男",'female':'女'}"
-##### \$
-&gt; 在jsp中使用EL表达时使用,列如${name}
-&gt; 在xml配置文件中,编写OGNL表达式使用,假如文件下载,文件名编码
-     struts.xml---${@java.net.URLEncoder.encode(filename)}
-##### %
-&gt; 把普通字符串当成OGNL &lt;s:textfield value="%{username}"/&gt;
+<h5 id=">%</h5>
 
-## checkboxlist
-</code></pre></div>
-<p>public class Demo6Action extends ActionSupport {<br>
-    //初始化表单的爱好列表<br>
-    private String[] hobbyarr=new String[]{&quot;吃饭&quot;,&quot;睡觉&quot;,&quot;敲代码&quot;};<br>
-    //用户提交表单时的数据 封装到此属性中<br>
-    private String hobby;<br>
-    public String save(){<br>
-        System.out.println(hobby);<br>
-        return NONE;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public String getHobby() {
-    return hobby;
-}
+<p>把普通字符串当成OGNL <s:textfield value="%{username}"/></p>
+</blockquote>
 
-public void setHobby(String hobby) {
-    this.hobby = hobby;
-}
+<h2 id="checkboxlist">checkboxlist</h2>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo6Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+    <span class="c1">//初始化表单的爱好列表</span>
+    <span class="kr">private</span> <span class="nb">String</span><span class="p">[]</span> <span class="nx">hobbyarr</span><span class="o">=</span><span class="k">new</span> <span class="nb">String</span><span class="p">[]{</span><span class="s2">"吃饭"</span><span class="p">,</span><span class="s2">"睡觉"</span><span class="p">,</span><span class="s2">"敲代码"</span><span class="p">};</span>
+    <span class="c1">//用户提交表单时的数据 封装到此属性中</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">hobby</span><span class="p">;</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">save</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">hobby</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">NONE</span><span class="p">;</span>
+    <span class="p">}</span>
 
-public String[] getHobbyarr() {
-    return hobbyarr;
-}
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">getHobby</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">hobby</span><span class="p">;</span>
+    <span class="p">}</span>
 
-public void setHobbyarr(String[] hobbyarr) {
-    this.hobbyarr = hobbyarr;
-}
-</code></pre></div>
-<p>}</p>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setHobby</span><span class="p">(</span><span class="nb">String</span> <span class="nx">hobby</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">hobby</span> <span class="o">=</span> <span class="nx">hobby</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<p>//demo6.jsp<br>
-<s:form action="save"><br>
-    <s:checkboxlist list="hobbyarr" name="hobby"><a href="/s:checkboxlist">/s:checkboxlist</a><br>
-    <s:submit value="提交"/><br>
-<a href="/s:form">/s:form</a><br>
-<s:debug/></p>
+    <span class="kr">public</span> <span class="nb">String</span><span class="p">[]</span> <span class="nx">getHobbyarr</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">hobbyarr</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<p>public class Demo7Action extends ActionSupport implements ModelDriven<Customer> {<br>
-    private Customer customer=new Customer();<br>
-    @Override<br>
-    public Customer getModel() {<br>
-        return customer;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public Customer getCustomer() {
-    return customer;
-}
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setHobbyarr</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">hobbyarr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">hobbyarr</span> <span class="o">=</span> <span class="nx">hobbyarr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-public void setCustomer(Customer customer) {
-    this.customer = customer;
-}
-public String save(){
-    System.out.println(customer);
-    return NONE;
-}
-</code></pre></div>
-<p>}<br>
-//demo7.jsp<br>
-<body><br>
-    <s:form action="saveCustomer"><br>
-        <s:textfield name="name" label="用户名"><a href="/s:textfield">/s:textfield</a><br>
-        <s:password name="password" label="密码"><a href="/s:password">/s:password</a><br>
-        <s:checkbox name="married" label="已婚" value="true"><a href="/s:checkbox">/s:checkbox</a><br>
-        <s:checkboxlist list="{'吃饭','睡觉','敲代码'}" name="hobby" label="爱好"><a href="/s:checkboxlist">/s:checkboxlist</a><br>
-        <s:select list="#{'bj':'北京','sh':'上海','sz':'苏州'}" name="city" label="故乡" headerValue="---请选择---"><a href="/s:select">/s:select</a><br>
-        <s:textarea name="description" label="个人介绍" rows="5" cols="25"><a href="/s:textarea">/s:textarea</a><br>
-        <s:radio list="#{'male':'男','frmale':'女'}" name="gender" value="'male'"><a href="/s:radio">/s:radio</a><br>
-        <s:submit value="提交" theme="simple"/><br>
-        <s:reset value="重置" theme="simple"/><br>
-    <a href="/s:form">/s:form</a><br>
-    <hr/><br>
-    <s:form action="saveCustomer" theme="simple"><br>
-        <s:textfield name="name" label="用户名"><a href="/s:textfield">/s:textfield</a><br>
-        <s:password name="password" label="密码"><a href="/s:password">/s:password</a><br>
-        <s:checkbox name="married" label="已婚" value="true"><a href="/s:checkbox">/s:checkbox</a><br>
-        <s:checkboxlist list="{'吃饭','睡觉','敲代码'}" name="hobby" label="爱好"><a href="/s:checkboxlist">/s:checkboxlist</a><br>
-        <s:select list="#{'bj':'北京','sh':'上海','sz':'苏州'}" name="city" label="故乡" headerValue="---请选择---"><a href="/s:select">/s:select</a><br>
-        <s:textarea name="description" label="个人介绍" rows="5" cols="25"><a href="/s:textarea">/s:textarea</a><br>
-        <s:radio list="#{'male':'男','frmale':'女'}" name="gender" value="'male'"><a href="/s:radio">/s:radio</a><br>
-        <s:submit value="提交" theme="simple"/><br>
-        <s:reset value="重置" theme="simple"/><br>
-    <a href="/s:form">/s:form</a><br>
-    &lt;%--<constant name="struts.ui.theme" value="simple"/>--%&gt;<br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 表单重复提交
-###### 模拟原理
-</code></pre></div>
-<p>@WebServlet(&quot;/servlet/LoginServlet.servlet&quot;)<br>
-public class LoginServlet extends HttpServlet {<br>
-    @Override<br>
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-        String username = req.getParameter(&quot;username&quot;);<br>
-        String fcode = req.getParameter(&quot;fcode&quot;);<br>
-        String scode = (String) req.getSession().getAttribute(&quot;scode&quot;);<br>
-        if(fcode.equals(scode)){<br>
-            //第一次提交<br>
-            req.getSession().removeAttribute(&quot;scode&quot;);<br>
-            resp.getWriter().println(&quot;第一次提交 成功&quot;);<br>
-        }else {<br>
-            if(scode==null||&quot;&quot;.equals(scode)){<br>
-                //重复提交<br>
-                resp.getWriter().println(&quot;重复提交&quot;);<br>
-            }else {<br>
-                //输入的验证码不正确<br>
-                resp.getWriter().println(&quot;验证码不正确&quot;);<br>
-            }<br>
-        }<br>
-        System.out.println(username);<br>
-        System.out.println(fcode);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doGet(req,resp);
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>//login.jsp login2.jsp<br>
-<body><br>
-  <s:form action="login.action"><br>
-    <s:token/><br>
-    <s:textfield name="name" label="用户名"/><br>
-    <s:submit value="提交"/><br>
-  <a href="/s:form">/s:form</a><br>
-</body></p>
+<span class="c1">//demo6.jsp</span>
+<span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"save"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">checkboxlist</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"hobbyarr"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hobby"</span><span class="o">&gt;&lt;</span><span class="sr">/s:checkboxlist</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">submit</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"提交"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">debug</span><span class="o">/&gt;</span>
 
-<p>//struts.xml<br>
-<package name="p2" extends="struts-default"><br>
-    <action name="login" class="com.itheima.web.action.LoginAction" method="login"><br>
-        <interceptor-ref name="defaultStack"></interceptor-ref><br>
-        &lt;!--拦截器 通过令牌避免重复提交--&gt;<br>
-        <interceptor-ref name="token"></interceptor-ref><br>
-        <result type="redirect">/success.jsp</result><br>
-        <result name="invalid.token">/message.jsp</result><br>
-    </action><br>
-    <action name="login2" class="com.itheima.web.action.Login2Action" method="login"><br>
-        <interceptor-ref name="defaultStack"></interceptor-ref><br>
-        &lt;!--只处理第一次，以后的不再处理--&gt;<br>
-        <interceptor-ref name="tokenSession"></interceptor-ref><br>
-        <result type="redirect">/success.jsp</result><br>
-        <result name="invalid.token">/message.jsp</result><br>
-    </action><br>
-</package></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo7Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="kr">implements</span> <span class="nx">ModelDriven</span><span class="o">&lt;</span><span class="nx">Customer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">Customer</span> <span class="nx">customer</span><span class="o">=</span><span class="k">new</span> <span class="nx">Customer</span><span class="p">();</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nx">Customer</span> <span class="nx">getModel</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">customer</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="nx">Customer</span> <span class="nx">getCustomer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">customer</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setCustomer</span><span class="p">(</span><span class="nx">Customer</span> <span class="nx">customer</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">customer</span> <span class="o">=</span> <span class="nx">customer</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">save</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">customer</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">NONE</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">//demo7.jsp</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"saveCustomer"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"用户名"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">password</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"password"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"密码"</span><span class="o">&gt;&lt;</span><span class="sr">/s:password</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">checkbox</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"married"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"已婚"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;&lt;</span><span class="sr">/s:checkbox</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">checkboxlist</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"{'吃饭','睡觉','敲代码'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hobby"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"爱好"</span><span class="o">&gt;&lt;</span><span class="sr">/s:checkboxlist</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">select</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"#{'bj':'北京','sh':'上海','sz':'苏州'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"city"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"故乡"</span> <span class="nx">headerValue</span><span class="o">=</span><span class="s2">"---请选择---"</span><span class="o">&gt;&lt;</span><span class="sr">/s:select</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">textarea</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"description"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"个人介绍"</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">"5"</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">"25"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textarea</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">radio</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"#{'male':'男','frmale':'女'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"gender"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"'male'"</span><span class="o">&gt;&lt;</span><span class="sr">/s:radio</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">submit</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"提交"</span> <span class="nx">theme</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">reset</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"重置"</span> <span class="nx">theme</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">hr</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"saveCustomer"</span> <span class="nx">theme</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"用户名"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">password</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"password"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"密码"</span><span class="o">&gt;&lt;</span><span class="sr">/s:password</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">checkbox</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"married"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"已婚"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;&lt;</span><span class="sr">/s:checkbox</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">checkboxlist</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"{'吃饭','睡觉','敲代码'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hobby"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"爱好"</span><span class="o">&gt;&lt;</span><span class="sr">/s:checkboxlist</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">select</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"#{'bj':'北京','sh':'上海','sz':'苏州'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"city"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"故乡"</span> <span class="nx">headerValue</span><span class="o">=</span><span class="s2">"---请选择---"</span><span class="o">&gt;&lt;</span><span class="sr">/s:select</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">textarea</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"description"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"个人介绍"</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">"5"</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">"25"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textarea</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">radio</span> <span class="nx">list</span><span class="o">=</span><span class="s2">"#{'male':'男','frmale':'女'}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"gender"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"'male'"</span><span class="o">&gt;&lt;</span><span class="sr">/s:radio</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">submit</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"提交"</span> <span class="nx">theme</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="na">s</span><span class="p">:</span><span class="nx">reset</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"重置"</span> <span class="nx">theme</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span>    <span class="o">&lt;%--&lt;</span><span class="nx">constant</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"struts.ui.theme"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"simple"</span><span class="o">/&gt;--%&gt;</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="表单重复提交">表单重复提交</h2>
+
+<h6 id="模拟原理">模拟原理</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">WebServlet</span><span class="p">(</span><span class="s2">"/servlet/LoginServlet.servlet"</span><span class="p">)</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">LoginServlet</span> <span class="kr">extends</span> <span class="nx">HttpServlet</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">protected</span> <span class="k">void</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">resp</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
+        <span class="nx">resp</span><span class="p">.</span><span class="nx">setContentType</span><span class="p">(</span><span class="s2">"text/html;charset=utf-8"</span><span class="p">);</span>
+        <span class="nb">String</span> <span class="nx">username</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="s2">"username"</span><span class="p">);</span>
+        <span class="nb">String</span> <span class="nx">fcode</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="s2">"fcode"</span><span class="p">);</span>
+        <span class="nb">String</span> <span class="nx">scode</span> <span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">req</span><span class="p">.</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"scode"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">fcode</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">scode</span><span class="p">)){</span>
+            <span class="c1">//第一次提交</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="s2">"scode"</span><span class="p">);</span>
+            <span class="nx">resp</span><span class="p">.</span><span class="nx">getWriter</span><span class="p">().</span><span class="nx">println</span><span class="p">(</span><span class="s2">"第一次提交 成功"</span><span class="p">);</span>
+        <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">scode</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="s2">""</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">scode</span><span class="p">)){</span>
+                <span class="c1">//重复提交</span>
+                <span class="nx">resp</span><span class="p">.</span><span class="nx">getWriter</span><span class="p">().</span><span class="nx">println</span><span class="p">(</span><span class="s2">"重复提交"</span><span class="p">);</span>
+            <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                <span class="c1">//输入的验证码不正确</span>
+                <span class="nx">resp</span><span class="p">.</span><span class="nx">getWriter</span><span class="p">().</span><span class="nx">println</span><span class="p">(</span><span class="s2">"验证码不正确"</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">username</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">fcode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">protected</span> <span class="k">void</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">resp</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
+        <span class="nx">doGet</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">resp</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//login.jsp login2.jsp</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"login.action"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">token</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"用户名"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">submit</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"提交"</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span>
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"login"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.LoginAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"login"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"defaultStack"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="c">&lt;!--</span><span class="err">拦截器</span> <span class="err">通过令牌避免重复提交</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"token"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"redirect"</span><span class="o">&gt;</span><span class="sr">/success.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"invalid.token"</span><span class="o">&gt;</span><span class="sr">/message.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"login2"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Login2Action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"login"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"defaultStack"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="c">&lt;!--</span><span class="err">只处理第一次，以后的不再处理</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"tokenSession"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"redirect"</span><span class="o">&gt;</span><span class="sr">/success.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"invalid.token"</span><span class="o">&gt;</span><span class="sr">/message.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span></code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -700,9 +791,10 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

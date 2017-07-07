@@ -115,32 +115,8 @@
 <blockquote>
 <p>在每次动作执行之前核心控制器StrutsPrepareAndExecuteFilter都会创建ActionContext和ValueStack对象，且每次访问都会创建<br>
 ValueStatck 是个list集合<br>
-ActionContext是一个Map<String,Map><br>
-|key|value|<br>
-|----|------|<br>
-|applicaton|map|<br>
-|session|map|<br>
-|request|map|<br>
-|attr|map|</p>
-
-<h2 id="actioncontext的存取">ActionContext的存取</h2>
-
-<p>OGNL取值  #key+名称</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo1Action extends ActionSupport {
-    @Override
-    public String execute() throws Exception {
-        ActionContext context = ActionContext.getContext();//从当前线程局部变量获得
-        context.put("contextMap","helloContextMap");
-        Map&lt;String,Object&gt;sessionAttribute= (Map&lt;String, Object&gt;) context.get("session");
-        sessionAttribute.put("name1","张三");
-        context.getSession().put("name2","李四");
-        ServletActionContext.getRequest().getSession().putValue("name3","王五");
-        context.getApplication().put("name1","刘亦菲");
-        ServletActionContext.getServletContext().setAttribute("name2","周芷若");
-        return SUCCESS;
-    }
-}
-</code></pre></div></blockquote>
+ActionContext是一个Map<String,Map></p>
+</blockquote>
 
         
         
@@ -247,9 +223,9 @@ jsp.login.password=密码
 jsp.login.submit=登陆
 </code></pre></div>
 <h5 id="3-java中使用">3.java中使用</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">public class I18NDemo {
-    @Test
-    public void test1(){
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">I18NDemo</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test1</span><span class="o">(){</span>
 </code></pre></div></blockquote>
 
         
@@ -338,14 +314,14 @@ jsp.login.submit=登陆
 
 <blockquote>
 <p>静态注入是struts-default.xml中的staticparams拦截器实现的</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//Demo1Action
-public class Demo1Action extends ActionSupport {
-    private String username;
-    private int age;
-    public String addUser(){
-        System.out.println("username:"+username+" age:"+age);
-        return null;
-    }
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Demo1Action</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo1Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">username</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="kr">int</span> <span class="nx">age</span><span class="p">;</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">addUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"username:"</span><span class="o">+</span><span class="nx">username</span><span class="o">+</span><span class="s2">" age:"</span><span class="o">+</span><span class="nx">age</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
 </code></pre></div></blockquote>
 
         
@@ -438,7 +414,7 @@ public class Demo1Action extends ActionSupport {
 Struts2处在表现层，是表现层框架</p>
 
 <h6 id="struts2配置">struts2配置</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">struts2
+<div class="highlight"><pre><code class="language-html" data-lang="html">struts2
     |
     |--apps
         |
@@ -459,7 +435,7 @@ Struts2处在表现层，是表现层框架</p>
                     |--xwork-core-xx.jar xwork的核心jar,也是struts2的核心jar包
 </code></pre></div>
 <h6 id="执行过程">执行过程</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">客户浏览器
+<div class="highlight"><pre><code class="language-html" data-lang="html">客户浏览器
     |
     |--启动Tomcat服务器
         |
@@ -478,7 +454,7 @@ Struts2处在表现层，是表现层框架</p>
                 |--根据返回值，找到name对应的结果视图
 </code></pre></div>
 <h6 id="struts2配置加载顺序">struts2配置加载顺序</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">struts2按如下顺序加载配置
+<div class="highlight"><pre><code class="language-html" data-lang="html">struts2按如下顺序加载配置
     |--default-properties 该文件保存在struts2-core-xx.jar中org.apache.struts包里面
     |--struts-defaults.xml 该文件保存在struts2-core-xxx.jar中
     |--struts-plugin 该文件保存在struts2-xxx-xx.jar中
@@ -488,7 +464,7 @@ Struts2处在表现层，是表现层框架</p>
 后面的配置覆盖前面的配置
 </code></pre></div>
 <h6 id="struts2-配置">struts2 配置</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">Package:定义一个struts的包按照面向对象的思想管理(分模块开发)
+<div class="highlight"><pre><code class="language-html" data-lang="html">Package:定义一个struts的包按照面向对象的思想管理(分模块开发)
     |
     |--name属性:包的名称，在配置文件中唯一
     |
@@ -531,14 +507,14 @@ Struts2处在表现层，是表现层框架</p>
                      |    |
                      |    |--转发同包(相同名称空间)的另一个动作
                      |    |     |
-                     |    |     |--&lt;result name="success" type="chain"&gt;actionName&lt;/result&gt;
+                     |    |     |--<span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>actionName<span class="nt">&lt;/result&gt;</span>
                      |    |
                      |    |--转发不同包的另一个动作
                      |          |
-                     |          |--&lt;result name="success" type="chain"&gt;
-                     |                      &lt;param name="namespace"&gt;struts&lt;/param&gt;
-                     |                      &lt;param name="actionName"&gt;other_action&lt;/param&gt;
-                     |              &lt;/result&gt;
+                     |          |--<span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>
+                     |                      <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"namespace"</span><span class="nt">&gt;</span>struts<span class="nt">&lt;/param&gt;</span>
+                     |                      <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"actionName"</span><span class="nt">&gt;</span>other_action<span class="nt">&lt;/param&gt;</span>
+                     |              <span class="nt">&lt;/result&gt;</span>
                      |
                      |--redirectAction 重定向到另一个动作
                           |
@@ -649,7 +625,7 @@ Struts2处在表现层，是表现层框架</p>
 特点:占有内存少，并发能力强</p>
 
 <h2 id="mac-配置nginx">mac 配置Nginx</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">mac配置Ngix
+<div class="highlight"><pre><code class="language-html" data-lang="html">mac配置Ngix
     |
     |--安装Nginx
     |     |
@@ -660,7 +636,7 @@ Struts2处在表现层，是表现层框架</p>
     |           |--conf目录
     |               |--server.xml
     |                    |--注意修改端口不要冲突
-    |                    |--&lt;Engine name="Catalina" defaultHost="localhost" jvmRoute="tomcat2"&gt;
+    |                    |--<span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">"Catalina"</span> <span class="na">defaultHost=</span><span class="s">"localhost"</span> <span class="na">jvmRoute=</span><span class="s">"tomcat2"</span><span class="nt">&gt;</span>
     |
     |--负载均衡配置
     |      |--Nginx目录
@@ -780,7 +756,7 @@ Struts2处在表现层，是表现层框架</p>
 <li>高扩展性
 结构: 代理对象和目标对象实现同一个接口
 ###### 静态代理
-```
+```java
 //出租者
 public interface Lessor {
 public void hire();
@@ -895,7 +871,7 @@ public Agent(Lessor lessor){
 <li>提供input type=&#39;file&#39;类的上传输入域
 ##### enctype(encodingType)
 告知服务器请求正文的MIME类型(文件类型，请求消息头:Content-type作用是一致的)
-<code>
+<code>javascript
 可选值
 |
 |--application/x-www-form-urlencode(默认)
@@ -1002,7 +978,7 @@ public Agent(Lessor lessor){
     <div class="article-content">
         
         <h2 id="javaweb常见监听">javaweb常见监听</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">监听域对象创建销毁
+<div class="highlight"><pre><code class="language-html" data-lang="html">监听域对象创建销毁
     |
     |--监听ServletContext创建和销毁
     |           |
@@ -1106,7 +1082,7 @@ public Agent(Lessor lessor){
 
 <ul>
 <li>Axja:只刷新布局页面技术
-<code>
+<code>html
 步骤
 |
 |--创建对象 var xmlHttp
@@ -1161,7 +1137,7 @@ public Agent(Lessor lessor){
 |
 </code>
 ###### 初体验
-```
+```javascript
 //myJs.js
 function getXMLHttpRequest(){
 var xmlHttp;
@@ -1256,94 +1232,94 @@ return xmlHttp;
     <div class="article-content">
         
         <h6 id="admin-product-list-jsp">admin/product/list.jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;%@ page language="java" pageEncoding="UTF-8"%&gt;
-&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;
-&lt;HTML&gt;
-&lt;HEAD&gt;
-   &lt;meta http-equiv="Content-Language" content="zh-cn"&gt;
-   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
-   &lt;link href="${pageContext.request.contextPath}/admin/css/Style.css"
-        rel="stylesheet" type="text/css" /&gt;
-   &lt;script language="javascript"
-         src="${pageContext.request.contextPath}/admin/js/public.js"&gt;&lt;/script&gt;
-   &lt;script type="text/javascript"&gt;
-        function addProduct() {
-            window.location.href = "${pageContext.request.contextPath}/admin/products/add.jsp";
-        }
-        function delAllBooks(){
-            &lt;%--var ids=document.getElementsByName("ids");--%&gt;
-            &lt;%--var str="";--%&gt;
-            &lt;%--for(var i=0;i&lt;ids.length;i++){--%&gt;
-                &lt;%--if(ids[i].checked){--%&gt;
-                    &lt;%--str+="ids="+ids[i].value;--%&gt;
-                    &lt;%--if(i!=ids.length)--%&gt;
-                        &lt;%--str+="&amp;";--%&gt;
-                &lt;%--}--%&gt;
-            &lt;%--}--%&gt;
-            &lt;%--if(str!=""){--%&gt;
-                &lt;%--location.href="${pageContext.request.contextPath}/servlet/delAllBooksServlet?"+str;--%&gt;
-            &lt;%--}--%&gt;
-         var form2=document.getElementById("form2");
-         form2.submit();
-        }
-        function delBook(id){
-            if(confirm("是否确定删除")){
-                location.href="${pageContext.request.contextPath}/servlet/delBookServlet?id="+id;
-            }
-        }
-        function checkAll(){
-            var flag=document.getElementById("ckAll").checked;
-            var ids=document.getElementsByName("ids");
-            for(var i=0;i&lt;ids.length;i++){
-                ids[i].checked=flag;
-            }
-        }
-   &lt;/script&gt;
-&lt;/HEAD&gt;
-&lt;body&gt;
-&lt;br&gt;
-&lt;table cellSpacing="1" cellPadding="0" width="100%" align="center"
-      bgColor="#f5fafe" border="0"&gt;
-   &lt;form id="Form1" name="Form1"
-        action="${pageContext.request.contextPath}/servlet/searchBooksServlet"
-        method="post"&gt;
-      &lt;TBODY&gt;
-      &lt;tr&gt;
-         &lt;td class="ta_01" align="center" bgColor="#afd1f3"&gt;&lt;strong&gt;查
-            询 条 件&lt;/strong&gt;
-         &lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-         &lt;td&gt;
-            &lt;table cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
-               &lt;tr&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     商品编号&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;input type="text"
-                                                   name="id" size="15" value="" id="Form1_userName" class="bg" /&gt;
-                  &lt;/td&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     类别：&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;select name="category"
-                                                   id="category"&gt;
-                     &lt;option value="" selected="selected"&gt;--选择商品类加--&lt;/option&gt;
-                     &lt;option value="文学"&gt;文学&lt;/option&gt;
-                     &lt;option value="生活"&gt;生活&lt;/option&gt;
-                     &lt;option value="计算机"&gt;计算机&lt;/option&gt;
-                     &lt;option value="外语"&gt;外语&lt;/option&gt;
-                     &lt;option value="经营"&gt;经营&lt;/option&gt;
-                     &lt;option value="励志"&gt;励志&lt;/option&gt;
-                     &lt;option value="社科"&gt;社科&lt;/option&gt;
-                     &lt;option value="学术"&gt;学术&lt;/option&gt;
-                     &lt;option value="少儿"&gt;少儿&lt;/option&gt;
-                     &lt;option value="艺术"&gt;艺术&lt;/option&gt;
-                     &lt;option value="原版"&gt;原版&lt;/option&gt;
-                     &lt;option value="科技"&gt;科技&lt;/option&gt;
-                     &lt;option value="考试"&gt;考试&lt;/option&gt;
-                     &lt;option value="生活百科"&gt;生活百科&lt;/option&gt;
-                  &lt;/select&gt;&lt;/td&gt;
-               &lt;/tr&gt;
-
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span><span class="nx">taglib</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">"c"</span> <span class="nx">uri</span><span class="o">=</span><span class="s2">"http://java.sun.com/jsp/jstl/core"</span><span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="nx">HTML</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">HEAD</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Language"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"zh-cn"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/css/Style.css"</span>
+        <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"javascript"</span>
+         <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/js/public.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+        <span class="kd">function</span> <span class="nx">addProduct</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="s2">"${pageContext.request.contextPath}/admin/products/add.jsp"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">delAllBooks</span><span class="p">(){</span>
+            <span class="o">&lt;%--</span><span class="kd">var</span> <span class="nx">ids</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">"ids"</span><span class="p">);</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">""</span><span class="p">;</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span><span class="p">){</span><span class="o">--%&gt;</span>
+                    <span class="o">&lt;%--</span><span class="nx">str</span><span class="o">+=</span><span class="s2">"ids="</span><span class="o">+</span><span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">;</span><span class="o">--%&gt;</span>
+                    <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">!=</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">--%&gt;</span>
+                        <span class="o">&lt;%--</span><span class="nx">str</span><span class="o">+=</span><span class="s2">"&amp;"</span><span class="p">;</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="o">!=</span><span class="s2">""</span><span class="p">){</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/delAllBooksServlet?"</span><span class="o">+</span><span class="nx">str</span><span class="p">;</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+         <span class="kd">var</span> <span class="nx">form2</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"form2"</span><span class="p">);</span>
+         <span class="nx">form2</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">delBook</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"是否确定删除"</span><span class="p">)){</span>
+                <span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/delBookServlet?id="</span><span class="o">+</span><span class="nx">id</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">checkAll</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">flag</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"ckAll"</span><span class="p">).</span><span class="nx">checked</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">ids</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">"ids"</span><span class="p">);</span>
+            <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span><span class="o">=</span><span class="nx">flag</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/HEAD</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellSpacing</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">cellPadding</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span>
+      <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"Form1"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"Form1"</span>
+        <span class="nx">action</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/searchBooksServlet"</span>
+        <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">TBODY</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#afd1f3"</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="err">查</span>
+            <span class="err">询</span> <span class="err">条</span> <span class="err">件</span><span class="o">&lt;</span><span class="sr">/strong</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellpadding</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">商品编号</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span>
+                                                   <span class="nx">name</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"15"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"Form1_userName"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"bg"</span> <span class="o">/&gt;</span>
+                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">类别：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">select</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"category"</span>
+                                                   <span class="nx">id</span><span class="o">=</span><span class="s2">"category"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="nx">selected</span><span class="o">=</span><span class="s2">"selected"</span><span class="o">&gt;--</span><span class="err">选择商品类加</span><span class="o">--&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"文学"</span><span class="o">&gt;</span><span class="err">文学</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"生活"</span><span class="o">&gt;</span><span class="err">生活</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"计算机"</span><span class="o">&gt;</span><span class="err">计算机</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"外语"</span><span class="o">&gt;</span><span class="err">外语</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"经营"</span><span class="o">&gt;</span><span class="err">经营</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"励志"</span><span class="o">&gt;</span><span class="err">励志</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"社科"</span><span class="o">&gt;</span><span class="err">社科</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"学术"</span><span class="o">&gt;</span><span class="err">学术</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"少儿"</span><span class="o">&gt;</span><span class="err">少儿</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"艺术"</span><span class="o">&gt;</span><span class="err">艺术</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"原版"</span><span class="o">&gt;</span><span class="err">原版</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"科技"</span><span class="o">&gt;</span><span class="err">科技</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"考试"</span><span class="o">&gt;</span><span class="err">考试</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"生活百科"</span><span class="o">&gt;</span><span class="err">生活百科</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/select&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>
 </code></pre></div>
         
         
@@ -1445,7 +1421,7 @@ batch()批处理</li>
 用于定义select 结果集</li>
 <li>DBUtils类
 关闭资源，事务管理
-<code>
+<code>html
 使用步骤
 |
 |--导入jar包
@@ -1486,7 +1462,7 @@ batch()批处理</li>
 |
 |--使用DBUtils释放资源     
 </code>
-```
+```java
 @Test
 public void testSelect1()throws Exception{
 QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
@@ -1603,7 +1579,7 @@ mysql默认自动提交事务。每条语句都处在单独的事务中<br>
 <li>开启事务: start transaction | begin</li>
 <li>提交事务: commit</li>
 <li>回滚事务: rollback
-<code>
+<code>java
 try(Connection conn= DBUtils.getConnetion();    
 PreparedStatement ps1=conn.prepareStatement(&quot;update account set money =money-100 where name =&#39;aaa&#39;&quot;);
 PreparedStatement ps2=conn.prepareStatement(&quot;update account set money = money +100 where name =&#39;bbb&#39;&quot;);
@@ -1715,7 +1691,7 @@ e.printStackTrace();
 <blockquote>
 <p>C/S:客户端/服务器(胖客户端)<br>
 B/S:浏览器/服务器(瘦客户端)</p>
-<div class="highlight"><pre><code class="language-" data-lang="">开发模式
+<div class="highlight"><pre><code class="language-html" data-lang="html">开发模式
    |
    |--Model1模式  (过时)
    |      |
@@ -1822,8 +1798,8 @@ mac idea .jsp编译目录:<br>
 /Users/zhangxiaolong/Library/Caches/IntelliJIdea2017.1/tomcat/Unnamed_Learn38/work/Catalina/localhost/ROOT/org/apache/jsp</p>
 
 <h6 id="转译后">转译后</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
-      throws java.io.IOException, javax.servlet.ServletException {
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">_jspService</span><span class="o">(</span><span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span>
+      <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">,</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletException</span> <span class="o">{</span>
 </code></pre></div></blockquote>
 
         
@@ -1913,26 +1889,8 @@ mac idea .jsp编译目录:<br>
 
 <h2 id="cookie">Cookie</h2>
 
-<p>Cookie是客服端技术，把用户数据存储在各自浏览器，再去访问带着数据访问。这样web资源就能处理各自数据<br>
-|方法|备注|<br>
-|-----|-----|<br>
-|response.addCookie()|可以多次调用|<br>
-|request.getCookies()||<br>
-|new Cookie(name,value)|一个cookie里面有一个名字,一个值，多个cookie名字可以相同|<br>
-|cookie.getName()|获得cookie名称|<br>
-|cookie.getValue()|获得cookie值|<br>
-|cookie.getMaxAge()|得到cookie保留时间单位秒，-1表示保留到浏览器关闭|<br>
-|cookie.setMaxAge(expiry)|设置cookie缓存到硬盘上的时间单位秒，浏览器关闭之后保留的时间|<br>
-|cookie.setMaxAge(0)|删除cookie|<br>
-|cookie.getPath()|默认值是写Cookie程序的访问路径，URI。名字和path都相同为同一个cookie|</p>
-
-<h6 id="servletdemo1">ServletDemo1</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class CookieDemo1 extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
-    }
-</code></pre></div></blockquote>
+<p>Cookie是客服端技术，把用户数据存储在各自浏览器，再去访问带着数据访问。这样web资源就能处理各自数据</p>
+</blockquote>
 
         
         
@@ -2028,7 +1986,7 @@ setHead(String name,String value)设置响应头</li>
 getOutputSteam();字节流
 setCharacterEncoding(String)
 setContentType(String)
-```
+```java
 public class ServletDemo1 extends HttpServlet {
 @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -2334,7 +2292,7 @@ stmt.close();
 conn.close();
 </code>
 ## java.sql.DriverManager
-<code>
+<code>java
 注册驱动
 DriverManage.registDriver(Driver driver) 不建议使用(1.导致驱动被注册2次,2.强烈依赖jar包)
 加载驱动 Class.froNmae(&quot;com.mysql.jdbc.Driver&quot;); Driver里面有静态代码块注册驱动
@@ -2363,7 +2321,7 @@ Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/
 ResultSet getResultSet()。
 </code>
 ## java.sql.ResultSet
-<code>
+<code>java
 封装结果集
 提供一个游标，默认游标在第一行之前
 调用next()方法，游标向下移动一行
@@ -2377,7 +2335,7 @@ boolean previous()
 boolean afterLast()将游标移动到末尾，最后一行之后
 boolean beforeFirst() 移动到开头，第一行之前
 </code>
-<code>
+<code>java
 Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
 Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
 Statement stmt=conn.createStatement();
@@ -2398,7 +2356,7 @@ stmt.close();
 conn.close();
 </code>
 ## 释放资源
-<code>
+<code>java
 Connection conn=null;
 Statement stmt=null;
 ResultSet rs=null;
@@ -2434,7 +2392,7 @@ if(rs!=null){
 }
 </code>
 ## CRUD
-```
+```java
 public class DBUtils {
 private static String driverClass;
 private static String url;
@@ -2524,7 +2482,7 @@ public static Connection getConnection()throws Exception{</li>
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2017/02/23/mysql" title="mysql" itemprop="url">mysql</a>
+      <a href="/Blog/2017/02/23/mysql02" title="Mysql02" itemprop="url">Mysql02</a>
   </h1>
   <p class="article-author">By
        
@@ -2537,31 +2495,19 @@ public static Connection getConnection()throws Exception{</li>
 </header>
     <div class="article-content">
         
-        <h2 id="数据库">数据库</h2>
+        <p>layout: post<br>
+title: mysql02<br>
+tags:</p>
 
-<blockquote>
-<p>存储，维护，管理数据的集合</p>
-
-<h2 id="mac卸载mysql">mac卸载mysql</h2>
-
-<p>打开终端，全部拷贝下面的内容，回车</p>
-<div class="highlight"><pre><code class="language-" data-lang="">cd ~/
-sudo rm /usr/local/mysql
-sudo rm -rf /usr/local/var/mysql
-sudo rm -rf /usr/local/mysql*
-sudo rm -rf /Library/StartupItems/MySQLCOM
-sudo rm -rf /Library/PreferencePanes/My*
-vim /etc/hostconfig and removed the line MYSQLCOM=-YES-rm -rf ~/Library/PreferencePanes/My*
-sudo rm -rf /Library/Receipts/mysql*
-sudo rm -rf /Library/Receipts/MySQL*
-sudo rm -rf /var/db/receipts/com.mysql.*
-</code></pre></div></blockquote>
+<ul>
+<li>java</li>
+</ul>
 
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/java/2017/02/23/mysql#more">Read More</a>
+            <a href="/Blog/2017/02/23/mysql02#more">Read More</a>
           
        </p>
     </div>
@@ -2580,8 +2526,6 @@ sudo rm -rf /var/db/receipts/com.mysql.*
   }) %>
   -->
   
-  <a class="article-category-link" href="/Blog/categories/#java">java</a>
-  
 </div>
 
 
@@ -2593,8 +2537,6 @@ sudo rm -rf /var/db/receipts/com.mysql.*
     }); %>-->
   <span></span> <!--<%- tags.join('') %>-->
   
-  
-  <a href="/Blog/tags/#java">java</a>
   
   </div>
 
@@ -2619,7 +2561,7 @@ sudo rm -rf /var/db/receipts/com.mysql.*
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
     
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a>
+    <a class="extend prev" rel="prev" href="/Blog//"><span></span>Prev</a>
     
     
     <a class="page-number" href="/">1</a>
@@ -2630,20 +2572,21 @@ sudo rm -rf /var/db/receipts/com.mysql.*
     
     
     
-    <a class="page-number" href="/page3">3</a>
+    <a class="page-number" href="/Blog/page3">3</a>
     
     
     
-    <a class="page-number" href="/page4">4</a>
+    <a class="page-number" href="/Blog/page4">4</a>
     
     
      
-    <a class="extend next" rel="next" href="/page3">Next<span></span></a>
+    <a class="extend next" rel="next" href="/Blog//page3">Next<span></span></a>
     
   </nav>
   </nav>
 
 </div>
+
       
       
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
@@ -2717,9 +2660,10 @@ sudo rm -rf /var/db/receipts/com.mysql.*
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

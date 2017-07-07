@@ -129,8 +129,8 @@ mac idea .jsp编译目录:<br>
 /Users/zhangxiaolong/Library/Caches/IntelliJIdea2017.1/tomcat/Unnamed_Learn38/work/Catalina/localhost/ROOT/org/apache/jsp</p>
 
 <h6 id="转译后">转译后</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
-      throws java.io.IOException, javax.servlet.ServletException {
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">_jspService</span><span class="o">(</span><span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="kd">final</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span>
+      <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">,</span> <span class="n">javax</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">ServletException</span> <span class="o">{</span>
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">final java.lang.String _jspx_method = request.getMethod();
 if (!"GET".equals(_jspx_method) <span class="err">&amp;&amp;</span> !"POST".equals(_jspx_method) <span class="err">&amp;&amp;</span> !"HEAD".equals(_jspx_method) <span class="err">&amp;&amp;</span> !javax.servlet.DispatcherType.ERROR.equals(request.getDispatcherType())) {
@@ -200,292 +200,526 @@ try {
 &gt;serlvet:控制器,重点编写java代码逻辑
 &gt;jsp:代码显示模板，重点在于显示数据
 
-</code></pre></div>
-<p>//login.jsp<br>
-<body><br>
-    <form action="/doLogin" method="post"><br>
-        用户名:<input type="text" name="userName"><br/><br>
-        密码:<input type="password" name="pwd"><br/><br>
-        <input type="submit" value="登陆"></p>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;/form&gt;
-</code></pre></div>
-<p></body></p>
-
-<p>//DoLoginServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    String userName = req.getParameter(&quot;userName&quot;);<br>
-    String pwd = req.getParameter(&quot;pwd&quot;);<br>
-    if(&quot;tom&quot;.equals(userName)&amp;&amp;&quot;123&quot;.equals(pwd)){<br>
-        req.getRequestDispatcher(&quot;/success.jsp&quot;).forward(req,resp);<br>
-        req.getSession().setAttribute(&quot;name&quot;,userName);<br>
-    }else {<br>
-        req.getRequestDispatcher(&quot;/login.jsp&quot;).forward(req,resp);<br>
-    }<br>
-}</p>
-
-<p>//success.jsp<br>
-<body><br>
-    欢迎您:&lt;%<br>
-        String userName=request.getParameter(&quot;userName&quot;);<br>
-        out.println(userName);<br>
-    %&gt;<br>
-    <br/><br>
-    <a href="home.jsp">跳到主页</a><br>
-</body></p>
-
-<p>//home.jsp<br>
-<body><br>
-    <h1>欢迎来到本网站</h1><br>
-    欢迎您:<br>
-    &lt;%<br>
-        String userName = (String) session.getAttribute(&quot;name&quot;);<br>
-        out.println(userName);<br>
-    %&gt;<br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## jsp的基本语法
-|语法|备注|
-|-----|-----|
-|网页的静态内容|如html标签和文本|
-|jsp脚本||
-|小脚本|&lt;%java代码%&gt;|
-|表达式|&lt;%=%&gt;&lt;%=i%&gt;等价于int i=30,out.println(i),不能有;|
-|声明| &lt;%!%&gt;全局变量 每次刷新值都不会变|
-|注释|&lt;!--这是html注释 不安全费流量--&gt;&lt;%--这是jsp注释 安全不费流量--%&gt; //java单行注释 /*java多行注释*/|
-|jsp指令|不产生可见输出，告示引擎如果处理jsp其余部分|
-|语法|&lt;%@ 指令名称 属性1=“属性值” 属性n="属性值"%&gt;|
-|page指令|定义jsp页面各个属性|
-|language|&lt;%@ page language="java"%&gt;jsp支持的语言|
-|extends|&lt;%@ page extend="package.class"%&gt; 继承|
-|import|和java import一样 &lt;%@ page import="java.util.Date"% &gt; &lt;%@ page import="java.util.Date,java.sql.*"%&gt;|
-|import自动导入的包|import java.long.*   import javax.servlet.*;   import javax.servlet.http.*  import javax.servlet.jsp.*|
-|session|&lt;%@ page session="false"%&gt;默认true,false不会创建session|
-|buffer|&lt;%@ page buffer="none \| 8kb \| sizekb"%&gt;out.println()缓冲区大小 默认8kb 不建议改动|
-|autoFlush|&lt;%@ page autoFlush="true \| false"%&gt;自动清空缓冲区  默认true 不建议改动|
-|isThreadSafe|&lt;%@ page isThreadSafe="true \| false"%&gt;默认true false才继承SingleThreadModle接口(来一个请求创建一个servlet)|
-|info|&lt;%@ page info="text"%&gt;输出页面基本信息 Servlet.getServletInfo方法取回|
-|errorPage|出错后跳转的页面&lt;%@ page errorPage="ralative_url"%&gt; /是绝对路径 不写/是相对路径|
-|isErrorPage|&lt;%@ page isErrorPage="true \| false"%&gt; 是否创建throwable对象，默认是false,创建可以打印错误信息 &lt;%exception.getMessage()%&gt;|
-|contentType|等同于reponse.setContentType()&lt;%@ page contentType="text/html;charset=utf-8"%&gt;|
-|pageEncoding|&lt;%@ page pageEncoding="utf-8"% 告示服务用什么编码编译 同时包装contentType&gt;
-|include指令||
-|静态包含|&lt;%@include file="/include/header.jsp" %&gt; 在编译时就把两个文件合并|
-|动态包含|&amp;lt;jsp:include page="/include/header.jsp"&gt; 不会合并文件，当代码执行到include才会包含文件内容|
-|taglib指令|在jsp页面中导入JSTL标签库，替换jsp中的java代码段 &lt;%@taglib uri="http://java.sun.com/jsp/jsp/jst1/core" prefix="c"%&gt;|
-|6个动作|
-|动态包含|&amp;lt;jsp:include&gt;&amp;lt;jsp:include page="2.jsp"&gt;&amp;lt;/jsp:include&gt;|
-|请求转发|&amp;lt;jsp:forward page="5.jsp"&gt;&amp;lt;jsp:param name="name" value="1234&amp;gt;|
-|设置请求参数|&amp;lt;jsp:param name="name" value="1234"&gt;&lt;/jsp:param&gt;|
-|创建对象|&amp;lt;jsp:useBean id="stu2" class="com.itheima.entity.Student"&gt;|
-|属性赋值|&amp;lt;jsp:setProperty name="stu2" property="name" value="jerry"&gt;|
-|取属性值|&amp;lt;jsp:getProperty name="stu2" property="name"&gt;|
-|9大内置对象|在&lt;%%&gt;和&lt;%=%&gt;中直接使用的对象|
-|request|javax.serlvet.http.HttpServletRequest,域对象|
-|response|javax.servlet.http.HttpServletResponse|
-|session|javax.servlet.http.HttpSession 由session="true"开关,域对象|
-|application|javax.servlet.http.ServletContext|
-|exception|java.lang.Throwable 由isErrorPage="false"开关,域对象|
-|page|java.lang.Object 当前对象this，当前servlet|
-|config|javax.servlet.ServletConfig|
-|out|javax.servlet.jsp.JspWriter相当于printWriter|
-|pageContext|javax.servlet.jsp.PageContext,相当于当前页面的上下文,域对象|
-</code></pre></div>
-<p>//1.jsp<br>
-&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot;  %&gt;<br>
-&lt;%@ taglib uri=&quot;<a href="http://java.sun.com/jsp/jstl/core">http://java.sun.com/jsp/jstl/core</a>&quot; prefix=&quot;c&quot;%&gt;<br>
-<html><br>
-<head><br>
-    <title>Title</title><br>
-</head><br>
-<body><br>
-    bbbbbbbbbbbb<br>
-    &lt;%@ include file=&quot;2.jsp&quot;%&gt;<br>
-    <jsp:include page="3.jsp"><a href="/jsp:include">/jsp:include</a><br>
-    &lt;%<br>
-        if(5&gt;3){<br>
-            out.println(&quot;aaaaa&quot;);<br>
-        }<br>
-        %&gt;<br>
-    <c:if test="${5>3}&quot;&gt;<br>
-        aaaaa<br>
-    <a href="/c:if">/c:if</a></p>
-
-<p>//2.jsp<br>
-aaaaaaaaa</p>
-
-<p>//3.jsp<br>
-cccccccccccc<br>
-</body><br>
-</html></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## PageContext
-&gt; 本身是一个域对象，它可以操作其他三个域对象
-&gt; 它可以创建其他8个隐式对象
-&gt; 提供简易api pageContext.forward("2.jsp") pageContext.include("2.jsp")
-|方法|备注|
-|----|----|
-|setAttribute(name,value)||
-|getAttribute(name)||
-|removeAttribute(name)||
-|setAttribute(name,obj,scope)|
-|getAttribute(name,scope)
-|removeAttribute(name,scope)|
-|findAttribute(name)|自动从page,request,session,application依次查找|
-|PageContext.PAGE_SCOPE| scope的值，操作page的域对象|
-|PageContext.REQUEST_SCOPE| scope的值，操作request的域对象|
-|PageContext.SESSION_SCOPE| scope的值，操作session的域对象|
-|PageContext.APPLICATION_SCOPE| scope的值，操作PageContext的域对象|
-</code></pre></div>
-<p>//6.jsp<br>
-<body><br>
-    &lt;%<br>
-        pageContext.setAttribute(&quot;scope&quot;,&quot;page&quot;);<br>
-        pageContext.setAttribute(&quot;scope&quot;,&quot;request&quot;,PageContext.REQUEST_SCOPE);<br>
-        pageContext.setAttribute(&quot;scope&quot;,&quot;session&quot;,PageContext.SESSION_SCOPE);<br>
-        pageContext.setAttribute(&quot;scope&quot;,&quot;application&quot;,PageContext.APPLICATION_SCOPE);<br>
-        request.getRequestDispatcher(&quot;7.jsp&quot;).forward(request,response);<br>
-    %&gt;<br>
-</body></p>
-
-<p>//7.jsp<br>
-<body><br>
-    &lt;%<br>
-        String scope1 = (String) pageContext.getAttribute(&quot;scope&quot;);<br>
-        out.println(scope1);//null pageContext作用域本页面<br>
-        String scope2= (String) pageContext.getAttribute(&quot;scope&quot;,PageContext.REQUEST_SCOPE);<br>
-        out.println(scope2);//转发可以取到 重定向取不到<br>
-        String scope3= (String) pageContext.getAttribute(&quot;scope&quot;,PageContext.SESSION_SCOPE);<br>
-        out.println(scope3);//转发重定向都可以取到<br>
-        String scope4= (String) pageContext.getAttribute(&quot;scope&quot;,PageContext.APPLICATION_SCOPE);<br>
-        out.println(scope4);//转发重定向都可以取到<br>
-        String scope = (String) pageContext.findAttribute(&quot;scope&quot;);<br>
-        out.println(scope);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">%&gt;
-</code></pre></div>
-<p></body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 四大域对象
-
-+ PageContext:存放的数据在当前页面有效，开发时使用较少
-+ ServletRequest:request,存放的数据在一次请求(转发)内有效，使用非常多
-+ HttpSession: session,存放的数据在一次会话内有效，使用比较多，存放登陆信息，购物车功能
-+ ServlertContext:application,存放的数据在整个应用范围内有效，范围太大，应尽量少用
-
-## EL表达式
-&gt; expression language 表达式语言
-&gt; 简化jsp中java代码
-
-+ 获取数据
-1. EL 表达式只能获取存在4个作用域中的数据
-1. \${u}原理:pageContext.findAttribute("u");
-1. EL获取对于null这样的数据，在页面中表现为空字符串，\${u.name} u为空也不会报错
-1. \${u.name}==u.getName() .运算符想大于调用了getter方法
-1. 属性导航 \${u.address.city}
-1. []运算符: \${u.name}==\${u['name']}==\${u["name"]}
-```jsp
-//demo8.jsp
+```javascript
+//login.jsp
 &lt;body&gt;
-    &lt;%
-        Student stu=new Student();
-        stu.setName("tom");
-        request.setAttribute("stu",stu);
-        request.getRequestDispatcher("demo9.jsp").forward(request,response);
-    %&gt;
+    &lt;form action="/doLogin" method="post"&gt;
+        用户名:&lt;input type="text" name="userName"&gt;&lt;br/&gt;
+        密码:&lt;input type="password" name="pwd"&gt;&lt;br/&gt;
+        &lt;input type="submit" value="登陆"&gt;
+
+    &lt;/form&gt;
 &lt;/body&gt;
 
-//demo9.jsp
+
+//DoLoginServlet
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
+    String userName = req.getParameter("userName");
+    String pwd = req.getParameter("pwd");
+    if("tom".equals(userName)&amp;&amp;"123".equals(pwd)){
+        req.getRequestDispatcher("/success.jsp").forward(req,resp);
+        req.getSession().setAttribute("name",userName);
+    }else {
+        req.getRequestDispatcher("/login.jsp").forward(req,resp);
+    }
+}
+
+
+//success.jsp
 &lt;body&gt;
-    &lt;%
-        Student stu= (Student) request.getAttribute("stu");
-        out.println(stu);
-        out.println(stu.getName());
-    %&gt;&lt;br/&gt;
-    ${stu}&lt;!--${stu}==pageContext.findAttribute("stu")--&gt;&lt;br/&gt;
-    ${stu.name}&lt;br/&gt;
-    ${stu.city.address}&lt;br/&gt;
-    ${stu['city']["address"]}&lt;br/&gt;
-    &lt;%
-        List list=new ArrayList();
-        list.add("aaa");
-        list.add("bbb");
-        pageContext.setAttribute("list",list);
+    欢迎您:&lt;%
+        String userName=request.getParameter("userName");
+        out.println(userName);
     %&gt;
-    ${list}&lt;br/&gt;
-    ${list[1]}&lt;br/&gt;
+    &lt;br/&gt;
+    &lt;a href="home.jsp"&gt;跳到主页&lt;/a&gt;
+&lt;/body&gt;
+
+
+//home.jsp
+&lt;body&gt;
+    &lt;h1&gt;欢迎来到本网站&lt;/h1&gt;
+    欢迎您:
     &lt;%
-        Map map=new HashMap();
-        map.put("key0","value0");
-        map.put("key1","value1");
-        pageContext.setAttribute("map",map);
+        String userName = (String) session.getAttribute("name");
+        out.println(userName);
     %&gt;
-    ${map.key1}&lt;br/&gt;
-    ${map["key1"]}&lt;br/&gt;
+&lt;/body&gt;
+</code></pre></div>
+<h2 id="jsp的基本语法">jsp的基本语法</h2>
+
+<table><thead>
+<tr>
+<th>语法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>网页的静态内容</td>
+<td>如html标签和文本</td>
+</tr>
+<tr>
+<td>jsp脚本</td>
+<td></td>
+</tr>
+<tr>
+<td>小脚本</td>
+<td>&lt;%java代码%&gt;</td>
+</tr>
+<tr>
+<td>表达式</td>
+<td>&lt;%=%&gt;&lt;%=i%&gt;等价于int i=30,out.println(i),不能有;</td>
+</tr>
+<tr>
+<td>声明</td>
+<td>&lt;%!%&gt;全局变量 每次刷新值都不会变</td>
+</tr>
+<tr>
+<td>注释</td>
+<td>&lt;!--这是html注释 不安全费流量--&gt;&lt;%--这是jsp注释 安全不费流量--%&gt; //java单行注释 /<em>java多行注释</em>/</td>
+</tr>
+<tr>
+<td>jsp指令</td>
+<td>不产生可见输出，告示引擎如果处理jsp其余部分</td>
+</tr>
+<tr>
+<td>语法</td>
+<td>&lt;%@ 指令名称 属性1=“属性值” 属性n=&quot;属性值&quot;%&gt;</td>
+</tr>
+<tr>
+<td>page指令</td>
+<td>定义jsp页面各个属性</td>
+</tr>
+<tr>
+<td>language</td>
+<td>&lt;%@ page language=&quot;java&quot;%&gt;jsp支持的语言</td>
+</tr>
+<tr>
+<td>extends</td>
+<td>&lt;%@ page extend=&quot;package.class&quot;%&gt; 继承</td>
+</tr>
+<tr>
+<td>import</td>
+<td>和java import一样 &lt;%@ page import=&quot;java.util.Date&quot;% &gt; &lt;%@ page import=&quot;java.util.Date,java.sql.*&quot;%&gt;</td>
+</tr>
+<tr>
+<td>import自动导入的包</td>
+<td>import java.long.*   import javax.servlet.<em>;   import javax.servlet.http.</em>  import javax.servlet.jsp.*</td>
+</tr>
+<tr>
+<td>session</td>
+<td>&lt;%@ page session=&quot;false&quot;%&gt;默认true,false不会创建session</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>&lt;%@ page buffer=&quot;none \</td>
+</tr>
+<tr>
+<td>autoFlush</td>
+<td>&lt;%@ page autoFlush=&quot;true \</td>
+</tr>
+<tr>
+<td>isThreadSafe</td>
+<td>&lt;%@ page isThreadSafe=&quot;true \</td>
+</tr>
+<tr>
+<td>info</td>
+<td>&lt;%@ page info=&quot;text&quot;%&gt;输出页面基本信息 Servlet.getServletInfo方法取回</td>
+</tr>
+<tr>
+<td>errorPage</td>
+<td>出错后跳转的页面&lt;%@ page errorPage=&quot;ralative_url&quot;%&gt; /是绝对路径 不写/是相对路径</td>
+</tr>
+<tr>
+<td>isErrorPage</td>
+<td>&lt;%@ page isErrorPage=&quot;true \</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td>等同于reponse.setContentType()&lt;%@ page contentType=&quot;text/html;charset=utf-8&quot;%&gt;</td>
+</tr>
+<tr>
+<td>pageEncoding</td>
+<td>&lt;%@ page pageEncoding=&quot;utf-8&quot;% 告示服务用什么编码编译 同时包装contentType&gt;</td>
+</tr>
+<tr>
+<td>include指令</td>
+<td></td>
+</tr>
+<tr>
+<td>静态包含</td>
+<td>&lt;%@include file=&quot;/include/header.jsp&quot; %&gt; 在编译时就把两个文件合并</td>
+</tr>
+<tr>
+<td>动态包含</td>
+<td>&lt;jsp:include page=&quot;/include/header.jsp&quot;&gt; 不会合并文件，当代码执行到include才会包含文件内容</td>
+</tr>
+<tr>
+<td>taglib指令</td>
+<td>在jsp页面中导入JSTL标签库，替换jsp中的java代码段 &lt;%@taglib uri=&quot;<a href="http://java.sun.com/jsp/jsp/jst1/core">http://java.sun.com/jsp/jsp/jst1/core</a>&quot; prefix=&quot;c&quot;%&gt;</td>
+</tr>
+<tr>
+<td>6个动作</td>
+<td></td>
+</tr>
+<tr>
+<td>动态包含</td>
+<td>&lt;jsp:include&gt;&lt;jsp:include page=&quot;2.jsp&quot;&gt;&lt;/jsp:include&gt;</td>
+</tr>
+<tr>
+<td>请求转发</td>
+<td>&lt;jsp:forward page=&quot;5.jsp&quot;&gt;&lt;jsp:param name=&quot;name&quot; value=&quot;1234&gt;</td>
+</tr>
+<tr>
+<td>设置请求参数</td>
+<td>&lt;jsp:param name=&quot;name&quot; value=&quot;1234&quot;&gt;<a href="/jsp:param">/jsp:param</a></td>
+</tr>
+<tr>
+<td>创建对象</td>
+<td>&lt;jsp:useBean id=&quot;stu2&quot; class=&quot;com.itheima.entity.Student&quot;&gt;</td>
+</tr>
+<tr>
+<td>属性赋值</td>
+<td>&lt;jsp:setProperty name=&quot;stu2&quot; property=&quot;name&quot; value=&quot;jerry&quot;&gt;</td>
+</tr>
+<tr>
+<td>取属性值</td>
+<td>&lt;jsp:getProperty name=&quot;stu2&quot; property=&quot;name&quot;&gt;</td>
+</tr>
+<tr>
+<td>9大内置对象</td>
+<td>在&lt;%%&gt;和&lt;%=%&gt;中直接使用的对象</td>
+</tr>
+<tr>
+<td>request</td>
+<td>javax.serlvet.http.HttpServletRequest,域对象</td>
+</tr>
+<tr>
+<td>response</td>
+<td>javax.servlet.http.HttpServletResponse</td>
+</tr>
+<tr>
+<td>session</td>
+<td>javax.servlet.http.HttpSession 由session=&quot;true&quot;开关,域对象</td>
+</tr>
+<tr>
+<td>application</td>
+<td>javax.servlet.http.ServletContext</td>
+</tr>
+<tr>
+<td>exception</td>
+<td>java.lang.Throwable 由isErrorPage=&quot;false&quot;开关,域对象</td>
+</tr>
+<tr>
+<td>page</td>
+<td>java.lang.Object 当前对象this，当前servlet</td>
+</tr>
+<tr>
+<td>config</td>
+<td>javax.servlet.ServletConfig</td>
+</tr>
+<tr>
+<td>out</td>
+<td>javax.servlet.jsp.JspWriter相当于printWriter</td>
+</tr>
+<tr>
+<td>pageContext</td>
+<td>javax.servlet.jsp.PageContext,相当于当前页面的上下文,域对象</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//1.jsp</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html;charset=UTF-8"</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span>  <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">taglib</span> <span class="nx">uri</span><span class="o">=</span><span class="s2">"http://java.sun.com/jsp/jstl/core"</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">"c"</span><span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">Title</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="nx">bbbbbbbbbbbb</span>
+    <span class="o">&lt;%</span><span class="err">@</span> <span class="nx">include</span> <span class="nx">file</span><span class="o">=</span><span class="s2">"2.jsp"</span><span class="o">%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"3.jsp"</span><span class="o">&gt;&lt;</span><span class="sr">/jsp:include</span><span class="err">&gt;
+</span>    <span class="o">&lt;%</span>
+        <span class="k">if</span><span class="p">(</span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">){</span>
+            <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"aaaaa"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="o">%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">c</span><span class="err">:</span><span class="k">if</span> <span class="nx">test</span><span class="o">=</span><span class="s2">"${5&gt;3}"</span><span class="o">&gt;</span>
+        <span class="nx">aaaaa</span>
+    <span class="o">&lt;</span><span class="sr">/c:if</span><span class="err">&gt;
+</span>
+<span class="c1">//2.jsp</span>
+<span class="nx">aaaaaaaaa</span>
+
+<span class="c1">//3.jsp</span>
+<span class="nx">cccccccccccc</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="pagecontext">PageContext</h2>
+
+<blockquote>
+<p>本身是一个域对象，它可以操作其他三个域对象<br>
+它可以创建其他8个隐式对象<br>
+提供简易api pageContext.forward(&quot;2.jsp&quot;) pageContext.include(&quot;2.jsp&quot;)</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>setAttribute(name,value)</td>
+<td></td>
+</tr>
+<tr>
+<td>getAttribute(name)</td>
+<td></td>
+</tr>
+<tr>
+<td>removeAttribute(name)</td>
+<td></td>
+</tr>
+<tr>
+<td>setAttribute(name,obj,scope)</td>
+<td></td>
+</tr>
+<tr>
+<td>getAttribute(name,scope)</td>
+<td></td>
+</tr>
+<tr>
+<td>removeAttribute(name,scope)</td>
+<td></td>
+</tr>
+<tr>
+<td>findAttribute(name)</td>
+<td>自动从page,request,session,application依次查找</td>
+</tr>
+<tr>
+<td>PageContext.PAGE_SCOPE</td>
+<td>scope的值，操作page的域对象</td>
+</tr>
+<tr>
+<td>PageContext.REQUEST_SCOPE</td>
+<td>scope的值，操作request的域对象</td>
+</tr>
+<tr>
+<td>PageContext.SESSION_SCOPE</td>
+<td>scope的值，操作session的域对象</td>
+</tr>
+<tr>
+<td>PageContext.APPLICATION_SCOPE</td>
+<td>scope的值，操作PageContext的域对象</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//6.jsp</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;%</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"page"</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"request"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">REQUEST_SCOPE</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"session"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">SESSION_SCOPE</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"application"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">APPLICATION_SCOPE</span><span class="p">);</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">getRequestDispatcher</span><span class="p">(</span><span class="s2">"7.jsp"</span><span class="p">).</span><span class="nx">forward</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span><span class="nx">response</span><span class="p">);</span>
+    <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span>
+<span class="c1">//7.jsp</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;%</span>
+        <span class="nb">String</span> <span class="nx">scope1</span> <span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">pageContext</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">);</span>
+        <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">scope1</span><span class="p">);</span><span class="c1">//null pageContext作用域本页面</span>
+        <span class="nb">String</span> <span class="nx">scope2</span><span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">pageContext</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">REQUEST_SCOPE</span><span class="p">);</span>
+        <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">scope2</span><span class="p">);</span><span class="c1">//转发可以取到 重定向取不到</span>
+        <span class="nb">String</span> <span class="nx">scope3</span><span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">pageContext</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">SESSION_SCOPE</span><span class="p">);</span>
+        <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">scope3</span><span class="p">);</span><span class="c1">//转发重定向都可以取到</span>
+        <span class="nb">String</span> <span class="nx">scope4</span><span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">pageContext</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">APPLICATION_SCOPE</span><span class="p">);</span>
+        <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">scope4</span><span class="p">);</span><span class="c1">//转发重定向都可以取到</span>
+        <span class="nb">String</span> <span class="nx">scope</span> <span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">pageContext</span><span class="p">.</span><span class="nx">findAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">);</span>
+        <span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">scope</span><span class="p">);</span>
+
+    <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="四大域对象">四大域对象</h2>
+
+<ul>
+<li>PageContext:存放的数据在当前页面有效，开发时使用较少</li>
+<li>ServletRequest:request,存放的数据在一次请求(转发)内有效，使用非常多</li>
+<li>HttpSession: session,存放的数据在一次会话内有效，使用比较多，存放登陆信息，购物车功能</li>
+<li>ServlertContext:application,存放的数据在整个应用范围内有效，范围太大，应尽量少用</li>
+</ul>
+
+<h2 id="el表达式">EL表达式</h2>
+
+<blockquote>
+<p>expression language 表达式语言<br>
+简化jsp中java代码</p>
+</blockquote>
+
+<ul>
+<li>获取数据</li>
+<li>EL 表达式只能获取存在4个作用域中的数据</li>
+<li>\${u}原理:pageContext.findAttribute(&quot;u&quot;);</li>
+<li>EL获取对于null这样的数据，在页面中表现为空字符串，\${u.name} u为空也不会报错</li>
+<li>\${u.name}==u.getName() .运算符想大于调用了getter方法</li>
+<li>属性导航 \${u.address.city}</li>
+<li>[]运算符: \${u.name}==\${u[&#39;name&#39;]}==\${u[&quot;name&quot;]}
+```javascript
+//demo8.jsp
+<body>
+&lt;%
+    Student stu=new Student();
+    stu.setName(&quot;tom&quot;);
+    request.setAttribute(&quot;stu&quot;,stu);
+    request.getRequestDispatcher(&quot;demo9.jsp&quot;).forward(request,response);
+%&gt;
+</body></li>
+</ul>
+
+<p>//demo9.jsp<br>
+<body><br>
+    &lt;%<br>
+        Student stu= (Student) request.getAttribute(&quot;stu&quot;);<br>
+        out.println(stu);<br>
+        out.println(stu.getName());<br>
+    %&gt;<br/><br>
+    ${stu}&lt;!--${stu}==pageContext.findAttribute(&quot;stu&quot;)--&gt;<br/><br>
+    ${stu.name}<br/><br>
+    ${stu.city.address}<br/><br>
+    ${stu[&#39;city&#39;][&quot;address&quot;]}<br/><br>
+    &lt;%<br>
+        List list=new ArrayList();<br>
+        list.add(&quot;aaa&quot;);<br>
+        list.add(&quot;bbb&quot;);<br>
+        pageContext.setAttribute(&quot;list&quot;,list);<br>
+    %&gt;<br>
+    ${list}<br/><br>
+    ${list[1]}<br/><br>
+    &lt;%<br>
+        Map map=new HashMap();<br>
+        map.put(&quot;key0&quot;,&quot;value0&quot;);<br>
+        map.put(&quot;key1&quot;,&quot;value1&quot;);<br>
+        pageContext.setAttribute(&quot;map&quot;,map);<br>
+    %&gt;<br>
+    ${map.key1}<br/><br>
+    ${map[&quot;key1&quot;]}<br/><br>
+</body></p>
+<div class="highlight"><pre><code class="language-" data-lang="">+ 运算
+    1. empty \$[ empty str} 判断null,空字符串和没有元素的集合都返回true
+    2. 三元运算符 \${ empty list? "您还没有购买商品":"你买的商品有"}
+```javascript
+&lt;body&gt;
+     &lt;%
+        String s1=null;pageContext.setAttribute("s1",s1);
+        String s2="";pageContext.setAttribute("s2",s2);
+        String s3="abc";pageContext.setAttribute("s3",s3);
+        List list1=null;pageContext.setAttribute("list1",list1);
+        List list2=new ArrayList();pageContext.setAttribute("list2",list2);
+        List list3=new ArrayList();
+        list3.add("aaa");pageContext.setAttribute("list3",list3);
+        int sex=1;pageContext.setAttribute("sex",sex);
+     %&gt;
+     ${ empty s1} &lt;br/&gt; &lt;%--true--%&gt;
+     ${ empty s2} &lt;br/&gt; &lt;%--true--%&gt;
+     ${ empty s3} &lt;br/&gt; &lt;%--false--%&gt;
+     ${ empty list1} &lt;br/&gt; &lt;%--true--%&gt;
+     ${ empty list2} &lt;br/&gt; &lt;%--true--%&gt;
+     ${ empty list3} &lt;br/&gt; &lt;%--false--%&gt;
+     ${ empty list1? "你还没有购买商品" : "你买的商品如下"}&lt;br/&gt;
+     &lt;input type="radio" value="男" name="sex" ${sex==0?"checked='checked'":""}&gt;男&lt;br/&gt;
+     &lt;input type="radio" value="女" name="sex" ${sex==1?"checked='checked'":""}&gt;女&lt;br/&gt;
 &lt;/body&gt;
 </code></pre></div>
 <ul>
-<li>运算
-
-<ol>
-<li>empty \$[ empty str} 判断null,空字符串和没有元素的集合都返回true</li>
-<li>三元运算符 \${ empty list? &quot;您还没有购买商品&quot;:&quot;你买的商品有&quot;}
-<code>
-&lt;body&gt;
-&lt;%
-String s1=null;pageContext.setAttribute(&quot;s1&quot;,s1);
-String s2=&quot;&quot;;pageContext.setAttribute(&quot;s2&quot;,s2);
-String s3=&quot;abc&quot;;pageContext.setAttribute(&quot;s3&quot;,s3);
-List list1=null;pageContext.setAttribute(&quot;list1&quot;,list1);
-List list2=new ArrayList();pageContext.setAttribute(&quot;list2&quot;,list2);
-List list3=new ArrayList();
-list3.add(&quot;aaa&quot;);pageContext.setAttribute(&quot;list3&quot;,list3);
-int sex=1;pageContext.setAttribute(&quot;sex&quot;,sex);
-%&gt;
-${ empty s1} &lt;br/&gt; &lt;%--true--%&gt;
-${ empty s2} &lt;br/&gt; &lt;%--true--%&gt;
-${ empty s3} &lt;br/&gt; &lt;%--false--%&gt;
-${ empty list1} &lt;br/&gt; &lt;%--true--%&gt;
-${ empty list2} &lt;br/&gt; &lt;%--true--%&gt;
-${ empty list3} &lt;br/&gt; &lt;%--false--%&gt;
-${ empty list1? &quot;你还没有购买商品&quot; : &quot;你买的商品如下&quot;}&lt;br/&gt;
-&lt;input type=&quot;radio&quot; value=&quot;男&quot; name=&quot;sex&quot; ${sex==0?&quot;checked=&#39;checked&#39;&quot;:&quot;&quot;}&gt;男&lt;br/&gt;
-&lt;input type=&quot;radio&quot; value=&quot;女&quot; name=&quot;sex&quot; ${sex==1?&quot;checked=&#39;checked&#39;&quot;:&quot;&quot;}&gt;女&lt;br/&gt;
-&lt;/body&gt;
-</code></li>
-</ol></li>
-<li>隐式对象 11个
-|EL引用名称| 说明 |类型|
-|-------------|-----|------|
-|pageContext|和jsp pageContext一样的,域对象|javax.servlet.jsp.PageContext|
-|pageScope|pageContext范围中存放的数据，页面范围,域对象|java.util.Map<Stirng,Object|
-|requestScope|请求范围数据,域对象|java.util.Map<String,Object||
-|sessionScope|会话范围数据,域对象|java.util.Map<String,Object|
-|applicationScope|应用范围数据,域对象|java.util.Map<String,Object|
-|param|一个请求参数|java.util.Map<String,String>|
-|paramValues|重名请求参数|java.util.Map<String,String[]|
-|header|一个请求消息头|java.util.Map<Stirng,String>|
-|headerValues|重名消息头|java.util.Map<String,String[]>|
-|initParam|web.xml中全局参数|java.util.Map<String,String>|
-|cookie|key: cookie对象的name,域对象java.util.Map<String,Cookie>|</li>
+<li>隐式对象 11个</li>
 </ul>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;body&gt;
-    &lt;%
-        pageContext.setAttribute("scope","page");
-        pageContext.setAttribute("scope","request",PageContext.REQUEST_SCOPE);
-        pageContext.setAttribute("scope","session",PageContext.SESSION_SCOPE);
-        pageContext.setAttribute("scope","application",PageContext.APPLICATION_SCOPE);
-    %&gt;
-    ${scope}&lt;br/&gt;
-    ${pageScope.get("scope")}&lt;br/&gt;
-    ${requestScope.scope}&lt;br/&gt;
-    ${sessionScope.scope}&lt;br/&gt;
-    ${applicationScope.scope}&lt;br/&gt;
-    ${param.userName}&lt;br/&gt;&lt;%--/demo11.jsp?userName=tom--%&gt;
-    ${paramValues.hobby[1]}&lt;br/&gt;&lt;%--/demo11.jsp?hobby=篮球&amp;hobby=足球--%&gt;
-    ${header["User-agent"]}&lt;br/&gt;
-    ${cookie.JSESSIONID.value}&lt;br/&gt;
-    &lt;%=request.getScheme()+"//"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()%&gt;&lt;br/&gt;
-    ${pageContext.request.scheme}
-&lt;/body&gt;
-</code></pre></div>
+
+<table><thead>
+<tr>
+<th>EL引用名称</th>
+<th>说明</th>
+<th>类型</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pageContext</td>
+<td>和jsp pageContext一样的,域对象</td>
+<td>javax.servlet.jsp.PageContext</td>
+</tr>
+<tr>
+<td>pageScope</td>
+<td>pageContext范围中存放的数据，页面范围,域对象</td>
+<td>java.util.Map&lt;Stirng,Object</td>
+</tr>
+<tr>
+<td>requestScope</td>
+<td>请求范围数据,域对象</td>
+<td>java.util.Map&lt;String,Object</td>
+</tr>
+<tr>
+<td>sessionScope</td>
+<td>会话范围数据,域对象</td>
+<td>java.util.Map&lt;String,Object</td>
+</tr>
+<tr>
+<td>applicationScope</td>
+<td>应用范围数据,域对象</td>
+<td>java.util.Map&lt;String,Object</td>
+</tr>
+<tr>
+<td>param</td>
+<td>一个请求参数</td>
+<td>java.util.Map<String,String></td>
+</tr>
+<tr>
+<td>paramValues</td>
+<td>重名请求参数</td>
+<td>java.util.Map&lt;String,String[]</td>
+</tr>
+<tr>
+<td>header</td>
+<td>一个请求消息头</td>
+<td>java.util.Map<Stirng,String></td>
+</tr>
+<tr>
+<td>headerValues</td>
+<td>重名消息头</td>
+<td>java.util.Map<String,String[]></td>
+</tr>
+<tr>
+<td>initParam</td>
+<td>web.xml中全局参数</td>
+<td>java.util.Map<String,String></td>
+</tr>
+<tr>
+<td>cookie</td>
+<td>key: cookie对象的name,域对象java.util.Map<String,Cookie></td>
+<td></td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;%</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"page"</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"request"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">REQUEST_SCOPE</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"session"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">SESSION_SCOPE</span><span class="p">);</span>
+        <span class="nx">pageContext</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">,</span><span class="s2">"application"</span><span class="p">,</span><span class="nx">PageContext</span><span class="p">.</span><span class="nx">APPLICATION_SCOPE</span><span class="p">);</span>
+    <span class="o">%&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">scope</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">pageScope</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"scope"</span><span class="p">)}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">requestScope</span><span class="p">.</span><span class="nx">scope</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">sessionScope</span><span class="p">.</span><span class="nx">scope</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">applicationScope</span><span class="p">.</span><span class="nx">scope</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">param</span><span class="p">.</span><span class="nx">userName</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;&lt;%--</span><span class="sr">/demo11.jsp</span><span class="se">?</span><span class="sr">userName=tom--%</span><span class="err">&gt;
+</span>    <span class="nx">$</span><span class="p">{</span><span class="nx">paramValues</span><span class="p">.</span><span class="nx">hobby</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;&lt;%--</span><span class="sr">/demo11.jsp</span><span class="se">?</span><span class="sr">hobby=篮球&amp;hobby=足球--%</span><span class="err">&gt;
+</span>    <span class="nx">$</span><span class="p">{</span><span class="nx">header</span><span class="p">[</span><span class="s2">"User-agent"</span><span class="p">]}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">JSESSIONID</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="o">&lt;%=</span><span class="nx">request</span><span class="p">.</span><span class="nx">getScheme</span><span class="p">()</span><span class="o">+</span><span class="s2">"//"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">getServerName</span><span class="p">()</span><span class="o">+</span><span class="s2">":"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">getServerPort</span><span class="p">()</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">getContextPath</span><span class="p">()</span><span class="o">%&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nx">pageContext</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">scheme</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span></code></pre></div>
 <h2 id="jstl">JSTL</h2>
 
 <blockquote>
@@ -500,24 +734,24 @@ ${ empty list1? &quot;你还没有购买商品&quot; : &quot;你买的商品如�
 <li>迭代标签 foreach</li>
 </ul>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;body&gt;
-    &lt;c:set var="num" value="10" scope="page"&gt;&lt;/c:set&gt;&lt;%--声明一个变量 变量名num值10--%&gt;
-    输出变量:&lt;c:out value="${num}"&gt;&lt;/c:out&gt;&lt;br/&gt;
-    &lt;c:remove var="num"&gt;&lt;/c:remove&gt;
-    输出变量:&lt;c:out value="${num}" default="默认值5"&gt;&lt;/c:out&gt;&lt;br/&gt;
-    &lt;c:if test="${5&gt;3}"&gt;
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;c:set</span> <span class="na">var=</span><span class="s">"num"</span> <span class="na">value=</span><span class="s">"10"</span> <span class="na">scope=</span><span class="s">"page"</span><span class="nt">&gt;&lt;/c:set&gt;</span><span class="err">&lt;</span>%--声明一个变量 变量名num值10--%&gt;
+    输出变量:<span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">"${num}"</span><span class="nt">&gt;&lt;/c:out&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;c:remove</span> <span class="na">var=</span><span class="s">"num"</span><span class="nt">&gt;&lt;/c:remove&gt;</span>
+    输出变量:<span class="nt">&lt;c:out</span> <span class="na">value=</span><span class="s">"${num}"</span> <span class="na">default=</span><span class="s">"默认值5"</span><span class="nt">&gt;&lt;/c:out&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;c:if</span> <span class="na">test=</span><span class="s">"${5&gt;3}"</span><span class="nt">&gt;</span>
         5&gt;3
-    &lt;/c:if&gt;&lt;br/&gt;
-    &lt;c:set var="num" value="${3}"&gt;&lt;/c:set&gt;
-    &lt;c:choose&gt;
-        &lt;c:when test="${num==1}"&gt;1111&lt;/c:when&gt;
-        &lt;c:when test="${num==2}"&gt;1111&lt;/c:when&gt;
-        &lt;c:when test="${num==3}"&gt;3333&lt;/c:when&gt;
-    &lt;/c:choose&gt;&lt;br/&gt;
-    &lt;c:forEach var="i" begin="1" end="10" step="1"&gt;&lt;%--step i+=--%&gt;
+    <span class="nt">&lt;/c:if&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;c:set</span> <span class="na">var=</span><span class="s">"num"</span> <span class="na">value=</span><span class="s">"${3}"</span><span class="nt">&gt;&lt;/c:set&gt;</span>
+    <span class="nt">&lt;c:choose&gt;</span>
+        <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">"${num==1}"</span><span class="nt">&gt;</span>1111<span class="nt">&lt;/c:when&gt;</span>
+        <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">"${num==2}"</span><span class="nt">&gt;</span>1111<span class="nt">&lt;/c:when&gt;</span>
+        <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">"${num==3}"</span><span class="nt">&gt;</span>3333<span class="nt">&lt;/c:when&gt;</span>
+    <span class="nt">&lt;/c:choose&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;c:forEach</span> <span class="na">var=</span><span class="s">"i"</span> <span class="na">begin=</span><span class="s">"1"</span> <span class="na">end=</span><span class="s">"10"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span><span class="err">&lt;</span>%--step i+=--%&gt;
         ${i}
-    &lt;/c:forEach&gt;&lt;br/&gt;
-    &lt;%
+    <span class="nt">&lt;/c:forEach&gt;&lt;br/&gt;</span>
+    <span class="err">&lt;</span>%
         List list=new ArrayList();
         list.add("aaa");
         list.add("bbb");
@@ -527,28 +761,28 @@ ${ empty list1? &quot;你还没有购买商品&quot; : &quot;你买的商品如�
         list.add("fff");
         pageContext.setAttribute("list",list);
     %&gt;
-    &lt;c:forEach items="${list}" var="item"&gt;
+    <span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${list}"</span> <span class="na">var=</span><span class="s">"item"</span><span class="nt">&gt;</span>
         ${item}
-    &lt;/c:forEach&gt;
-    &lt;table border="1"&gt;
-        &lt;tr&gt;
-            &lt;th&gt;数据&lt;/th&gt;
-            &lt;th&gt;索引&lt;/th&gt;
-            &lt;th&gt;计数&lt;/th&gt;
-            &lt;th&gt;第一个&lt;/th&gt;
-            &lt;th&gt;最后一个&lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;c:forEach items="${list}" var="item" varStatus="vs"&gt;
-            &lt;tr ${vs.index%2==0?"style='background-color:lime'":"style='background-color:green'"}&gt;
-                &lt;td&gt;${item}&lt;/td&gt;
-                &lt;td&gt;${vs.index}&lt;/td&gt;&lt;%--索引--%&gt;
-                &lt;td&gt;${vs.count}&lt;/td&gt;&lt;%--计数--%&gt;
-                &lt;td&gt;${vs.first}&lt;/td&gt;&lt;%--第一个--%&gt;
-                &lt;td&gt;${vs.last}&lt;/td&gt;&lt;%--最后一个--%&gt;
-            &lt;/tr&gt;
-        &lt;/c:forEach&gt;
-    &lt;/table&gt;
-&lt;/body&gt;
+    <span class="nt">&lt;/c:forEach&gt;</span>
+    <span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;tr&gt;</span>
+            <span class="nt">&lt;th&gt;</span>数据<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th&gt;</span>索引<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th&gt;</span>计数<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th&gt;</span>第一个<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th&gt;</span>最后一个<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${list}"</span> <span class="na">var=</span><span class="s">"item"</span> <span class="na">varStatus=</span><span class="s">"vs"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;tr</span> <span class="err">${</span><span class="na">vs</span><span class="err">.</span><span class="na">index</span><span class="err">%</span><span class="na">2=</span><span class="s">=0?"style='background-color:lime'":"style='background-color:green'"}</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;td&gt;</span>${item}<span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;td&gt;</span>${vs.index}<span class="nt">&lt;/td&gt;</span><span class="err">&lt;</span>%--索引--%&gt;
+                <span class="nt">&lt;td&gt;</span>${vs.count}<span class="nt">&lt;/td&gt;</span><span class="err">&lt;</span>%--计数--%&gt;
+                <span class="nt">&lt;td&gt;</span>${vs.first}<span class="nt">&lt;/td&gt;</span><span class="err">&lt;</span>%--第一个--%&gt;
+                <span class="nt">&lt;td&gt;</span>${vs.last}<span class="nt">&lt;/td&gt;</span><span class="err">&lt;</span>%--最后一个--%&gt;
+            <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;/c:forEach&gt;</span>
+    <span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
 </code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
@@ -702,9 +936,10 @@ ${ empty list1? &quot;你还没有购买商品&quot; : &quot;你买的商品如�
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

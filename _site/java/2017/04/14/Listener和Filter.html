@@ -116,7 +116,7 @@
 		</div>
 		
 		<h2 id="javaweb常见监听">javaweb常见监听</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">监听域对象创建销毁
+<div class="highlight"><pre><code class="language-html" data-lang="html">监听域对象创建销毁
     |
     |--监听ServletContext创建和销毁
     |           |
@@ -160,7 +160,7 @@
 
 </code></pre></div>
 <h2 id="创建监听器步骤">创建监听器步骤</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">创建监听器步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">创建监听器步骤
     |
     |--创建一个类，实现指定的监听器接口
     |
@@ -168,106 +168,106 @@
     |
     |--在web.xml文件中对监听器注册
     |        |
-    |        |-- &lt;listener&gt;
-    |               &lt;listener-class&gt;&lt;/listener-class&gt;
-    |             &lt;/listener&gt;
+    |        |-- <span class="nt">&lt;listener&gt;</span>
+    |               <span class="nt">&lt;listener-class&gt;&lt;/listener-class&gt;</span>
+    |             <span class="nt">&lt;/listener&gt;</span>
     |
 </code></pre></div>
 <h5 id="servletrequestlistener">ServletRequestListener</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">public class MyServletRequestListener implements ServletRequestListener {
-    @Override
-    public void requestDestroyed(ServletRequestEvent sre) {
-        System.out.println("servletRequest销毁了");
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyServletRequestListener</span> <span class="kd">implements</span> <span class="n">ServletRequestListener</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestDestroyed</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"servletRequest销毁了"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void requestInitialized(ServletRequestEvent sre) {
-        System.out.println("servletRequest创建了");
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestInitialized</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"servletRequest创建了"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="servletrequestattributelistener">ServletRequestAttributeListener</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class MyRequestAttributeListener implements ServletRequestAttributeListener{
-    @Override
-    public void attributeAdded(ServletRequestAttributeEvent srae) {
-        System.out.println("servletRequest添加属性 name:"+srae.getName()+" value:"+srae.getValue());
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyRequestAttributeListener</span> <span class="kd">implements</span> <span class="n">ServletRequestAttributeListener</span><span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeAdded</span><span class="o">(</span><span class="n">ServletRequestAttributeEvent</span> <span class="n">srae</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"servletRequest添加属性 name:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">" value:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
 
-    @Override
-    public void attributeRemoved(ServletRequestAttributeEvent srae) {
-        System.out.println("servletRequest移出属性 name:"+srae.getName()+" value:"+srae.getValue());
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeRemoved</span><span class="o">(</span><span class="n">ServletRequestAttributeEvent</span> <span class="n">srae</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"servletRequest移出属性 name:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">" value:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
 
-    @Override
-    public void attributeReplaced(ServletRequestAttributeEvent srae) {
-        System.out.println("servletRequest替换属性 name:"+srae.getName()+" value:"+srae.getValue());
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attributeReplaced</span><span class="o">(</span><span class="n">ServletRequestAttributeEvent</span> <span class="n">srae</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"servletRequest替换属性 name:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">" value:"</span><span class="o">+</span><span class="n">srae</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="httpsessionbindinglistener">HttpSessionBindingListener</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class User implements HttpSessionBindingListener,Serializable{
-    private String name;
-    private int age;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">HttpSessionBindingListener</span><span class="o">,</span><span class="n">Serializable</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
 
-    @Override
-    public void valueBound(HttpSessionBindingEvent event) {
-        System.out.println("session绑定user对象");
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">valueBound</span><span class="o">(</span><span class="n">HttpSessionBindingEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"session绑定user对象"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void valueUnbound(HttpSessionBindingEvent event) {
-        System.out.println("session解除user绑定");
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">valueUnbound</span><span class="o">(</span><span class="n">HttpSessionBindingEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"session解除user绑定"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="定时移出session">定时移出session</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//myServletContextListener
-public class MyServletContextListener implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        ServletContext application=sce.getServletContext();
-        final ArrayList&lt;HttpSession&gt; list = new ArrayList&lt;&gt;();
-        application.setAttribute("sessions",list);
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("开始扫描了");
-                for(int i=0;i&lt;list.size();i++){
-                    HttpSession session = list.get(i);
-                    long l = System.currentTimeMillis() - session.getLastAccessedTime();
-                    if(l&gt;5000){//如果时间大于5秒 把session销毁
-                        list.remove(session);
-                        System.out.println("session 移出了 id:"+session.getId());
-                        i--;
-                        try {
-                            session.invalidate();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        },2000,5000);
-    }
-}
-//MySessionListener
-public class MySessionListener implements HttpSessionListener {
-    @Override
-    public void sessionCreated(HttpSessionEvent se) {
-        HttpSession session = se.getSession();
-        ServletContext application = session.getServletContext();
-        ArrayList&lt;HttpSession&gt; list = (ArrayList&lt;HttpSession&gt;) application.getAttribute("sessions");
-        list.add(session);
-        System.out.println("添加了session id:"+session.getId());
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//myServletContextListener</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyServletContextListener</span> <span class="kd">implements</span> <span class="n">ServletContextListener</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">contextInitialized</span><span class="o">(</span><span class="n">ServletContextEvent</span> <span class="n">sce</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ServletContext</span> <span class="n">application</span><span class="o">=</span><span class="n">sce</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+        <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HttpSession</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">application</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"sessions"</span><span class="o">,</span><span class="n">list</span><span class="o">);</span>
+        <span class="n">Timer</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timer</span><span class="o">();</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">new</span> <span class="n">TimerTask</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"开始扫描了"</span><span class="o">);</span>
+                <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+                    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                    <span class="kt">long</span> <span class="n">l</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">session</span><span class="o">.</span><span class="na">getLastAccessedTime</span><span class="o">();</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">l</span><span class="o">&gt;</span><span class="mi">5000</span><span class="o">){</span><span class="c1">//如果时间大于5秒 把session销毁</span>
+                        <span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"session 移出了 id:"</span><span class="o">+</span><span class="n">session</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+                        <span class="n">i</span><span class="o">--;</span>
+                        <span class="k">try</span> <span class="o">{</span>
+                            <span class="n">session</span><span class="o">.</span><span class="na">invalidate</span><span class="o">();</span>
+                        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">},</span><span class="mi">2000</span><span class="o">,</span><span class="mi">5000</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//MySessionListener</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySessionListener</span> <span class="kd">implements</span> <span class="n">HttpSessionListener</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sessionCreated</span><span class="o">(</span><span class="n">HttpSessionEvent</span> <span class="n">se</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">se</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+        <span class="n">ServletContext</span> <span class="n">application</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HttpSession</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">HttpSession</span><span class="o">&gt;)</span> <span class="n">application</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"sessions"</span><span class="o">);</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"添加了session id:"</span><span class="o">+</span><span class="n">session</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="filter">Filter</h2>
 
 <blockquote>
 <p>javaweb中的过滤器可以拦截所有访问web资源的请求或响应操作</p>
-<div class="highlight"><pre><code class="language-" data-lang="">Filter使用步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">Filter使用步骤
      |
      |--创建一个类实现Filter接口
      |
@@ -277,14 +277,14 @@ public class MySessionListener implements HttpSessionListener {
      |
      |--在web.xml文件中配置
      |       |
-     |       |--&lt;filter&gt;
-     |       |      &lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
-     |       |      &lt;filter-class&gt;com.itheima.filter.MyFilter&lt;/filter-class&gt;
-     |       |  &lt;/filter&gt;
-     |       |   &lt;filter-mapping&gt;
-     |       |      &lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
-     |       |      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-     |       |  &lt;/filter-mapping&gt;
+     |       |--<span class="nt">&lt;filter&gt;</span>
+     |       |      <span class="nt">&lt;filter-name&gt;</span>MyFilter<span class="nt">&lt;/filter-name&gt;</span>
+     |       |      <span class="nt">&lt;filter-class&gt;</span>com.itheima.filter.MyFilter<span class="nt">&lt;/filter-class&gt;</span>
+     |       |  <span class="nt">&lt;/filter&gt;</span>
+     |       |   <span class="nt">&lt;filter-mapping&gt;</span>
+     |       |      <span class="nt">&lt;filter-name&gt;</span>MyFilter<span class="nt">&lt;/filter-name&gt;</span>
+     |       |      <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+     |       |  <span class="nt">&lt;/filter-mapping&gt;</span>
      |
      |--Filter生命周期
      |      |
@@ -294,17 +294,17 @@ public class MySessionListener implements HttpSessionListener {
      |
      |--Filter配置
             |
-            |--&lt;url-pattern&gt;
+            |--<span class="nt">&lt;url-pattern&gt;</span>
             |       |
             |       |--完全匹配 以‘/’开始不包含通配符*
             |       |--目录匹配 以‘/’开始 *结尾
             |       |--扩展名匹配 以‘.xxx’
             |
-            |--&lt;servlet-name&gt;
+            |--<span class="nt">&lt;servlet-name&gt;</span>
             |       |
             |       |--对指定servlet名称的servlet拦截
             |
-            |--&lt;dispatcher&gt;
+            |--<span class="nt">&lt;dispatcher&gt;</span>
                     |
                     |--REQUEST 拦截直接访问
                     |--FORWARD 拦截转发
@@ -312,24 +312,24 @@ public class MySessionListener implements HttpSessionListener {
                     |--INCLUDE 拦截包含请求
 </code></pre></div>
 <h6 id="filter">Filter</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//MyFilter
-public class MyFilter implements Filter {
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("doFilter过滤开始");
-        filterChain.doFilter(servletRequest,servletResponse);
-        System.out.println("doFilter过滤结束");
-    }
-}
-//web.xml
-&lt;filter&gt;
-    &lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;com.itheima.filter.MyFilter&lt;/filter-class&gt;
-&lt;/filter&gt;
-&lt;filter-mapping&gt;
-    &lt;filter-name&gt;MyFilter&lt;/filter-name&gt;
-    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-&lt;/filter-mapping&gt;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//MyFilter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyFilter</span> <span class="kd">implements</span> <span class="n">Filter</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">servletRequest</span><span class="o">,</span> <span class="n">ServletResponse</span> <span class="n">servletResponse</span><span class="o">,</span> <span class="n">FilterChain</span> <span class="n">filterChain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"doFilter过滤开始"</span><span class="o">);</span>
+        <span class="n">filterChain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">servletRequest</span><span class="o">,</span><span class="n">servletResponse</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"doFilter过滤结束"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//web.xml</span>
+<span class="o">&lt;</span><span class="n">filter</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">filter</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">MyFilter</span><span class="o">&lt;/</span><span class="n">filter</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">filter</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">filter</span><span class="o">.</span><span class="na">MyFilter</span><span class="o">&lt;/</span><span class="n">filter</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
+<span class="err">&lt;/</span><span class="nc">filter</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">filter</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">filter</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">MyFilter</span><span class="o">&lt;/</span><span class="n">filter</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;/*&lt;/</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">filter</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
 </code></pre></div>
 <h2 id="filterchain">FilterChain</h2>
 
@@ -345,7 +345,7 @@ public class MyFilter implements Filter {
 <li>获取Filter初始化参数</li>
 <li>获取ServletContext对象
 ###### FilterConfig
-```
+```java
 public class MyFilterConfigTest implements Filter {
 private FilterConfig filterConfig;</li>
 </ul>
@@ -365,80 +365,84 @@ public void doFilter(ServletRequest servletRequest, ServletResponse servletRespo
 </code></pre></div>
 <p>}</p>
 <div class="highlight"><pre><code class="language-" data-lang="">###### Filter配置
-</code></pre></div>
-<p><filter><br>
-    <filter-name>MyFilter3</filter-name><br>
-    <filter-class>com.itheima.filter.MyFilter3</filter-class><br>
-</filter><br>
-<filter-mapping><br>
-    <filter-name>MyFilter3</filter-name><br>
-    <url-pattern>/servlet/demo2</url-pattern>&lt;!--完全匹配--&gt;<br>
-    <url-pattern><em>.do</url-pattern>&lt;!--扩展名匹配--&gt;<br>
-    <url-pattern>/</em></url-pattern>&lt;!--目录匹配--&gt;<br>
-    <servlet-name>FirstServlet</servlet-name>&lt;!--servlet名称拦截--&gt;<br>
-    <dispatcher>FORWARD</dispatcher>&lt;!--转发拦截--&gt;<br>
-    <dispatcher>REQUEST</dispatcher>&lt;!--请求拦截--&gt;<br>
-    <dispatcher>INCLUDE</dispatcher>&lt;!--包含拦截--&gt;<br>
-    <dispatcher>ERROR</dispatcher>&lt;!--异常拦截 拦截error-page--&gt;<br>
-</filter-mapping></p>
+```xml
+&lt;filter&gt;
+    &lt;filter-name&gt;MyFilter3&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.itheima.filter.MyFilter3&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;MyFilter3&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/servlet/demo2&lt;/url-pattern&gt;&lt;!--完全匹配--&gt;
+    &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;&lt;!--扩展名匹配--&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;&lt;!--目录匹配--&gt;
+    &lt;servlet-name&gt;FirstServlet&lt;/servlet-name&gt;&lt;!--servlet名称拦截--&gt;
+    &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;&lt;!--转发拦截--&gt;
+    &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;&lt;!--请求拦截--&gt;
+    &lt;dispatcher&gt;INCLUDE&lt;/dispatcher&gt;&lt;!--包含拦截--&gt;
+    &lt;dispatcher&gt;ERROR&lt;/dispatcher&gt;&lt;!--异常拦截 拦截error-page--&gt;
+&lt;/filter-mapping&gt;
 
-<p><error-page><br>
-    &lt;!--第一种方式--&gt;<br>
-    <exception-type>java.lang.Exception</exception-type><br>
-    &lt;!--第二种方式--&gt;<br>
-    <error-code>404</error-code><br>
-    <location>/error.jsp</location><br>
-</error-page></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## MD5加密
-&gt; mysql md5加密 update 表名 set 字段名 = md5(字段名);
-###### java md5加密
+&lt;error-page&gt;
+    &lt;!--第一种方式--&gt;
+    &lt;exception-type&gt;java.lang.Exception&lt;/exception-type&gt;
+    &lt;!--第二种方式--&gt;
+    &lt;error-code&gt;404&lt;/error-code&gt;
+    &lt;location&gt;/error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
 </code></pre></div>
-<p>public static String md5(String plainText){<br>
-    byte[]secretBytes=null;<br>
-    try {<br>
-        secretBytes=MessageDigest.getInstance(&quot;md5&quot;).digest(plainText.getBytes());<br>
-    } catch (NoSuchAlgorithmException e) {<br>
-        e.printStackTrace();<br>
-    }<br>
-    String md5code=new BigInteger(1,secretBytes).toString(16);<br>
-    for(int i=0;i&lt;32-md5code.length();i++){<br>
-        md5code+=&quot;0&quot;+md5code;<br>
-    }<br>
-    return md5code;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 自动登录
+<h2 id="md5加密">MD5加密</h2>
+
+<blockquote>
+<p>mysql md5加密 update 表名 set 字段名 = md5(字段名);</p>
+
+<h6 id="java-md5加密">java md5加密</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">md5</span><span class="o">(</span><span class="n">String</span> <span class="n">plainText</span><span class="o">){</span>
+    <span class="kt">byte</span><span class="o">[]</span><span class="n">secretBytes</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">secretBytes</span><span class="o">=</span><span class="n">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"md5"</span><span class="o">).</span><span class="na">digest</span><span class="o">(</span><span class="n">plainText</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="n">md5code</span><span class="o">=</span><span class="k">new</span> <span class="n">BigInteger</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">secretBytes</span><span class="o">).</span><span class="na">toString</span><span class="o">(</span><span class="mi">16</span><span class="o">);</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">-</span><span class="n">md5code</span><span class="o">.</span><span class="na">length</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+        <span class="n">md5code</span><span class="o">+=</span><span class="s">"0"</span><span class="o">+</span><span class="n">md5code</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">md5code</span><span class="o">;</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>//LoginServlet<br>
-public class LoginServlet extends HttpServlet {<br>
-    @Override<br>
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        doGet(req,resp);<br>
-    }<br>
-    @Override<br>
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        String username = req.getParameter(&quot;username&quot;);<br>
-        String password = req.getParameter(&quot;password&quot;);<br>
-        password= MD5Util.md5(password);<br>
-        UserService service=new UserService();<br>
-        User u=service.findUser(username,password);<br>
-        if(u!=null){<br>
-            String autologin=req.getParameter(&quot;autologin&quot;);<br>
-            Cookie cookie=new Cookie(&quot;user&quot;,username+&quot;&amp;&quot;+password);<br>
-            cookie.setPath(&quot;/&quot;);<br>
-            if(autologin!=null){//自动登录<br>
-                cookie.setMaxAge(60*60*24*7);<br>
-            }else{//清除cookie登录数据<br>
-                cookie.setMaxAge(0);<br>
-            }<br>
-            resp.addCookie(cookie);<br>
-            req.getSession().setAttribute(&quot;user&quot;,u);<br>
-            req.getRequestDispatcher(&quot;/home.jsp&quot;).forward(req,resp);<br>
-        }else{<br>
-            req.setAttribute(&quot;msg&quot;,&quot;用户名或者密码错误&quot;);<br>
-            req.getRequestDispatcher(&quot;/login.jsp&quot;).forward(req,resp);<br>
-        }<br>
-    }<br>
-}</p>
+<h6 id="自动登录">自动登录</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//LoginServlet</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"username"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>
+        <span class="n">password</span><span class="o">=</span> <span class="n">MD5Util</span><span class="o">.</span><span class="na">md5</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+        <span class="n">UserService</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">UserService</span><span class="o">();</span>
+        <span class="n">User</span> <span class="n">u</span><span class="o">=</span><span class="n">service</span><span class="o">.</span><span class="na">findUser</span><span class="o">(</span><span class="n">username</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">u</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">String</span> <span class="n">autologin</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"autologin"</span><span class="o">);</span>
+            <span class="n">Cookie</span> <span class="n">cookie</span><span class="o">=</span><span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span><span class="n">username</span><span class="o">+</span><span class="s">"&amp;"</span><span class="o">+</span><span class="n">password</span><span class="o">);</span>
+            <span class="n">cookie</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="s">"/"</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">autologin</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span><span class="c1">//自动登录</span>
+                <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">7</span><span class="o">);</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span><span class="c1">//清除cookie登录数据</span>
+                <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">cookie</span><span class="o">);</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span><span class="n">u</span><span class="o">);</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/home.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"msg"</span><span class="o">,</span><span class="s">"用户名或者密码错误"</span><span class="o">);</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/login.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></blockquote>
 
 <p>//AutoLoginFilter<br>
 public class AutoLoginFilter implements Filter {<br>
@@ -474,68 +478,68 @@ public class AutoLoginFilter implements Filter {<br>
 }</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ###### 全局编码过滤
-</code></pre></div>
-<p>public class GlobarFilter implements Filter {<br>
-    @Override<br>
-    public void init(FilterConfig filterConfig) throws ServletException {</p>
-<div class="highlight"><pre><code class="language-" data-lang="">}
+```java
+public class GlobarFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
 
-@Override
-public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-    HttpServletRequest req= (HttpServletRequest) servletRequest;
-    HttpServletResponse resp= (HttpServletResponse) servletResponse;
-    req.setCharacterEncoding("utf-8");
-    filterChain.doFilter(new MyRequest(req),resp);
-}
-
-@Override
-public void destroy() {
-
-}
-class MyRequest extends HttpServletRequestWrapper{
-    HttpServletRequest request;
-    public MyRequest(HttpServletRequest request) {
-        super(request);
-        this.request=request;
     }
 
     @Override
-    public String getParameter(String name) {
-        Map&lt;String, String[]&gt; map = getParameterMap();
-        String[] values = map.get(name);
-        return values[0];
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest req= (HttpServletRequest) servletRequest;
+        HttpServletResponse resp= (HttpServletResponse) servletResponse;
+        req.setCharacterEncoding("utf-8");
+        filterChain.doFilter(new MyRequest(req),resp);
     }
 
     @Override
-    public String[] getParameterValues(String name) {
-        Map&lt;String, String[]&gt; map = getParameterMap();
-        String[] values = map.get(name);
-        return values;
-    }
+    public void destroy() {
 
-    @Override
-    public Map&lt;String, String[]&gt; getParameterMap() {
-        Map&lt;String, String[]&gt; map = request.getParameterMap();
-        if(flag) {
-            for (Map.Entry&lt;String, String[]&gt; m : map.entrySet()) {
-                String[] values = m.getValue();
-                for (int i = 0; values != null &amp;&amp; i &lt; values.length; i++) {
-                    try {
-                        values[i] = new String(values[i].getBytes("iso-8859-1"), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+    }
+    class MyRequest extends HttpServletRequestWrapper{
+        HttpServletRequest request;
+        public MyRequest(HttpServletRequest request) {
+            super(request);
+            this.request=request;
+        }
+
+        @Override
+        public String getParameter(String name) {
+            Map&lt;String, String[]&gt; map = getParameterMap();
+            String[] values = map.get(name);
+            return values[0];
+        }
+
+        @Override
+        public String[] getParameterValues(String name) {
+            Map&lt;String, String[]&gt; map = getParameterMap();
+            String[] values = map.get(name);
+            return values;
+        }
+
+        @Override
+        public Map&lt;String, String[]&gt; getParameterMap() {
+            Map&lt;String, String[]&gt; map = request.getParameterMap();
+            if(flag) {
+                for (Map.Entry&lt;String, String[]&gt; m : map.entrySet()) {
+                    String[] values = m.getValue();
+                    for (int i = 0; values != null &amp;&amp; i &lt; values.length; i++) {
+                        try {
+                            values[i] = new String(values[i].getBytes("iso-8859-1"), "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+                flag=false;
             }
-            flag=false;
+            return map;
         }
-        return map;
+        private  boolean flag=true;
     }
-    private  boolean flag=true;
 }
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -688,9 +692,10 @@ class MyRequest extends HttpServletRequestWrapper{
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

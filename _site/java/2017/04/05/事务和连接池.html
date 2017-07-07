@@ -126,7 +126,7 @@ mysql默认自动提交事务。每条语句都处在单独的事务中<br>
 <li>开启事务: start transaction | begin</li>
 <li>提交事务: commit</li>
 <li>回滚事务: rollback
-<code>
+<code>java
 try(Connection conn= DBUtils.getConnetion();    
 PreparedStatement ps1=conn.prepareStatement(&quot;update account set money =money-100 where name =&#39;aaa&#39;&quot;);
 PreparedStatement ps2=conn.prepareStatement(&quot;update account set money = money +100 where name =&#39;bbb&#39;&quot;);
@@ -200,100 +200,100 @@ mysql中:<br>
  |--对于需要改写的方法，写自己的代码        
 </code></pre></div>
 <h6 id="装饰模式">装饰模式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//MyDataSource
-public class MyDataSource implements DataSource {
-    private static ConcurrentLinkedDeque&lt;Connection&gt; pool= new ConcurrentLinkedDeque&lt;Connection&gt;();
-    static {
-        try {
-            for(int i=0;i&lt;10;i++){
-                Connection conn= DBUtils.getConnetion();
-                pool.addFirst(conn);
-            }
-        } catch (SQLException e) {
-            throw new ExceptionInInitializerError("初始化数据库连接失败，请检查配置文件");
-        }
-    }
-    @Override
-    public Connection getConnection() throws SQLException {
-        Connection conn=null;
-        if(pool.size()&gt;0){
-            conn= pool.removeFirst();
-            conn = new MyConnection(conn,pool);
-        }else {
-            //1.等待2.等待超时新建
-            throw new RuntimeException("服务器忙..");
-        }
-        return conn;
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//MyDataSource</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyDataSource</span> <span class="kd">implements</span> <span class="n">DataSource</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">=</span> <span class="k">new</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;();</span>
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+                <span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span> <span class="n">DBUtils</span><span class="o">.</span><span class="na">getConnetion</span><span class="o">();</span>
+                <span class="n">pool</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ExceptionInInitializerError</span><span class="o">(</span><span class="s">"初始化数据库连接失败，请检查配置文件"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">pool</span><span class="o">.</span><span class="na">size</span><span class="o">()&gt;</span><span class="mi">0</span><span class="o">){</span>
+            <span class="n">conn</span><span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyConnection</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span><span class="n">pool</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">//1.等待2.等待超时新建</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"服务器忙.."</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-//myConnection
-public class MyConnection implements Connection {
-    private Connection conn;
-    private ConcurrentLinkedDeque&lt;Connection&gt; pool;
+<span class="c1">//myConnection</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyConnection</span> <span class="kd">implements</span> <span class="n">Connection</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">;</span>
 
-    public MyConnection(Connection conn, ConcurrentLinkedDeque&lt;Connection&gt; pool) {
-        this.conn = conn;
-        this.pool = pool;
-    }
+    <span class="kd">public</span> <span class="nf">MyConnection</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">,</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">conn</span> <span class="o">=</span> <span class="n">conn</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pool</span> <span class="o">=</span> <span class="n">pool</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    @Override
-    public void close() throws SQLException {
-        System.out.println("放回连接池");
-        pool.addLast(conn);
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"放回连接池"</span><span class="o">);</span>
+        <span class="n">pool</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public Statement createStatement() throws SQLException {
-        return conn.createStatement();
-    }
-//...代理所有方法
-}
-//test
-@org.junit.Test
-public void test(){
-    MyDataSource ds = new MyDataSource();
-    try(Connection conn=ds.getConnection();
-        PreparedStatement ps=conn.prepareStatement("select * from account");
-    ){
-        ps.executeQuery();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Statement</span> <span class="nf">createStatement</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="c1">//...代理所有方法</span>
+<span class="o">}</span>
+<span class="c1">//test</span>
+<span class="nd">@org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">(){</span>
+    <span class="n">MyDataSource</span> <span class="n">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyDataSource</span><span class="o">();</span>
+    <span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+        <span class="n">PreparedStatement</span> <span class="n">ps</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="s">"select * from account"</span><span class="o">);</span>
+    <span class="o">){</span>
+        <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="适配器模式">适配器模式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//MyConnection
-public class MyConnection extends MyConnectionWarper {
-    private Connection conn;
-    private ConcurrentLinkedDeque&lt;Connection&gt;pool;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//MyConnection</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyConnection</span> <span class="kd">extends</span> <span class="n">MyConnectionWarper</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span><span class="n">pool</span><span class="o">;</span>
 
-    public MyConnection(Connection conn, Connection conn1, ConcurrentLinkedDeque&lt;Connection&gt; pool) {
-        super(conn);
-        this.conn = conn1;
-        this.pool = pool;
-    }
+    <span class="kd">public</span> <span class="nf">MyConnection</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">,</span> <span class="n">Connection</span> <span class="n">conn1</span><span class="o">,</span> <span class="n">ConcurrentLinkedDeque</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">conn</span> <span class="o">=</span> <span class="n">conn1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pool</span> <span class="o">=</span> <span class="n">pool</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    @Override
-    public void close() throws SQLException {
-        pool.addLast(conn);
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">pool</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-//MyConnectionWarper
-public class MyConnectionWarper implements Connection {
-    private Connection conn;
+<span class="c1">//MyConnectionWarper</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyConnectionWarper</span> <span class="kd">implements</span> <span class="n">Connection</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span><span class="o">;</span>
 
-    public MyConnectionWarper(Connection conn) {
-        this.conn = conn;
-    }
+    <span class="kd">public</span> <span class="nf">MyConnectionWarper</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">conn</span> <span class="o">=</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    @Override
-    public Statement createStatement() throws SQLException {
-        return conn.createStatement();
-    }
-//...代理所有方法
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Statement</span> <span class="nf">createStatement</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="c1">//...代理所有方法</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="常用数据源配置">常用数据源配置</h2>
 
@@ -301,7 +301,7 @@ public class MyConnectionWarper implements Connection {
 
 <blockquote>
 <p>Apache推出的Database Connection Pool</p>
-<div class="highlight"><pre><code class="language-" data-lang="">使用步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">使用步骤
    |
    |--添加jar包
    |     |
@@ -337,52 +337,52 @@ public class MyConnectionWarper implements Connection {
                 |--rs.close()
                 |--stmt.close()
                 |--conn.close()
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">public class DBCPUtil {
-    private static DataSource ds=null;
-    static {
-        Properties prop=new Properties();
-        try {
-            prop.load(DBCPUtil.class.getClassLoader().getResourceAsStream("dbcpconfig.properties"));
-            ds= BasicDataSourceFactory.createDataSource(prop);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError("数据库连接池初始化失败,请检查配置文件");
-        }
-    }
-    public static Connection getConnection(){
-        try {
-            return ds.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("获得数据连接失败");
-        }
-    }
-    public static void release(ResultSet rs,Statement stmt,Connection conn){
-        try {
-            if(rs!=null)
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                if(stmt!=null)
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                    if(conn!=null)
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-}
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DBCPUtil</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">DataSource</span> <span class="n">ds</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="n">Properties</span> <span class="n">prop</span><span class="o">=</span><span class="k">new</span> <span class="n">Properties</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">prop</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">DBCPUtil</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">"dbcpconfig.properties"</span><span class="o">));</span>
+            <span class="n">ds</span><span class="o">=</span> <span class="n">BasicDataSourceFactory</span><span class="o">.</span><span class="na">createDataSource</span><span class="o">(</span><span class="n">prop</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ExceptionInInitializerError</span><span class="o">(</span><span class="s">"数据库连接池初始化失败,请检查配置文件"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"获得数据连接失败"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">release</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">,</span><span class="n">Statement</span> <span class="n">stmt</span><span class="o">,</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+            <span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">stmt</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+                <span class="n">stmt</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h4 id="c3p0">C3P0</h4>
-<div class="highlight"><pre><code class="language-" data-lang="">使用步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">使用步骤
    |
    |--添加jar包
    |     |
@@ -435,7 +435,7 @@ public class MyConnectionWarper implements Connection {
 <h4 id="tomcat-dbcp">Tomcat:(DBCP)</h4>
 
 <p>数据源只需配置服务器即可</p>
-<div class="highlight"><pre><code class="language-" data-lang="">配置数据源步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">配置数据源步骤
     |
     |--拷贝数据库连接的jar到tomcatlib目录下
     |       |
@@ -449,10 +449,10 @@ public class MyConnectionWarper implements Connection {
     |       |
     |       |--context.xml
     |       |       |
-    |       |       |--&lt;Resource name="jdbc/day13" auth="Container" type="java.sql.DataSource"
-    |       |       |            maxActive="100" maxIdle="30" maxWait="10000"
-    |       |       |            usernmae="root" password="root" driverClassName="com.mysql.jdbc.Driver"
-    |       |       |            url="jdbc:mysql//localhost:3306/day13"/&gt;       
+    |       |       |--<span class="nt">&lt;Resource</span> <span class="na">name=</span><span class="s">"jdbc/day13"</span> <span class="na">auth=</span><span class="s">"Container"</span> <span class="na">type=</span><span class="s">"java.sql.DataSource"</span>
+    <span class="err">|</span>       <span class="err">|</span>       <span class="err">|</span>            <span class="na">maxActive=</span><span class="s">"100"</span> <span class="na">maxIdle=</span><span class="s">"30"</span> <span class="na">maxWait=</span><span class="s">"10000"</span>
+    <span class="err">|</span>       <span class="err">|</span>       <span class="err">|</span>            <span class="na">usernmae=</span><span class="s">"root"</span> <span class="na">password=</span><span class="s">"root"</span> <span class="na">driverClassName=</span><span class="s">"com.mysql.jdbc.Driver"</span>
+    <span class="err">|</span>       <span class="err">|</span>       <span class="err">|</span>            <span class="na">url=</span><span class="s">"jdbc:mysql//localhost:3306/day13"</span><span class="nt">/&gt;</span>       
     |       |
     |       |--把配置信息写在tomcat下的conf目录的context.xml中，所有应用都能使用此数据源
     |       |
@@ -461,7 +461,7 @@ public class MyConnectionWarper implements Connection {
     |
     |
     |--使用连接池
-    |       &lt;%
+    |       <span class="err">&lt;</span>%
     |           Context ctx=new initialContext();
     |           DataSource ds=(DataSource)ctx.lookup("java:/comp/env/jdbc/day13");
     |           out.print(ds)
@@ -621,9 +621,10 @@ public class MyConnectionWarper implements Connection {
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -469,19 +469,8 @@
 <h3 id="变量和常量">变量和常量</h3>
 
 <blockquote>
-<p>变量和说明变量中间添加 constant就是常量<br>
-|变量|说明变量|<br>
-|-----|----------|<br>
-|var1|char(15)|<br>
-|married|boolean:=true|<br>
-|psal|number(7,2)|<br>
-|my_name|emp.ename%type 引用型变量|<br>
-|emp_rec|emp%rowtype 记录型变量 一行可以当做一个数组|</p>
-
-<h5 id="引用型变量">引用型变量</h5>
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">--查询7839的姓名和薪水</span>
-<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span> <span class="c1">--打开输出</span>
-</code></pre></div></blockquote>
+<p>变量和说明变量中间添加 constant就是常量</p>
+</blockquote>
 
         
         
@@ -952,24 +941,24 @@
         <h2 id="课程类别">课程类别</h2>
 
 <h6 id="jsp">jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;s:form namespace="/" action="courseTypeAction_findAll"&gt;
-    &lt;table width="88%" border="0" class="emp_table" style="width:80%;"&gt;
-      &lt;tr&gt;
-        &lt;td width="10%"&gt;课程类别：&lt;/td&gt;
-        &lt;td&gt;&lt;s:textfield name="courseName" size="30"&gt;&lt;/s:textfield&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td &gt;课程简介：&lt;/td&gt;
-        &lt;td &gt;&lt;s:textfield name="remark" size="30" &gt;&lt;/s:textfield&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;  
-        &lt;td &gt;总学时：&lt;/td&gt;
-        &lt;td &gt;
-            &lt;s:textfield name="totalStart" size="12"&gt;&lt;/s:textfield&gt;  
-            至  
-            &lt;s:textfield name="totalEnd" size="12"&gt;&lt;/s:textfield&gt;
-        &lt;/td&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">namespace</span><span class="o">=</span><span class="s2">"/"</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"courseTypeAction_findAll"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"88%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"emp_table"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width:80%;"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"10%"</span><span class="o">&gt;</span><span class="err">课程类别：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courseName"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"30"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span><span class="err">课程简介：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"remark"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"30"</span> <span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>  
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span><span class="err">总学时：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"totalStart"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"12"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt; </span><span class="err"> 
+</span>            <span class="err">至</span>  
+            <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"totalEnd"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"12"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span></code></pre></div>
         
         
         <p class="article-more-link">
@@ -1582,7 +1571,7 @@ Spring是一个分层的JavaSE/EE full-stack(一站式) 轻量级开源框架。
 <li>添加log4j.properties设置
 ## Hibernate中配置一对一
 ###### 外键的方式
-```
+```java
 public class Address {
 private Integer id;
 private String name;
@@ -1853,7 +1842,7 @@ private Company company;
 orm元数据:配置文件</p>
 
 <h6 id="步骤">步骤</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">Hibernate3.6.10使用步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">Hibernate3.6.10使用步骤
     |
     |--添加jar包
     |     |
@@ -1894,11 +1883,11 @@ orm元数据:配置文件</p>
           |--映射添加到核心配置文件
 </code></pre></div>
 <h6 id="示例">示例</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//hibernate.cfg.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE hibernate-configuration PUBLIC
-   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-   "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//hibernate.cfg.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">configuration</span> <span class="nx">PUBLIC</span>
+   <span class="s2">"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span>
+   <span class="s2">"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"</span><span class="o">&gt;</span>
 </code></pre></div></blockquote>
 
         
@@ -1968,24 +1957,25 @@ orm元数据:配置文件</p>
     
     
     
-    <a class="page-number" href="/page2">2</a>
+    <a class="page-number" href="/Blog/page2">2</a>
     
     
     
-    <a class="page-number" href="/page3">3</a>
+    <a class="page-number" href="/Blog/page3">3</a>
     
     
     
-    <a class="page-number" href="/page4">4</a>
+    <a class="page-number" href="/Blog/page4">4</a>
     
     
      
-    <a class="extend next" rel="next" href="/page2">Next<span></span></a>
+    <a class="extend next" rel="next" href="/Blog//page2">Next<span></span></a>
     
   </nav>
   </nav>
 
 </div>
+
       
       
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
@@ -2059,9 +2049,10 @@ orm元数据:配置文件</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

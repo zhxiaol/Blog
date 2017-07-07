@@ -123,7 +123,7 @@
 
 <ul>
 <li>Axja:只刷新布局页面技术
-<code>
+<code>html
 步骤
 |
 |--创建对象 var xmlHttp
@@ -178,7 +178,7 @@
 |
 </code>
 ###### 初体验
-```
+```javascript
 //myJs.js
 function getXMLHttpRequest(){
 var xmlHttp;
@@ -218,17 +218,15 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 }</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ###### 验证用户名
-</code></pre></div>
-<p>//reg.jsp</p>
-
-<script type="text/javascript" src="js/myJs.js"></script>
-
-<script type="text/javascript">
+```javascript
+//reg.jsp
+&lt;script type="text/javascript" src="js/myJs.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
     function ckName() {
         var name=document.getElementsByName("username")[0].value;
         var xhr=getXMLHttpRequest();
         xhr.onreadystatechange=function(){
-            if(xhr.readyState==4&&xhr.status==200){
+            if(xhr.readyState==4&amp;&amp;xhr.status==200){
                 var msg=document.getElementById("msg");
                 if(xhr.responseText=="true"){
                     msg.style.color="red";
@@ -242,78 +240,77 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
         xhr.open("get","${pageContext.request.contextPath}/servlet/ckNameServlet?name="+name);
         xhr.send(null);
     }
-</script>
+&lt;/script&gt;
 
-<p>//ckNameServlet<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    String name = req.getParameter(&quot;name&quot;);<br>
-    if(&quot;tom&quot;.equals(name)){<br>
-        out.print(true);<br>
-    }else {<br>
-        out.print(false);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## Json对象
+//ckNameServlet
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    resp.setContentType("text/html;charset=utf-8");
+    PrintWriter out = resp.getWriter();
+    req.setCharacterEncoding("utf-8");
+    String name = req.getParameter("name");
+    if("tom".equals(name)){
+        out.print(true);
+    }else {
+        out.print(false);
+    }
+}
 </code></pre></div>
-<p>Json对象使用步骤<br>
-    |<br>
-    |--添加jar<br>
-    |    |<br>
-    |    |--commons-beanutils-1.8.3.jar<br>
-    |    |--commons-collections-3.2.1.jar<br>
-    |    |--commons-lang-2.6.jar<br>
-    |    |--commons-logging-1.1.1.jar<br>
-    |    |--ezmorph-1.0.6.jar<br>
-    |    |--json-lib-2.4-jdk15.jar<br>
-    |<br>
-    |--将Object转换成json字符串<br>
-    |       |<br>
-    |       |--String jsonObjct = JSONObject.fromObject(obj).toString();<br>
-    |<br>
-    |--将list转换成json字符串<br>
-    |       |<br>
-    |       |--String s = JSONArray.fromObject(list).toString();<br>
-    |<br>
-    |--字段过滤<br>
-         |<br>
-         |-- JsonConfig js=new JsonConfig();//排除<br>
-             js.setExcludes(new String[]{&quot;pnum&quot;,&quot;description&quot;,&quot;category&quot;,&quot;id&quot;,&quot;author&quot;});<br>
-             String s=JSONArray.fromObject(list,js).toString();</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>public class JsonTest {<br>
-    @Test<br>
-    public void test1(){<br>
-        Book b=new Book();<br>
-        b.setId(&quot;1001&quot;);<br>
-        b.setName(&quot;盗墓笔记&quot;);<br>
-        b.setPrice(&quot;98.00&quot;);<br>
-        String s = JSONObject.fromObject(b).toString();<br>
-        System.out.println(s);<br>
-    }<br>
-    @Test<br>
-    public void test2(){<br>
-        ArrayList<Book> list = new ArrayList&lt;&gt;();<br>
-        list.add(new Book(&quot;1001&quot;,&quot;盗墓笔记&quot;,&quot;98.00&quot;,&quot;南派三叔&quot;));<br>
-        list.add(new Book(&quot;1002&quot;,&quot;鬼吹灯&quot;,&quot;89.00&quot;,&quot;天下霸唱&quot;));<br>
-        list.add(new Book(&quot;1003&quot;,&quot;诛仙&quot;,&quot;67.00&quot;,&quot;&quot;));<br>
-        String s = JSONArray.fromObject(list).toString();<br>
-        System.out.println(s);<br>
-    }<br>
-    @Test<br>
-    public void test3() throws SQLException {<br>
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());<br>
-        List<Book> list = qr.query(&quot;select * from book&quot;, new BeanListHandler<Book>(Book.class));<br>
-        JsonConfig js=new JsonConfig();//排除<br>
-        js.setExcludes(new String[]{&quot;pnum&quot;,&quot;description&quot;,&quot;category&quot;,&quot;id&quot;,&quot;author&quot;});<br>
-        String s=JSONArray.fromObject(list,js).toString();<br>
-        System.out.println(s);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<h2 id="json对象">Json对象</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">Json对象使用步骤
+    |
+    |--添加jar
+    |    |
+    |    |--commons-beanutils-1.8.3.jar
+    |    |--commons-collections-3.2.1.jar
+    |    |--commons-lang-2.6.jar
+    |    |--commons-logging-1.1.1.jar
+    |    |--ezmorph-1.0.6.jar
+    |    |--json-lib-2.4-jdk15.jar
+    |
+    |--将Object转换成json字符串
+    |       |
+    |       |--String jsonObjct = JSONObject.fromObject(obj).toString();
+    |
+    |--将list转换成json字符串
+    |       |
+    |       |--String s = JSONArray.fromObject(list).toString();
+    |
+    |--字段过滤
+         |
+         |-- JsonConfig js=new JsonConfig();//排除
+             js.setExcludes(new String[]{"pnum","description","category","id","author"});
+             String s=JSONArray.fromObject(list,js).toString();
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">JsonTest</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">test1</span><span class="p">(){</span>
+        <span class="nx">Book</span> <span class="nx">b</span><span class="o">=</span><span class="k">new</span> <span class="nx">Book</span><span class="p">();</span>
+        <span class="nx">b</span><span class="p">.</span><span class="nx">setId</span><span class="p">(</span><span class="s2">"1001"</span><span class="p">);</span>
+        <span class="nx">b</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"盗墓笔记"</span><span class="p">);</span>
+        <span class="nx">b</span><span class="p">.</span><span class="nx">setPrice</span><span class="p">(</span><span class="s2">"98.00"</span><span class="p">);</span>
+        <span class="nb">String</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">JSONObject</span><span class="p">.</span><span class="nx">fromObject</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">test2</span><span class="p">(){</span>
+        <span class="nx">ArrayList</span><span class="o">&lt;</span><span class="nx">Book</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="nx">list</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">(</span><span class="s2">"1001"</span><span class="p">,</span><span class="s2">"盗墓笔记"</span><span class="p">,</span><span class="s2">"98.00"</span><span class="p">,</span><span class="s2">"南派三叔"</span><span class="p">));</span>
+        <span class="nx">list</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">(</span><span class="s2">"1002"</span><span class="p">,</span><span class="s2">"鬼吹灯"</span><span class="p">,</span><span class="s2">"89.00"</span><span class="p">,</span><span class="s2">"天下霸唱"</span><span class="p">));</span>
+        <span class="nx">list</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">(</span><span class="s2">"1003"</span><span class="p">,</span><span class="s2">"诛仙"</span><span class="p">,</span><span class="s2">"67.00"</span><span class="p">,</span><span class="s2">""</span><span class="p">));</span>
+        <span class="nb">String</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">JSONArray</span><span class="p">.</span><span class="nx">fromObject</span><span class="p">(</span><span class="nx">list</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">test3</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">SQLException</span> <span class="p">{</span>
+        <span class="nx">QueryRunner</span> <span class="nx">qr</span><span class="o">=</span><span class="k">new</span> <span class="nx">QueryRunner</span><span class="p">(</span><span class="nx">C3P0Util</span><span class="p">.</span><span class="nx">getDataSource</span><span class="p">());</span>
+        <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Book</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">qr</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s2">"select * from book"</span><span class="p">,</span> <span class="k">new</span> <span class="nx">BeanListHandler</span><span class="o">&lt;</span><span class="nx">Book</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">Book</span><span class="p">.</span><span class="kr">class</span><span class="p">));</span>
+        <span class="nx">JsonConfig</span> <span class="nx">js</span><span class="o">=</span><span class="k">new</span> <span class="nx">JsonConfig</span><span class="p">();</span><span class="c1">//排除</span>
+        <span class="nx">js</span><span class="p">.</span><span class="nx">setExcludes</span><span class="p">(</span><span class="k">new</span> <span class="nb">String</span><span class="p">[]{</span><span class="s2">"pnum"</span><span class="p">,</span><span class="s2">"description"</span><span class="p">,</span><span class="s2">"category"</span><span class="p">,</span><span class="s2">"id"</span><span class="p">,</span><span class="s2">"author"</span><span class="p">});</span>
+        <span class="nb">String</span> <span class="nx">s</span><span class="o">=</span><span class="nx">JSONArray</span><span class="p">.</span><span class="nx">fromObject</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span><span class="nx">js</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -466,9 +463,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -122,77 +122,98 @@
 <h3 id="变量和常量">变量和常量</h3>
 
 <blockquote>
-<p>变量和说明变量中间添加 constant就是常量<br>
-|变量|说明变量|<br>
-|-----|----------|<br>
-|var1|char(15)|<br>
-|married|boolean:=true|<br>
-|psal|number(7,2)|<br>
-|my_name|emp.ename%type 引用型变量|<br>
-|emp_rec|emp%rowtype 记录型变量 一行可以当做一个数组|</p>
+<p>变量和说明变量中间添加 constant就是常量</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>变量</th>
+<th>说明变量</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>var1</td>
+<td>char(15)</td>
+</tr>
+<tr>
+<td>married</td>
+<td>boolean:=true</td>
+</tr>
+<tr>
+<td>psal</td>
+<td>number(7,2)</td>
+</tr>
+<tr>
+<td>my_name</td>
+<td>emp.ename%type 引用型变量</td>
+</tr>
+<tr>
+<td>emp_rec</td>
+<td>emp%rowtype 记录型变量 一行可以当做一个数组</td>
+</tr>
+</tbody></table>
 
 <h5 id="引用型变量">引用型变量</h5>
 <div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">--查询7839的姓名和薪水</span>
 <span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span> <span class="c1">--打开输出</span>
-</code></pre></div></blockquote>
 
-<p>declare<br>
-  --定义变量保存姓名和薪水<br>
-  --pename varchar2(20);<br>
-  --psal   number;<br>
-  pename emp.ename%type;<br>
-  psal   emp.sal%type;<br>
-begin<br>
-  --得到姓名和薪水<br>
-  select ename,sal into pename,psal from emp where empno=7839;</p>
+<span class="k">declare</span>
+  <span class="c1">--定义变量保存姓名和薪水</span>
+  <span class="c1">--pename varchar2(20);</span>
+  <span class="c1">--psal   number;</span>
+  <span class="n">pename</span> <span class="n">emp</span><span class="p">.</span><span class="n">ename</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
+  <span class="n">psal</span>   <span class="n">emp</span><span class="p">.</span><span class="n">sal</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="c1">--得到姓名和薪水</span>
+  <span class="k">select</span> <span class="n">ename</span><span class="p">,</span><span class="n">sal</span> <span class="k">into</span> <span class="n">pename</span><span class="p">,</span><span class="n">psal</span> <span class="k">from</span> <span class="n">emp</span> <span class="k">where</span> <span class="n">empno</span><span class="o">=</span><span class="mi">7839</span><span class="p">;</span>
 
-<p>dbms_output.put_line(pename||&#39;的薪水是&#39;||psal);<br>
-end;<br>
-/</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 记录型变量
-```sql
---查询7839的姓名和薪水
-set serveroutput on
+  <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="n">pename</span><span class="o">||</span><span class="s1">'的薪水是'</span><span class="o">||</span><span class="n">psal</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="o">/</span>
+</code></pre></div>
+<h5 id="记录型变量">记录型变量</h5>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">--查询7839的姓名和薪水</span>
+<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span>
 
-declare
-  --定义记录型变量：代表一行
-  emp_rec emp%rowtype;
-begin
-  select * into emp_rec from emp where empno=7839;
-  dbms_output.put_line(emp_rec.ename||'的薪水是'||emp_rec.sal);
-end;
-/
+<span class="k">declare</span>
+  <span class="c1">--定义记录型变量：代表一行</span>
+  <span class="n">emp_rec</span> <span class="n">emp</span><span class="o">%</span><span class="n">rowtype</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="k">select</span> <span class="o">*</span> <span class="k">into</span> <span class="n">emp_rec</span> <span class="k">from</span> <span class="n">emp</span> <span class="k">where</span> <span class="n">empno</span><span class="o">=</span><span class="mi">7839</span><span class="p">;</span>
+  <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="n">emp_rec</span><span class="p">.</span><span class="n">ename</span><span class="o">||</span><span class="s1">'的薪水是'</span><span class="o">||</span><span class="n">emp_rec</span><span class="p">.</span><span class="n">sal</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="o">/</span>
 </code></pre></div>
 <h2 id="if语句">IF语句</h2>
 
 <h6 id="格式">格式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">if 条件 then 语句1; 语句2;end if;
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">if</span> <span class="err">条件</span> <span class="k">then</span> <span class="err">语句</span><span class="mi">1</span><span class="p">;</span> <span class="err">语句</span><span class="mi">2</span><span class="p">;</span><span class="k">end</span> <span class="n">if</span><span class="p">;</span>
 
-if 条件 then  语句序列1:esle 语句序列2; end if;
+<span class="n">if</span> <span class="err">条件</span> <span class="k">then</span>  <span class="err">语句序列</span><span class="mi">1</span><span class="p">:</span><span class="n">esle</span> <span class="err">语句序列</span><span class="mi">2</span><span class="p">;</span> <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
 
-if 条件 then 语句; elsif 语句 then 语句; else 语句; end if;
+<span class="n">if</span> <span class="err">条件</span> <span class="k">then</span> <span class="err">语句</span><span class="p">;</span> <span class="n">elsif</span> <span class="err">语句</span> <span class="k">then</span> <span class="err">语句</span><span class="p">;</span> <span class="k">else</span> <span class="err">语句</span><span class="p">;</span> <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
 
 </code></pre></div>
 <h6 id="if案例">if案例</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">--判断用户从键盘输入的数字
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">--判断用户从键盘输入的数字</span>
 
-set serveroutput on
+<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span>
 
---接收键盘输入
---num: 地址值，在该地址上 保存了输入的值
-accept num prompt '请输入一个数字';
+<span class="c1">--接收键盘输入</span>
+<span class="c1">--num: 地址值，在该地址上 保存了输入的值</span>
+<span class="n">accept</span> <span class="n">num</span> <span class="n">prompt</span> <span class="s1">'请输入一个数字'</span><span class="p">;</span>
 
-declare
-  --定义变量保存输入的数字
-  pnum number := &amp;num;
-begin
-  if pnum = 0 then dbms_output.put_line('您输入的是0');
-    elsif pnum = 1 then dbms_output.put_line('您输入的是1');
-    elsif pnum = 2 then dbms_output.put_line('您输入的是2');
-    else dbms_output.put_line('其他数字');
-  end if;
-end;
-/
+<span class="k">declare</span>
+  <span class="c1">--定义变量保存输入的数字</span>
+  <span class="n">pnum</span> <span class="n">number</span> <span class="p">:</span><span class="o">=</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="n">if</span> <span class="n">pnum</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'您输入的是0'</span><span class="p">);</span>
+    <span class="n">elsif</span> <span class="n">pnum</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'您输入的是1'</span><span class="p">);</span>
+    <span class="n">elsif</span> <span class="n">pnum</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">then</span> <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'您输入的是2'</span><span class="p">);</span>
+    <span class="k">else</span> <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'其他数字'</span><span class="p">);</span>
+  <span class="k">end</span> <span class="n">if</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="o">/</span>
 </code></pre></div>
 <h5 id="循环语句">循环语句</h5>
 
@@ -509,7 +530,7 @@ count87 number := 0;
 <span class="o">/</span>
 </code></pre></div>
 <h6 id="案例二">案例二</h6>
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="cm">/*
+<div class="highlight"><pre><code class="language-plsql" data-lang="plsql">/*
 SQL语句：
 select empno,sal from emp order by sal;
 ---&gt; 光标 ---&gt; 退出：1. 总额 &gt; 5w   2. notfound
@@ -521,44 +542,44 @@ select empno,sal from emp order by sal;
 2. 涨后=涨前 + sal * 0.1
 
 练习： 人数:7   总额:50205.325
-*/</span>
-<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span>
-<span class="k">declare</span>
-  <span class="k">cursor</span> <span class="n">cemp</span> <span class="k">is</span> <span class="k">select</span> <span class="n">empno</span><span class="p">,</span><span class="n">sal</span> <span class="k">from</span> <span class="n">emp</span> <span class="k">order</span> <span class="k">by</span> <span class="n">sal</span><span class="p">;</span>
-  <span class="n">pempno</span> <span class="n">emp</span><span class="p">.</span><span class="n">empno</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
-  <span class="n">psal</span>   <span class="n">emp</span><span class="p">.</span><span class="n">sal</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
-  <span class="c1">--涨工资的人数:</span>
-  <span class="n">countEmp</span> <span class="n">number</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="c1">--涨后的工资总额:</span>
-  <span class="n">salTotal</span> <span class="n">number</span><span class="p">;</span>
-<span class="k">begin</span>
-  <span class="c1">--得到初始的工资总额</span>
-  <span class="k">select</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">into</span> <span class="n">salTotal</span> <span class="k">from</span> <span class="n">emp</span><span class="p">;</span>
+*/
+set serveroutput on
+declare
+  cursor cemp is select empno,sal from emp order by sal;
+  pempno emp.empno%type;
+  psal   emp.sal%type;
+  --涨工资的人数:
+  countEmp number := 0;
+  --涨后的工资总额:
+  salTotal number;
+begin
+  --得到初始的工资总额
+  select sum(sal) into salTotal from emp;
 
-  <span class="k">open</span> <span class="n">cemp</span><span class="p">;</span>
-  <span class="n">loop</span>
-    <span class="c1">--1. 总额 &gt; 5w</span>
-    <span class="n">exit</span> <span class="k">when</span> <span class="n">salTotal</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">;</span>
-    <span class="c1">--取一个员工</span>
-    <span class="k">fetch</span> <span class="n">cemp</span> <span class="k">into</span> <span class="n">pempno</span><span class="p">,</span><span class="n">psal</span><span class="p">;</span>
-    <span class="c1">--2. notfound</span>
-    <span class="n">exit</span> <span class="k">when</span> <span class="n">cemp</span><span class="o">%</span><span class="n">notfound</span><span class="p">;</span>
+  open cemp;
+  loop
+    --1. 总额 &gt; 5w
+    exit when salTotal &gt; 50000;
+    --取一个员工
+    fetch cemp into pempno,psal;
+    --2. notfound
+    exit when cemp%notfound;
 
-    <span class="c1">--涨工资</span>
-    <span class="k">update</span> <span class="n">emp</span> <span class="k">set</span> <span class="n">sal</span><span class="o">=</span><span class="n">sal</span><span class="o">*</span><span class="mi">1</span><span class="p">.</span><span class="mi">1</span> <span class="k">where</span> <span class="n">empno</span><span class="o">=</span><span class="n">pempno</span><span class="p">;</span>
-    <span class="c1">--人数+1</span>
-    <span class="n">countEmp</span> <span class="p">:</span><span class="o">=</span> <span class="n">countEmp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="c1">--2. 涨后=涨前 + sal * 0.1</span>
-    <span class="n">salTotal</span> <span class="p">:</span><span class="o">=</span> <span class="n">salTotal</span> <span class="o">+</span> <span class="n">psal</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+    --涨工资
+    update emp set sal=sal*1.1 where empno=pempno;
+    --人数+1
+    countEmp := countEmp + 1;
+    --2. 涨后=涨前 + sal * 0.1
+    salTotal := salTotal + psal * 0.1;
 
-  <span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
-  <span class="k">close</span> <span class="n">cemp</span><span class="p">;</span>
+  end loop;
+  close cemp;
 
-  <span class="k">commit</span><span class="p">;</span>
-  <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'人数:'</span><span class="o">||</span><span class="n">countEmp</span><span class="o">||</span><span class="s1">'   总额:'</span><span class="o">||</span><span class="n">salTotal</span><span class="p">);</span>
+  commit;
+  dbms_output.put_line('人数:'||countEmp||'   总额:'||salTotal);
 
-<span class="k">end</span><span class="p">;</span>
-<span class="o">/</span>
+end;
+/
 </code></pre></div>
 <h2 id="触发器">触发器</h2>
 
@@ -1138,9 +1159,10 @@ return number
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

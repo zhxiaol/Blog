@@ -116,689 +116,689 @@
 		</div>
 		
 		<h6 id="admin-product-list-jsp">admin/product/list.jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;%@ page language="java" pageEncoding="UTF-8"%&gt;
-&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;
-&lt;HTML&gt;
-&lt;HEAD&gt;
-   &lt;meta http-equiv="Content-Language" content="zh-cn"&gt;
-   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
-   &lt;link href="${pageContext.request.contextPath}/admin/css/Style.css"
-        rel="stylesheet" type="text/css" /&gt;
-   &lt;script language="javascript"
-         src="${pageContext.request.contextPath}/admin/js/public.js"&gt;&lt;/script&gt;
-   &lt;script type="text/javascript"&gt;
-        function addProduct() {
-            window.location.href = "${pageContext.request.contextPath}/admin/products/add.jsp";
-        }
-        function delAllBooks(){
-            &lt;%--var ids=document.getElementsByName("ids");--%&gt;
-            &lt;%--var str="";--%&gt;
-            &lt;%--for(var i=0;i&lt;ids.length;i++){--%&gt;
-                &lt;%--if(ids[i].checked){--%&gt;
-                    &lt;%--str+="ids="+ids[i].value;--%&gt;
-                    &lt;%--if(i!=ids.length)--%&gt;
-                        &lt;%--str+="&amp;";--%&gt;
-                &lt;%--}--%&gt;
-            &lt;%--}--%&gt;
-            &lt;%--if(str!=""){--%&gt;
-                &lt;%--location.href="${pageContext.request.contextPath}/servlet/delAllBooksServlet?"+str;--%&gt;
-            &lt;%--}--%&gt;
-         var form2=document.getElementById("form2");
-         form2.submit();
-        }
-        function delBook(id){
-            if(confirm("是否确定删除")){
-                location.href="${pageContext.request.contextPath}/servlet/delBookServlet?id="+id;
-            }
-        }
-        function checkAll(){
-            var flag=document.getElementById("ckAll").checked;
-            var ids=document.getElementsByName("ids");
-            for(var i=0;i&lt;ids.length;i++){
-                ids[i].checked=flag;
-            }
-        }
-   &lt;/script&gt;
-&lt;/HEAD&gt;
-&lt;body&gt;
-&lt;br&gt;
-&lt;table cellSpacing="1" cellPadding="0" width="100%" align="center"
-      bgColor="#f5fafe" border="0"&gt;
-   &lt;form id="Form1" name="Form1"
-        action="${pageContext.request.contextPath}/servlet/searchBooksServlet"
-        method="post"&gt;
-      &lt;TBODY&gt;
-      &lt;tr&gt;
-         &lt;td class="ta_01" align="center" bgColor="#afd1f3"&gt;&lt;strong&gt;查
-            询 条 件&lt;/strong&gt;
-         &lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-         &lt;td&gt;
-            &lt;table cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
-               &lt;tr&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     商品编号&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;input type="text"
-                                                   name="id" size="15" value="" id="Form1_userName" class="bg" /&gt;
-                  &lt;/td&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     类别：&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;select name="category"
-                                                   id="category"&gt;
-                     &lt;option value="" selected="selected"&gt;--选择商品类加--&lt;/option&gt;
-                     &lt;option value="文学"&gt;文学&lt;/option&gt;
-                     &lt;option value="生活"&gt;生活&lt;/option&gt;
-                     &lt;option value="计算机"&gt;计算机&lt;/option&gt;
-                     &lt;option value="外语"&gt;外语&lt;/option&gt;
-                     &lt;option value="经营"&gt;经营&lt;/option&gt;
-                     &lt;option value="励志"&gt;励志&lt;/option&gt;
-                     &lt;option value="社科"&gt;社科&lt;/option&gt;
-                     &lt;option value="学术"&gt;学术&lt;/option&gt;
-                     &lt;option value="少儿"&gt;少儿&lt;/option&gt;
-                     &lt;option value="艺术"&gt;艺术&lt;/option&gt;
-                     &lt;option value="原版"&gt;原版&lt;/option&gt;
-                     &lt;option value="科技"&gt;科技&lt;/option&gt;
-                     &lt;option value="考试"&gt;考试&lt;/option&gt;
-                     &lt;option value="生活百科"&gt;生活百科&lt;/option&gt;
-                  &lt;/select&gt;&lt;/td&gt;
-               &lt;/tr&gt;
-
-               &lt;tr&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     商品名称：&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;input type="text"
-                                                   name="name" size="15" value="" id="Form1_userName" class="bg" /&gt;
-                  &lt;/td&gt;
-                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
-                     价格区间(元)：&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;input type="text"
-                                                   name="minprice" size="10" value="" /&gt;- &lt;input type="text"
-                                                                                     name="maxprice" size="10" value="" /&gt;&lt;/td&gt;
-               &lt;/tr&gt;
-
-               &lt;tr&gt;
-                  &lt;td width="100" height="22" align="center" bgColor="#f5fafe"
-                     class="ta_01"&gt;&lt;/td&gt;
-                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;font face="宋体"
-                                                  color="red"&gt; &amp;nbsp;&lt;/font&gt;
-                  &lt;/td&gt;
-                  &lt;td align="right" bgColor="#ffffff" class="ta_01"&gt;&lt;br&gt;
-                     &lt;br&gt;&lt;/td&gt;
-                  &lt;td align="right" bgColor="#ffffff" class="ta_01"&gt;
-                     &lt;button type="submit" id="search" name="search"
-                           value="&amp;#26597;&amp;#35810;" class="button_view"&gt;
-                        &amp;#26597;&amp;#35810;&lt;/button&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;input
-                        type="reset" name="reset" value="&amp;#37325;&amp;#32622;"
-                        class="button_view" /&gt;
-                  &lt;/td&gt;
-               &lt;/tr&gt;
-            &lt;/table&gt;
-   &lt;/form&gt;
-   &lt;/td&gt;
-
-   &lt;/tr&gt;
-   &lt;tr&gt;
-      &lt;td class="ta_01" align="center" bgColor="#afd1f3"&gt;&lt;strong&gt;商品列表&lt;/strong&gt;
-      &lt;/TD&gt;
-   &lt;/tr&gt;
-   &lt;form id="form2" action="${pageContext.request.contextPath}/servlet/delAllBooksServlet" method="post"&gt;
-   &lt;tr&gt;
-      &lt;td class="ta_01" align="right"&gt;
-         &lt;button type="button" id="delAll" name="delAll" value="批量删除"
-               class="button_add" onclick="delAllBooks()"&gt;批量删除
-         &lt;/button&gt;
-         &lt;button type="button" id="add" name="add" value="添加"
-               class="button_add" onclick="addProduct()"&gt;添加
-         &lt;/button&gt;
-      &lt;/td&gt;
-   &lt;/tr&gt;
-   &lt;tr&gt;
-      &lt;td class="ta_01" align="center" bgColor="#f5fafe"&gt;
-         &lt;table cellspacing="0" cellpadding="1" rules="all"
-               bordercolor="gray" border="1" id="DataGrid1"
-               style="BORDER-RIGHT: gray 1px solid; BORDER-TOP: gray 1px solid; BORDER-LEFT: gray 1px solid; WIDTH: 100%; WORD-BREAK: break-all; BORDER-BOTTOM: gray 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #f5fafe; WORD-WRAP: break-word"&gt;
-            &lt;tr
-                  style="FONT-WEIGHT: bold; FONT-SIZE: 12pt; HEIGHT: 25px; BACKGROUND-COLOR: #afd1f3"&gt;
-               &lt;td align="center" width="9%"&gt;&lt;input type="checkbox" id="ckAll" onclick="checkAll()" &gt;全选/全不选&lt;/td&gt;
-               &lt;td align="center" width="24%"&gt;商品编号&lt;/td&gt;
-               &lt;td align="center" width="18%"&gt;商品名称&lt;/td&gt;
-               &lt;td align="center" width="9%"&gt;商品价格&lt;/td&gt;
-               &lt;td align="center" width="9%"&gt;商品数量&lt;/td&gt;
-               &lt;td width="8%" align="center"&gt;商品类别&lt;/td&gt;
-               &lt;td width="8%" align="center"&gt;编辑&lt;/td&gt;
-
-               &lt;td width="8%" align="center"&gt;删除&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;c:forEach items="${books}" var="b"&gt;
-               &lt;tr onmouseover="this.style.backgroundColor = 'white'"
-                  onmouseout="this.style.backgroundColor = '#F5FAFE';"&gt;
-                  &lt;td align="center" width="9%"&gt;&lt;input type="checkbox" name="ids" value="${b.id}" &gt;&lt;/td&gt;
-                  &lt;td align="center" width="24%"&gt;${b.id}&lt;/td&gt;
-                  &lt;td align="center" width="18%"&gt;${b.name}&lt;/td&gt;
-                  &lt;td align="center" width="9%"&gt;${b.price}&lt;/td&gt;
-                  &lt;td align="center" width="9%"&gt;${b.pnum}&lt;/td&gt;
-                  &lt;td width="8%" align="center"&gt;${b.category}&lt;/td&gt;
-                  &lt;td align="center" style="HEIGHT: 22px" width="7%"&gt;&lt;a
-                        href="${pageContext.request.contextPath}/servlet/findBookByIdServlet?id=${b.id }"&gt;
-                     &lt;img
-                           src="${pageContext.request.contextPath}/admin/images/i_edit.gif"
-                           border="0" style="CURSOR: hand"&gt; &lt;/a&gt;
-                  &lt;/td&gt;
-
-                  &lt;td align="center" style="HEIGHT: 22px" width="7%"&gt;&lt;a
-                        href="#"&gt;
-                     &lt;a href="javascript:delBook('${b.id}')"&gt;
-                        &lt;img
-                              src="${pageContext.request.contextPath}/admin/images/i_del.gif"
-                              width="16" height="16" border="0" style="CURSOR: hand"&gt;
-                     &lt;/a&gt;
-                  &lt;/a&gt;
-                  &lt;/td&gt;
-               &lt;/tr&gt;
-            &lt;/c:forEach&gt;
-
-         &lt;/table&gt;
-
-      &lt;/td&gt;
-   &lt;/tr&gt;
-   &lt;/TBODY&gt;
-   &lt;/form&gt;
-&lt;/table&gt;
-&lt;/body&gt;
-&lt;/HTML&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span><span class="nx">taglib</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">"c"</span> <span class="nx">uri</span><span class="o">=</span><span class="s2">"http://java.sun.com/jsp/jstl/core"</span><span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="nx">HTML</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">HEAD</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Language"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"zh-cn"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/css/Style.css"</span>
+        <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"javascript"</span>
+         <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/js/public.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+        <span class="kd">function</span> <span class="nx">addProduct</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="s2">"${pageContext.request.contextPath}/admin/products/add.jsp"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">delAllBooks</span><span class="p">(){</span>
+            <span class="o">&lt;%--</span><span class="kd">var</span> <span class="nx">ids</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">"ids"</span><span class="p">);</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">""</span><span class="p">;</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span><span class="p">){</span><span class="o">--%&gt;</span>
+                    <span class="o">&lt;%--</span><span class="nx">str</span><span class="o">+=</span><span class="s2">"ids="</span><span class="o">+</span><span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">;</span><span class="o">--%&gt;</span>
+                    <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">i</span><span class="o">!=</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">--%&gt;</span>
+                        <span class="o">&lt;%--</span><span class="nx">str</span><span class="o">+=</span><span class="s2">"&amp;"</span><span class="p">;</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="o">!=</span><span class="s2">""</span><span class="p">){</span><span class="o">--%&gt;</span>
+                <span class="o">&lt;%--</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/delAllBooksServlet?"</span><span class="o">+</span><span class="nx">str</span><span class="p">;</span><span class="o">--%&gt;</span>
+            <span class="o">&lt;%--</span><span class="p">}</span><span class="o">--%&gt;</span>
+         <span class="kd">var</span> <span class="nx">form2</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"form2"</span><span class="p">);</span>
+         <span class="nx">form2</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">delBook</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"是否确定删除"</span><span class="p">)){</span>
+                <span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/delBookServlet?id="</span><span class="o">+</span><span class="nx">id</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">checkAll</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">flag</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"ckAll"</span><span class="p">).</span><span class="nx">checked</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">ids</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="s2">"ids"</span><span class="p">);</span>
+            <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="nx">ids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span><span class="o">=</span><span class="nx">flag</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/HEAD</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellSpacing</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">cellPadding</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span>
+      <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"Form1"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"Form1"</span>
+        <span class="nx">action</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/searchBooksServlet"</span>
+        <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">TBODY</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#afd1f3"</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="err">查</span>
+            <span class="err">询</span> <span class="err">条</span> <span class="err">件</span><span class="o">&lt;</span><span class="sr">/strong</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellpadding</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">商品编号</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span>
+                                                   <span class="nx">name</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"15"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"Form1_userName"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"bg"</span> <span class="o">/&gt;</span>
+                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">类别：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">select</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"category"</span>
+                                                   <span class="nx">id</span><span class="o">=</span><span class="s2">"category"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="nx">selected</span><span class="o">=</span><span class="s2">"selected"</span><span class="o">&gt;--</span><span class="err">选择商品类加</span><span class="o">--&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"文学"</span><span class="o">&gt;</span><span class="err">文学</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"生活"</span><span class="o">&gt;</span><span class="err">生活</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"计算机"</span><span class="o">&gt;</span><span class="err">计算机</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"外语"</span><span class="o">&gt;</span><span class="err">外语</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"经营"</span><span class="o">&gt;</span><span class="err">经营</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"励志"</span><span class="o">&gt;</span><span class="err">励志</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"社科"</span><span class="o">&gt;</span><span class="err">社科</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"学术"</span><span class="o">&gt;</span><span class="err">学术</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"少儿"</span><span class="o">&gt;</span><span class="err">少儿</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"艺术"</span><span class="o">&gt;</span><span class="err">艺术</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"原版"</span><span class="o">&gt;</span><span class="err">原版</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"科技"</span><span class="o">&gt;</span><span class="err">科技</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"考试"</span><span class="o">&gt;</span><span class="err">考试</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"生活百科"</span><span class="o">&gt;</span><span class="err">生活百科</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/select&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>
+               <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">商品名称：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span>
+                                                   <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"15"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"Form1_userName"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"bg"</span> <span class="o">/&gt;</span>
+                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="err">价格区间</span><span class="p">(</span><span class="err">元</span><span class="p">)</span><span class="err">：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span>
+                                                   <span class="nx">name</span><span class="o">=</span><span class="s2">"minprice"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"10"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="o">/&gt;-</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span>
+                                                                                     <span class="nx">name</span><span class="o">=</span><span class="s2">"maxprice"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"10"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">""</span> <span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>
+               <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"22"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span>
+                     <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span><span class="o">&gt;&lt;</span><span class="nx">font</span> <span class="nx">face</span><span class="o">=</span><span class="s2">"宋体"</span>
+                                                  <span class="nx">color</span><span class="o">=</span><span class="s2">"red"</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/font</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"right"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"right"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#ffffff"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"submit"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"search"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"search"</span>
+                           <span class="nx">value</span><span class="o">=</span><span class="s2">"&amp;#26597;&amp;#35810;"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"button_view"</span><span class="o">&gt;</span>
+                        <span class="o">&amp;</span><span class="err">#</span><span class="mi">26597</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">35810</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/button&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;inpu</span><span class="err">t
+</span>                        <span class="nx">type</span><span class="o">=</span><span class="s2">"reset"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"reset"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"&amp;#37325;&amp;#32622;"</span>
+                        <span class="kr">class</span><span class="o">=</span><span class="s2">"button_view"</span> <span class="o">/&gt;</span>
+                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>
+   <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#afd1f3"</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="err">商品列表</span><span class="o">&lt;</span><span class="sr">/strong</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/TD</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"form2"</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/delAllBooksServlet"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"right"</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"delAll"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"delAll"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"批量删除"</span>
+               <span class="kr">class</span><span class="o">=</span><span class="s2">"button_add"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"delAllBooks()"</span><span class="o">&gt;</span><span class="err">批量删除</span>
+         <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"add"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"add"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"添加"</span>
+               <span class="kr">class</span><span class="o">=</span><span class="s2">"button_add"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"addProduct()"</span><span class="o">&gt;</span><span class="err">添加</span>
+         <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">td</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ta_01"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">bgColor</span><span class="o">=</span><span class="s2">"#f5fafe"</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellpadding</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">rules</span><span class="o">=</span><span class="s2">"all"</span>
+               <span class="nx">bordercolor</span><span class="o">=</span><span class="s2">"gray"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"1"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"DataGrid1"</span>
+               <span class="nx">style</span><span class="o">=</span><span class="s2">"BORDER-RIGHT: gray 1px solid; BORDER-TOP: gray 1px solid; BORDER-LEFT: gray 1px solid; WIDTH: 100%; WORD-BREAK: break-all; BORDER-BOTTOM: gray 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #f5fafe; WORD-WRAP: break-word"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">tr</span>
+                  <span class="nx">style</span><span class="o">=</span><span class="s2">"FONT-WEIGHT: bold; FONT-SIZE: 12pt; HEIGHT: 25px; BACKGROUND-COLOR: #afd1f3"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"checkbox"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"ckAll"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"checkAll()"</span> <span class="o">&gt;</span><span class="err">全选</span><span class="o">/</span><span class="err">全不选</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"24%"</span><span class="o">&gt;</span><span class="err">商品编号</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"18%"</span><span class="o">&gt;</span><span class="err">商品名称</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;</span><span class="err">商品价格</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;</span><span class="err">商品数量</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"8%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span><span class="err">商品类别</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"8%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span><span class="err">编辑</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>
+               <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"8%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span><span class="err">删除</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">c</span><span class="err">:</span><span class="nx">forEach</span> <span class="nx">items</span><span class="o">=</span><span class="s2">"${books}"</span> <span class="kd">var</span><span class="o">=</span><span class="s2">"b"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">tr</span> <span class="nx">onmouseover</span><span class="o">=</span><span class="s2">"this.style.backgroundColor = 'white'"</span>
+                  <span class="nx">onmouseout</span><span class="o">=</span><span class="s2">"this.style.backgroundColor = '#F5FAFE';"</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"checkbox"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"ids"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"${b.id}"</span> <span class="o">&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"24%"</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"18%"</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"9%"</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">pnum</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"8%"</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">category</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"HEIGHT: 22px"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"7%"</span><span class="o">&gt;&lt;</span><span class="nx">a</span>
+                        <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/findBookByIdServlet?id=${b.id }"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">img</span>
+                           <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/images/i_edit.gif"</span>
+                           <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"CURSOR: hand"</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>
+                  <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">align</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"HEIGHT: 22px"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"7%"</span><span class="o">&gt;&lt;</span><span class="nx">a</span>
+                        <span class="nx">href</span><span class="o">=</span><span class="s2">"#"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"javascript:delBook('${b.id}')"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">img</span>
+                              <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/admin/images/i_del.gif"</span>
+                              <span class="nx">width</span><span class="o">=</span><span class="s2">"16"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"16"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"CURSOR: hand"</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/c:forEach</span><span class="err">&gt;
+</span>
+         <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>
+      <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/TBODY</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/HTML</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="c3p0util">C3P0Util</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class C3P0Util {
-    private static DataSource ds=new ComboPooledDataSource();
-    public static Connection getConnection(){
-        try {
-            return ds.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("获得数据连接失败");
-        }
-    }
-    public static DataSource getDataSource(){
-        return ds;
-    }
-    public static DataSource getDataSource(String databaseName){
-        ComboPooledDataSource testDs= (ComboPooledDataSource) ds;
-        testDs.setJdbcUrl("jdbc:mysql://localhost:3306/"+databaseName+"?characterEncoding=utf-8");
-        return testDs;
-    }
-    public static void release(ResultSet rs, Statement stmt, Connection conn){
-        try {
-            if(rs!=null)
-                rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                if(stmt!=null)
-                    stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                    if(conn!=null)
-                        conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">C3P0Util</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">DataSource</span> <span class="n">ds</span><span class="o">=</span><span class="k">new</span> <span class="n">ComboPooledDataSource</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"获得数据连接失败"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">DataSource</span> <span class="nf">getDataSource</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">ds</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">DataSource</span> <span class="nf">getDataSource</span><span class="o">(</span><span class="n">String</span> <span class="n">databaseName</span><span class="o">){</span>
+        <span class="n">ComboPooledDataSource</span> <span class="n">testDs</span><span class="o">=</span> <span class="o">(</span><span class="n">ComboPooledDataSource</span><span class="o">)</span> <span class="n">ds</span><span class="o">;</span>
+        <span class="n">testDs</span><span class="o">.</span><span class="na">setJdbcUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/"</span><span class="o">+</span><span class="n">databaseName</span><span class="o">+</span><span class="s">"?characterEncoding=utf-8"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">testDs</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">release</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">,</span> <span class="n">Statement</span> <span class="n">stmt</span><span class="o">,</span> <span class="n">Connection</span> <span class="n">conn</span><span class="o">){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+                <span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">stmt</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+                    <span class="n">stmt</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">conn</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+                        <span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public static Connection getConnection(String databaseName) {
-        ComboPooledDataSource testDs= (ComboPooledDataSource) ds;
-        testDs.setJdbcUrl("jdbc:mysql://localhost:3306/"+databaseName+"?characterEncoding=utf-8");
-        try {
-            return testDs.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("初始化数据库连接失败");
-        }
-    }
-}
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(</span><span class="n">String</span> <span class="n">databaseName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ComboPooledDataSource</span> <span class="n">testDs</span><span class="o">=</span> <span class="o">(</span><span class="n">ComboPooledDataSource</span><span class="o">)</span> <span class="n">ds</span><span class="o">;</span>
+        <span class="n">testDs</span><span class="o">.</span><span class="na">setJdbcUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/"</span><span class="o">+</span><span class="n">databaseName</span><span class="o">+</span><span class="s">"?characterEncoding=utf-8"</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">testDs</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"初始化数据库连接失败"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="bookserviceimpl">BookServiceImpl</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class BookServiceImpl {
-    private BookDaoImpl dao=new BookDaoImpl();
-    public List&lt;Book&gt; findAllBooks(){
-        try {
-            return dao.findAllBooks();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public void addBook(Book book){
-        try {
-            dao.addBook(book);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookServiceImpl</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">BookDaoImpl</span> <span class="n">dao</span><span class="o">=</span><span class="k">new</span> <span class="n">BookDaoImpl</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findAllBooks</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">dao</span><span class="o">.</span><span class="na">findAllBooks</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBook</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">dao</span><span class="o">.</span><span class="na">addBook</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public Book findBookById(String id) {
-        try {
-            return dao.findBookById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    <span class="kd">public</span> <span class="n">Book</span> <span class="nf">findBookById</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">dao</span><span class="o">.</span><span class="na">findBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public void updateBook(Book book) {
-        try {
-            dao.updateBook(book);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateBook</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">dao</span><span class="o">.</span><span class="na">updateBook</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public void delBookById(String id) {
-        try {
-            dao.delBookById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delBookById</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">dao</span><span class="o">.</span><span class="na">delBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public void delAllBooks(String[] ids) {
-        try {
-            dao.delAllBooks(ids);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delAllBooks</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">ids</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">dao</span><span class="o">.</span><span class="na">delAllBooks</span><span class="o">(</span><span class="n">ids</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public List&lt;Book&gt; searchBooks(String id, String category, String name, String minprice, String maxprice) {
-        try {
-            return dao.searchBooks(id,category,name,minprice,maxprice);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">searchBooks</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">,</span> <span class="n">String</span> <span class="n">category</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">minprice</span><span class="o">,</span> <span class="n">String</span> <span class="n">maxprice</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">dao</span><span class="o">.</span><span class="na">searchBooks</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="n">category</span><span class="o">,</span><span class="n">name</span><span class="o">,</span><span class="n">minprice</span><span class="o">,</span><span class="n">maxprice</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public PageBean findBooksPage(int currentPage, int pageSize) {
-        PageBean pb = new PageBean();
-        try {
-            int count=dao.count();
-            int totalPage= (int) Math.ceil(count*1.0/pageSize);
-            List&lt;Book&gt;list=dao.findBooksByPage(currentPage,pageSize);
-            pb.setCount(count);
-            pb.setCurrentPage(currentPage);
-            pb.setBooks(list);
-            pb.setTotalPage(totalPage);
-            return pb;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    <span class="kd">public</span> <span class="n">PageBean</span> <span class="nf">findBooksPage</span><span class="o">(</span><span class="kt">int</span> <span class="n">currentPage</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pageSize</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">PageBean</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PageBean</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="n">dao</span><span class="o">.</span><span class="na">count</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">totalPage</span><span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">(</span><span class="n">count</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="n">pageSize</span><span class="o">);</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span><span class="n">list</span><span class="o">=</span><span class="n">dao</span><span class="o">.</span><span class="na">findBooksByPage</span><span class="o">(</span><span class="n">currentPage</span><span class="o">,</span><span class="n">pageSize</span><span class="o">);</span>
+            <span class="n">pb</span><span class="o">.</span><span class="na">setCount</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+            <span class="n">pb</span><span class="o">.</span><span class="na">setCurrentPage</span><span class="o">(</span><span class="n">currentPage</span><span class="o">);</span>
+            <span class="n">pb</span><span class="o">.</span><span class="na">setBooks</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+            <span class="n">pb</span><span class="o">.</span><span class="na">setTotalPage</span><span class="o">(</span><span class="n">totalPage</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">pb</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
 
-        return null;
-    }
-}
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="bookdaoimpl">BookDaoImpl</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class BookDaoImpl {
-    //查找所有的图书
-    public List&lt;Book&gt; findAllBooks() throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        return qr.query("select * from book",new BeanListHandler&lt;Book&gt;(Book.class));
-    }
-    //添加图书
-    public void addBook(Book book) throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        qr.update("insert into book values(?,?,?,?,?,?)",book.getId(),book.getName(),book.getPrice(),book.getPnum(),book.getCategory(),book.getDescription());
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookDaoImpl</span> <span class="o">{</span>
+    <span class="c1">//查找所有的图书</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findAllBooks</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">qr</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from book"</span><span class="o">,</span><span class="k">new</span> <span class="n">BeanListHandler</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="c1">//添加图书</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addBook</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"insert into book values(?,?,?,?,?,?)"</span><span class="o">,</span><span class="n">book</span><span class="o">.</span><span class="na">getId</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getPrice</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getPnum</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getCategory</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getDescription</span><span class="o">());</span>
+    <span class="o">}</span>
 
-    public Book findBookById(String id) throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        return qr.query("select * from book where id = ?",new BeanHandler&lt;Book&gt;(Book.class),id);
-    }
+    <span class="kd">public</span> <span class="n">Book</span> <span class="nf">findBookById</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">qr</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from book where id = ?"</span><span class="o">,</span><span class="k">new</span> <span class="n">BeanHandler</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public void updateBook(Book book) throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        qr.update("update book set name =?,price =?,pnum=?,category=?,description=? where id =?",book.getName(),book.getPrice(),book.getPnum(),book.getCategory(),book.getDescription(),book.getId());
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateBook</span><span class="o">(</span><span class="n">Book</span> <span class="n">book</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"update book set name =?,price =?,pnum=?,category=?,description=? where id =?"</span><span class="o">,</span><span class="n">book</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getPrice</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getPnum</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getCategory</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getDescription</span><span class="o">(),</span><span class="n">book</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+    <span class="o">}</span>
 
-    public void delBookById(String id) throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        qr.update("delete from book where id =?",id);
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delBookById</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"delete from book where id =?"</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public void delAllBooks(String[] ids)throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        Object[][] params = new Object[ids.length][];
-        for(int i=0;i&lt;params.length;i++){
-            params[i]=new Object[]{ids[i]};
-        }
-        qr.batch("delete from book where id = ?",params);
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delAllBooks</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">ids</span><span class="o">)</span><span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="n">Object</span><span class="o">[][]</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="n">ids</span><span class="o">.</span><span class="na">length</span><span class="o">][];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="k">new</span> <span class="n">Object</span><span class="o">[]{</span><span class="n">ids</span><span class="o">[</span><span class="n">i</span><span class="o">]};</span>
+        <span class="o">}</span>
+        <span class="n">qr</span><span class="o">.</span><span class="na">batch</span><span class="o">(</span><span class="s">"delete from book where id = ?"</span><span class="o">,</span><span class="n">params</span><span class="o">);</span>
 
-    }
+    <span class="o">}</span>
 
-    public List&lt;Book&gt; searchBooks(String id, String category, String name, String minprice, String maxprice) throws SQLException {
-        String sql="select * from book where 1=1";
-        ArrayList&lt;String&gt; params = new ArrayList&lt;&gt;();
-        if(!"".equals(id.trim())){
-            sql+=" and id like ?";
-            params.add("%"+id+"%");
-        }
-        if(!"".equals(category.trim())){
-            sql+=" and category = ?";
-            params.add(category);
-        }
-        if(!"".equals(name.trim())){
-            sql+=" and name like ?";
-            params.add("%"+name+"%");
-        }
-        if(!"".equals(minprice.trim())){
-            sql+= " and price &gt;= ?";
-            params.add(minprice);
-        }
-        if(!"".equals(maxprice.trim())){
-            sql+=" and price &lt;= ?";
-            params.add(maxprice);
-        }
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        return qr.query(sql,new BeanListHandler&lt;Book&gt;(Book.class),params.toArray());
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">searchBooks</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">,</span> <span class="n">String</span> <span class="n">category</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">minprice</span><span class="o">,</span> <span class="n">String</span> <span class="n">maxprice</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">sql</span><span class="o">=</span><span class="s">"select * from book where 1=1"</span><span class="o">;</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">if</span><span class="o">(!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">id</span><span class="o">.</span><span class="na">trim</span><span class="o">())){</span>
+            <span class="n">sql</span><span class="o">+=</span><span class="s">" and id like ?"</span><span class="o">;</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"%"</span><span class="o">+</span><span class="n">id</span><span class="o">+</span><span class="s">"%"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">category</span><span class="o">.</span><span class="na">trim</span><span class="o">())){</span>
+            <span class="n">sql</span><span class="o">+=</span><span class="s">" and category = ?"</span><span class="o">;</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">category</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">trim</span><span class="o">())){</span>
+            <span class="n">sql</span><span class="o">+=</span><span class="s">" and name like ?"</span><span class="o">;</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"%"</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">"%"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">minprice</span><span class="o">.</span><span class="na">trim</span><span class="o">())){</span>
+            <span class="n">sql</span><span class="o">+=</span> <span class="s">" and price &gt;= ?"</span><span class="o">;</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">minprice</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">maxprice</span><span class="o">.</span><span class="na">trim</span><span class="o">())){</span>
+            <span class="n">sql</span><span class="o">+=</span><span class="s">" and price &lt;= ?"</span><span class="o">;</span>
+            <span class="n">params</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">maxprice</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">qr</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="k">new</span> <span class="n">BeanListHandler</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">params</span><span class="o">.</span><span class="na">toArray</span><span class="o">());</span>
 
-    }
+    <span class="o">}</span>
 
-    public int count() throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        long l = (Long) qr.query("select count(*) from book", new ScalarHandler(1));
-        return (int)l;
-    }
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">count</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="kt">long</span> <span class="n">l</span> <span class="o">=</span> <span class="o">(</span><span class="n">Long</span><span class="o">)</span> <span class="n">qr</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select count(*) from book"</span><span class="o">,</span> <span class="k">new</span> <span class="n">ScalarHandler</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">l</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public List&lt;Book&gt; findBooksByPage(int currentPage, int pageSize) throws SQLException {
-        QueryRunner qr=new QueryRunner(C3P0Util.getDataSource("day14"));
-        return qr.query("select * from book limit ?,?",new BeanListHandler&lt;Book&gt;(Book.class),(currentPage-1)*pageSize,pageSize);
-    }
-}
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findBooksByPage</span><span class="o">(</span><span class="kt">int</span> <span class="n">currentPage</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pageSize</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">QueryRunner</span> <span class="n">qr</span><span class="o">=</span><span class="k">new</span> <span class="n">QueryRunner</span><span class="o">(</span><span class="n">C3P0Util</span><span class="o">.</span><span class="na">getDataSource</span><span class="o">(</span><span class="s">"day14"</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">qr</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from book limit ?,?"</span><span class="o">,</span><span class="k">new</span> <span class="n">BeanListHandler</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;(</span><span class="n">Book</span><span class="o">.</span><span class="na">class</span><span class="o">),(</span><span class="n">currentPage</span><span class="o">-</span><span class="mi">1</span><span class="o">)*</span><span class="n">pageSize</span><span class="o">,</span><span class="n">pageSize</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="booklistservlet">BookListServlet</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setCharacterEncoding("utf-8");
-    resp.setContentType("text/html;charset=utf-8");
-    BookServiceImpl service=new BookServiceImpl();
-    List&lt;Book&gt; list = service.findAllBooks();
-    if(list!=null){
-        req.setAttribute("books",list);
-        req.getRequestDispatcher(req.getContextPath()+"/admin/products/list.jsp").forward(req,resp);
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">findAllBooks</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"books"</span><span class="o">,</span><span class="n">list</span><span class="o">);</span>
+        <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/admin/products/list.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="findbookbyidservlet">FindBookByIdServlet</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String id=req.getParameter("id");
-    BookServiceImpl service=new BookServiceImpl();
-    Book book=service.findBookById(id);
-    req.setAttribute("book",book);
-    req.getRequestDispatcher("/admin/products/edit.jsp").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">Book</span> <span class="n">book</span><span class="o">=</span><span class="n">service</span><span class="o">.</span><span class="na">findBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"book"</span><span class="o">,</span><span class="n">book</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/admin/products/edit.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="addbookservlet">AddBookServlet</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setCharacterEncoding("utf-8");
-    resp.setContentType("text/html;charset=utf-8");
-    Book book=new Book();
-    try {
-        BeanUtils.populate(book,req.getParameterMap());
-        book.setId(UUIDUtil.getUUID());
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    BookServiceImpl service=new BookServiceImpl();
-    service.addBook(book);
-    req.getRequestDispatcher("bookListServlet").forward(req,resp);//不写/代表相对路径
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">Book</span> <span class="n">book</span><span class="o">=</span><span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">BeanUtils</span><span class="o">.</span><span class="na">populate</span><span class="o">(</span><span class="n">book</span><span class="o">,</span><span class="n">req</span><span class="o">.</span><span class="na">getParameterMap</span><span class="o">());</span>
+        <span class="n">book</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">UUIDUtil</span><span class="o">.</span><span class="na">getUUID</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">addBook</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"bookListServlet"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span><span class="c1">//不写/代表相对路径</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="updatebookservlet">UpdateBookServlet</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setCharacterEncoding("utf-8");
-    resp.setContentType("text/html;charset=utf-8");
-    Book book=new Book();
-    try {
-        BeanUtils.populate(book,req.getParameterMap());
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    BookServiceImpl service=new BookServiceImpl();
-    service.updateBook(book);
-    req.getRequestDispatcher("bookListServlet").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">Book</span> <span class="n">book</span><span class="o">=</span><span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">BeanUtils</span><span class="o">.</span><span class="na">populate</span><span class="o">(</span><span class="n">book</span><span class="o">,</span><span class="n">req</span><span class="o">.</span><span class="na">getParameterMap</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">updateBook</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"bookListServlet"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="delbookservlet">DelBookServlet</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String id=req.getParameter("id");
-    BookServiceImpl service=new BookServiceImpl();
-    service.delBookById(id);
-    req.getRequestDispatcher("/servlet/bookListServlet").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">delBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/servlet/bookListServlet"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="delallbooksservlet">DelAllBooksServlet</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String[] ids = req.getParameterValues("ids");
-    BookServiceImpl service=new BookServiceImpl();
-    service.delAllBooks(ids);
-    req.getRequestDispatcher("bookListServlet").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameterValues</span><span class="o">(</span><span class="s">"ids"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">delAllBooks</span><span class="o">(</span><span class="n">ids</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"bookListServlet"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="searchbooksservlet">SearchBooksServlet</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setCharacterEncoding("utf-8");
-    String id = req.getParameter("id");
-    String category = req.getParameter("category");
-    String name = req.getParameter("name");
-    String minprice = req.getParameter("minprice");
-    String maxprice = req.getParameter("maxprice");
-    BookServiceImpl service=new BookServiceImpl();
-    List&lt;Book&gt; books=service.searchBooks(id,category,name,minprice,maxprice);
-    req.setAttribute("books",books);
-    req.getRequestDispatcher("/admin/products/list.jsp").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">category</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"category"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">minprice</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"minprice"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">maxprice</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"maxprice"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span><span class="o">=</span><span class="n">service</span><span class="o">.</span><span class="na">searchBooks</span><span class="o">(</span><span class="n">id</span><span class="o">,</span><span class="n">category</span><span class="o">,</span><span class="n">name</span><span class="o">,</span><span class="n">minprice</span><span class="o">,</span><span class="n">maxprice</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"books"</span><span class="o">,</span><span class="n">books</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/admin/products/list.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="product_list-jsp">product_list.jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%&gt;
-<span class="err">&lt;</span>%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;
-<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="kr">import</span><span class="o">=</span><span class="s2">"java.util.*"</span> <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">taglib</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">"c"</span> <span class="nx">uri</span><span class="o">=</span><span class="s2">"http://java.sun.com/jsp/jstl/core"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">HTML</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
 
 
-   <span class="nt">&lt;title&gt;</span>bookStore列表<span class="nt">&lt;/title&gt;</span>
-   <span class="err">&lt;</span>%--导入css --%&gt;
-   <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath}/css/main.css"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
+   <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">bookStore</span><span class="err">列表</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span>   <span class="o">&lt;%--</span><span class="err">导入</span><span class="nx">css</span> <span class="o">--%&gt;</span>
+   <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/css/main.css"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">body</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"main"</span><span class="o">&gt;</span>
 
-<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+<span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"head.jsp"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"menu_search.jsp"</span> <span class="o">/&gt;</span>
 
-<span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"head.jsp"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"menu_search.jsp"</span> <span class="nt">/&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"divpagecontent"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
 
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"divpagecontent"</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">"100%"</span> <span class="na">border=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;tr&gt;</span>
+         <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"text-align:right; margin:5px 10px 5px 0px"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"index.jsp"</span><span class="o">&gt;</span><span class="err">首页</span><span class="o">&lt;</span><span class="sr">/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;计算机&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;图书列</span><span class="err">表
+</span>            <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+            <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"listcontent"</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="err">商品目录</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="err">计算机</span><span class="o">&lt;</span><span class="sr">/h1&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;共${pb.count}种商</span><span class="err">品
+</span>                     <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"margin-top:20px; margin-bottom:5px"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/images/productlist.gif"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"38"</span> <span class="o">/&gt;</span>
+                     <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"booklist"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                           <span class="o">&lt;</span><span class="nx">c</span><span class="err">:</span><span class="nx">forEach</span> <span class="nx">items</span><span class="o">=</span><span class="s2">"${pb.books}"</span> <span class="kd">var</span><span class="o">=</span><span class="s2">"b"</span><span class="o">&gt;</span>
+                           <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
 
-         <span class="nt">&lt;td&gt;</span>
-            <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"text-align:right; margin:5px 10px 5px 0px"</span><span class="nt">&gt;</span>
-               <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"index.jsp"</span><span class="nt">&gt;</span>首页<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>计算机<span class="ni">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>图书列表
-            <span class="nt">&lt;/div&gt;</span>
-
-            <span class="nt">&lt;table</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"listcontent"</span><span class="nt">&gt;</span>
-               <span class="nt">&lt;tr&gt;</span>
-                  <span class="nt">&lt;td&gt;</span>
-                     <span class="nt">&lt;h1&gt;</span>商品目录<span class="nt">&lt;/h1&gt;</span>
-                     <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
-                     <span class="nt">&lt;h1&gt;</span>计算机<span class="nt">&lt;/h1&gt;</span><span class="ni">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>共${pb.count}种商品
-                     <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
-                     <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"margin-top:20px; margin-bottom:5px"</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath}/images/productlist.gif"</span> <span class="na">width=</span><span class="s">"100%"</span> <span class="na">height=</span><span class="s">"38"</span> <span class="nt">/&gt;</span>
-                     <span class="nt">&lt;/div&gt;</span>
-                     <span class="nt">&lt;table</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"booklist"</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;tr&gt;</span>
-                           <span class="nt">&lt;c:forEach</span> <span class="na">items=</span><span class="s">"${pb.books}"</span> <span class="na">var=</span><span class="s">"b"</span><span class="nt">&gt;</span>
-                           <span class="nt">&lt;td&gt;</span>
-
-                              <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"divbookpic"</span><span class="nt">&gt;</span>
-                                 <span class="nt">&lt;p&gt;</span>
-                                    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath}/servlet/bookInfoServlet?id=${b.id}"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">""</span> <span class="na">style=</span><span class="s">"background-color: #f1f1f1"</span> <span class="na">width=</span><span class="s">"115"</span> <span class="na">height=</span><span class="s">"129"</span>
-                                                 <span class="na">border=</span><span class="s">"0"</span> <span class="nt">/&gt;</span> <span class="nt">&lt;/a&gt;</span>
-                                 <span class="nt">&lt;/p&gt;</span>
-                              <span class="nt">&lt;/div&gt;</span>
-
-                              <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"divlisttitle"</span><span class="nt">&gt;</span>
-                                 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>书名:${b.name}<span class="nt">&lt;br</span> <span class="nt">/&gt;</span>售价:${b.price} <span class="nt">&lt;/a&gt;</span>
-                              <span class="nt">&lt;/div&gt;&lt;/td&gt;</span>
-                           <span class="nt">&lt;/c:forEach&gt;</span>
-                        <span class="nt">&lt;/tr&gt;</span>
-                     <span class="nt">&lt;/table&gt;</span>
-                     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"pagination"</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;ul&gt;</span>
-
-
-                           <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"disablepage"</span><span class="nt">&gt;</span>
-                              <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath}/servlet/pageServlet?currentPage=${pb.currentPage==1?1:pb.currentPage-1}"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;&amp;lt;</span>上一页<span class="nt">&lt;/a&gt;</span>
-                           <span class="nt">&lt;/li&gt;</span>
+                              <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"divbookpic"</span><span class="o">&gt;</span>
+                                 <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+                                    <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/bookInfoServlet?id=${b.id}"</span><span class="o">&gt;&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">""</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"background-color: #f1f1f1"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"115"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"129"</span>
+                                                 <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="o">/&gt;</span> <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                                 <span class="o">&lt;</span><span class="sr">/p</span><span class="err">&gt;
+</span>                              <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+                              <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"divlisttitle"</span><span class="o">&gt;</span>
+                                 <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"#"</span><span class="o">&gt;</span><span class="err">书名:</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span><span class="err">售价:</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span> <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                              <span class="o">&lt;</span><span class="sr">/div&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+                           <span class="o">&lt;</span><span class="sr">/c:forEach</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"pagination"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
 
 
-                           <span class="nt">&lt;li&gt;</span>第${pb.currentPage}页/共${pb.totalPage}页<span class="nt">&lt;/li&gt;</span>
+                           <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"disablepage"</span><span class="o">&gt;</span>
+                              <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/pageServlet?currentPage=${pb.currentPage==1?1:pb.currentPage-1}"</span><span class="o">&gt;&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="err">上一页</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                           <span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
+</span>
 
-                           <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nextPage"</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath}/servlet/pageServlet?currentPage=${pb.currentPage==pb.totalPage?pb.totalPage:pb.currentPage+1}"</span><span class="nt">&gt;</span><span class="ni">&amp;lt;&amp;lt;</span>下一页<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-
-
-                        <span class="nt">&lt;/ul&gt;</span>
-                     <span class="nt">&lt;/div&gt;&lt;/td&gt;</span>
-               <span class="nt">&lt;/tr&gt;</span>
-            <span class="nt">&lt;/table&gt;</span>
-         <span class="nt">&lt;/td&gt;</span>
-      <span class="nt">&lt;/tr&gt;</span>
-   <span class="nt">&lt;/table&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+                           <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="err">第</span><span class="nx">$</span><span class="p">{</span><span class="nx">pb</span><span class="p">.</span><span class="nx">currentPage</span><span class="p">}</span><span class="err">页</span><span class="o">/</span><span class="err">共</span><span class="nx">$</span><span class="p">{</span><span class="nx">pb</span><span class="p">.</span><span class="nx">totalPage</span><span class="p">}</span><span class="err">页</span><span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
+</span>
+                           <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"nextPage"</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/servlet/pageServlet?currentPage=${pb.currentPage==pb.totalPage?pb.totalPage:pb.currentPage+1}"</span><span class="o">&gt;&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="err">下一页</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="nx">li</span><span class="o">&gt;</span>
 
 
+                        <span class="o">&lt;</span><span class="sr">/ul</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="sr">/div&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
 
-<span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"foot.jsp"</span> <span class="nt">/&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"foot.jsp"</span> <span class="o">/&gt;</span>
 
 
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="product_info-jsp">product_info.jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%&gt;
-<span class="err">&lt;</span>%
-   String path=request.getContextPath();
-   String basPath=request.getScheme()+"://"+request.getServerName()+":"+request.getLocalPort()+path;
-%&gt;
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="kr">import</span><span class="o">=</span><span class="s2">"java.util.*"</span> <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;%</span>
+   <span class="nb">String</span> <span class="nx">path</span><span class="o">=</span><span class="nx">request</span><span class="p">.</span><span class="nx">getContextPath</span><span class="p">();</span>
+   <span class="nb">String</span> <span class="nx">basPath</span><span class="o">=</span><span class="nx">request</span><span class="p">.</span><span class="nx">getScheme</span><span class="p">()</span><span class="o">+</span><span class="s2">"://"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">getServerName</span><span class="p">()</span><span class="o">+</span><span class="s2">":"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">getLocalPort</span><span class="p">()</span><span class="o">+</span><span class="nx">path</span><span class="p">;</span>
+<span class="o">%&gt;</span>
 
-<span class="cp">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-<span class="nt">&lt;title&gt;</span>电子书城<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"/css/main.css"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">HTML</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">电子书城</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"/css/main.css"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">body</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"main"</span><span class="o">&gt;</span>
 
-<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"head.jsp"</span> <span class="o">/&gt;</span>
 
-   <span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"head.jsp"</span> <span class="nt">/&gt;</span>
-
-   <span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"menu_search.jsp"</span> <span class="nt">/&gt;</span>
-
-
-   <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"divpagecontent"</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">"100%"</span> <span class="na">border=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span><span class="nt">&gt;</span>
-         <span class="nt">&lt;tr&gt;</span>
-
-            <span class="nt">&lt;td&gt;&lt;div</span> <span class="na">style=</span><span class="s">"text-align:right; margin:5px 10px 5px 0px"</span><span class="nt">&gt;</span>
-                  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>首页<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><span class="nt">&lt;a</span>
-                     <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;</span>计算机<span class="nt">&lt;/a&gt;</span><span class="ni">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>java编程思想
-               <span class="nt">&lt;/div&gt;</span>
+   <span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"menu_search.jsp"</span> <span class="o">/&gt;</span>
 
 
+   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"divpagecontent"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+
+            <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"text-align:right; margin:5px 10px 5px 0px"</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"#"</span><span class="o">&gt;</span><span class="err">首页</span><span class="o">&lt;</span><span class="sr">/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;</span><span class="err">a
+</span>                     <span class="nx">href</span><span class="o">=</span><span class="s2">"#"</span><span class="o">&gt;&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="err">计算机</span><span class="o">&lt;</span><span class="sr">/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;java编程思</span><span class="err">想
+</span>               <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
 
 
 
-               <span class="nt">&lt;table</span> <span class="na">cellspacing=</span><span class="s">"0"</span> <span class="na">class=</span><span class="s">"infocontent"</span><span class="nt">&gt;</span>
-                  <span class="nt">&lt;tr&gt;</span>
-                     <span class="nt">&lt;td&gt;&lt;img</span> <span class="na">src=</span><span class="s">"/ad/page_ad.jpg"</span> <span class="na">width=</span><span class="s">"645"</span> <span class="na">height=</span><span class="s">"84"</span> <span class="nt">/&gt;</span>
 
-                        <span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">"100%%"</span> <span class="na">border=</span><span class="s">"0"</span> <span class="na">cellspacing=</span><span class="s">"0"</span><span class="nt">&gt;</span>
-                           <span class="nt">&lt;tr&gt;</span>
-                              <span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"30%"</span><span class="nt">&gt;</span>
+               <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"infocontent"</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                     <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"/ad/page_ad.jpg"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"645"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"84"</span> <span class="o">/&gt;</span>
 
-                                 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"divbookcover"</span><span class="nt">&gt;</span>
-                                    <span class="nt">&lt;p&gt;</span>
-                                       <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"#"</span> <span class="na">width=</span><span class="s">"213"</span> <span class="na">height=</span><span class="s">"269"</span> <span class="na">border=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
-                                    <span class="nt">&lt;/p&gt;</span>
-                                 <span class="nt">&lt;/div&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"100%%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="nx">cellspacing</span><span class="o">=</span><span class="s2">"0"</span><span class="o">&gt;</span>
+                           <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                              <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"30%"</span><span class="o">&gt;</span>
 
-                                 <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"text-align:center; margin-top:25px"</span><span class="nt">&gt;</span>
-                                    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span> <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/buybutton.gif"</span> <span class="na">border=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
-                                    <span class="nt">&lt;/a&gt;</span>
-                                 <span class="nt">&lt;/div&gt;</span>
-                              <span class="nt">&lt;/td&gt;</span>
-                              <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"padding:20px 5px 5px 5px"</span><span class="nt">&gt;&lt;img</span>
-                                 <span class="na">src=</span><span class="s">"/images/miniicon3.gif"</span> <span class="na">width=</span><span class="s">"16"</span> <span class="na">height=</span><span class="s">"13"</span> <span class="nt">/&gt;&lt;font</span>
-                                 <span class="na">class=</span><span class="s">"bookname"</span><span class="nt">&gt;</span><span class="ni">&amp;nbsp;&amp;nbsp;</span>${b.name}<span class="nt">&lt;/font&gt;</span>
+                                 <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"divbookcover"</span><span class="o">&gt;</span>
+                                    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+                                       <span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"#"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"213"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"269"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="o">/&gt;</span>
+                                    <span class="o">&lt;</span><span class="sr">/p</span><span class="err">&gt;
+</span>                                 <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+                                 <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"text-align:center; margin-top:25px"</span><span class="o">&gt;</span>
+                                    <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"#"</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"/images/buybutton.gif"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="o">/&gt;</span>
+                                    <span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>                                 <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>                              <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                              <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"padding:20px 5px 5px 5px"</span><span class="o">&gt;&lt;</span><span class="nx">img</span>
+                                 <span class="nx">src</span><span class="o">=</span><span class="s2">"/images/miniicon3.gif"</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"16"</span> <span class="nx">height</span><span class="o">=</span><span class="s2">"13"</span> <span class="o">/&gt;&lt;</span><span class="nx">font</span>
+                                 <span class="kr">class</span><span class="o">=</span><span class="s2">"bookname"</span><span class="o">&gt;&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/font</span><span class="err">&gt;
+</span>
+                                 <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;</span><span class="err">售价：</span><span class="o">&lt;</span><span class="nx">font</span> <span class="nx">color</span><span class="o">=</span><span class="s2">"#FF0000"</span><span class="o">&gt;</span><span class="err">￥:</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span><span class="err">元</span><span class="o">&lt;</span><span class="sr">/font</span><span class="err">&gt;
+</span>                                 <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;</span> <span class="err">类别：</span><span class="nx">$</span><span class="p">{</span><span class="nx">b</span><span class="p">.</span><span class="nx">category</span><span class="p">}</span>
 
-                                 <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>售价：<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"#FF0000"</span><span class="nt">&gt;</span>￥:${b.price}元<span class="nt">&lt;/font&gt;</span>
-                                 <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span> 类别：${b.category}
+                                 <span class="o">&lt;</span><span class="nx">hr</span> <span class="o">/&gt;</span>
+                                 <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+                                    <span class="o">&lt;</span><span class="nx">b</span><span class="o">&gt;</span><span class="err">内容简介：</span><span class="o">&lt;</span><span class="sr">/b</span><span class="err">&gt;
+</span>                                 <span class="o">&lt;</span><span class="sr">/p&gt;${b.description}&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+                           <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>                     <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                  <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/table&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+         <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
 
-                                 <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
-                                 <span class="nt">&lt;p&gt;</span>
-                                    <span class="nt">&lt;b&gt;</span>内容简介：<span class="nt">&lt;/b&gt;</span>
-                                 <span class="nt">&lt;/p&gt;</span>${b.description}<span class="nt">&lt;/td&gt;</span>
-                           <span class="nt">&lt;/tr&gt;</span>
-                        <span class="nt">&lt;/table&gt;</span>
-                     <span class="nt">&lt;/td&gt;</span>
-                  <span class="nt">&lt;/tr&gt;</span>
-               <span class="nt">&lt;/table&gt;&lt;/td&gt;</span>
-         <span class="nt">&lt;/tr&gt;</span>
-      <span class="nt">&lt;/table&gt;</span>
-   <span class="nt">&lt;/div&gt;</span>
-
-
-   <span class="nt">&lt;jsp:include</span> <span class="na">page=</span><span class="s">"foot.jsp"</span> <span class="nt">/&gt;</span>
+   <span class="o">&lt;</span><span class="nx">jsp</span><span class="err">:</span><span class="nx">include</span> <span class="nx">page</span><span class="o">=</span><span class="s2">"foot.jsp"</span> <span class="o">/&gt;</span>
 
 
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="pageservlet">PageServlet</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int pageSize=4;
-    int currentPage=1;
-    String currpage=req.getParameter("currentPage");
-    if(currpage!=null){
-        currentPage=Integer.parseInt(currpage);
-    }
-    BookServiceImpl service=new BookServiceImpl();
-    PageBean pb=service.findBooksPage(currentPage,pageSize);
-    req.setAttribute("pb",pb);
-    req.getRequestDispatcher("/product_list.jsp").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">pageSize</span><span class="o">=</span><span class="mi">4</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">currentPage</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">currpage</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"currentPage"</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">currpage</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">currentPage</span><span class="o">=</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">currpage</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">PageBean</span> <span class="n">pb</span><span class="o">=</span><span class="n">service</span><span class="o">.</span><span class="na">findBooksPage</span><span class="o">(</span><span class="n">currentPage</span><span class="o">,</span><span class="n">pageSize</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"pb"</span><span class="o">,</span><span class="n">pb</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/product_list.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="bookinfoservlet">BookInfoServlet</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String id = req.getParameter("id");
-    BookServiceImpl service=new BookServiceImpl();
-    Book book = service.findBookById(id);
-    req.setAttribute("b",book);
-    req.getRequestDispatcher("/product_info.jsp").forward(req,resp);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+    <span class="n">BookServiceImpl</span> <span class="n">service</span><span class="o">=</span><span class="k">new</span> <span class="n">BookServiceImpl</span><span class="o">();</span>
+    <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">findBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span><span class="n">book</span><span class="o">);</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/product_info.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
@@ -952,9 +952,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -122,493 +122,571 @@
 
 <h2 id="cookie">Cookie</h2>
 
-<p>Cookie是客服端技术，把用户数据存储在各自浏览器，再去访问带着数据访问。这样web资源就能处理各自数据<br>
-|方法|备注|<br>
-|-----|-----|<br>
-|response.addCookie()|可以多次调用|<br>
-|request.getCookies()||<br>
-|new Cookie(name,value)|一个cookie里面有一个名字,一个值，多个cookie名字可以相同|<br>
-|cookie.getName()|获得cookie名称|<br>
-|cookie.getValue()|获得cookie值|<br>
-|cookie.getMaxAge()|得到cookie保留时间单位秒，-1表示保留到浏览器关闭|<br>
-|cookie.setMaxAge(expiry)|设置cookie缓存到硬盘上的时间单位秒，浏览器关闭之后保留的时间|<br>
-|cookie.setMaxAge(0)|删除cookie|<br>
-|cookie.getPath()|默认值是写Cookie程序的访问路径，URI。名字和path都相同为同一个cookie|</p>
+<p>Cookie是客服端技术，把用户数据存储在各自浏览器，再去访问带着数据访问。这样web资源就能处理各自数据</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>response.addCookie()</td>
+<td>可以多次调用</td>
+</tr>
+<tr>
+<td>request.getCookies()</td>
+<td></td>
+</tr>
+<tr>
+<td>new Cookie(name,value)</td>
+<td>一个cookie里面有一个名字,一个值，多个cookie名字可以相同</td>
+</tr>
+<tr>
+<td>cookie.getName()</td>
+<td>获得cookie名称</td>
+</tr>
+<tr>
+<td>cookie.getValue()</td>
+<td>获得cookie值</td>
+</tr>
+<tr>
+<td>cookie.getMaxAge()</td>
+<td>得到cookie保留时间单位秒，-1表示保留到浏览器关闭</td>
+</tr>
+<tr>
+<td>cookie.setMaxAge(expiry)</td>
+<td>设置cookie缓存到硬盘上的时间单位秒，浏览器关闭之后保留的时间</td>
+</tr>
+<tr>
+<td>cookie.setMaxAge(0)</td>
+<td>删除cookie</td>
+</tr>
+<tr>
+<td>cookie.getPath()</td>
+<td>默认值是写Cookie程序的访问路径，URI。名字和path都相同为同一个cookie</td>
+</tr>
+</tbody></table>
 
 <h6 id="servletdemo1">ServletDemo1</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class CookieDemo1 extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CookieDemo1</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+        <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">"yyyy-MM-dd HH:mm:ss"</span><span class="o">);</span>
+        <span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">cookies</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cookies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="s">"lastAccessTime"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">())){</span>
+                <span class="kt">long</span> <span class="n">time</span><span class="o">=</span><span class="n">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">());</span>
+                <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sdf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">(</span><span class="n">time</span><span class="o">));</span>
+                <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"您最后访问时间:"</span><span class="o">+</span><span class="n">s</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">Cookie</span> <span class="n">c</span><span class="o">=</span><span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">"lastAccessTime"</span><span class="o">,</span><span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">getTime</span><span class="o">()+</span><span class="s">""</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">5</span><span class="o">);</span><span class="c1">//浏览器关闭保留5分钟</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">());</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"&lt;a href='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/clean'&gt;clean&lt;/a&gt;"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="servletdemo2">ServletDemo2</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CookieDemo2</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+        <span class="n">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">"yyyy-MM-dd HH:mm:ss"</span><span class="o">);</span>
+        <span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">cookies</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cookies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="s">"lastAccessTime"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">())){</span>
+                <span class="kt">long</span> <span class="n">time</span><span class="o">=</span><span class="n">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">());</span>
+                <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sdf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">(</span><span class="n">time</span><span class="o">));</span>
+                <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"您最后访问时间:"</span><span class="o">+</span><span class="n">s</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="cleanservlet">CleanServlet</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CleanSevlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">Cookie</span> <span class="n">cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">"lastAccessTime"</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">());</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">cookie</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="loginservlet">LoginServlet</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">username</span><span class="o">=</span><span class="s">""</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">checked</span><span class="o">=</span><span class="s">""</span><span class="o">;</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">cookies</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cookies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+        <span class="k">if</span><span class="o">(</span><span class="s">"username"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">())){</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">();</span>
+            <span class="n">checked</span><span class="o">=</span><span class="s">"checked='checked'"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;form action='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/dologin' method=post&gt;"</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"用户名:&lt;input type='text' name='username' value='"</span><span class="o">+</span><span class="n">username</span><span class="o">+</span><span class="s">"'/&gt;&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"密码:&lt;input type='password' name='pwd'/&gt;&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"记住密码:&lt;input type='checkbox' name='remember'"</span><span class="o">+</span><span class="n">checked</span><span class="o">+</span><span class="s">"/&gt;&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;input type='submit' value='登陆'/&gt;&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;/form&gt;"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="dologinservlet">doLoginServlet</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">username</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"username"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">pwd</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"pwd"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">remember</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"remember"</span><span class="o">);</span>
+    <span class="n">Cookie</span> <span class="n">cookie</span><span class="o">=</span><span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">"username"</span><span class="o">,</span><span class="n">username</span><span class="o">);</span>
+    <span class="n">cookie</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">());</span>
+    <span class="k">if</span><span class="o">(</span><span class="s">"tom"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">username</span><span class="o">)&amp;&amp;</span><span class="s">"123"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">pwd</span><span class="o">)){</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"登陆成功"</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"登陆失败"</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"refresh"</span><span class="o">,</span><span class="s">"2;url="</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/login"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">remember</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">cookie</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<h5 id="浏览记录">浏览记录</h5>
+
+<h6 id="dbtuil">dbtuil</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DBUtil</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">user</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">password</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="n">ResourceBundle</span> <span class="n">rb</span><span class="o">=</span><span class="n">ResourceBundle</span><span class="o">.</span><span class="na">getBundle</span><span class="o">(</span><span class="s">"dbutil"</span><span class="o">);</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">rb</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"url"</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">=</span><span class="n">rb</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">rb</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">classDriver</span><span class="o">=</span><span class="n">rb</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"classDriver"</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">classDriver</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span><span class="n">user</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="bookservice">BookService</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BookService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findBookByIds</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ids</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"查询IDS:"</span><span class="o">+</span><span class="n">ids</span><span class="o">);</span>
+        <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">ids</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">ids</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">0</span><span class="o">)</span>
+            <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"select * from book where id in ("</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="nl">id:</span><span class="n">ids</span><span class="o">){</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">deleteCharAt</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">")"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"SQL语句:"</span><span class="o">+</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span> <span class="n">DBUtil</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+            <span class="n">PreparedStatement</span> <span class="n">ps</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+            <span class="n">ResultSet</span> <span class="n">rs</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+        <span class="o">){</span>
+            <span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+                <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">price</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"price"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"author"</span><span class="o">);</span>
+                <span class="n">books</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">,</span><span class="n">book</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findBookByIdsOrder</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ids</span><span class="o">){</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">ids</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">ids</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">0</span><span class="o">)</span>
+            <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+        <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Book</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="n">findBookByIds</span><span class="o">(</span><span class="n">ids</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="nl">id:</span><span class="n">ids</span><span class="o">){</span>
+            <span class="n">books</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">id</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findBookByIdsOrder</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">ids</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">ids</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">ids</span><span class="o">.</span><span class="na">length</span><span class="o">==</span><span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+            <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">findBookByIdsOrder</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">ids</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="nf">findAllBooks</span><span class="o">(){</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span> <span class="n">DBUtil</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+            <span class="n">PreparedStatement</span> <span class="n">ps</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="s">"select * from book"</span><span class="o">);</span>
+            <span class="n">ResultSet</span> <span class="n">rs</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+        <span class="o">){</span>
+            <span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+                <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">price</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"price"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"author"</span><span class="o">);</span>
+                <span class="n">books</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">books</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Book</span> <span class="nf">findBookById</span><span class="o">(</span><span class="n">String</span> <span class="n">id</span><span class="o">){</span>
+        <span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">=</span> <span class="n">DBUtil</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+            <span class="n">PreparedStatement</span> <span class="n">ps</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="s">"select * from book where id ="</span><span class="o">+</span><span class="n">id</span><span class="o">);</span>
+            <span class="n">ResultSet</span> <span class="n">rs</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+        <span class="o">){</span>
+            <span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
+                <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">price</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"price"</span><span class="o">);</span>
+                <span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">=</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"author"</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">book</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="showallbooksservlet">ShowAllBooksServlet</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShowAllBooksServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"本网站有以下好书:&lt;br/&gt;"</span><span class="o">);</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">BookService</span><span class="o">.</span><span class="na">findAllBooks</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">Book</span> <span class="nl">book:</span><span class="n">books</span><span class="o">){</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;a href='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/showBookDetail?id="</span><span class="o">+</span>
+                    <span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">+</span><span class="s">"'&gt;"</span><span class="o">+</span><span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">+</span><span class="s">"&lt;/a&gt;&lt;br/&gt;"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;hr/&gt;您最近浏览过的书有:&lt;br/&gt;"</span><span class="o">);</span>
+        <span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">cookies</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cookies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="s">"historyBookId"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">())){</span>
+                <span class="n">String</span> <span class="n">ids</span><span class="o">=</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">();</span>
+                <span class="n">String</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">ids</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"-"</span><span class="o">);</span>
+                <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">historyBooks</span> <span class="o">=</span> <span class="n">BookService</span><span class="o">.</span><span class="na">findBookByIdsOrder</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+                <span class="k">for</span><span class="o">(</span><span class="n">Book</span> <span class="nl">book:</span><span class="n">historyBooks</span><span class="o">){</span>
+                    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"&lt;a href='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/showBookDetail?id="</span><span class="o">+</span>
+                            <span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">+</span><span class="s">"'&gt;"</span><span class="o">+</span><span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">+</span><span class="s">"&lt;/a&gt;&lt;br/&gt;"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="showbookdetail">ShowBookDetail</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShowBookDetail</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="n">BookService</span><span class="o">.</span><span class="na">findBookById</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">book</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">historyId</span><span class="o">=</span><span class="n">id</span><span class="o">;</span>
+        <span class="n">Cookie</span><span class="o">[]</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">cookies</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cookies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="s">"historyBookId"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">())){</span>
+                <span class="n">String</span> <span class="n">ids</span><span class="o">=</span><span class="n">cookies</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">();</span>
+                <span class="n">String</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">ids</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"-"</span><span class="o">);</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">arr</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">=</span><span class="k">new</span> <span class="n">LinkedList</span><span class="o">();</span>
+                    <span class="n">list</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">arr</span><span class="o">));</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">historyId</span><span class="o">))</span>
+                        <span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">historyId</span><span class="o">);</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">10</span><span class="o">)</span><span class="c1">//最多保存10本书</span>
+                        <span class="n">list</span><span class="o">.</span><span class="na">removeLast</span><span class="o">();</span>
+                    <span class="n">list</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">historyId</span><span class="o">);</span>
+                    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+                    <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="nl">s:</span><span class="n">list</span><span class="o">){</span>
+                        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+                        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"-"</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="n">sb</span><span class="o">.</span><span class="na">deleteCharAt</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">);</span>
+                    <span class="n">historyId</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"浏览记录id:"</span><span class="o">+</span><span class="n">historyId</span><span class="o">);</span>
+        <span class="n">Cookie</span> <span class="n">cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cookie</span><span class="o">(</span><span class="s">"historyBookId"</span><span class="o">,</span> <span class="n">historyId</span><span class="o">);</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">());</span>
+        <span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">);</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">cookie</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="httpsession">HttpSession</h2>
+
+<blockquote>
+<p>session是服务器技术，服务器为每一个用户创建一个独享的HttpSession,可以把各自数据放在各自session中，其他web资源可取出数据服务用户</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>request.getSession()</td>
+<td>获得session,为每个浏览器创建一个session</td>
+</tr>
+<tr>
+<td>session.setAttribute(name,object)</td>
+<td>存储数据</td>
+</tr>
+<tr>
+<td>session.removeAttribute(name)</td>
+<td>删除数据</td>
+</tr>
+<tr>
+<td>session.getSessionId()</td>
+<td>不同的浏览器sessionId不同,会将sessionId存储到Cookie(&quot;JSESSIONID&quot;)</td>
+</tr>
+<tr>
+<td>session.getAttributeNames()</td>
+<td>获得所有存储数据的名称</td>
+</tr>
+<tr>
+<td>seesion.setMaxInactiveInterval(秒)</td>
+<td>设置session的有效时间，默认30分钟</td>
+</tr>
+<tr>
+<td>session.getMaxInactiveInterval()</td>
+<td>获得session有效时间</td>
+</tr>
+<tr>
+<td>session.invalidate()</td>
+<td>使此会话无效,销毁session,退出的时候调用</td>
+</tr>
+<tr>
+<td>session.getSession(create)</td>
+<td>true和getSession()一样 flase找不到返回null不会创建session</td>
+</tr>
+<tr>
+<td>&lt;session-config&gt;&lt;session-timeout&gt;1&lt;/session-timeout&gt;&lt;/session-config&gt;</td>
+<td>web.xml中配置,session有效时间 单位分钟</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//SessionDemo1</span>
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+    <span class="n">HttpSession</span> <span class="n">session</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">//SessionDemo2</span>
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">HttpSession</span> <span class="n">session</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">name</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"不能直接访问次资源"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">().</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="购物车">购物车</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//所有商品 ShowAllBooksServlet</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"本网站有以下好书&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">BookService</span><span class="o">.</span><span class="na">findAllBooks</span><span class="o">();</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Book</span> <span class="nl">book:</span><span class="n">books</span><span class="o">){</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">+</span><span class="s">"\t\t&lt;a href='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/addCart?id="</span><span class="o">+</span><span class="n">book</span><span class="o">.</span><span class="na">id</span><span class="o">+</span><span class="s">"'&gt;添加到购物车&lt;/a&gt;&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"&lt;a href='"</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/showCart'&gt;查看购物车&lt;/a&gt;"</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//添加购物车 AddCartServlet</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ids</span> <span class="o">=</span> <span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;)</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">ids</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span>
+        <span class="n">ids</span><span class="o">=</span><span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">ids</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">id</span><span class="o">))</span>
+        <span class="n">ids</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="n">ids</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">,</span><span class="n">ids</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"添加购物车成功"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"refresh"</span><span class="o">,</span><span class="s">"1;url="</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/showBooks"</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//购物车商品 ShowCartServlet</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ids</span><span class="o">=</span> <span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;)</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">);</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">books</span> <span class="o">=</span> <span class="n">BookService</span><span class="o">.</span><span class="na">findBookByIdsOrder</span><span class="o">(</span><span class="n">ids</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"购物车有以下商品&lt;br/&gt;"</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">books</span><span class="o">==</span><span class="kc">null</span><span class="o">||</span><span class="n">books</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">0</span><span class="o">){</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"购物车为空!"</span><span class="o">);</span>
+        <span class="c1">//resp.sendRedirect();</span>
+        <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"refresh"</span><span class="o">,</span><span class="s">"2;url="</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="na">getContextPath</span><span class="o">()+</span><span class="s">"/showBooks"</span><span class="o">);</span>
+        <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Book</span> <span class="nl">book:</span><span class="n">books</span><span class="o">){</span>
+       <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">book</span><span class="o">.</span><span class="na">name</span><span class="o">+</span><span class="s">"&lt;br/&gt;"</span><span class="o">);</span>
+   <span class="o">}</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">setMaxInactiveInterval</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="getsession-内部执行原理">getSession()内部执行原理</h2>
+
+<p>1.获取名称为JSESSIONID的Cookie<br>
+2.没有这样的Cookie，创建一个新的HtppSession,分配唯一的SessionID,并且向客户端写一个名字为JSESSIONID=sessionId的Cookie<br>
+3.获取Cookie从根据ID查找HttpSession对象 （找到继续服务，找不到从2开始)</p>
+
+<h2 id="session的状态">Session的状态</h2>
+
+<p>1.创建</p>
+
+<blockquote>
+<p>第一次访问动态资源就会创建 request.getSession()触发<br>
+2.活着<br>
+应用运行时活着<br>
+3.钝化(搁置),活化(激活)<br>
+当内存溢出或者 服务器重启，服务器会序列化Session存盘这个过程叫钝化</p>
+
+<p>存盘路径:tomcat/work/Catalina/localhost/项目名称/Sessions.ser</p>
+</blockquote>
+
+<h2 id="验证验证码">验证验证码</h2>
+
+<h6 id="login-jsp">login.jsp</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html;charset=UTF-8"</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">"en"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">登录</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+        <span class="kd">function</span> <span class="nx">changeCode</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"img"</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">src</span><span class="o">=</span><span class="s2">"/codeServlet?time="</span><span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+        <span class="p">}</span>
+
+    <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;%</span>
+        <span class="nb">String</span> <span class="nx">msg</span> <span class="o">=</span> <span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="nx">request</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"msg"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">msg</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+            <span class="nx">out</span><span class="p">.</span><span class="nx">print</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+    <span class="o">%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"/doLogin"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+    <span class="err">用户名:</span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"username"</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+    <span class="err">密码:</span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"password"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"password"</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+        <span class="err">验证码:</span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"code"</span><span class="o">&gt;&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"/codeServlet"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"changeCode()"</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"javascript:changeCode()"</span><span class="o">&gt;</span><span class="err">看不清换一张</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"submit"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"登录"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
+<h6 id="codeservlet">CodeServlet</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">ValidateCode</span> <span class="n">validateCode</span><span class="o">=</span><span class="k">new</span> <span class="n">ValidateCode</span><span class="o">(</span><span class="mi">110</span><span class="o">,</span><span class="mi">25</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">9</span><span class="o">);</span>
+    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"scode"</span><span class="o">,</span><span class="n">validateCode</span><span class="o">.</span><span class="na">getCode</span><span class="o">());</span>
+    <span class="n">validateCode</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">resp</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="dologin">DoLogin</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">req</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/html;charset=utf-8"</span><span class="o">);</span>
+    <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">username</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"username"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">password</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">code</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"code"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">scode</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"scode"</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="s">"tom"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">username</span><span class="o">)&amp;&amp;</span><span class="s">"123"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">password</span><span class="o">)){</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">scode</span><span class="o">)){</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"msg"</span><span class="o">,</span><span class="s">"验证码错误"</span><span class="o">);</span>
+            <span class="n">req</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"login.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"登陆成功"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="客户端禁用cookie后的会话数据保存">客户端禁用Cookie后的会话数据保存</h2>
+
+<blockquote>
+<p>方案一:在主页给出提示，请不要禁用您的Cookie<br>
+方案二:URL重写，必须对网站所有地址重写<br>
+<a href="http://url">http://url</a> --&gt; <a href="http://url;JSESSIONID=111">http://url;JSESSIONID=111</a>;<br>
+response.encodeUrl(url)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">out.println("&lt;a href='"+resp.encodeURL(req.getContextPath()+"/showCart")+"'&gt;查看购物车&lt;/a&gt;");
 </code></pre></div></blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html;charset=utf-8");
-    PrintWriter out = resp.getWriter();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Cookie[] cookies = req.getCookies();
-    for(int i=0;cookies!=null&amp;&amp;i&lt;cookies.length;i++){
-        if("lastAccessTime".equals(cookies[i].getName())){
-            long time=Long.parseLong(cookies[i].getValue());
-            String s = sdf.format(new Date(time));
-            out.println("您最后访问时间:"+s);
-        }
-    }
-    Cookie c=new Cookie("lastAccessTime",new Date().getTime()+"");
-    c.setMaxAge(60*5);//浏览器关闭保留5分钟
-    c.setPath(req.getContextPath());
-    resp.addCookie(c);
-    out.println("&lt;a href='"+req.getContextPath()+"/clean'&gt;clean&lt;/a&gt;");
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### ServletDemo2
-</code></pre></div>
-<p>public class CookieDemo2 extends HttpServlet {<br>
-    @Override<br>
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        doGet(req,resp);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html;charset=utf-8");
-    PrintWriter out = resp.getWriter();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Cookie[] cookies = req.getCookies();
-    for(int i=0;cookies!=null&amp;&amp;i&lt;cookies.length;i++){
-        if("lastAccessTime".equals(cookies[i].getName())){
-            long time=Long.parseLong(cookies[i].getValue());
-            String s = sdf.format(new Date(time));
-            out.println("您最后访问时间:"+s);
-        }
-    }
-
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### CleanServlet
-</code></pre></div>
-<p>public class CleanSevlet extends HttpServlet {<br>
-    @Override<br>
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        doGet(req,resp);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Cookie cookie = new Cookie("lastAccessTime", "");
-    cookie.setMaxAge(0);
-    cookie.setPath(req.getContextPath());
-    resp.addCookie(cookie);
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### LoginServlet
-</code></pre></div>
-<p>protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    Cookie[] cookies = req.getCookies();<br>
-    String username=&quot;&quot;;<br>
-    String checked=&quot;&quot;;<br>
-    for(int i=0;cookies!=null&amp;&amp;i<cookies.length;i++){<br>
-        if("username".equals(cookies[i].getName())){<br>
-            username=cookies[i].getValue();<br>
-            checked="checked='checked'";<br>
-        }<br>
-    }<br>
-    out.write("<form action='"+req.getContextPath()+"/dologin' method=post>&quot;);<br>
-    out.write(&quot;用户名:<input type='text' name='username' value='"+username+"'/><br/>&quot;);<br>
-    out.write(&quot;密码:<input type='password' name='pwd'/><br/>&quot;);<br>
-    out.write(&quot;记住密码:<input type='checkbox' name='remember'"+checked+"/><br/>&quot;);<br>
-    out.write(&quot;<input type='submit' value='登陆'/><br/>&quot;);<br>
-    out.write(&quot;</form>&quot;);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### doLoginServlet
-</code></pre></div>
-<p>protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    String username = req.getParameter(&quot;username&quot;);<br>
-    String pwd = req.getParameter(&quot;pwd&quot;);<br>
-    String remember = req.getParameter(&quot;remember&quot;);<br>
-    Cookie cookie=new Cookie(&quot;username&quot;,username);<br>
-    cookie.setPath(req.getContextPath());<br>
-    if(&quot;tom&quot;.equals(username)&amp;&amp;&quot;123&quot;.equals(pwd)){<br>
-        out.println(&quot;登陆成功&quot;);<br>
-    }else {<br>
-        out.println(&quot;登陆失败&quot;);<br>
-        resp.setHeader(&quot;refresh&quot;,&quot;2;url=&quot;+req.getContextPath()+&quot;/login&quot;);<br>
-    }<br>
-    if(remember!=null){<br>
-        cookie.setMaxAge(Integer.MAX_VALUE);<br>
-    }else {<br>
-        cookie.setMaxAge(0);<br>
-    }<br>
-    resp.addCookie(cookie);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 浏览记录
-###### dbtuil
-</code></pre></div>
-<p>public class DBUtil {<br>
-    private static final String url;<br>
-    private static final String user;<br>
-    private static final String password;<br>
-    static {<br>
-        ResourceBundle rb=ResourceBundle.getBundle(&quot;dbutil&quot;);<br>
-        url=rb.getString(&quot;url&quot;);<br>
-        user=rb.getString(&quot;user&quot;);<br>
-        password=rb.getString(&quot;password&quot;);<br>
-        String classDriver=rb.getString(&quot;classDriver&quot;);<br>
-        try {<br>
-            Class.forName(classDriver);<br>
-        } catch (ClassNotFoundException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-    public static Connection getConnection() throws SQLException {<br>
-        return DriverManager.getConnection(url,user,password);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### BookService
-</code></pre></div>
-<p>public class BookService {<br>
-    public static HashMap<String,Book> findBookByIds(List<String> ids){<br>
-        System.out.println(&quot;查询IDS:&quot;+ids);<br>
-        HashMap<String, Book> books = new HashMap&lt;&gt;();<br>
-        if(ids==null||ids.size()==0)<br>
-            return books;<br>
-        StringBuilder sb = new StringBuilder();<br>
-        sb.append(&quot;select * from book where id in (&quot;);<br>
-        for(String id:ids){<br>
-            sb.append(id);<br>
-            sb.append(&quot;,&quot;);<br>
-        }<br>
-        sb.deleteCharAt(sb.length()-1);<br>
-        sb.append(&quot;)&quot;);<br>
-        System.out.println(&quot;SQL语句:&quot;+sb.toString());<br>
-        try(Connection conn= DBUtil.getConnection();<br>
-            PreparedStatement ps=conn.prepareStatement(sb.toString());<br>
-            ResultSet rs=ps.executeQuery();<br>
-        ){<br>
-            while(rs.next()){<br>
-                Book book = new Book();<br>
-                book.id=rs.getString(&quot;id&quot;);<br>
-                book.name=rs.getString(&quot;name&quot;);<br>
-                book.price=rs.getString(&quot;price&quot;);<br>
-                book.author=rs.getString(&quot;author&quot;);<br>
-                books.put(book.id,book);<br>
-            }<br>
-        }catch (Exception e){<br>
-            e.printStackTrace();<br>
-        }<br>
-        return books;<br>
-    }<br>
-    public static ArrayList<Book> findBookByIdsOrder(List<String> ids){<br>
-        ArrayList<Book> books = new ArrayList&lt;&gt;();<br>
-        if(ids==null||ids.size()==0)<br>
-            return books;<br>
-        HashMap<String, Book> map = findBookByIds(ids);<br>
-        for(String id:ids){<br>
-            books.add(map.get(id));<br>
-        }<br>
-        return books;<br>
-    }<br>
-    public static ArrayList<Book> findBookByIdsOrder(String... ids){<br>
-        if(ids==null||ids.length==0) {<br>
-            ArrayList<Book> books = new ArrayList&lt;&gt;();<br>
-            return books;<br>
-        }<br>
-        return findBookByIdsOrder(Arrays.asList(ids));<br>
-    }<br>
-    public static ArrayList<Book> findAllBooks(){<br>
-        ArrayList<Book> books = new ArrayList&lt;&gt;();<br>
-        try(Connection conn= DBUtil.getConnection();<br>
-            PreparedStatement ps=conn.prepareStatement(&quot;select * from book&quot;);<br>
-            ResultSet rs=ps.executeQuery();<br>
-        ){<br>
-            while(rs.next()){<br>
-                Book book = new Book();<br>
-                book.id=rs.getString(&quot;id&quot;);<br>
-                book.name=rs.getString(&quot;name&quot;);<br>
-                book.price=rs.getString(&quot;price&quot;);<br>
-                book.author=rs.getString(&quot;author&quot;);<br>
-                books.add(book);<br>
-            }<br>
-        }catch (Exception e){<br>
-            e.printStackTrace();<br>
-        }<br>
-        return books;<br>
-    }<br>
-    public static Book findBookById(String id){<br>
-        try(Connection conn= DBUtil.getConnection();<br>
-            PreparedStatement ps=conn.prepareStatement(&quot;select * from book where id =&quot;+id);<br>
-            ResultSet rs=ps.executeQuery();<br>
-        ){<br>
-            while(rs.next()){<br>
-                Book book = new Book();<br>
-                book.id=rs.getString(&quot;id&quot;);<br>
-                book.name=rs.getString(&quot;name&quot;);<br>
-                book.price=rs.getString(&quot;price&quot;);<br>
-                book.author=rs.getString(&quot;author&quot;);<br>
-                return book;<br>
-            }<br>
-        }catch (Exception e){<br>
-            e.printStackTrace();<br>
-        }<br>
-        return null;<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### ShowAllBooksServlet
-</code></pre></div>
-<p>public class ShowAllBooksServlet extends HttpServlet {<br>
-    @Override<br>
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        doGet(req,resp);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.setContentType("text/html;charset=utf-8");
-    PrintWriter out = resp.getWriter();
-    out.write("本网站有以下好书:&lt;br/&gt;");
-    ArrayList&lt;Book&gt; books = BookService.findAllBooks();
-    for(Book book:books){
-        out.write("&lt;a href='"+req.getContextPath()+"/showBookDetail?id="+
-                book.id+"'&gt;"+book.name+"&lt;/a&gt;&lt;br/&gt;");
-    }
-    out.write("&lt;hr/&gt;您最近浏览过的书有:&lt;br/&gt;");
-    Cookie[] cookies = req.getCookies();
-    for(int i=0;cookies!=null&amp;&amp;i&lt;cookies.length;i++){
-        if("historyBookId".equals(cookies[i].getName())){
-            String ids=cookies[i].getValue();
-            String[] arr = ids.split("-");
-            ArrayList&lt;Book&gt; historyBooks = BookService.findBookByIdsOrder(arr);
-            for(Book book:historyBooks){
-                out.write("&lt;a href='"+req.getContextPath()+"/showBookDetail?id="+
-                        book.id+"'&gt;"+book.name+"&lt;/a&gt;&lt;br/&gt;");
-            }
-        }
-    }
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### ShowBookDetail
-</code></pre></div>
-<p>public class ShowBookDetail extends HttpServlet {<br>
-    @Override<br>
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        doGet(req,resp);<br>
-    }<br>
-    @Override<br>
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-        req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-        resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-        String id = req.getParameter(&quot;id&quot;);<br>
-        Book book = BookService.findBookById(id);<br>
-        PrintWriter out = resp.getWriter();<br>
-        out.println(book);<br>
-        String historyId=id;<br>
-        Cookie[] cookies = req.getCookies();<br>
-        for(int i=0;cookies!=null&amp;&amp;i<cookies.length;i++){<br>
-            if("historyBookId".equals(cookies[i].getName())){<br>
-                String ids=cookies[i].getValue();<br>
-                String[] arr = ids.split("-");<br>
-                if(arr!=null) {<br>
-                    LinkedList<String> list=new LinkedList();<br>
-                    list.addAll(Arrays.asList(arr));<br>
-                    if(list.contains(historyId))<br>
-                        list.remove(historyId);<br>
-                    if(list.size()==10)//最多保存10本书<br>
-                        list.removeLast();<br>
-                    list.addFirst(historyId);<br>
-                    StringBuilder sb = new StringBuilder();<br>
-                    for(String s:list){<br>
-                        sb.append(s);<br>
-                        sb.append(&quot;-&quot;);<br>
-                    }<br>
-                    sb.deleteCharAt(sb.length()-1);<br>
-                    historyId=sb.toString();<br>
-                }<br>
-            }<br>
-        }<br>
-        System.out.println(&quot;浏览记录id:&quot;+historyId);<br>
-        Cookie cookie = new Cookie(&quot;historyBookId&quot;, historyId);<br>
-        cookie.setPath(req.getContextPath());<br>
-        cookie.setMaxAge(Integer.MAX_VALUE);<br>
-        resp.addCookie(cookie);<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-
-## HttpSession
-&gt; session是服务器技术，服务器为每一个用户创建一个独享的HttpSession,可以把各自数据放在各自session中，其他web资源可取出数据服务用户
-|方法|备注|
-|-----|-----|
-|request.getSession()|获得session,为每个浏览器创建一个session|
-|session.setAttribute(name,object)|存储数据|
-|session.removeAttribute(name)|删除数据|
-|session.getSessionId()|不同的浏览器sessionId不同,会将sessionId存储到Cookie("JSESSIONID")|
-|session.getAttributeNames()|获得所有存储数据的名称|
-|seesion.setMaxInactiveInterval(秒)|设置session的有效时间，默认30分钟|
-|session.getMaxInactiveInterval()|获得session有效时间|
-|session.invalidate()|使此会话无效,销毁session,退出的时候调用|
-|session.getSession(create)|true和getSession()一样 flase找不到返回null不会创建session|
-|&amp;lt;session-config&amp;gt;&amp;lt;session-timeout&amp;gt;1&amp;lt;/session-timeout&amp;gt;&amp;lt;/session-config&amp;gt;|web.xml中配置,session有效时间 单位分钟|
-
-</code></pre></div>
-<p>//SessionDemo1<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    String name = req.getParameter(&quot;name&quot;);<br>
-    HttpSession session=req.getSession();<br>
-    session.setAttribute(&quot;name&quot;,name);<br>
-}<br>
-//SessionDemo2<br>
-@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    HttpSession session=req.getSession();<br>
-    String name= (String) session.getAttribute(&quot;name&quot;);<br>
-    if(name!=null){<br>
-        System.out.println(name);<br>
-    }else {<br>
-        System.out.println(&quot;不能直接访问次资源&quot;);<br>
-    }<br>
-    resp.getWriter().println(name);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 购物车
-</code></pre></div>
-<p>//所有商品 ShowAllBooksServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    out.println(&quot;本网站有以下好书<br/>&quot;);<br>
-    ArrayList<Book> books = BookService.findAllBooks();<br>
-    for(Book book:books){<br>
-        out.println(book.name+&quot;\t\t<a href='"+req.getContextPath()+"/addCart?id="+book.id+"'>添加到购物车</a><br/>&quot;);<br>
-    }<br>
-    out.println(&quot;<a href='"+req.getContextPath()+"/showCart'>查看购物车</a>&quot;);<br>
-}</p>
-
-<p>//添加购物车 AddCartServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    String id=req.getParameter(&quot;id&quot;);<br>
-    HttpSession session = req.getSession();<br>
-    LinkedList<String> ids = (LinkedList<String>) session.getAttribute(&quot;cart&quot;);<br>
-    if(ids==null)<br>
-        ids=new LinkedList&lt;&gt;();<br>
-    if(ids.contains(id))<br>
-        ids.remove(id);<br>
-    ids.addFirst(id);<br>
-    session.setAttribute(&quot;cart&quot;,ids);<br>
-    out.println(&quot;添加购物车成功&quot;);<br>
-    resp.setHeader(&quot;refresh&quot;,&quot;1;url=&quot;+req.getContextPath()+&quot;/showBooks&quot;);<br>
-}</p>
-
-<p>//购物车商品 ShowCartServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    HttpSession session = req.getSession();<br>
-    List<String> ids= (List<String>) session.getAttribute(&quot;cart&quot;);<br>
-    ArrayList<Book> books = BookService.findBookByIdsOrder(ids);<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    out.println(&quot;购物车有以下商品<br/>&quot;);<br>
-    if(books==null||books.size()==0){<br>
-        out.println(&quot;购物车为空!&quot;);<br>
-        //resp.sendRedirect();<br>
-        resp.setHeader(&quot;refresh&quot;,&quot;2;url=&quot;+req.getContextPath()+&quot;/showBooks&quot;);<br>
-        return;<br>
-    }<br>
-    for(Book book:books){<br>
-       out.println(book.name+&quot;<br/>&quot;);<br>
-   }<br>
-    session.setMaxInactiveInterval(5);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## getSession()内部执行原理
-1.获取名称为JSESSIONID的Cookie
-2.没有这样的Cookie，创建一个新的HtppSession,分配唯一的SessionID,并且向客户端写一个名字为JSESSIONID=sessionId的Cookie
-3.获取Cookie从根据ID查找HttpSession对象 （找到继续服务，找不到从2开始)
-
-## Session的状态
-1.创建
-&gt; 第一次访问动态资源就会创建 request.getSession()触发
-2.活着
-&gt; 应用运行时活着
-3.钝化(搁置),活化(激活)
-&gt;当内存溢出或者 服务器重启，服务器会序列化Session存盘这个过程叫钝化
-&gt;
-&gt;存盘路径:tomcat/work/Catalina/localhost/项目名称/Sessions.ser
-
-## 验证验证码
-###### login.jsp
-</code></pre></div>
-<p>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;<br>
-<html lang="en"><br>
-<head><br>
-    <title>登录</title><br>
-    <script type="text/javascript"><br>
-        function changeCode() {<br>
-            document.getElementsByTagName(&quot;img&quot;)[0].src=&quot;/codeServlet?time=&quot;+new Date().getTime();<br>
-        }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;/script&gt;
-</code></pre></div>
-<p></head><br>
-<body><br>
-    &lt;%<br>
-        String msg = (String) request.getAttribute(&quot;msg&quot;);<br>
-        if(msg!=null)<br>
-            out.print(msg);<br>
-    %&gt;<br>
-    <form action="/doLogin" method="post"><br>
-    用户名:<input type="text" name="username"><br/><br>
-    密码:<input type="password" name="password"><br/><br>
-        验证码:<input type="text" name="code"><img src="/codeServlet" onclick="changeCode()"><a href="javascript:changeCode()">看不清换一张</a><br/><br>
-    <input type="submit" value="登录"><br>
-    </form><br>
-</body></p>
-
-<p></html></p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### CodeServlet
-</code></pre></div>
-<p>@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    ValidateCode validateCode=new ValidateCode(110,25,4,9);<br>
-    HttpSession session = req.getSession();<br>
-    session.setAttribute(&quot;scode&quot;,validateCode.getCode());<br>
-    validateCode.write(resp.getOutputStream());<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### DoLogin
-</code></pre></div>
-<p>@Override<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    PrintWriter out = resp.getWriter();<br>
-    String username=req.getParameter(&quot;username&quot;);<br>
-    String password=req.getParameter(&quot;password&quot;);<br>
-    String code=req.getParameter(&quot;code&quot;);<br>
-    String scode = (String) req.getSession().getAttribute(&quot;scode&quot;);<br>
-    if(&quot;tom&quot;.equals(username)&amp;&amp;&quot;123&quot;.equals(password)){<br>
-        if (!code.equals(scode)){<br>
-            req.setAttribute(&quot;msg&quot;,&quot;验证码错误&quot;);<br>
-            req.getRequestDispatcher(&quot;login.jsp&quot;).forward(req,resp);<br>
-        }else {<br>
-            out.println(&quot;登陆成功&quot;);<br>
-        }<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 客户端禁用Cookie后的会话数据保存
-&gt;方案一:在主页给出提示，请不要禁用您的Cookie
-&gt;方案二:URL重写，必须对网站所有地址重写
-&gt;http://url --&gt; http://url;JSESSIONID=111;
-&gt;response.encodeUrl(url)
-</code></pre></div>
-<p>out.println(&quot;<a href='"+resp.encodeURL(req.getContextPath()+"/showCart")+"'>查看购物车</a>&quot;);</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -761,9 +839,10 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

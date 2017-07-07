@@ -17,7 +17,7 @@ description: webService
 * 下载地址
 http://cxf.apache.org/download.html
 * 包结构介绍
-```
+```html
 目录结构
    |
    |--bin 二进制文件
@@ -64,7 +64,7 @@ http://cxf.apache.org/download.html
 
 ##### 服务端
 
-```java
+```javascript
 // 第一步：导入Jar包 cxf里面所有的jar包
 // 第二步：创建SEI接口，要加入@WebService
 @WebService
@@ -126,7 +126,7 @@ public class WeatherServer {
 拦截器必须加到服务端，在服务端发布之前
 获取拦截器列表，将自己的拦截器加入列表中
 
-```java
+```javascript
 public class WeatherServer {
     public static void main(String[] args) {
         JaxWsServerFactoryBean jaxWsServerFactoryBean=new JaxWsServerFactoryBean();
@@ -156,7 +156,7 @@ Wsdl2java支持SOAP1.1和SOAP1.2
 * 第二步：使用说明书，使用生成代码调用服务端
 	JaxWsProxyFactoryBean调用服务端，设置2个参数，1.设置服务接口；2.设置服务地址
 
-```java
+```javascript
 public class WeatherClient {
 
 	public static void main(String[] args) {
@@ -178,7 +178,7 @@ public class WeatherClient {
 
 #### CXF+Spring整合发布SOAP协议的服务
 ##### 服务端
-```java
+```xml
 // 第一步：创建web项目（引入jar包）
 // 第二步：创建SEI接口
 // 第三步：创建SEI实现类
@@ -550,7 +550,7 @@ public class HttpClient {
 ```
 
 ##### 综合案例 集成公网手机号归属地查询服务
-```
+```javascript
 // 第一步：创建web项目（引入jar包）
 // 第二步：生成公网客户端代码
 // 第三步：创建SEI接口

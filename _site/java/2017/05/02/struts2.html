@@ -125,7 +125,7 @@
 Struts2处在表现层，是表现层框架</p>
 
 <h6 id="struts2配置">struts2配置</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">struts2
+<div class="highlight"><pre><code class="language-html" data-lang="html">struts2
     |
     |--apps
         |
@@ -146,7 +146,7 @@ Struts2处在表现层，是表现层框架</p>
                     |--xwork-core-xx.jar xwork的核心jar,也是struts2的核心jar包
 </code></pre></div>
 <h6 id="执行过程">执行过程</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">客户浏览器
+<div class="highlight"><pre><code class="language-html" data-lang="html">客户浏览器
     |
     |--启动Tomcat服务器
         |
@@ -165,7 +165,7 @@ Struts2处在表现层，是表现层框架</p>
                 |--根据返回值，找到name对应的结果视图
 </code></pre></div>
 <h6 id="struts2配置加载顺序">struts2配置加载顺序</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">struts2按如下顺序加载配置
+<div class="highlight"><pre><code class="language-html" data-lang="html">struts2按如下顺序加载配置
     |--default-properties 该文件保存在struts2-core-xx.jar中org.apache.struts包里面
     |--struts-defaults.xml 该文件保存在struts2-core-xxx.jar中
     |--struts-plugin 该文件保存在struts2-xxx-xx.jar中
@@ -175,7 +175,7 @@ Struts2处在表现层，是表现层框架</p>
 后面的配置覆盖前面的配置
 </code></pre></div>
 <h6 id="struts2-配置">struts2 配置</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">Package:定义一个struts的包按照面向对象的思想管理(分模块开发)
+<div class="highlight"><pre><code class="language-html" data-lang="html">Package:定义一个struts的包按照面向对象的思想管理(分模块开发)
     |
     |--name属性:包的名称，在配置文件中唯一
     |
@@ -218,14 +218,14 @@ Struts2处在表现层，是表现层框架</p>
                      |    |
                      |    |--转发同包(相同名称空间)的另一个动作
                      |    |     |
-                     |    |     |--&lt;result name="success" type="chain"&gt;actionName&lt;/result&gt;
+                     |    |     |--<span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>actionName<span class="nt">&lt;/result&gt;</span>
                      |    |
                      |    |--转发不同包的另一个动作
                      |          |
-                     |          |--&lt;result name="success" type="chain"&gt;
-                     |                      &lt;param name="namespace"&gt;struts&lt;/param&gt;
-                     |                      &lt;param name="actionName"&gt;other_action&lt;/param&gt;
-                     |              &lt;/result&gt;
+                     |          |--<span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>
+                     |                      <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"namespace"</span><span class="nt">&gt;</span>struts<span class="nt">&lt;/param&gt;</span>
+                     |                      <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"actionName"</span><span class="nt">&gt;</span>other_action<span class="nt">&lt;/param&gt;</span>
+                     |              <span class="nt">&lt;/result&gt;</span>
                      |
                      |--redirectAction 重定向到另一个动作
                           |
@@ -296,194 +296,194 @@ public class Demo2Action {
 </tbody></table>
 
 <h6 id="创建action第二种方法">创建Action第二种方法</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//struts.xml
-&lt;action name="action3" class="com.itheima.web.action.Demo3Action"&gt;
-    &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-&lt;/action&gt;
-
-//Demo3Action
-import com.opensymphony.xwork2.Action;
-public class Demo3Action implements Action {
-    @Override
-    public String execute() throws Exception {
-        return SUCCESS;
-    }
-}
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"action3"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo3Action"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/success.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>
+<span class="c1">//Demo3Action</span>
+<span class="kr">import</span> <span class="nx">com</span><span class="p">.</span><span class="nx">opensymphony</span><span class="p">.</span><span class="nx">xwork2</span><span class="p">.</span><span class="nx">Action</span><span class="p">;</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo3Action</span> <span class="kr">implements</span> <span class="nx">Action</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">execute</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h6 id="创建action的第三种方式">创建Action的第三种方式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//开发中一般采用这种方式
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//开发中一般采用这种方式</span>
 
-//struts.xml
-&lt;action name="action4" class="com.itheima.web.action.Demo4Action"&gt;
-    &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-&lt;/action&gt;
-
-//Demo4Action
-import com.opensymphony.xwork2.ActionSupport;
-public class Demo4Action extends ActionSupport {
-}
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"action4"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo4Action"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/success.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>
+<span class="c1">//Demo4Action</span>
+<span class="kr">import</span> <span class="nx">com</span><span class="p">.</span><span class="nx">opensymphony</span><span class="p">.</span><span class="nx">xwork2</span><span class="p">.</span><span class="nx">ActionSupport</span><span class="p">;</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo4Action</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span> <span class="p">{</span>
+<span class="p">}</span>
 </code></pre></div>
 <h6 id="修改设置默认action动作类">修改设置默认action动作类</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;package name="p2" extends="struts-default"&gt;
-    &lt;!--修改默认动作类--&gt;
-    &lt;default-class-ref class="com.itheima.web.action.Demo4Action"&gt;&lt;/default-class-ref&gt;
-    &lt;!--访问默认的动作类和动作方法的配置 默认的动作类是:ActionSupport.
-        它是在struts-default.xml的配置文件中定义看--&gt;
-    &lt;action name="defaultAction"&gt;
-        &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-    &lt;/action&gt;
-&lt;/package&gt;
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">"p2"</span> <span class="na">extends=</span><span class="s">"struts-default"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--修改默认动作类--&gt;</span>
+    <span class="nt">&lt;default-class-ref</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.Demo4Action"</span><span class="nt">&gt;&lt;/default-class-ref&gt;</span>
+    <span class="c">&lt;!--访问默认的动作类和动作方法的配置 默认的动作类是:ActionSupport.
+        它是在struts-default.xml的配置文件中定义看--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"defaultAction"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span><span class="nt">&gt;</span>/success.jsp<span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+<span class="nt">&lt;/package&gt;</span>
 </code></pre></div>
 <h6 id="原始配置方式">原始配置方式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//struts.xml
-&lt;package name="p2" extends="struts-default"&gt;
-    &lt;action name="addUser" class="com.itheima.web.action.UserAction" method="addUser"&gt;
-        &lt;result name="success"&gt;/addUser.jsp&lt;/result&gt;
-    &lt;/action&gt;
-    &lt;action name="updateUser" class="com.itheima.web.action.UserAction" method="updateUser"&gt;
-        &lt;result name="success"&gt;/updateUser.jsp&lt;/result&gt;
-    &lt;/action&gt;
-    &lt;action name="deleteUser" class="com.itheima.web.action.UserAction" method="deleteUser"&gt;
-        &lt;result name="success"&gt;/deleteUser.jsp&lt;/result&gt;
-    &lt;/action&gt;
-    &lt;action name="findUser" class="com.itheima.web.action.UserAction" method="findUser"&gt;
-        &lt;result name="success"&gt;/findUser.jsp&lt;/result&gt;
-    &lt;/action&gt;
-&lt;/package&gt;
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"addUser"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.UserAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"addUser"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/addUser.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"updateUser"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.UserAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"updateUser"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/updateUser.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"deleteUser"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.UserAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"deleteUser"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/deleteUser.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"findUser"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.UserAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"findUser"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/findUser.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span>
+
+<span class="c1">//UserAction</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">UserAction</span> <span class="kr">extends</span> <span class="nx">ActionSupport</span><span class="p">{</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">addUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"添加用户"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">updateUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"修改用户"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">deleteUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"删除用户"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">findUser</span><span class="p">(){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"查找用户"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 
-//UserAction
-public class UserAction extends ActionSupport{
-    public String addUser(){
-        System.out.println("添加用户");
-        return SUCCESS;
-    }
-    public String updateUser(){
-        System.out.println("修改用户");
-        return SUCCESS;
-    }
-    public String deleteUser(){
-        System.out.println("删除用户");
-        return SUCCESS;
-    }
-    public String findUser(){
-        System.out.println("查找用户");
-        return SUCCESS;
-    }
-}
-
-
-//userIndex.jsp
-&lt;a href="${pageContext.request.contextPath}/addUser.abcd"&gt;添加用户&lt;/a&gt;&lt;br&gt;
-&lt;a href="${pageContext.request.contextPath}/updateUser.abcd"&gt;修改用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/deleteUser.abcd"&gt;删除用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/findUser.abcd"&gt;查找用户&lt;/a&gt;
-</code></pre></div>
+<span class="c1">//userIndex.jsp</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/addUser.abcd"</span><span class="o">&gt;</span><span class="err">添加用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/updateUser.abcd"</span><span class="o">&gt;</span><span class="err">修改用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/deleteUser.abcd"</span><span class="o">&gt;</span><span class="err">删除用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/findUser.abcd"</span><span class="o">&gt;</span><span class="err">查找用户</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="通配符配置action">通配符配置action</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//index.jsp
-&lt;a href="${pageContext.request.contextPath}/add_User.abcd"&gt;添加用户&lt;/a&gt;&lt;br&gt;
-&lt;a href="${pageContext.request.contextPath}/update_User.abcd"&gt;修改用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/delete_User.abcd"&gt;删除用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/find_User.abcd"&gt;查找用户&lt;/a&gt;
-
-//struts.xml
-&lt;package name="p2" extends="struts-default"&gt;
-    &lt;!--使用通配符，配置动作方法
-        *表示动作名称,当有何动作名称相匹配的时候可以用{出现的位置来代替}
-    --&gt;
-    &lt;action name="*_*" class="com.itheima.web.action.{2}Action" method="{1}{2}"&gt;
-        &lt;result name="success"&gt;/{1}{2}.jsp&lt;/result&gt;
-    &lt;/action&gt;
-&lt;/package&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//index.jsp</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/add_User.abcd"</span><span class="o">&gt;</span><span class="err">添加用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/update_User.abcd"</span><span class="o">&gt;</span><span class="err">修改用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/delete_User.abcd"</span><span class="o">&gt;</span><span class="err">删除用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/find_User.abcd"</span><span class="o">&gt;</span><span class="err">查找用户</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">使用通配符，配置动作方法</span>
+        <span class="o">*</span><span class="err">表示动作名称</span><span class="p">,</span><span class="err">当有何动作名称相匹配的时候可以用</span><span class="p">{</span><span class="err">出现的位置来代替</span><span class="p">}</span>
+    <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"*_*"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.{2}Action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"{1}{2}"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/</span><span class="se">{1}{2}</span><span class="sr">.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="动态方法调用">动态方法调用</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//userIndex.jsp
-&lt;!--动态方法调用
-    动作名称!动作方法.action
-    动作名称!动作方法
---&gt;
-&lt;a href="${pageContext.request.contextPath}/user!addUser.abcd"&gt;添加用户&lt;/a&gt;&lt;br&gt;
-&lt;a href="${pageContext.request.contextPath}/user!updateUser.abcd"&gt;修改用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/user!deleteUser.abcd"&gt;删除用户&lt;/a&gt;&lt;br/&gt;
-&lt;a href="${pageContext.request.contextPath}/user!findUser.abcd"&gt;查找用户&lt;/a&gt;&lt;br/&gt;
-&lt;/body&gt;
-
-//struts.xml
-&lt;struts&gt;
-    &lt;!--开启动态方法调用--&gt;
-    &lt;constant name="struts.enable.DynamicMethodInvocation" value="true"&gt;&lt;/constant&gt;
-     &lt;package name="p2" extends="struts-default"&gt;
-        &lt;!--动态调用方法--&gt;
-        &lt;action name="user" class="com.itheima.web.action.UserAction"&gt;
-            &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-        &lt;/action&gt;
-    &lt;/package&gt;
-&lt;/struts&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//userIndex.jsp</span>
+<span class="c">&lt;!--</span><span class="err">动态方法调用</span>
+    <span class="err">动作名称</span><span class="o">!</span><span class="err">动作方法</span><span class="p">.</span><span class="nx">action</span>
+    <span class="err">动作名称</span><span class="o">!</span><span class="err">动作方法</span>
+<span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/user!addUser.abcd"</span><span class="o">&gt;</span><span class="err">添加用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/user!updateUser.abcd"</span><span class="o">&gt;</span><span class="err">修改用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/user!deleteUser.abcd"</span><span class="o">&gt;</span><span class="err">删除用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/user!findUser.abcd"</span><span class="o">&gt;</span><span class="err">查找用户</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;br/</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span>
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="nx">struts</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">开启动态方法调用</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">constant</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"struts.enable.DynamicMethodInvocation"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;&lt;</span><span class="sr">/constant</span><span class="err">&gt;
+</span>     <span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+        <span class="c">&lt;!--</span><span class="err">动态调用方法</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"user"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.UserAction"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span><span class="o">&gt;</span><span class="sr">/success.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/struts</span><span class="err">&gt;
+</span></code></pre></div>
 <h2 id="结果视图">结果视图</h2>
 
 <h6 id="常见结果视图类型">常见结果视图类型</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;package name="p2" extends="struts-default"&gt;
-    &lt;!--重定向--&gt;
-    &lt;action name="action5" class="com.itheima.web.action.Demo5Action"&gt;
-        &lt;result name="success" type="redirect"&gt;/success.jsp&lt;/result&gt;
-    &lt;/action&gt;
-    &lt;!--转发同包的另一个动作--&gt;
-    &lt;action name="action5_chain_1"&gt;
-        &lt;result name="success" type="chain"&gt;other_action&lt;/result&gt;
-    &lt;/action&gt;
-    &lt;!--转发不同包的另一个动作--&gt;
-    &lt;action name="action5_chain_2"&gt;
-        &lt;result name="success" type="chain"&gt;
-            &lt;param name="namespace"&gt;struts&lt;/param&gt;
-            &lt;param name="actionName"&gt;other_action&lt;/param&gt;
-        &lt;/result&gt;
-    &lt;/action&gt;
-    &lt;!--另一个动作--&gt;
-    &lt;action name="other_action"&gt;
-        &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-    &lt;/action&gt;
-&lt;/package&gt;
-&lt;package name="p3" extends="struts-default" namespace="/struts"&gt;
-        &lt;!--另一个动作--&gt;
-    &lt;action name="other_action"&gt;
-        &lt;result name="success"&gt;/success.jsp&lt;/result&gt;
-    &lt;/action&gt;
-&lt;/package&gt;
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">"p2"</span> <span class="na">extends=</span><span class="s">"struts-default"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--重定向--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"action5"</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.Demo5Action"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"redirect"</span><span class="nt">&gt;</span>/success.jsp<span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+    <span class="c">&lt;!--转发同包的另一个动作--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"action5_chain_1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>other_action<span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+    <span class="c">&lt;!--转发不同包的另一个动作--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"action5_chain_2"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span> <span class="na">type=</span><span class="s">"chain"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"namespace"</span><span class="nt">&gt;</span>struts<span class="nt">&lt;/param&gt;</span>
+            <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"actionName"</span><span class="nt">&gt;</span>other_action<span class="nt">&lt;/param&gt;</span>
+        <span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+    <span class="c">&lt;!--另一个动作--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"other_action"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span><span class="nt">&gt;</span>/success.jsp<span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+<span class="nt">&lt;/package&gt;</span>
+<span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">"p3"</span> <span class="na">extends=</span><span class="s">"struts-default"</span> <span class="na">namespace=</span><span class="s">"/struts"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--另一个动作--&gt;</span>
+    <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"other_action"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">name=</span><span class="s">"success"</span><span class="nt">&gt;</span>/success.jsp<span class="nt">&lt;/result&gt;</span>
+    <span class="nt">&lt;/action&gt;</span>
+<span class="nt">&lt;/package&gt;</span>
 </code></pre></div>
 <h2 id="自定义结果视图">自定义结果视图</h2>
 
 <blockquote>
 <p>在包中配置的结果视图，只能在包和其子包中使用<br>
 在action内部的结果视图，是只能当前动作类使用</p>
-<div class="highlight"><pre><code class="language-" data-lang="">自定义结果类型
-    |
-    |--创建一个继承StrutsResultSupport的实例，重写doExecute的方法
-    |
-    |--Servlet的中怎么写，doExecute中还怎么写
-    |
-    |--在struts.xml中配置
-            |
-            |--&lt;package name="p4" extends="struts-default"&gt;
-                    &lt;result-types&gt;
-                        &lt;result-type name="captcha" class="com.itheima.web.result.CAPTCHResult"&gt;&lt;/result-type&gt;
-                    &lt;/result-types&gt;
-                    &lt;action name="captchaAction"&gt;
-                        &lt;result name="success" type="captcha"&gt;
-                            &lt;param name="width"&gt;400&lt;/param&gt;
-                            &lt;param name="height"&gt;200&lt;/param&gt;
-                        &lt;/result&gt;
-                    &lt;/action&gt;
-               &lt;/package&gt;
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">public class CAPTCHResult extends StrutsResultSupport {
-    private int width;
-    private int height;
-    @Override
-    protected void doExecute(String s, ActionInvocation actionInvocation) throws Exception {
-        ValidateCode code = new ValidateCode(width, height, 4, 10);
-        HttpServletResponse resp = ServletActionContext.getResponse();
-        code.write(resp.getOutputStream());
-    }
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="err">自定义结果类型</span>
+    <span class="o">|</span>
+    <span class="o">|--</span><span class="err">创建一个继承</span><span class="nx">StrutsResultSupport</span><span class="err">的实例，重写</span><span class="nx">doExecute</span><span class="err">的方法</span>
+    <span class="o">|</span>
+    <span class="o">|--</span><span class="nx">Servlet</span><span class="err">的中怎么写，</span><span class="nx">doExecute</span><span class="err">中还怎么写</span>
+    <span class="o">|</span>
+    <span class="o">|--</span><span class="err">在</span><span class="nx">struts</span><span class="p">.</span><span class="nx">xml</span><span class="err">中配置</span>
+            <span class="o">|</span>
+            <span class="o">|--&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p4"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">result</span><span class="o">-</span><span class="nx">types</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">result</span><span class="o">-</span><span class="nx">type</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"captcha"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.result.CAPTCHResult"</span><span class="o">&gt;&lt;</span><span class="sr">/result-type</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="sr">/result-types</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"captchaAction"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"captcha"</span><span class="o">&gt;</span>
+                            <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"width"</span><span class="o">&gt;</span><span class="mi">400</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>                            <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"height"</span><span class="o">&gt;</span><span class="mi">200</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">CAPTCHResult</span> <span class="kr">extends</span> <span class="nx">StrutsResultSupport</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="kr">int</span> <span class="nx">width</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="kr">int</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">protected</span> <span class="k">void</span> <span class="nx">doExecute</span><span class="p">(</span><span class="nb">String</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">ActionInvocation</span> <span class="nx">actionInvocation</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="nx">ValidateCode</span> <span class="nx">code</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ValidateCode</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="nx">HttpServletResponse</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getResponse</span><span class="p">();</span>
+        <span class="nx">code</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">getOutputStream</span><span class="p">());</span>
+    <span class="p">}</span>
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">public int getWidth() {
     return width;
@@ -516,101 +516,98 @@ public void setHeight(int height) {
     </action><br>
 </package></p>
 <div class="highlight"><pre><code class="language-" data-lang="">###### 定义全局的结果视图
+```xml
+&lt;package name="myDefault" extends="struts-default" abstract="true"&gt;
+    &lt;result-types&gt;
+        &lt;result-type name="captcha" class="com.itheima.web.result.CAPTCHResult"&gt;&lt;/result-type&gt;
+    &lt;/result-types&gt;
+    &lt;global-results&gt;
+        &lt;!--结果视图的查找顺序，先找当前的，如果没有再找全局的--&gt;
+        &lt;result name="success" type="captcha"&gt;
+            &lt;param name="width"&gt;400&lt;/param&gt;
+            &lt;param name="height"&gt;200&lt;/param&gt;
+        &lt;/result&gt;
+    &lt;/global-results&gt;
+&lt;/package&gt;
+
+&lt;package name="p4" extends="myDefault"&gt;
+    &lt;action name="captchaAction"&gt;&lt;/action&gt;
+&lt;/package&gt;
 </code></pre></div>
-<p><package name="myDefault" extends="struts-default" abstract="true"><br>
-    <result-types><br>
-        <result-type name="captcha" class="com.itheima.web.result.CAPTCHResult"></result-type><br>
-    </result-types><br>
-    <global-results><br>
-        &lt;!--结果视图的查找顺序，先找当前的，如果没有再找全局的--&gt;<br>
-        <result name="success" type="captcha"><br>
-            <param name="width">400</param><br>
-            <param name="height">200</param><br>
-        </result><br>
-    </global-results><br>
-</package></p>
+<h2 id="获取servletapi">获取ServletAPI</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**
+ * 获取ServletApi
+ * 第一种方式:使用ServletActionContext 推荐
+ * 第二种方式:使用是依赖注入的形式,把我们想要的对象注入进来
+ *  是由一个拦截器为我们做的(ServletConfig)
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo6Action</span> <span class="kd">extends</span> <span class="n">ActionSupport</span> <span class="kd">implements</span> <span class="n">ServletRequestAware</span><span class="o">,</span><span class="n">ServletResponseAware</span><span class="o">,</span><span class="n">ServletContextAware</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">ServletContext</span> <span class="n">application</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">execute</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ServletContext</span> <span class="n">application</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+        <span class="n">HttpServletRequest</span> <span class="n">req</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">();</span>
+        <span class="n">HttpServletResponse</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getResponse</span><span class="o">();</span>
+        <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">req</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">resp</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
 
-<p><package name="p4" extends="myDefault"><br>
-    <action name="captchaAction"></action><br>
-</package></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 获取ServletAPI
+        <span class="c1">//第二种方式</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">application</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">req</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">resp</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">());</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setServletRequest</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">req</span><span class="o">=</span><span class="n">req</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setServletResponse</span><span class="o">(</span><span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">resp</span><span class="o">=</span><span class="n">resp</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setServletContext</span><span class="o">(</span><span class="n">ServletContext</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">application</span><span class="o">=</span><span class="n">application</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>/**</p>
+<p>分文件编写框架配置文件</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//struts.xml
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd"&gt;</span>
+<span class="nt">&lt;struts&gt;</span>
+    <span class="nt">&lt;constant</span> <span class="na">name=</span><span class="s">"struts.devMode"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/constant&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">"struts_user.xml"</span><span class="nt">&gt;&lt;/include&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">"struts_role.xml"</span><span class="nt">&gt;&lt;/include&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">"struts_module.xml"</span><span class="nt">&gt;&lt;/include&gt;</span>
+<span class="nt">&lt;/struts&gt;</span>
 
-<ul>
-<li>获取ServletApi</li>
-<li>第一种方式:使用ServletActionContext 推荐</li>
-<li>第二种方式:使用是依赖注入的形式,把我们想要的对象注入进来</li>
-<li><p>是由一个拦截器为我们做的(ServletConfig)<br>
-*/<br>
-public class Demo6Action extends ActionSupport implements ServletRequestAware,ServletResponseAware,ServletContextAware {<br>
-private HttpServletRequest req;<br>
-private HttpServletResponse resp;<br>
-private ServletContext application;<br>
-@Override<br>
-public String execute() throws Exception {<br>
-    ServletContext application = ServletActionContext.getServletContext();<br>
-    HttpServletRequest req = ServletActionContext.getRequest();<br>
-    HttpServletResponse resp = ServletActionContext.getResponse();<br>
-    HttpSession session = req.getSession();<br>
-    System.out.println(application);<br>
-    System.out.println(req);<br>
-    System.out.println(resp);<br>
-    System.out.println(session);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//第二种方式
-System.out.println(this.application);
-System.out.println(this.req);
-System.out.println(this.resp);
-System.out.println(this.req.getSession());
-return null;
-</code></pre></div>
-<p>}</p>
 
-<p>@Override<br>
-public void setServletRequest(HttpServletRequest req) {<br>
-    this.req=req;<br>
-}</p>
-
-<p>@Override<br>
-public void setServletResponse(HttpServletResponse resp) {<br>
-    this.resp=resp;<br>
-}</p>
-
-<p>@Override<br>
-public void setServletContext(ServletContext application) {<br>
-    this.application=application;<br>
-}<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##
-分文件编写框架配置文件
-</code></pre></div>
-<p>//struts.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;!DOCTYPE struts PUBLIC<br>
-    &quot;-//Apache Software Foundation//DTD Struts Configuration 2.3//EN&quot;<br>
-    &quot;<a href="http://struts.apache.org/dtds/struts-2.3.dtd%22%3E">http://struts.apache.org/dtds/struts-2.3.dtd&quot;&gt;</a><br>
-<struts><br>
-<constant name="struts.devMode" value="true"></constant><br>
-<include file="struts_user.xml"></include><br>
-<include file="struts_role.xml"></include><br>
-<include file="struts_module.xml"></include><br>
-</struts></p></li>
-</ul>
-
-<p>//struts_user.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;!DOCTYPE struts PUBLIC<br>
-        &quot;-//Apache Software Foundation//DTD Struts Configuration 2.3//EN&quot;<br>
-        &quot;<a href="http://struts.apache.org/dtds/struts-2.3.dtd%22%3E">http://struts.apache.org/dtds/struts-2.3.dtd&quot;&gt;</a><br>
-<struts><br>
-    <package name="p1" extends="struts_default" namespace="/user"><br>
-        <action name="addUser" class="com.itheima.web.action.UserAction" method="addUser"></action><br>
-        <action name="updateUser" class="com.itheima.web.action.UserAction" method="updateUser"></action><br>
-        <action name="deleteUser" class="com.itheima.web.action.UserAction" method="deleteUser"></action><br>
-        <action name="findUser" class="com.itheima.web.action.UserAction" method="findUser"></action><br>
-    </package><br>
-</struts></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+//struts_user.xml
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd"&gt;</span>
+<span class="nt">&lt;struts&gt;</span>
+    <span class="nt">&lt;package</span> <span class="na">name=</span><span class="s">"p1"</span> <span class="na">extends=</span><span class="s">"struts_default"</span> <span class="na">namespace=</span><span class="s">"/user"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"addUser"</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.UserAction"</span> <span class="na">method=</span><span class="s">"addUser"</span><span class="nt">&gt;&lt;/action&gt;</span>
+        <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"updateUser"</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.UserAction"</span> <span class="na">method=</span><span class="s">"updateUser"</span><span class="nt">&gt;&lt;/action&gt;</span>
+        <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"deleteUser"</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.UserAction"</span> <span class="na">method=</span><span class="s">"deleteUser"</span><span class="nt">&gt;&lt;/action&gt;</span>
+        <span class="nt">&lt;action</span> <span class="na">name=</span><span class="s">"findUser"</span> <span class="na">class=</span><span class="s">"com.itheima.web.action.UserAction"</span> <span class="na">method=</span><span class="s">"findUser"</span><span class="nt">&gt;&lt;/action&gt;</span>
+    <span class="nt">&lt;/package&gt;</span>
+<span class="nt">&lt;/struts&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -763,9 +760,10 @@ public void setServletContext(ServletContext application) {<br>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

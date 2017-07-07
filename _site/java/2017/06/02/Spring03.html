@@ -183,111 +183,111 @@ PROPAGATION_NESTED ，nested ，嵌套<br>
 <p>掌握：PROPAGATION_REQUIRED、PROPAGATION_REQUIRES_NEW、PROPAGATION_NESTED</p>
 
 <h2 id="案例：转账">案例：转账</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface AccountService {
-    //转账
-    public void transfer(String outer, String inner, int money);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AccountService</span> <span class="o">{</span>
+    <span class="c1">//转账</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="n">String</span> <span class="n">outer</span><span class="o">,</span> <span class="n">String</span> <span class="n">inner</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">);</span>
+<span class="o">}</span>
 
-public interface AccountDao {
-    //汇款
-    void out(String outer, int money);
-    //收款
-    void in(String in, int money);
-}
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AccountDao</span> <span class="o">{</span>
+    <span class="c1">//汇款</span>
+    <span class="kt">void</span> <span class="nf">out</span><span class="o">(</span><span class="n">String</span> <span class="n">outer</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">);</span>
+    <span class="c1">//收款</span>
+    <span class="kt">void</span> <span class="nf">in</span><span class="o">(</span><span class="n">String</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">);</span>
+<span class="o">}</span>
 
-//applicationContext.xml
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
+<span class="c1">//applicationContext.xml</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns:</span><span class="n">context</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="nl">xmlns:</span><span class="n">aop</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
-    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
-        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
-        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
-        &lt;property name="user" value="root"/&gt;
-        &lt;property name="password" value="root"/&gt;
+       http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"dataSource"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"user"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"accountDao"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">dao</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountDaoImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
     &lt;/bean&gt;
-    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
-    &lt;/bean&gt;
-    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
-        &lt;property name="dao" ref="accountDao"/&gt;
+    &lt;bean id="</span><span class="n">accountService</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">service</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountServiceImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dao</span><span class="s">" ref="</span><span class="n">accountDao</span><span class="s">"/&gt;
     &lt;/bean&gt;
 &lt;/beans&gt;
 
 public class TestApp {
     @Test
     public void demo01(){
-        String path="applicationContext.xml";
+        String path="</span><span class="n">applicationContext</span><span class="o">.</span><span class="na">xml</span><span class="s">";
         ApplicationContext appcontext = new ClassPathXmlApplicationContext(path);
-        AccountService service= (AccountService) appcontext.getBean("accountService");
-        service.transfer("jack","rose",1000);
-    }
-}
+        AccountService service= (AccountService) appcontext.getBean("</span><span class="n">accountService</span><span class="s">");
+        service.transfer("</span><span class="n">jack</span><span class="s">","</span><span class="n">rose</span><span class="err">"</span><span class="o">,</span><span class="mi">1000</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="手动管理事">手动管理事</h2>
 
 <blockquote>
 <p>spring底层使用 TransactionTemplate 事务模板进行操作。<br>
 操作</p>
-<div class="highlight"><pre><code class="language-" data-lang="">1.service 需要获得 TransactionTemplate
-2.spring 配置模板，并注入给service
-3.模板需要注入事务管理器
-4.配置事务管理器：DataSourceTransactionManager ，需要注入DataSource
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="mi">1</span><span class="o">.</span><span class="na">service</span> <span class="err">需要获得</span> <span class="n">TransactionTemplate</span>
+<span class="mi">2</span><span class="o">.</span><span class="na">spring</span> <span class="err">配置模板，并注入给</span><span class="n">service</span>
+<span class="mi">3</span><span class="o">.</span><span class="err">模板需要注入事务管理器</span>
+<span class="mi">4</span><span class="o">.</span><span class="err">配置事务管理器：</span><span class="n">DataSourceTransactionManager</span> <span class="err">，需要注入</span><span class="n">DataSource</span>
 </code></pre></div></blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
-    @Override
-    public void out(String outer, int money) {
-        this.getJdbcTemplate().update("update account set money = money - ? where username = ?",money,outer);
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountDaoImpl</span> <span class="kd">extends</span> <span class="n">JdbcDaoSupport</span> <span class="kd">implements</span> <span class="n">AccountDao</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">out</span><span class="o">(</span><span class="n">String</span> <span class="n">outer</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money = money - ? where username = ?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">outer</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void in(String in, int money) {
-        this.getJdbcTemplate().update("update account set money = money + ? where username = ?",money,in);
-    }
-}
-
-
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">in</span><span class="o">(</span><span class="n">String</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money = money + ? where username = ?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">in</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-//applicationContext.xml
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
+
+
+<span class="c1">//applicationContext.xml</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns:</span><span class="n">context</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="nl">xmlns:</span><span class="n">aop</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
-    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
-        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
-        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
-        &lt;property name="user" value="root"/&gt;
-        &lt;property name="password" value="root"/&gt;
+       http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"dataSource"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"user"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"accountDao"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">dao</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountDaoImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
     &lt;/bean&gt;
-    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
-    &lt;/bean&gt;
-    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
-        &lt;property name="dao" ref="accountDao"/&gt;
-        &lt;property name="transactionTemplate" ref="transactionTemplate"/&gt;
+    &lt;bean id="</span><span class="n">accountService</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">service</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountServiceImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dao</span><span class="s">" ref="</span><span class="n">accountDao</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">transactionTemplate</span><span class="s">" ref="</span><span class="n">transactionTemplate</span><span class="s">"/&gt;
     &lt;/bean&gt;
     &lt;!--创建模板--&gt;
-    &lt;bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate"&gt;
-        &lt;property name="transactionManager" ref="transactionManager"/&gt;
+    &lt;bean id="</span><span class="n">transactionTemplate</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">transaction</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">TransactionTemplate</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">transactionManager</span><span class="s">" ref="</span><span class="n">transactionManager</span><span class="s">"/&gt;
     &lt;/bean&gt;
     &lt;!--配置事务管理器 事务从Connection获得，连接从连接池获取--&gt;
-    &lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;
+    &lt;bean id="</span><span class="n">transactionManager</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">DataSourceTransactionManager</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="err">"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beans</span><span class="o">&gt;</span>
 </code></pre></div>
 <h2 id="工厂bean-生成代理：半自动">工厂bean 生成代理：半自动</h2>
 
@@ -296,70 +296,70 @@ public class TestApp {
 getBean() 获得代理对象<br>
 spring 配置一个代理</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
-    @Override
-    public void out(String outer, int money) {
-        this.getJdbcTemplate().update("update account set money = money - ? where username = ?",money,outer);
-    }
-    @Override
-    public void in(String in, int money) {
-        this.getJdbcTemplate().update("update account set money = money + ? where username = ?",money,in);
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountDaoImpl</span> <span class="kd">extends</span> <span class="n">JdbcDaoSupport</span> <span class="kd">implements</span> <span class="n">AccountDao</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">out</span><span class="o">(</span><span class="n">String</span> <span class="n">outer</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money = money - ? where username = ?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">outer</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">in</span><span class="o">(</span><span class="n">String</span> <span class="n">in</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set money = money + ? where username = ?"</span><span class="o">,</span><span class="n">money</span><span class="o">,</span><span class="n">in</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-public class AccountServiceImpl implements AccountService {
-    private AccountDao dao;
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="n">AccountService</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">AccountDao</span> <span class="n">dao</span><span class="o">;</span>
 
-    public void setDao(AccountDao dao) {
-        this.dao = dao;
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDao</span><span class="o">(</span><span class="n">AccountDao</span> <span class="n">dao</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dao</span> <span class="o">=</span> <span class="n">dao</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    @Override
-    public void transfer(String outer, String inner, int money) {
-        dao.out(outer,money);
-        int i=10/0;
-        dao.in(inner,money);
-    }
-}
-
-
-public class TestApp {
-    @Test
-    public void demo01(){
-        String path="applicationContext.xml";
-        ApplicationContext appcontext = new ClassPathXmlApplicationContext(path);
-        AccountService service= (AccountService) appcontext.getBean("proxyAccountService");
-        service.transfer("jack","ross",1000);
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="n">String</span> <span class="n">outer</span><span class="o">,</span> <span class="n">String</span> <span class="n">inner</span><span class="o">,</span> <span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">dao</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="n">outer</span><span class="o">,</span><span class="n">money</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">10</span><span class="o">/</span><span class="mi">0</span><span class="o">;</span>
+        <span class="n">dao</span><span class="o">.</span><span class="na">in</span><span class="o">(</span><span class="n">inner</span><span class="o">,</span><span class="n">money</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-//beans.xml
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestApp</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo01</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">path</span><span class="o">=</span><span class="s">"applicationContext.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">appcontext</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">path</span><span class="o">);</span>
+        <span class="n">AccountService</span> <span class="n">service</span><span class="o">=</span> <span class="o">(</span><span class="n">AccountService</span><span class="o">)</span> <span class="n">appcontext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"proxyAccountService"</span><span class="o">);</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">transfer</span><span class="o">(</span><span class="s">"jack"</span><span class="o">,</span><span class="s">"ross"</span><span class="o">,</span><span class="mi">1000</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="c1">//beans.xml</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns:</span><span class="n">context</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="nl">xmlns:</span><span class="n">aop</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd"&gt;
-    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
-        &lt;property name="driverClass" value="com.mysql.jdbc.Driver"/&gt;
-        &lt;property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;
-        &lt;property name="user" value="root"/&gt;
-        &lt;property name="password" value="root"/&gt;
+       http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"dataSource"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day03?characterEncoding=utf-8"/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"user"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"accountDao"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">dao</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountDaoImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
     &lt;/bean&gt;
-    &lt;bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;bean id="</span><span class="n">accountService</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">service</span><span class="o">.</span><span class="na">impl</span><span class="o">.</span><span class="na">AccountServiceImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dao</span><span class="s">" ref="</span><span class="n">accountDao</span><span class="s">"/&gt;
     &lt;/bean&gt;
-    &lt;bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"&gt;
-        &lt;property name="dao" ref="accountDao"/&gt;
-    &lt;/bean&gt;
-    &lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
+    &lt;bean id="</span><span class="n">transactionManager</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">datasource</span><span class="o">.</span><span class="na">DataSourceTransactionManager</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
     &lt;/bean&gt;
     &lt;!--service代理对象
     target:目标类
@@ -370,20 +370,20 @@ public class TestApp {
     格式:PROPAGATION,ISOLATION,readOnly,-Exception,+Exception
          传播行为       事务级别   是否只读   异常回滚   异常提交
     --&gt;
-    &lt;bean id="proxyAccountService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
-        &lt;property name="target" ref="accountService"/&gt;
-        &lt;property name="proxyInterfaces" value="com.itheima.service.AccountService"/&gt;
-        &lt;property name="transactionManager" ref="transactionManager"/&gt;
-        &lt;property name="transactionAttributes"&gt;
+    &lt;bean id="</span><span class="n">proxyAccountService</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">transaction</span><span class="o">.</span><span class="na">interceptor</span><span class="o">.</span><span class="na">TransactionProxyFactoryBean</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">target</span><span class="s">" ref="</span><span class="n">accountService</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">proxyInterfaces</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">service</span><span class="o">.</span><span class="na">AccountService</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">transactionManager</span><span class="s">" ref="</span><span class="n">transactionManager</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">transactionAttributes</span><span class="s">"&gt;
             &lt;props&gt;
-                &lt;prop key="transfer"&gt;PROPAGATION_REQUIRED,ISOLATION_DEFAULT,+ java.lang.ArithmeticException&lt;/prop&gt;
-            &lt;/props&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;
+                &lt;prop key="</span><span class="n">transfer</span><span class="err">"</span><span class="o">&gt;</span><span class="n">PROPAGATION_REQUIRED</span><span class="o">,</span><span class="n">ISOLATION_DEFAULT</span><span class="o">,+</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">ArithmeticException</span><span class="o">&lt;/</span><span class="n">prop</span><span class="o">&gt;</span>
+            <span class="o">&lt;/</span><span class="n">props</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beans</span><span class="o">&gt;</span>
 </code></pre></div>
 <h2 id="aop配置事务">AOP配置事务</h2>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
        <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
        <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
@@ -435,18 +435,18 @@ public class TestApp {
 <p>1.配置事务管理器，将并事务管理器交予spring<br>
 2.在目标类或目标方法添加注解即可 @Transactional</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">
-&lt;!-- 4 事务管理 --&gt;
-    &lt;!-- 4.1 事务管理器 --&gt;
-    &lt;bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
-        &lt;property name="dataSource" ref="dataSource"&gt;&lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;!-- 4.2 将管理器交予spring
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">
+<span class="c">&lt;!-- 4 事务管理 --&gt;</span>
+    <span class="c">&lt;!-- 4.1 事务管理器 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"txManager"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="c">&lt;!-- 4.2 将管理器交予spring
         * transaction-manager 配置事务管理器
         * proxy-target-class
             true ： 底层强制使用cglib 代理
-    --&gt;
-    &lt;tx:annotation-driven transaction-manager="txManager"/&gt;
+    --&gt;</span>
+    <span class="nt">&lt;tx:annotation-driven</span> <span class="na">transaction-manager=</span><span class="s">"txManager"</span><span class="nt">/&gt;</span>
 
 2.3.5.2 service 层
 @Transactional
@@ -469,45 +469,45 @@ public class AccountServiceImpl implements AccountService {
 <p>1.让Junit通知spring加载配置文件<br>
 2.让spring容器自动进行注入</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class TestApp {
-    @Autowired
-    private AccountService accountService;//与junit整合，不需要spring xml扫描配置
-    @Test
-    public void demo01(){
-        accountService.transfer("jack","ross",1000);
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@RunWith</span><span class="o">(</span><span class="n">SpringJUnit4ClassRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ContextConfiguration</span><span class="o">(</span><span class="n">locations</span> <span class="o">=</span> <span class="s">"classpath:applicationContext.xml"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestApp</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">AccountService</span> <span class="n">accountService</span><span class="o">;</span><span class="c1">//与junit整合，不需要spring xml扫描配置</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo01</span><span class="o">(){</span>
+        <span class="n">accountService</span><span class="o">.</span><span class="na">transfer</span><span class="o">(</span><span class="s">"jack"</span><span class="o">,</span><span class="s">"ross"</span><span class="o">,</span><span class="mi">1000</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="整合web">整合web</h2>
-<div class="highlight"><pre><code class="language-" data-lang="">
+<div class="highlight"><pre><code class="language-html" data-lang="html">
 0.导入jar包
     spring-web.jar
 
 1.tomcat启动加载配置文件
-    servlet --&gt; init(ServletConfig) --&gt; &lt;load-on-startup&gt;2
+    servlet --&gt; init(ServletConfig) --&gt; <span class="nt">&lt;load-on-startup&gt;</span>2
     filter --&gt; init(FilterConfig)  --&gt; web.xml注册过滤器自动调用初始化
     listener --&gt; ServletContextListener --&gt; servletContext对象监听【】
-    spring提供监听器 ContextLoaderListener  --&gt; web.xml  &lt;listener&gt;&lt;listener-class&gt;....
+    spring提供监听器 ContextLoaderListener  --&gt; web.xml  <span class="nt">&lt;listener&gt;&lt;listener-class&gt;</span>....
         如果只配置监听器，默认加载xml位置：/WEB-INF/applicationContext.xml
 
 2.确定配置文件位置，通过系统初始化参数
     ServletContext 初始化参数 web.xml  
-        &lt;context-param&gt;
-            &lt;param-name&gt;contextConfigLocation
-            &lt;param-value&gt;classpath:applicationContext.xml
+        <span class="nt">&lt;context-param&gt;</span>
+            <span class="nt">&lt;param-name&gt;</span>contextConfigLocation
+            <span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml
 
-  &lt;!-- 确定配置文件位置 --&gt;
-  &lt;context-param&gt;
-    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
-  &lt;/context-param&gt;
+  <span class="c">&lt;!-- 确定配置文件位置 --&gt;</span>
+  <span class="nt">&lt;context-param&gt;</span>
+    <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+    <span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
+  <span class="nt">&lt;/context-param&gt;</span>
 
-  &lt;!-- 配置spring 监听器，加载xml配置文件 --&gt;
-  &lt;listener&gt;
-    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
-  &lt;/listener&gt;
+  <span class="c">&lt;!-- 配置spring 监听器，加载xml配置文件 --&gt;</span>
+  <span class="nt">&lt;listener&gt;</span>
+    <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
+  <span class="nt">&lt;/listener&gt;</span>
 
 3.从servletContext作用域 获得spring容器 （了解）
     // 从application作用域（ServletContext）获得spring容器
@@ -1081,9 +1081,10 @@ public class UserAction extends ActionSupport implements ModelDriven&lt;User&gt;
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -140,9 +140,9 @@ jsp.login.password=密码
 jsp.login.submit=登陆
 </code></pre></div>
 <h5 id="3-java中使用">3.java中使用</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">public class I18NDemo {
-    @Test
-    public void test1(){
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">I18NDemo</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test1</span><span class="o">(){</span>
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">    ResourceBundle bundle=ResourceBundle.getBundle("com.itheima.resource.message", Locale.US);
     String key = bundle.getString("key");
@@ -151,208 +151,214 @@ jsp.login.submit=登陆
 </code></pre></div>
 <p>}</p>
 <div class="highlight"><pre><code class="language-" data-lang="">##### 4.jsp中使用
+```javascript
+&lt;%
+    ResourceBundle bundle=ResourceBundle.getBundle("com.itheima.resource.message",Locale.getDefault());
+%&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;%=bundle.getString("jsp.login.title")%&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form action="#" method="post"&gt;
+        &lt;%=bundle.getString("jsp.login.username")%&gt;:&lt;input type="text" name="username"&gt;&lt;br/&gt;
+        &lt;%=bundle.getString("jsp.login.password")%&gt;:&lt;input type="password" name="password"&gt;&lt;br/&gt;
+        &lt;input type="submit" value="&lt;%=bundle.getString("jsp.login.submit")%&gt;"&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
 </code></pre></div>
-<p>&lt;%<br>
-    ResourceBundle bundle=ResourceBundle.getBundle(&quot;com.itheima.resource.message&quot;,Locale.getDefault());<br>
-%&gt;<br>
-<head><br>
-    <title>&lt;%=bundle.getString(&quot;jsp.login.title&quot;)%&gt;</title><br>
-</head><br>
-<body><br>
-    <form action="#" method="post"><br>
-        &lt;%=bundle.getString(&quot;jsp.login.username&quot;)%&gt;:<input type="text" name="username"><br/><br>
-        &lt;%=bundle.getString(&quot;jsp.login.password&quot;)%&gt;:<input type="password" name="password"><br/><br>
-        <input type="submit" value="<%=bundle.getString("jsp.login.submit")%>&quot;&gt;<br>
-    </form><br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## struts2中的国际化
-##### 1.在指定包名下配置message_en_US.properties和message_zh_CN.properties的全局资源文件
-##### 2.在struts.xml中声明配置
-&gt; 在struts2-core-xxx.jar org.apache.struts2 default.properties中搜索i18n 找到struts.custom.i18n.resources
-</code></pre></div>
-<p><constant name="struts.custom.i18n.resources" value="com.itheima.resource.message"></constant></p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 3.可以在任意包名下配置package_en_US.properties和package_zh_CN的资源文件
-##### 4.可以在动作类的包名下配置:动作类名_en_US.properties和package_zh_CN的资源文件
-##### 5.动作类要使用资源文件必须继承ActionSupport
-</code></pre></div>
-<p>public class Demo1Action extends ActionSupport {<br>
-    @Override<br>
-    public String execute() throws Exception {<br>
-        String value=getText(&quot;key&quot;);<br>
-        System.out.println(value);<br>
-        return SUCCESS;<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 6.jsp要使用struts标签
-</code></pre></div>
-<p>&lt;%@taglib prefix=&quot;s&quot; uri=&quot;/struts-tags&quot; %&gt;<br>
-<html><br>
-<head><br>
-    <title>struts2中的国际化</title><br>
-</head><br>
-<body><br>
-    struts2中的国际,在jsp页面访问消息资源包，必须使用struts的标签<br/><br>
-    &lt;!--当直接访问jsp时，因为没有经过动作类，只会去查找全局消息资源包<br>
-        如果经过了动作类，则先去找动作类<br>
-    --&gt;<br>
-    <s:text name="key"/><br/><br>
-    &lt;!--如果没有找到直接输出name的值--&gt;<br>
-    <s:text name="abd"/><br/><br>
-    &lt;!--当自由指定消息资源包不存在，是按照资源搜索顺序搜索 官网文档location中有说明--&gt;<br>
-    <s:i18n name="com.itheima.resource.message"><br>
-        <s:text name="key"/><br>
-    <a href="/s:i18n">/s:i18n</a><br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 自定义拦截器
-</code></pre></div>
-<p>拦截器使用步骤<br>
-    |<br>
-    |--创建普通类，继承AbstractInterceptor,实现抽象方法<br>
-    |               |<br>
-    |               |--public String intercept(ActionInvocation)<br>
-    |<br>
-    |--struts.xml<br>
-         |<br>
-         |--package<br>
-                |<br>
-                |--声明拦截器<br>
-                |    |<br>
-                |    |--<interceptors><br>
-                |    |      <interceptor name="my" class="com.MyInterceptor"></interceptor><br>
-                |                <interceptor-stack name="myDefaultStack"><br>
-                |                     <interceptor-ref name="defaultStack"></interceptor-ref>&lt;！--系统默认--&gt;<br>
-                |                     <interceptor-ref name="checkLoginInterceptor"></interceptor-ref><br>
-                |<br><br>
-                |                </interceptor-stack><br>
-                |        </interceptors><br>
-                |<br><br>
-                |<br>
-                |<br><br>
-                |<br>
-                |--配置拦截器引用<br>
-                     |<br>
-                     |--全局默认<br>
-                     |      |<br>
-                     |      |--package<br>
-                     |           |<br>
-                     |           |--<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref><br>
-                     |<br>
-                     |<br>
-                     |--action配置<br>
-                            |<br>
-                            |--如果拦截器继承了MethodFilterInterceptor,其中一个拦截器不需要拦截时<br>
-                            |       |<br>
-                            |       |--<interceptor-ref name="myDefaultStack"><br>
-                            |               <param name="checkLoginInterceptor.excludeMethods">login</param><br>
-                            |          </interceptor-ref><br><br>
-                            |<br>
-                            |--配置使用的拦截器<br>
-                                    |<br>
-                                    |--<interceptor-ref name="myDefault"></interceptor-ref></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>//Demo2Action<br>
-public class Demo2Interceptor extends AbstractInterceptor {<br>
-    @Override<br>
-    public String intercept(ActionInvocation actionInvocation) throws Exception {<br>
-        System.out.println(&quot;demo2Interceptor 拦截了-执行动作方法之前&quot;);<br>
-        //放行:如果有下一个拦截器就执行下一个拦截器，如果没有就到达方法<br>
-        String value = actionInvocation.invoke();<br>
-        System.out.println(&quot;demo2Interceptor 拦截了-执行动作方法之后&quot;);<br>
-        return value;<br>
-    }<br>
-}</p>
+<h2 id="struts2中的国际化">struts2中的国际化</h2>
 
-<p>//struts.xml<br>
-<package name="p2" extends="struts-default"><br>
-    &lt;!--声明拦截器--&gt;<br>
-    <interceptors><br>
-        <interceptor name="demo2Interceptor" class="com.itheima.interceptor.Demo2Interceptor"></interceptor><br>
-        <interceptor name="demo3Interceptor" class="com.itheima.interceptor.Demo3Interceptor"></interceptor><br>
-    </interceptors><br>
-    <action name="action2" class="com.itheima.web.action.Demo2Action" method="save"><br>
-        &lt;!--使用拦截器,多个拦截器的时候引用配置决定顺序--&gt;<br>
-        <interceptor-ref name="demo2Interceptor"></interceptor-ref><br>
-        <interceptor-ref name="demo3Interceptor"></interceptor-ref><br>
-        <result>/demo2.jsp</result><br>
-    </action><br>
-</package></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p>//CehckLoginInterceptor<br>
-public class CheckLoginInterceptor extends AbstractInterceptor {<br>
-    @Override<br>
-    public String intercept(ActionInvocation actionInvocation) throws Exception {<br>
-        //获取httpsession对象<br>
-        HttpSession session = ServletActionContext.getRequest().getSession();<br>
-        //获取登录标记<br>
-        Object obj = session.getAttribute(&quot;user&quot;);<br>
-        if(obj==null){//用户没有登录<br>
-            return &quot;input&quot;;<br>
-        }<br>
-        String rtValue=actionInvocation.invoke();<br>
-        return rtValue;<br>
-    }<br>
-}</p>
+<h5 id="1-在指定包名下配置message_en_us-properties和message_zh_cn-properties的全局资源文件">1.在指定包名下配置message_en_US.properties和message_zh_CN.properties的全局资源文件</h5>
 
-<p>//CheckLoginInterceptor2<br>
-public class CheckLoginInterceptor2 extends MethodFilterInterceptor {</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
-    //获取httpsession对象
-    HttpSession session = ServletActionContext.getRequest().getSession();
-    //获取登录标记
-    Object obj = session.getAttribute("user");
-    if(obj==null){//用户没有登录
-        return "input";
-    }
-    String rtValue=actionInvocation.invoke();
-    return rtValue;
-}
-</code></pre></div>
-<p>}</p>
+<h5 id="2-在struts-xml中声明配置">2.在struts.xml中声明配置</h5>
 
-<p>//struts.xml<br>
-<package name="p3" extends="struts-default"><br>
-    <interceptors><br>
-        <interceptor name="checkLoginInterceptor" class="com.itheima.interceptor.CheckLoginInterceptor2"></interceptor><br>
-        <interceptor-stack name="myDefaultStack"><br>
-            <interceptor-ref name="defaultStack"></interceptor-ref><br>
-            <interceptor-ref name="checkLoginInterceptor"><br>
-                <param name="excludeMethods">login</param><br>
-            </interceptor-ref><br>
-        </interceptor-stack><br>
-    </interceptors><br>
-    <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref><br>
-    <global-results><br>
-        <result name="input">/login.jsp</result><br>
-    </global-results><br>
-    <action name="showMain" class="com.itheima.web.action.Demo3Action"><br>
-        <interceptor-ref name="myDefault"></interceptor-ref><br>
-        <result>main.jsp</result><br>
-    </action><br>
-    <action name="showOther" class="com.itheima.web.action.Demo3Action"><br>
-        <interceptor-ref name="myDefault"></interceptor-ref><br>
-        <result>other.jsp</result><br>
-    </action><br>
-    <action name="login" method="login" class="com.itheima.web.action.Demo3Action"><br>
-        <interceptor-ref name="myDefaultStack"><br>
-            <param name="checkLoginInterceptor.excludeMethods">login</param><br>
-        </interceptor-ref><br>
-        <result type="redirectAction">showMain</result><br>
-    </action><br>
-</package></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 文件上传
-&gt; FileUploadInterceptor 拦截器注入获取表单数据
-##### 单文件上传
+<blockquote>
+<p>在struts2-core-xxx.jar org.apache.struts2 default.properties中搜索i18n 找到struts.custom.i18n.resources</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;constant name="struts.custom.i18n.resources" value="com.itheima.resource.message"&gt;&lt;/constant&gt;
 </code></pre></div>
-<p>//upload1.jsp<br>
-<s:form action="upload.action" enctype="multipart/form-data"><br>
-    <s:textfield name="username" label="用户名"/><br>
-    <s:file name="photo" label="照片"/><br>
-    <s:submit value="上传"><a href="/s:submit">/s:submit</a><br>
-<a href="/s:form">/s:form</a></p>
+<h5 id="3-可以在任意包名下配置package_en_us-properties和package_zh_cn的资源文件">3.可以在任意包名下配置package_en_US.properties和package_zh_CN的资源文件</h5>
+
+<h5 id="4-可以在动作类的包名下配置-动作类名en_us-properties和packagezh_cn的资源文件">4.可以在动作类的包名下配置:动作类名<em>en_US.properties和package</em>zh_CN的资源文件</h5>
+
+<h5 id="5-动作类要使用资源文件必须继承actionsupport">5.动作类要使用资源文件必须继承ActionSupport</h5>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo1Action</span> <span class="kd">extends</span> <span class="n">ActionSupport</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">execute</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">value</span><span class="o">=</span><span class="n">getText</span><span class="o">(</span><span class="s">"key"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h5 id="6-jsp要使用struts标签">6.jsp要使用struts标签</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="err">&lt;</span>%@taglib prefix="s" uri="/struts-tags" %&gt;
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>struts2中的国际化<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    struts2中的国际,在jsp页面访问消息资源包，必须使用struts的标签<span class="nt">&lt;br/&gt;</span>
+    <span class="c">&lt;!--当直接访问jsp时，因为没有经过动作类，只会去查找全局消息资源包
+        如果经过了动作类，则先去找动作类
+    --&gt;</span>
+    <span class="nt">&lt;s:text</span> <span class="na">name=</span><span class="s">"key"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+    <span class="c">&lt;!--如果没有找到直接输出name的值--&gt;</span>
+    <span class="nt">&lt;s:text</span> <span class="na">name=</span><span class="s">"abd"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+    <span class="c">&lt;!--当自由指定消息资源包不存在，是按照资源搜索顺序搜索 官网文档location中有说明--&gt;</span>
+    <span class="nt">&lt;s:i18n</span> <span class="na">name=</span><span class="s">"com.itheima.resource.message"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;s:text</span> <span class="na">name=</span><span class="s">"key"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/s:i18n&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>
+<h2 id="自定义拦截器">自定义拦截器</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">拦截器使用步骤
+    |
+    |--创建普通类，继承AbstractInterceptor,实现抽象方法
+    |               |
+    |               |--public String intercept(ActionInvocation)
+    |
+    |--struts.xml
+         |
+         |--package
+                |
+                |--声明拦截器
+                |    |
+                |    |--<span class="nt">&lt;interceptors&gt;</span>
+                |    |      <span class="nt">&lt;interceptor</span> <span class="na">name=</span><span class="s">"my"</span> <span class="na">class=</span><span class="s">"com.MyInterceptor"</span><span class="nt">&gt;&lt;/interceptor&gt;</span>
+                |                <span class="nt">&lt;interceptor-stack</span> <span class="na">name=</span><span class="s">"myDefaultStack"</span><span class="nt">&gt;</span>
+                |                     <span class="nt">&lt;interceptor-ref</span> <span class="na">name=</span><span class="s">"defaultStack"</span><span class="nt">&gt;&lt;/interceptor-ref&gt;</span><span class="err">&lt;</span>！--系统默认--&gt;
+                |                     <span class="nt">&lt;interceptor-ref</span> <span class="na">name=</span><span class="s">"checkLoginInterceptor"</span><span class="nt">&gt;&lt;/interceptor-ref&gt;</span>
+                |                                                                           
+                |                <span class="nt">&lt;/interceptor-stack&gt;</span>
+                |        <span class="nt">&lt;/interceptors&gt;</span>
+                |    
+                |
+                |    
+                |
+                |--配置拦截器引用
+                     |
+                     |--全局默认
+                     |      |
+                     |      |--package
+                     |           |
+                     |           |--<span class="nt">&lt;default-interceptor-ref</span> <span class="na">name=</span><span class="s">"myDefaultStack"</span><span class="nt">&gt;&lt;/default-interceptor-ref&gt;</span>
+                     |
+                     |
+                     |--action配置
+                            |
+                            |--如果拦截器继承了MethodFilterInterceptor,其中一个拦截器不需要拦截时
+                            |       |
+                            |       |--<span class="nt">&lt;interceptor-ref</span> <span class="na">name=</span><span class="s">"myDefaultStack"</span><span class="nt">&gt;</span>
+                            |               <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"checkLoginInterceptor.excludeMethods"</span><span class="nt">&gt;</span>login<span class="nt">&lt;/param&gt;</span>
+                            |          <span class="nt">&lt;/interceptor-ref&gt;</span>       
+                            |
+                            |--配置使用的拦截器
+                                    |
+                                    |--<span class="nt">&lt;interceptor-ref</span> <span class="na">name=</span><span class="s">"myDefault"</span><span class="nt">&gt;&lt;/interceptor-ref&gt;</span>
+</code></pre></div></blockquote>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Demo2Action</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo2Interceptor</span> <span class="kr">extends</span> <span class="nx">AbstractInterceptor</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">intercept</span><span class="p">(</span><span class="nx">ActionInvocation</span> <span class="nx">actionInvocation</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"demo2Interceptor 拦截了-执行动作方法之前"</span><span class="p">);</span>
+        <span class="c1">//放行:如果有下一个拦截器就执行下一个拦截器，如果没有就到达方法</span>
+        <span class="nb">String</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">actionInvocation</span><span class="p">.</span><span class="nx">invoke</span><span class="p">();</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"demo2Interceptor 拦截了-执行动作方法之后"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">声明拦截器</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">interceptors</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"demo2Interceptor"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.interceptor.Demo2Interceptor"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">interceptor</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"demo3Interceptor"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.interceptor.Demo3Interceptor"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/interceptors</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"action2"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo2Action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"save"</span><span class="o">&gt;</span>
+        <span class="c">&lt;!--</span><span class="err">使用拦截器</span><span class="p">,</span><span class="err">多个拦截器的时候引用配置决定顺序</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"demo2Interceptor"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"demo3Interceptor"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span><span class="o">&gt;</span><span class="sr">/demo2.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//CehckLoginInterceptor</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">CheckLoginInterceptor</span> <span class="kr">extends</span> <span class="nx">AbstractInterceptor</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">intercept</span><span class="p">(</span><span class="nx">ActionInvocation</span> <span class="nx">actionInvocation</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="c1">//获取httpsession对象</span>
+        <span class="nx">HttpSession</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getRequest</span><span class="p">().</span><span class="nx">getSession</span><span class="p">();</span>
+        <span class="c1">//获取登录标记</span>
+        <span class="nb">Object</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"user"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="o">==</span><span class="kc">null</span><span class="p">){</span><span class="c1">//用户没有登录</span>
+            <span class="k">return</span> <span class="s2">"input"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nb">String</span> <span class="nx">rtValue</span><span class="o">=</span><span class="nx">actionInvocation</span><span class="p">.</span><span class="nx">invoke</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nx">rtValue</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//CheckLoginInterceptor2</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">CheckLoginInterceptor2</span> <span class="kr">extends</span> <span class="nx">MethodFilterInterceptor</span> <span class="p">{</span>
+
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">protected</span> <span class="nb">String</span> <span class="nx">doIntercept</span><span class="p">(</span><span class="nx">ActionInvocation</span> <span class="nx">actionInvocation</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">Exception</span> <span class="p">{</span>
+        <span class="c1">//获取httpsession对象</span>
+        <span class="nx">HttpSession</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getRequest</span><span class="p">().</span><span class="nx">getSession</span><span class="p">();</span>
+        <span class="c1">//获取登录标记</span>
+        <span class="nb">Object</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"user"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="o">==</span><span class="kc">null</span><span class="p">){</span><span class="c1">//用户没有登录</span>
+            <span class="k">return</span> <span class="s2">"input"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nb">String</span> <span class="nx">rtValue</span><span class="o">=</span><span class="nx">actionInvocation</span><span class="p">.</span><span class="nx">invoke</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nx">rtValue</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"p3"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">interceptors</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"checkLoginInterceptor"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.interceptor.CheckLoginInterceptor2"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">stack</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myDefaultStack"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"defaultStack"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"checkLoginInterceptor"</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"excludeMethods"</span><span class="o">&gt;</span><span class="nx">login</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/interceptor-stack</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/interceptors</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="k">default</span><span class="o">-</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myDefaultStack"</span><span class="o">&gt;&lt;</span><span class="sr">/default-interceptor-ref</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">global</span><span class="o">-</span><span class="nx">results</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"input"</span><span class="o">&gt;</span><span class="sr">/login.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/global-results</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"showMain"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo3Action"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myDefault"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span><span class="o">&gt;</span><span class="nx">main</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"showOther"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo3Action"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myDefault"</span><span class="o">&gt;&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span><span class="o">&gt;</span><span class="nx">other</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"login"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"login"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.Demo3Action"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">interceptor</span><span class="o">-</span><span class="nx">ref</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"myDefaultStack"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"checkLoginInterceptor.excludeMethods"</span><span class="o">&gt;</span><span class="nx">login</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/interceptor-ref</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"redirectAction"</span><span class="o">&gt;</span><span class="nx">showMain</span><span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="文件上传">文件上传</h2>
+
+<blockquote>
+<p>FileUploadInterceptor 拦截器注入获取表单数据</p>
+
+<h5 id="单文件上传">单文件上传</h5>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//upload1.jsp</span>
+<span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"upload.action"</span> <span class="nx">enctype</span><span class="o">=</span><span class="s2">"multipart/form-data"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"username"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"用户名"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">file</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"photo"</span> <span class="nx">label</span><span class="o">=</span><span class="s2">"照片"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">submit</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"上传"</span><span class="o">&gt;&lt;</span><span class="sr">/s:submit</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span></code></pre></div></blockquote>
 
 <p>//struts.xml<br>
 <struts></p>
@@ -429,93 +435,96 @@ public void setPhotoContentType(String photoContentType) {
 <p>}</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ##### 多文件上传
+```javascript
+//upload2.jsp
+&lt;s:form action="upload2.action" enctype="multipart/form-data"&gt;
+    &lt;s:textfield name="username" label="用户名"/&gt;
+    &lt;s:file name="photo" label="照片"/&gt;
+    &lt;s:file name="photo" label="照片"/&gt;
+    &lt;s:submit value="上传"&gt;&lt;/s:submit&gt;
+&lt;/s:form&gt;
+
+
+//struts.xml
+&lt;action name="upload2" class="com.itheima.web.action.Upload2Action" method="upload"&gt;
+    &lt;interceptor-ref name="defaultStack"&gt;
+        &lt;param name="fileUpload.maximumSize"&gt;31457280&lt;/param&gt;
+        &lt;param name="fileUpload.allowedExtensions"&gt;png,jpeg,bmp,jpg&lt;/param&gt;
+        &lt;param name="fileUpload.allowedTypes"&gt;image/jpg,image/pjpeg,image/png,image/jpeg&lt;/param&gt;
+    &lt;/interceptor-ref&gt;
+    &lt;result name="input"&gt;/upload2.jsp&lt;/result&gt;
+&lt;/action&gt;
+
+//upload2Action
+public class Upload2Action extends ActionSupport{
+    private String username;
+    private File[] photo;
+    //struts2在文件上传属性
+    private String[] photoFileName;//上传的文件名.上传字段名+FileName
+    private String[] photoContentType;//上传文件的MIME类型。上传字段名+contentType
+    public String upload()throws Exception{
+        ServletContext application = ServletActionContext.getServletContext();
+        String filePath = application.getRealPath("/WEB-INF/files");
+        File file=new File(filePath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        for(int i=0;i&lt;photo.length;i++) {
+            //剪接，把临时文件剪接过去
+            photo[i].renameTo(new File(file, photoFileName[i]));
+            //FileUtils.copyFile(photo,new File(file,photoFileName));
+        }
+        return NONE;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public File[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(File[] photo) {
+        this.photo = photo;
+    }
+
+    public String[] getPhotoFileName() {
+        return photoFileName;
+    }
+
+    public void setPhotoFileName(String[] photoFileName) {
+        this.photoFileName = photoFileName;
+    }
+
+    public String[] getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String[] photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+}
 </code></pre></div>
-<p>//upload2.jsp<br>
-<s:form action="upload2.action" enctype="multipart/form-data"><br>
-    <s:textfield name="username" label="用户名"/><br>
-    <s:file name="photo" label="照片"/><br>
-    <s:file name="photo" label="照片"/><br>
-    <s:submit value="上传"><a href="/s:submit">/s:submit</a><br>
-<a href="/s:form">/s:form</a></p>
+<h2 id="文件下载">文件下载</h2>
 
-<p>//struts.xml<br>
-<action name="upload2" class="com.itheima.web.action.Upload2Action" method="upload"><br>
-    <interceptor-ref name="defaultStack"><br>
-        <param name="fileUpload.maximumSize">31457280</param><br>
-        <param name="fileUpload.allowedExtensions">png,jpeg,bmp,jpg</param><br>
-        <param name="fileUpload.allowedTypes">image/jpg,image/pjpeg,image/png,image/jpeg</param><br>
-    </interceptor-ref><br>
-    <result name="input">/upload2.jsp</result><br>
-</action></p>
-
-<p>//upload2Action<br>
-public class Upload2Action extends ActionSupport{<br>
-    private String username;<br>
-    private File[] photo;<br>
-    //struts2在文件上传属性<br>
-    private String[] photoFileName;//上传的文件名.上传字段名+FileName<br>
-    private String[] photoContentType;//上传文件的MIME类型。上传字段名+contentType<br>
-    public String upload()throws Exception{<br>
-        ServletContext application = ServletActionContext.getServletContext();<br>
-        String filePath = application.getRealPath(&quot;/WEB-INF/files&quot;);<br>
-        File file=new File(filePath);<br>
-        if(!file.exists()){<br>
-            file.mkdirs();<br>
-        }<br>
-        for(int i=0;i&lt;photo.length;i++) {<br>
-            //剪接，把临时文件剪接过去<br>
-            photo[i].renameTo(new File(file, photoFileName[i]));<br>
-            //FileUtils.copyFile(photo,new File(file,photoFileName));<br>
-        }<br>
-        return NONE;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public String getUsername() {
-    return username;
-}
-
-public void setUsername(String username) {
-    this.username = username;
-}
-
-public File[] getPhoto() {
-    return photo;
-}
-
-public void setPhoto(File[] photo) {
-    this.photo = photo;
-}
-
-public String[] getPhotoFileName() {
-    return photoFileName;
-}
-
-public void setPhotoFileName(String[] photoFileName) {
-    this.photoFileName = photoFileName;
-}
-
-public String[] getPhotoContentType() {
-    return photoContentType;
-}
-
-public void setPhotoContentType(String[] photoContentType) {
-    this.photoContentType = photoContentType;
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 文件下载
-&gt; StreamResult注入结果视图 类型要是stream
-</code></pre></div>
-<p>//struts.xml<br>
-<action name="download" class="com.itheima.web.action.DownloadAction" method="download"><br>
-    <result name="success" type="stream"><br>
-        &lt;!--给steam的结果类型注入参数 --&gt;<br>
-        <param name="contentType">application/octet-stream</param><br>
-        <param name="contentDisposition">attachment;filename=photo.jpg</param><br>
-        &lt;!--注入字节输入流--&gt;<br>
-        <param name="inputName">is</param><br>
-    </result><br>
-</action></p>
+<blockquote>
+<p>StreamResult注入结果视图 类型要是stream</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//struts.xml</span>
+<span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"download"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.web.action.DownloadAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"download"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"success"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"stream"</span><span class="o">&gt;</span>
+        <span class="c">&lt;!--</span><span class="err">给</span><span class="nx">steam</span><span class="err">的结果类型注入参数</span> <span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"contentType"</span><span class="o">&gt;</span><span class="nx">application</span><span class="o">/</span><span class="nx">octet</span><span class="o">-</span><span class="nx">stream</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"contentDisposition"</span><span class="o">&gt;</span><span class="nx">attachment</span><span class="p">;</span><span class="nx">filename</span><span class="o">=</span><span class="nx">photo</span><span class="p">.</span><span class="nx">jpg</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>        <span class="c">&lt;!--</span><span class="err">注入字节输入流</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">param</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"inputName"</span><span class="o">&gt;</span><span class="nx">is</span><span class="o">&lt;</span><span class="sr">/param</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span></code></pre></div></blockquote>
 
 <p>//downloadAction<br>
 public class DownloadAction extends ActionSupport {<br>
@@ -540,97 +549,133 @@ public void setIs(InputStream is) {
 &gt; 格式${}
 &gt; EL只能调用静态方法
 ##### 步骤
+```html
+自定义EL表达式方法
+     |
+     |--创建类和静态方法
+     |
+     |--配置
+     |   |
+     |   |--在WEB-INF的目录中创建一个扩展名为.tld的xml文件。文件不能放在classes和lib 目录
+     |          |
+     |          |--仿造tomcat目录下conf/webapps/examples/WEB-INF/jsp2/xxx.tld写
+     |
+     |--引入
+         |
+         |--在jsp中引入方法库
+                |
+                |--&lt;%@ taglib prefix="myfn" uri="http://www.itheima.com/function/myfunction" %&gt;
 </code></pre></div>
-<p>自定义EL表达式方法<br>
-     |<br>
-     |--创建类和静态方法<br>
-     |<br>
-     |--配置<br>
-     |   |<br>
-     |   |--在WEB-INF的目录中创建一个扩展名为.tld的xml文件。文件不能放在classes和lib 目录<br>
-     |          |<br>
-     |          |--仿造tomcat目录下conf/webapps/examples/WEB-INF/jsp2/xxx.tld写<br>
-     |<br>
-     |--引入<br>
-         |<br>
-         |--在jsp中引入方法库<br>
-                |<br>
-                |--&lt;%@ taglib prefix=&quot;myfn&quot; uri=&quot;<a href="http://www.itheima.com/function/myfunction">http://www.itheima.com/function/myfunction</a>&quot; %&gt;</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### 示例
-</code></pre></div>
-<p>//MyFunction<br>
-public class MyFunction {<br>
-    public static String toUpperCase(String str){<br>
-        return str.toUpperCase();<br>
-    }<br>
-}</p>
+<h5 id="示例">示例</h5>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//MyFunction</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MyFunction</span> <span class="p">{</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="nb">String</span> <span class="nx">toUpperCase</span><span class="p">(</span><span class="nb">String</span> <span class="nx">str</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">str</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-<p>//myfunction.tld<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-<taglib xmlns="http://java.sun.com/xml/ns/j2ee"<br>
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
-        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"<br>
-        version="2.0"><br>
-    <description>A tag library exercising SimpleTag handlers.</description><br>
-    <tlib-version>1.0</tlib-version>&lt;!--指定标签库或方法版本号--&gt;<br>
-    <short-name>myfn</short-name>&lt;!--短名称，对应taglib指令中的prefix--&gt;<br>
-    <uri><a href="http://www.itheima.com/function/myfunction">http://www.itheima.com/function/myfunction</a></uri>&lt;!--uri:把当前的方法库绑定到一个uri地址上，在该网址上不一定存在方法库--&gt;<br>
-    <function><br>
-        <description>Converts the string to all caps</description><br>
-        <name>toUpperCase</name>&lt;!--方法名称 jsp页面上使用的名称--&gt;<br>
-        <function-class>com.itheima.web.function.MyFunction</function-class>&lt;!--指定执行的类--&gt;<br>
-        <function-signature>java.lang.String toUpperCase( java.lang.String )</function-signature>&lt;!--指定执行的方法，返回值和参数除了基本类型必须写全路径--&gt;<br>
-    </function><br>
-</taglib></p>
+<span class="c1">//myfunction.tld</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">taglib</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/j2ee"</span>
+        <span class="nl">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span>
+        <span class="nl">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"</span>
+        <span class="nx">version</span><span class="o">=</span><span class="s2">"2.0"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">description</span><span class="o">&gt;</span><span class="nx">A</span> <span class="nx">tag</span> <span class="nx">library</span> <span class="nx">exercising</span> <span class="nx">SimpleTag</span> <span class="nx">handlers</span><span class="p">.</span><span class="o">&lt;</span><span class="sr">/description</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">tlib</span><span class="o">-</span><span class="nx">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">&lt;</span><span class="sr">/tlib-version&gt;&lt;!--指定标签库或方法版本号--</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="kr">short</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">myfn</span><span class="o">&lt;</span><span class="sr">/short-name&gt;&lt;!--短名称，对应taglib指令中的prefix--</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">uri</span><span class="o">&gt;</span><span class="nx">http</span><span class="p">:</span><span class="c1">//www.itheima.com/function/myfunction&lt;/uri&gt;&lt;!--uri:把当前的方法库绑定到一个uri地址上，在该网址上不一定存在方法库--&gt;</span>
+    <span class="o">&lt;</span><span class="kd">function</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">description</span><span class="o">&gt;</span><span class="nx">Converts</span> <span class="nx">the</span> <span class="nx">string</span> <span class="nx">to</span> <span class="nx">all</span> <span class="nx">caps</span><span class="o">&lt;</span><span class="sr">/description</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">toUpperCase</span><span class="o">&lt;</span><span class="sr">/name&gt;&lt;!--方法名称 jsp页面上使用的名称--</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="kd">function</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">com</span><span class="p">.</span><span class="nx">itheima</span><span class="p">.</span><span class="nx">web</span><span class="p">.</span><span class="kd">function</span><span class="p">.</span><span class="nx">MyFunction</span><span class="o">&lt;</span><span class="sr">/function-class&gt;&lt;!--指定执行的类--</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="kd">function</span><span class="o">-</span><span class="nx">signature</span><span class="o">&gt;</span><span class="nx">java</span><span class="p">.</span><span class="nx">lang</span><span class="p">.</span><span class="nb">String</span> <span class="nx">toUpperCase</span><span class="p">(</span> <span class="nx">java</span><span class="p">.</span><span class="nx">lang</span><span class="p">.</span><span class="nb">String</span> <span class="p">)</span><span class="o">&lt;</span><span class="sr">/function-signature&gt;&lt;!--指定执行的方法，返回值和参数除了基本类型必须写全路径--</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/function</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/taglib</span><span class="err">&gt;
+</span>
+<span class="c1">//eldemo.jsp</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html;charset=UTF-8"</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">taglib</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">"myfn"</span> <span class="nx">uri</span><span class="o">=</span><span class="s2">"http://www.itheima.com/function/myfunction"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="nx">abcdefg</span><span class="o">---</span><span class="nx">ABCDEFG</span>
+    <span class="nx">$</span><span class="p">{</span><span class="nl">myfn</span><span class="p">:</span><span class="nx">toUpperCase</span><span class="p">(</span><span class="s2">"abcdefg"</span><span class="p">)}</span>
+<span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
+<h6 id="jsp-el-ognl表达式">jsp el ognl表达式</h6>
 
-<p>//eldemo.jsp<br>
-&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;<br>
-&lt;%@ taglib prefix=&quot;myfn&quot; uri=&quot;<a href="http://www.itheima.com/function/myfunction">http://www.itheima.com/function/myfunction</a>&quot; %&gt;<br>
-<html><br>
-<body><br>
-    abcdefg---ABCDEFG<br>
-    ${myfn:toUpperCase(&quot;abcdefg&quot;)}<br>
-</body><br>
-</html></p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### jsp el ognl表达式
-&gt;jsp表达式:  &lt;%%&gt;
-&gt;el表达式:  ${}
-&gt; ognl表达式:  &amp;lt;s:property value=""&gt;
+<blockquote>
+<p>jsp表达式:  &lt;%%&gt;<br>
+el表达式:  ${}<br>
+ognl表达式:  &lt;s:property value=&quot;&quot;&gt;</p>
+</blockquote>
 
-## OGNL
-&gt; OGNL是Oject Graphic Navigation Language(对象图导航)的缩写，它是一个开源项目，struts2框架使用OGNL作为默认的表达式语言
-|属性|备注|
-|---|---|
-| 格式|lt;s:property value=""|
-|开启静态访问|struts.ognl.allowStaticMethodAccess=true|
-|value属性|不在是字符串而是表达式，如果想要字符串要加单引号|
-|访问静态属性的格式|@全类名@静态属性名称|
-|访问静态方法的格式|@全类名@静态方法名|
-|xml中使用ognl方法|${@全类名@方法名}
-|list集合|{}相当于创建了list集合 集合里面是ognl表达式|
-|map集合| '#{}表示创建一个map'|
-</code></pre></div>
-<p><body><br>
-    abcdefg---ABCDEFG<br>
-    ${myfn:toUpperCase(&quot;abcdefg&quot;)}<br>
-    <hr/><br>
-    &lt;!--value 内容是表达式，不是字符串，如果想让他变成字符串套上单引号--&gt;<br>
-    <s:property value="OGNL-Expression"/>这是一个OGNL表达式<br/><br>
-    <s:property value="'OGNL-Expression'"/>这是一个普通字符串<br/><br>
-    <s:property value="'OGNL-Expression'.length()"/>使用普通字符串调取了字符串方法<br>
-    <hr/><br>
-    &lt;%--ognl访问静态属性格式@全类名@静态属性名称--%&gt;<br>
-    <s:property value="@java.lang.Integer@MAX_VALUE"/><br>
-    &lt;%--ognl访问静态方法格式@全类名@静态方法名称 struts2默认是禁止静态方法 配置开启--%&gt;<br>
-    <s:property value="@java.lang.Math@random()"/><br>
-    &lt;%--ognl操作list和map<br>
-    {}相当于创建了list集合 集合里面是ognl表达式<br>
-    #{}表示创建一个map<br>
-    --%&gt;<br>
-    <s:radio list="{'男','女'}" name="gender"/><br>
-    <s:radio list="#{'1':'男','0':'女'}" name="gender"/><br>
-</body></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<h2 id="ognl">OGNL</h2>
+
+<blockquote>
+<p>OGNL是Oject Graphic Navigation Language(对象图导航)的缩写，它是一个开源项目，struts2框架使用OGNL作为默认的表达式语言</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>属性</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>格式</td>
+<td>lt;s:property value=&quot;&quot;</td>
+</tr>
+<tr>
+<td>开启静态访问</td>
+<td>struts.ognl.allowStaticMethodAccess=true</td>
+</tr>
+<tr>
+<td>value属性</td>
+<td>不在是字符串而是表达式，如果想要字符串要加单引号</td>
+</tr>
+<tr>
+<td>访问静态属性的格式</td>
+<td>@全类名@静态属性名称</td>
+</tr>
+<tr>
+<td>访问静态方法的格式</td>
+<td>@全类名@静态方法名</td>
+</tr>
+<tr>
+<td>xml中使用ognl方法</td>
+<td>${@全类名@方法名}</td>
+</tr>
+<tr>
+<td>list集合</td>
+<td>{}相当于创建了list集合 集合里面是ognl表达式</td>
+</tr>
+<tr>
+<td>map集合</td>
+<td>&#39;#{}表示创建一个map&#39;</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;body&gt;</span>
+    abcdefg---ABCDEFG
+    ${myfn:toUpperCase("abcdefg")}
+    <span class="nt">&lt;hr/&gt;</span>
+    <span class="c">&lt;!--value 内容是表达式，不是字符串，如果想让他变成字符串套上单引号--&gt;</span>
+    <span class="nt">&lt;s:property</span> <span class="na">value=</span><span class="s">"OGNL-Expression"</span><span class="nt">/&gt;</span>这是一个OGNL表达式<span class="nt">&lt;br/&gt;</span>
+    <span class="nt">&lt;s:property</span> <span class="na">value=</span><span class="s">"'OGNL-Expression'"</span><span class="nt">/&gt;</span>这是一个普通字符串<span class="nt">&lt;br/&gt;</span>
+    <span class="nt">&lt;s:property</span> <span class="na">value=</span><span class="s">"'OGNL-Expression'.length()"</span><span class="nt">/&gt;</span>使用普通字符串调取了字符串方法
+    <span class="nt">&lt;hr/&gt;</span>
+    <span class="err">&lt;</span>%--ognl访问静态属性格式@全类名@静态属性名称--%&gt;
+    <span class="nt">&lt;s:property</span> <span class="na">value=</span><span class="s">"@java.lang.Integer@MAX_VALUE"</span><span class="nt">/&gt;</span>
+    <span class="err">&lt;</span>%--ognl访问静态方法格式@全类名@静态方法名称 struts2默认是禁止静态方法 配置开启--%&gt;
+    <span class="nt">&lt;s:property</span> <span class="na">value=</span><span class="s">"@java.lang.Math@random()"</span><span class="nt">/&gt;</span>
+    <span class="err">&lt;</span>%--ognl操作list和map
+    {}相当于创建了list集合 集合里面是ognl表达式
+    #{}表示创建一个map
+    --%&gt;
+    <span class="nt">&lt;s:radio</span> <span class="na">list=</span><span class="s">"{'男','女'}"</span> <span class="na">name=</span><span class="s">"gender"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;s:radio</span> <span class="na">list=</span><span class="s">"#{'1':'男','0':'女'}"</span> <span class="na">name=</span><span class="s">"gender"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -783,9 +828,10 @@ public class MyFunction {<br>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

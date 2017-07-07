@@ -135,7 +135,7 @@
 dtd 外部dtd 本地文件:&lt;!DOCUTYPE students SYSTEM &quot;student.dtd&quot;&gt;
 dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quot; &quot;student.dtd&quot;&gt;
 ##### student.dtd
-<code>dtd
+<code>xml
 &lt;!ELEMENT students (student*)&gt;&lt;!-- 根标签 student可以出现0至多个--&gt;
 &lt;!ELEMENT student (name,age,sex)&gt;&lt;!--student标签要出现的内容，顺序--&gt;
 &lt;!ELEMENT name (#PCDATA)&gt;&lt;!-- name标签中可以写文本--&gt;
@@ -202,24 +202,23 @@ dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quo
 
 <p><a href="/xsd:schema">/xsd:schema</a></p>
 <div class="highlight"><pre><code class="language-" data-lang="">##### student.xml
-</code></pre></div>
-<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-<students xmlns="http://www.itcast.cn/xml"<br>
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
-xsi:schemaLocation="http://www.itcast.cn/xml  student.xsd"><br>
-<student number="itcast_1001"><br>
-    <name>张三</name><br>
-    <age>23</age><br>
-    <sex>男</sex><br>
-</student><br>
-</students></p>
-<div class="highlight"><pre><code class="language-" data-lang="">```xml
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-     version="3.1"&gt;
-&lt;/web-app&gt;
+```xml
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;students xmlns="http://www.itcast.cn/xml"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.itcast.cn/xml  student.xsd"&gt;
+&lt;student number="itcast_1001"&gt;
+    &lt;name&gt;张三&lt;/name&gt;
+    &lt;age&gt;23&lt;/age&gt;
+    &lt;sex&gt;男&lt;/sex&gt;
+&lt;/student&gt;
+&lt;/students&gt;
+</code></pre></div><div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">"http://xmlns.jcp.org/xml/ns/javaee"</span>
+     <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+     <span class="na">xsi:schemaLocation=</span><span class="s">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span>
+     <span class="na">version=</span><span class="s">"3.1"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/web-app&gt;</span>
 </code></pre></div>
 <h2 id="xml解析">xml解析</h2>
 
@@ -251,13 +250,13 @@ Document document=reader.read(url);</p>
 <span class="n">String</span> <span class="n">name</span><span class="o">=</span><span class="n">secondBook</span><span class="o">.</span><span class="na">element</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
 <span class="o">}</span>
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Test
-public  void test2() throws DocumentException {
-SAXReader reader=new SAXReader();
-Document document=reader.read("src/book.xml");
-Element root=document.getRootElement();
-treeWalk(root);
-}
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kd">public</span>  <span class="kt">void</span> <span class="nf">test2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">DocumentException</span> <span class="o">{</span>
+<span class="n">SAXReader</span> <span class="n">reader</span><span class="o">=</span><span class="k">new</span> <span class="n">SAXReader</span><span class="o">();</span>
+<span class="n">Document</span> <span class="n">document</span><span class="o">=</span><span class="n">reader</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="s">"src/book.xml"</span><span class="o">);</span>
+<span class="n">Element</span> <span class="n">root</span><span class="o">=</span><span class="n">document</span><span class="o">.</span><span class="na">getRootElement</span><span class="o">();</span>
+<span class="n">treeWalk</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div></li>
 </ul>
 
@@ -277,6 +276,7 @@ for(int i=0;i&lt;e.nodeCount();i++){<br>
 1.导入jaxen..jar
 2.创建解析器 SaxReader reader=new SaxReader()
 3.获得decument Document document = reader.read(url)
+
 |符号|备注|
 |----|------|
 |nodename| 选取此节点|
@@ -286,159 +286,182 @@ for(int i=0;i&lt;e.nodeCount();i++){<br>
 |@ |选取属性|
 |[@属性名] |属性过滤|
 |[标签名]  | 子元素过滤|
+```java
+@Test
+public void test1() throws DocumentException {
+SAXReader reader=new SAXReader();
+Document document = reader.read("src/book.xml");
+Node node = document.selectSingleNode("/books/book[2]/name");//第二本书名
+System.out.println(node.getText());
+}
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">DocumentException</span> <span class="o">{</span>
+<span class="n">SAXReader</span> <span class="n">reader</span><span class="o">=</span><span class="k">new</span> <span class="n">SAXReader</span><span class="o">();</span>
+<span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="s">"src/book.xml"</span><span class="o">);</span>
+<span class="n">List</span> <span class="n">list</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">selectNodes</span><span class="o">(</span><span class="s">"//*"</span><span class="o">);</span>
+<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+    <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="o">(</span><span class="n">Node</span><span class="o">)</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">"\t"</span><span class="o">+</span><span class="n">node</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test3</span><span class="o">()</span> <span class="kd">throws</span>  <span class="n">DocumentException</span> <span class="o">{</span>
+<span class="n">SAXReader</span> <span class="n">reader</span><span class="o">=</span><span class="k">new</span> <span class="n">SAXReader</span><span class="o">();</span>
+<span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="s">"src/Dom4JTest.xml"</span><span class="o">);</span>
+<span class="n">List</span> <span class="n">list</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">selectNodes</span><span class="o">(</span><span class="s">"bookstore//book/title"</span><span class="o">);</span>
+<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+    <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="o">(</span><span class="n">Node</span><span class="o">)</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="o">}</span>
 </code></pre></div>
-<p>@Test<br>
-public void test1() throws DocumentException {<br>
-SAXReader reader=new SAXReader();<br>
-Document document = reader.read(&quot;src/book.xml&quot;);<br>
-Node node = document.selectSingleNode(&quot;/books/book[2]/name&quot;);//第二本书名<br>
-System.out.println(node.getText());<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>@Test<br>
-public void test2() throws DocumentException {<br>
-SAXReader reader=new SAXReader();<br>
-Document document = reader.read(&quot;src/book.xml&quot;);<br>
-List list = document.selectNodes(&quot;//*&quot;);<br>
-for(int i=0;i&lt;list.size();i++){<br>
-    Node node = (Node) list.get(i);<br>
-    System.out.println(node.getName()+&quot;\t&quot;+node.getText());<br>
-}<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
-<p>@Test<br>
-public void test3() throws  DocumentException {<br>
-SAXReader reader=new SAXReader();<br>
-Document document = reader.read(&quot;src/Dom4JTest.xml&quot;);<br>
-List list = document.selectNodes(&quot;bookstore//book/title&quot;);<br>
-for(int i=0;i&lt;list.size();i++){<br>
-    Node node = (Node) list.get(i);<br>
-    System.out.println(node.getText());<br>
-}</p>
+<h2 id="tomcat">Tomcat</h2>
 
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## Tomcat
-&gt; 小型Servlet/jsp调试工具 免费 稳定 高效 可以配合Apache搭建集群 是企业javaweb应用最佳servlet容器选择之一
+<blockquote>
+<p>小型Servlet/jsp调试工具 免费 稳定 高效 可以配合Apache搭建集群 是企业javaweb应用最佳servlet容器选择之一</p>
+</blockquote>
 
-## 配置tomact
-http://tomcat.apache.org/ 下载tomcat tar.gz版本 解压拷贝到/usr/local/目录下
-启动 sudo /usr/local/tomcat目录名称/bin/startup.sh
-停止 sudo /usr/local/tomcat目录名称/bin/shutdown.sh
-## 修改tomcat端口
-&gt; tomcat目录/conf/server.xml 第70行 &amp;lt;Conector port="8081"/&amp;gt;
-## Tomcat主要目录
+<h2 id="配置tomact">配置tomact</h2>
+
+<p><a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> 下载tomcat tar.gz版本 解压拷贝到/usr/local/目录下<br>
+启动 sudo /usr/local/tomcat目录名称/bin/startup.sh<br>
+停止 sudo /usr/local/tomcat目录名称/bin/shutdown.sh</p>
+
+<h2 id="修改tomcat端口">修改tomcat端口</h2>
+
+<blockquote>
+<p>tomcat目录/conf/server.xml 第70行 &lt;Conector port=&quot;8081&quot;/&gt;</p>
+
+<h2 id="tomcat主要目录">Tomcat主要目录</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">Tomcat主要目录
+|
+|--bin 可执行文件
+|   |
+|   |--start.sh 启动tomcat
+|   |--shutdown.sh  关闭tomcat
+|
+|--conf 配置文件
+|   |
+|   |--server.xml
+|   |--Catalina
+|         |
+|         |--localhost 配置虚拟目录
+|
+|--lib tomcat运行时依赖的jar包
+|
+|--logs tomcat运行时产生的日志文件
+|
+|--temp tomcat运行时的临时文件
+|
+|--webapps 存放应用的目录
+|
+|--work tomcat运行时的工作目录
+</code></pre></div></blockquote>
+
+<h2 id="标准javaweb应用的目录结构">标准JavaWeb应用的目录结构</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">webapp
+|
+|---xx.html
+|
+|---css
+|   |--myStyle.css
+|
+|---js
+|    |--myjs.js
+|
+|---WEB-INF 固定写法 此目录不能被外部直接访问
+  |
+  |--classes    程序代码.class
+  |     |--xxx.class
+  |
+  |--lib  应用需要的jar
+  |   |--xxx.jar
+  |
+  |--web.xml  应用配置信息
 </code></pre></div>
-<p>Tomcat主要目录<br>
-|<br>
-|--bin 可执行文件<br>
-|   |<br>
-|   |--start.sh 启动tomcat<br>
-|   |--shutdown.sh  关闭tomcat<br>
-|<br>
-|--conf 配置文件<br>
-|   |<br>
-|   |--server.xml<br>
-|   |--Catalina<br>
-|         |<br>
-|         |--localhost 配置虚拟目录<br>
-|<br>
-|--lib tomcat运行时依赖的jar包<br>
-|<br>
-|--logs tomcat运行时产生的日志文件<br>
-|<br>
-|--temp tomcat运行时的临时文件<br>
-|<br>
-|--webapps 存放应用的目录<br>
-|<br>
-|--work tomcat运行时的工作目录</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 标准JavaWeb应用的目录结构
-</code></pre></div>
-<p>webapp<br>
-|<br>
-|---xx.html<br>
-|<br>
-|---css<br>
-|   |--myStyle.css<br>
-|<br>
-|---js<br>
-|    |--myjs.js<br>
-|<br>
-|---WEB-INF 固定写法 此目录不能被外部直接访问<br>
-  |<br>
-  |--classes    程序代码.class<br>
-  |     |--xxx.class<br>
-  |<br>
-  |--lib  应用需要的jar<br>
-  |   |--xxx.jar<br>
-  |<br>
-  |--web.xml  应用配置信息</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 集成Tomcat和自动部署
-### eclipse
-&gt;集成
-window--Prefereces--Servers--Tomcat--Tomcat Home directory
-&gt;部署
+<h2 id="集成tomcat和自动部署">集成Tomcat和自动部署</h2>
 
-servers窗口 &gt;&gt; Tomcat右键 add Deployment
-### idea
-&gt; 集成
+<h3 id="eclipse">eclipse</h3>
 
-References &gt;&gt; Application Servers +&gt;&gt; Tomcat目录  
-&gt; 部署 (tomcat9 要配置jdk8才能运行)
+<blockquote>
+<p>集成<br>
+window--Prefereces--Servers--Tomcat--Tomcat Home directory<br>
+部署</p>
+</blockquote>
 
-1. Project Structure &gt;&gt; Project &gt;&gt; Project compiler out(WEB-INF/classes)
-2. Project Structure &gt;&gt; Modules &gt;&gt; Sources &gt;&gt; 右键src(Sources)
+<p>servers窗口 &gt;&gt; Tomcat右键 add Deployment</p>
+
+<h3 id="idea">idea</h3>
+
+<blockquote>
+<p>集成</p>
+</blockquote>
+
+<p>References &gt;&gt; Application Servers +&gt;&gt; Tomcat目录  </p>
+
+<blockquote>
+<p>部署 (tomcat9 要配置jdk8才能运行)</p>
+</blockquote>
+
+<ol>
+<li>Project Structure &gt;&gt; Project &gt;&gt; Project compiler out(WEB-INF/classes)</li>
+<li>Project Structure &gt;&gt; Modules &gt;&gt; Sources &gt;&gt; 右键src(Sources)
 Project Structure &gt;&gt; Modules &gt;&gt; Paths &gt;&gt; output path(WEB-INF/classes)
-Project Structure &gt;&gt; Modules &gt;&gt; Dependencies &gt;&gt; +(libraries/tomcat) +jars or directories(WEB-INF/lib)
-3. double shift 输入 Edit Configurations &gt;&gt; + &gt;&gt; Tomcat Server
+Project Structure &gt;&gt; Modules &gt;&gt; Dependencies &gt;&gt; +(libraries/tomcat) +jars or directories(WEB-INF/lib)</li>
+<li>double shift 输入 Edit Configurations &gt;&gt; + &gt;&gt; Tomcat Server
 ## 部署应用到Tomcat
-&gt; 开发目录部署方式
+&gt; 开发目录部署方式</li>
+</ol>
 
-把应用直接复制到tomcat/webapps 目录下
-&gt;把应用打成war包
+<p>把应用直接复制到tomcat/webapps 目录下</p>
 
-打war包命令: jar -cvf 应用名称.war .
-把war包直接复制到tomcat/webapps下，应用会自动解压
+<blockquote>
+<p>把应用打成war包</p>
+</blockquote>
 
-##URI和URI
-&gt; URL:统一资源定位符(网址)
-&gt; URI:统一资源标识符
+<p>打war包命令: jar -cvf 应用名称.war .<br>
+把war包直接复制到tomcat/webapps下，应用会自动解压</p>
+
+<h2 id="uri和uri">URI和URI</h2>
+
+<blockquote>
+<p>URL:统一资源定位符(网址)<br>
+URI:统一资源标识符</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">URL统一资源定位符http://localhost:8080/myapp.index.html
+--------------------------------------------------------------------
+http://[协议]                                         
+|                                                   
+|--localhost:[主机]                                          
+  |                                         
+  |--8080[端口]                                               
+    |                                       
+    |--/myapp/index.html[URI资源标识符]
+</code></pre></div></blockquote>
+
+<h2 id="虚拟目录">虚拟目录</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">Tomcat目录
+|
+|--conf
+|    |--Catalina(方式一:推荐使用，无需重启服务器)
+|    |      |
+ |      |--localhost
+ |              |
+ |              |--添加myapp.xml
+ |                      |
+ |                      |--<span class="nt">&lt;Context</span> <span class="na">docBase=</span><span class="s">"D:\myApp"</span><span class="nt">/&gt;</span>
+ |
+ |--server.xml(方式二:不推荐使用，需重启服务器)
+    |
+    |--<span class="nt">&lt;Host&gt;</span> 标签内添加配置
+      |
+      |--添加<span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">""</span> <span class="na">docBase=</span><span class="s">""</span><span class="nt">&gt;&lt;/Context&gt;</span>       
+            |
+            |-- path:虚拟目录，docBase:实际目录
 </code></pre></div>
-<h2 id="url统一资源定位符http-localhost-8080-myapp-index-html">URL统一资源定位符<a href="http://localhost:8080/myapp.index.html">http://localhost:8080/myapp.index.html</a></h2>
-
-<p>http://[协议]<br><br>
-|<br><br>
-|--localhost:[主机]<br><br>
-  |<br><br>
-  |--8080[端口]<br><br>
-    |<br><br>
-    |--/myapp/index.html[URI资源标识符]</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 虚拟目录
-</code></pre></div>
-<p>Tomcat目录<br>
-|<br>
-|--conf<br>
-|    |--Catalina(方式一:推荐使用，无需重启服务器)<br>
-|    |      |<br>
- |      |--localhost<br>
- |              |<br>
- |              |--添加myapp.xml<br>
- |                      |<br>
- |                      |--<Context docBase="D:\myApp"/><br>
- |<br>
- |--server.xml(方式二:不推荐使用，需重启服务器)<br>
-    |<br>
-    |--<Host> 标签内添加配置<br>
-      |<br>
-      |--添加<Context path="" docBase=""></Context><br><br>
-            |<br>
-            |-- path:虚拟目录，docBase:实际目录</p>
-<div class="highlight"><pre><code class="language-" data-lang="">##### myapp.xml
-```xml
-&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Context docBase="D:\myApp"/&gt;
+<h5 id="myapp-xml">myapp.xml</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;Context</span> <span class="na">docBase=</span><span class="s">"D:\myApp"</span><span class="nt">/&gt;</span>
 </code></pre></div>
 <h2 id="默认主页">默认主页</h2>
 
@@ -683,9 +706,10 @@ Date: Tue, 11 Jul 2000 18:23:51 GMT</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

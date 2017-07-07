@@ -122,7 +122,7 @@
 <li>添加log4j.properties设置
 ## Hibernate中配置一对一
 ###### 外键的方式
-```
+```java
 public class Address {
 private Integer id;
 private String name;
@@ -178,174 +178,169 @@ public void fun2(){<br>
 }</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ###### 主键同步
+```java
+//Address.hbm.xml
+&lt;id name="id" column="id" type="int"&gt;
+    &lt;!--foreign既是主键又是外键--&gt;
+    &lt;generator class="foreign"&gt;
+        &lt;!--作为外键时引用那个属性--&gt;
+        &lt;param name="property"&gt;company&lt;/param&gt;
+    &lt;/generator&gt;
+&lt;/id&gt;
+
+&lt;!--constrained主键约束--&gt;
+&lt;one-to-one name="company" class="Company" constrained="true"&gt;&lt;/one-to-one&gt;
+
+
+//company.hbm.xml
+&lt;one-to-one name="address" class="Address" &gt;&lt;/one-to-one&gt;
 </code></pre></div>
-<p>//Address.hbm.xml<br>
-<id name="id" column="id" type="int"><br>
-    &lt;!--foreign既是主键又是外键--&gt;<br>
-    <generator class="foreign"><br>
-        &lt;!--作为外键时引用那个属性--&gt;<br>
-        <param name="property">company</param><br>
-    </generator><br>
-</id></p>
+<h2 id="二级缓存">二级缓存</h2>
 
-<!--constrained主键约束-->
+<blockquote>
+<p>级别:transactional(事务型) read-write(读写型) nostrict-read-write(非常严格的读写型)  read-only(只读型)<br>
+应用场景:很少被修改，不是很重要，经常被读取。</p>
+</blockquote>
 
-<p><one-to-one name="company" class="Company" constrained="true"></one-to-one></p>
-
-<p>//company.hbm.xml<br>
-<one-to-one name="address" class="Address" ></one-to-one></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## 二级缓存
-&gt; 级别:transactional(事务型) read-write(读写型) nostrict-read-write(非常严格的读写型)  read-only(只读型)
-&gt; 应用场景:很少被修改，不是很重要，经常被读取。
-
-## eacache
+<h2 id="eacache">eacache</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">eacache使用步骤
+    |
+    |--导入jar包
+    |    |
+    |    |--backport-util-concurrent-2.1.jar 依赖
+    |    |--commons-loggin-1.1.1.jar 依赖
+    |    |--ehcache-1.5.0.jar 核心
+    |
+    |--开启二级缓存(hibernate.cfg.xml中)
+    |    |
+    |    |--<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.cache.provider_class"</span><span class="nt">&gt;</span>org.hibernate.cache.EhCacheProvider<span class="nt">&lt;/property&gt;</span>
+    |    |--<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernate.cache.use_second_level_cache"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/property&gt;</span>
+    |
+    |
+    |--确定缓存内容(hibernate.cfg.xml中)
+         |
+         |--<span class="nt">&lt;class-cache</span> <span class="na">class=</span><span class="s">"Customer"</span> <span class="na">usage=</span><span class="s">"read-only"</span><span class="nt">&gt;&lt;/class-cache&gt;</span>
 </code></pre></div>
-<p>eacache使用步骤<br>
-    |<br>
-    |--导入jar包<br>
-    |    |<br>
-    |    |--backport-util-concurrent-2.1.jar 依赖<br>
-    |    |--commons-loggin-1.1.1.jar 依赖<br>
-    |    |--ehcache-1.5.0.jar 核心<br>
-    |<br>
-    |--开启二级缓存(hibernate.cfg.xml中)<br>
-    |    |<br>
-    |    |--<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property><br>
-    |    |--<property name="hibernate.cache.use_second_level_cache">true</property><br>
-    |<br>
-    |<br>
-    |--确定缓存内容(hibernate.cfg.xml中)<br>
-         |<br>
-         |--<class-cache class="Customer" usage="read-only"></class-cache></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 二级缓存:类缓存
+<h6 id="二级缓存-类缓存">二级缓存:类缓存</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//hibernate.cfg.xml</span>
+<span class="o">&lt;!--</span><span class="err">配置二级缓存</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"hibernate.cache.provider_class"</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">hibernate</span><span class="o">.</span><span class="na">cache</span><span class="o">.</span><span class="na">EhCacheProvider</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"hibernate.cache.use_second_level_cache"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">mapping</span> <span class="n">resource</span><span class="o">=</span><span class="s">"com/itheima/domain/Customer_hbm.xml"</span><span class="o">&gt;&lt;/</span><span class="n">mapping</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">mapping</span> <span class="n">resource</span><span class="o">=</span><span class="s">"com/itheima/domain/Order_hbm.xml"</span><span class="o">&gt;&lt;/</span><span class="n">mapping</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="kd">class</span><span class="err">-</span><span class="nc">cache</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">Customer</span><span class="s">" usage="</span><span class="n">read</span><span class="o">-</span><span class="n">only</span><span class="s">"&gt;&lt;/class-cache&gt;
+&lt;class-cache class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">Order</span><span class="s">" usage="</span><span class="n">read</span><span class="o">-</span><span class="n">only</span><span class="err">"</span><span class="o">&gt;&lt;/</span><span class="kd">class</span><span class="err">-</span><span class="nc">cache</span><span class="o">&gt;</span>
 
+<span class="c1">//类缓存</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtil</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+    <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+    <span class="n">Customer</span> <span class="n">c1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span><span class="c1">//清空一级缓存</span>
+    <span class="n">Customer</span> <span class="n">c2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">c1</span><span class="o">==</span><span class="n">c2</span><span class="o">);</span><span class="c1">//false 二级缓存数据并不是以对象形式缓存。缓存的对象的散列</span>
+    <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>//hibernate.cfg.xml</p>
+<h6 id="二级缓存-集合缓存">二级缓存:集合缓存</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//Hibernate.cfg.xml</span>
+<span class="o">&lt;!--</span><span class="err">集合缓存配置</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">collection</span><span class="o">-</span><span class="n">cache</span> <span class="n">collection</span><span class="o">=</span><span class="s">"com.itheima.domain.Customer.orders"</span> <span class="n">usage</span><span class="o">=</span><span class="s">"read-only"</span><span class="o">&gt;&lt;/</span><span class="n">collection</span><span class="o">-</span><span class="n">cache</span><span class="o">&gt;</span>
 
-<!--配置二级缓存-->
-
-<p><property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property><br>
-<property name="hibernate.cache.use_second_level_cache">true</property><br>
-<mapping resource="com/itheima/domain/Customer_hbm.xml"></mapping><br>
-<mapping resource="com/itheima/domain/Order_hbm.xml"></mapping><br>
-<class-cache class="com.itheima.domain.Customer" usage="read-only"></class-cache><br>
-<class-cache class="com.itheima.domain.Order" usage="read-only"></class-cache></p>
-
-<p>//类缓存<br>
-@Test<br>
-public void fun1(){<br>
-    Session session = HibernateUtil.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
-    session.clear();//清空一级缓存<br>
-    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
-    System.out.println(c1==c2);//false 二级缓存数据并不是以对象形式缓存。缓存的对象的散列<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 二级缓存:集合缓存
+<span class="c1">//集合缓存</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtil</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+    <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+    <span class="n">Customer</span> <span class="n">c1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Order</span> <span class="nl">o:</span><span class="n">c1</span><span class="o">.</span><span class="na">getOrders</span><span class="o">()){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">o</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="n">Customer</span> <span class="n">c2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Order</span> <span class="nl">o:</span><span class="n">c2</span><span class="o">.</span><span class="na">getOrders</span><span class="o">()){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">o</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>//Hibernate.cfg.xml</p>
+<h6 id="二级缓存-查询缓存-hql缓存">二级缓存:查询缓存(HQL缓存)</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//Hibernate.cfg.xml</span>
+<span class="o">&lt;!--</span><span class="err">开启查询缓存</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"hibernate.cache.use_query_cache"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
 
-<!--集合缓存配置-->
-
-<p><collection-cache collection="com.itheima.domain.Customer.orders" usage="read-only"></collection-cache></p>
-
-<p>//集合缓存<br>
-@Test<br>
-public void fun1(){<br>
-    Session session = HibernateUtil.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
-    for(Order o:c1.getOrders()){<br>
-        System.out.println(o.getName());<br>
-    }<br>
-    session.clear();<br>
-    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
-    for(Order o:c2.getOrders()){<br>
-        System.out.println(o.getName());<br>
-    }<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 二级缓存:查询缓存(HQL缓存)
+<span class="c1">//HQL查询缓存</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtil</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+    <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+    <span class="n">Query</span> <span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"from Customer "</span><span class="o">);</span>
+    <span class="c1">//使用二级缓存，查询时先从二级缓存中去结果，如果取不到执行语句将结果放到二级缓存中</span>
+    <span class="n">query</span><span class="o">.</span><span class="na">setCacheable</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Customer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="n">Query</span> <span class="n">query2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"from Customer "</span><span class="o">);</span>
+    <span class="n">query2</span><span class="o">.</span><span class="na">setCacheable</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">List</span> <span class="n">list2</span> <span class="o">=</span> <span class="n">query2</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
+    <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>//Hibernate.cfg.xml</p>
+<h6 id="时间戳区">时间戳区</h6>
 
-<!--开启查询缓存-->
+<blockquote>
+<p>记录的是表和最后操作的时间<br>
+判断二级缓存的时效性</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//时间戳区</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtil</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+    <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+    <span class="n">Customer</span> <span class="n">c1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"update Customer  set name =:name where id=:id"</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span><span class="s">"rose"</span><span class="o">).</span><span class="na">setInteger</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span><span class="mi">1</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="n">Customer</span> <span class="n">c2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+    <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></blockquote>
 
-<p><property name="hibernate.cache.use_query_cache">true</property></p>
+<h2 id="ehcache二级缓存配置">ehcache二级缓存配置</h2>
 
-<p>//HQL查询缓存<br>
-@Test<br>
-public void fun1(){<br>
-    Session session = HibernateUtil.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Query query = session.createQuery(&quot;from Customer &quot;);<br>
-    //使用二级缓存，查询时先从二级缓存中去结果，如果取不到执行语句将结果放到二级缓存中<br>
-    query.setCacheable(true);<br>
-    List<Customer> list = query.list();<br>
-    session.clear();<br>
-    Query query2 = session.createQuery(&quot;from Customer &quot;);<br>
-    query2.setCacheable(true);<br>
-    List list2 = query2.list();<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 时间戳区
-&gt; 记录的是表和最后操作的时间
-&gt; 判断二级缓存的时效性
-</code></pre></div>
-<p>//时间戳区<br>
-@Test<br>
-public void fun1(){<br>
-    Session session = HibernateUtil.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
-    session.createQuery(&quot;update Customer  set name =:name where id=:id&quot;)<br>
-            .setString(&quot;name&quot;,&quot;rose&quot;).setInteger(&quot;id&quot;,1)<br>
-            .executeUpdate();<br>
-    session.clear();<br>
-    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## ehcache二级缓存配置
-&gt; ehcache-1.5.0.jar 中 ehcache-failsafe.xml 复制到src下改名ehcache.xml
-</code></pre></div>
-<p>maxElementsInMemory=&quot;10000&quot;  内存最大数<br>
-eternal=&quot;false&quot;  是否永久（内存常驻留）<br>
-timeToIdleSeconds=&quot;120&quot; 最多空闲多少秒<br>
-timeToLiveSeconds=&quot;120&quot; 最多存活多少秒<br>
-overflowToDisk=&quot;true&quot;  内存满了，是否写入到硬盘<br>
-maxElementsOnDisk=&quot;10000000&quot;  硬盘最大数<br>
-diskPersistent=&quot;false&quot;  关闭JVM，是否将内存保存硬盘中<br>
-diskExpiryThreadIntervalSeconds=&quot;120&quot;  轮询<br>
-memoryStoreEvictionPolicy=&quot;LRU&quot; 移出策略 LRU最近最少使用 LFU最不常用 FIFO先进先出</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-</code></pre></div>
-<p><ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd"><br>
-    &lt;!--缓存路径--&gt;<br>
-    <diskStore path="java.io.tmpdir"/><br>
-    <defaultCache<br>
-            maxElementsInMemory="10000"<br>
-            eternal="false"<br>
-            timeToIdleSeconds="120"<br>
-            timeToLiveSeconds="120"<br>
-            overflowToDisk="true"<br>
-            maxElementsOnDisk="10000000"<br>
-            diskPersistent="false"<br>
-            diskExpiryThreadIntervalSeconds="120"<br>
-            memoryStoreEvictionPolicy="LRU"<br>
-            /></p>
+<blockquote>
+<p>ehcache-1.5.0.jar 中 ehcache-failsafe.xml 复制到src下改名ehcache.xml</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">maxElementsInMemory="10000"  内存最大数
+eternal="false"  是否永久（内存常驻留）
+timeToIdleSeconds="120" 最多空闲多少秒
+timeToLiveSeconds="120" 最多存活多少秒
+overflowToDisk="true"  内存满了，是否写入到硬盘
+maxElementsOnDisk="10000000"  硬盘最大数
+diskPersistent="false"  关闭JVM，是否将内存保存硬盘中
+diskExpiryThreadIntervalSeconds="120"  轮询
+memoryStoreEvictionPolicy="LRU" 移出策略 LRU最近最少使用 LFU最不常用 FIFO先进先出
+</code></pre></div></blockquote>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;ehcache</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xsi:noNamespaceSchemaLocation=</span><span class="s">"../config/ehcache.xsd"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--缓存路径--&gt;</span>
+    <span class="nt">&lt;diskStore</span> <span class="na">path=</span><span class="s">"java.io.tmpdir"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;defaultCache</span>
+            <span class="na">maxElementsInMemory=</span><span class="s">"10000"</span>
+            <span class="na">eternal=</span><span class="s">"false"</span>
+            <span class="na">timeToIdleSeconds=</span><span class="s">"120"</span>
+            <span class="na">timeToLiveSeconds=</span><span class="s">"120"</span>
+            <span class="na">overflowToDisk=</span><span class="s">"true"</span>
+            <span class="na">maxElementsOnDisk=</span><span class="s">"10000000"</span>
+            <span class="na">diskPersistent=</span><span class="s">"false"</span>
+            <span class="na">diskExpiryThreadIntervalSeconds=</span><span class="s">"120"</span>
+            <span class="na">memoryStoreEvictionPolicy=</span><span class="s">"LRU"</span>
+            <span class="nt">/&gt;</span>
 
-<p></ehcache></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<span class="nt">&lt;/ehcache&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -498,9 +493,10 @@ memoryStoreEvictionPolicy=&quot;LRU&quot; 移出策略 LRU最近最少使用 LFU
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

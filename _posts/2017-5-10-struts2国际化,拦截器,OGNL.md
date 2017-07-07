@@ -30,7 +30,7 @@ jsp.login.password=密码
 jsp.login.submit=登陆
 ```
 ##### 3.java中使用
-```
+```java
 public class I18NDemo {
     @Test
     public void test1(){
@@ -42,7 +42,7 @@ public class I18NDemo {
 }
 ```
 ##### 4.jsp中使用
-```
+```javascript
 <%
     ResourceBundle bundle=ResourceBundle.getBundle("com.itheima.resource.message",Locale.getDefault());
 %>
@@ -67,7 +67,7 @@ public class I18NDemo {
 ##### 3.可以在任意包名下配置package_en_US.properties和package_zh_CN的资源文件
 ##### 4.可以在动作类的包名下配置:动作类名_en_US.properties和package_zh_CN的资源文件
 ##### 5.动作类要使用资源文件必须继承ActionSupport
-```
+```java
 public class Demo1Action extends ActionSupport {
     @Override
     public String execute() throws Exception {
@@ -78,7 +78,7 @@ public class Demo1Action extends ActionSupport {
 }
 ```
 ##### 6.jsp要使用struts标签
-```
+```xml
 <%@taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
@@ -99,7 +99,7 @@ public class Demo1Action extends ActionSupport {
 </body>
 ```
 ## 自定义拦截器
-```
+```html
 拦截器使用步骤
 	|
 	|--创建普通类，继承AbstractInterceptor,实现抽象方法
@@ -146,7 +146,7 @@ public class Demo1Action extends ActionSupport {
            							|--<interceptor-ref name="myDefault"></interceptor-ref>
 ```
 
-```
+```javascript
 //Demo2Action
 public class Demo2Interceptor extends AbstractInterceptor {
     @Override
@@ -175,7 +175,7 @@ public class Demo2Interceptor extends AbstractInterceptor {
 </package>
 ```
 
-```
+```javascript
 //CehckLoginInterceptor
 public class CheckLoginInterceptor extends AbstractInterceptor {
     @Override
@@ -244,7 +244,7 @@ public class CheckLoginInterceptor2 extends MethodFilterInterceptor {
 ## 文件上传
 > FileUploadInterceptor 拦截器注入获取表单数据
 ##### 单文件上传
-```
+```javascript
 //upload1.jsp
 <s:form action="upload.action" enctype="multipart/form-data">
     <s:textfield name="username" label="用户名"/>
@@ -326,7 +326,7 @@ public class Upload1Action extends ActionSupport{
 ```
 
 ##### 多文件上传
-```
+```javascript
 //upload2.jsp
 <s:form action="upload2.action" enctype="multipart/form-data">
     <s:textfield name="username" label="用户名"/>
@@ -404,7 +404,7 @@ public class Upload2Action extends ActionSupport{
 
 ## 文件下载
 > StreamResult注入结果视图 类型要是stream
-```
+```javascript
 //struts.xml
 <action name="download" class="com.itheima.web.action.DownloadAction" method="download">
     <result name="success" type="stream">
@@ -440,7 +440,7 @@ public class DownloadAction extends ActionSupport {
 > 格式${}
 > EL只能调用静态方法
 ##### 步骤
-```
+```html
 自定义EL表达式方法
 	 |
 	 |--创建类和静态方法
@@ -458,7 +458,7 @@ public class DownloadAction extends ActionSupport {
 	 	 		|--<%@ taglib prefix="myfn" uri="http://www.itheima.com/function/myfunction" %>
 ```
 ##### 示例
-```
+```javascript
 //MyFunction
 public class MyFunction {
     public static String toUpperCase(String str){
@@ -501,6 +501,7 @@ public class MyFunction {
 
 ## OGNL
 > OGNL是Oject Graphic Navigation Language(对象图导航)的缩写，它是一个开源项目，struts2框架使用OGNL作为默认的表达式语言
+
 |属性|备注|
 |---|---|
 | 格式|lt;s:property value=""|
@@ -511,7 +512,7 @@ public class MyFunction {
 |xml中使用ognl方法|${@全类名@方法名}
 |list集合|{}相当于创建了list集合 集合里面是ognl表达式|
 |map集合| '#{}表示创建一个map'|
-```
+```xml
 <body>
     abcdefg---ABCDEFG
     ${myfn:toUpperCase("abcdefg")}

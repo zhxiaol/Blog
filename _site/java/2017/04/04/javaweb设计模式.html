@@ -120,7 +120,7 @@
 <blockquote>
 <p>C/S:客户端/服务器(胖客户端)<br>
 B/S:浏览器/服务器(瘦客户端)</p>
-<div class="highlight"><pre><code class="language-" data-lang="">开发模式
+<div class="highlight"><pre><code class="language-html" data-lang="html">开发模式
    |
    |--Model1模式  (过时)
    |      |
@@ -153,294 +153,294 @@ B/S:浏览器/服务器(瘦客户端)</p>
      |<br>
      |-分层思想-强内聚，弱耦合   </p>
 <div class="highlight"><pre><code class="language-" data-lang="">## 用户的登陆和注册
-</code></pre></div>
-<p>//index.jsp<br>
-<head><br>
-  <title>首页</title><br>
-</head><br>
-<body><br>
-  <c:if test="${ empty u}"><br>
-  <a href="login.jsp">登陆</a><br>
-  <a href="reg.jsp">注册</a><br>
-  <a href="/c:if">/c:if</a><br>
-  <c:if test="${ not empty u}"><br>
-      欢迎您:${u.name}  <a href="${pageContext.request.contextPath}/loginOutServlet">注销</a><br>
-  <a href="/c:if">/c:if</a><br>
-</body></p>
+```javascript
+//index.jsp
+&lt;head&gt;
+  &lt;title&gt;首页&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;c:if test="${ empty u}"&gt;
+  &lt;a href="login.jsp"&gt;登陆&lt;/a&gt;
+  &lt;a href="reg.jsp"&gt;注册&lt;/a&gt;
+  &lt;/c:if&gt;
+  &lt;c:if test="${ not empty u}"&gt;
+      欢迎您:${u.name}  &lt;a href="${pageContext.request.contextPath}/loginOutServlet"&gt;注销&lt;/a&gt;
+  &lt;/c:if&gt;
+&lt;/body&gt;
 
-<p>//----------------------------------------------------------------------------------------------<br>
-//login.jsp<br>
-<head><br>
-    <title>登录</title><br>
-</head><br>
-<body><br>
-    ${msg}<br>
-    <form action="${pageContext.request.contextPath}/loginServlet" method="post"><br>
-        用户名:<input type="text" name="name"><br/><br>
-        密码:<input type="password" name="password"><br/><br>
-        <input type="submit" value="登陆"><br>
-    </form><br>
-</body><br>
-//----------------------------------------------------------------------------------------------<br>
-//reg.jsp<br>
-<head><br>
-    <title>注册</title><br>
-</head><br>
-<body><br>
-    <form method="post" action="${pageContext.request.contextPath}/regservlet"><br>
-        用户名:<input type="text" name="name" value="${uf.name}">${uf.msg.name }${error}<br/><br>
-        密码:<input type="password" name="password">${uf.msg.password}<br/><br>
-        确认密码:<input type="password" name="repassword">${uf.msg.repassword}<br/><br>
-        邮箱:<input type="text" name="email" value="${uf.email}">${uf.msg.email}<br/><br>
-        生日:<input type="text" name="birthday" value="${uf.birthday}">${uf.msg.birthday}<br/><br>
-        <input type="submit" value="注册"><br>
-    </form><br>
-</body><br>
-//----------------------------------------------------------------------------------------------<br>
-//UserFrom<br>
-public class UserFrom {<br>
-    private int id;<br>
-    private String name;<br>
-    private String password;<br>
-    private String repassword;<br>
-    private String email;<br>
-    private String birthday;<br>
-    private Map<String,String> msg=new HashMap&lt;&gt;();<br>
-    public boolean validate(){<br>
-        if(&quot;&quot;.equals(name)){<br>
-            msg.put(&quot;name&quot;,&quot;用户名不能为空&quot;);<br>
-        }else if(!name.matches(&quot;\w{3,8}&quot;)){<br>
-            msg.put(&quot;name&quot;,&quot;用户名为3-8的字符组成&quot;);<br>
-        }<br>
-        if(&quot;&quot;.equals(password)){<br>
-            msg.put(&quot;password&quot;,&quot;密码不能为空&quot;);<br>
-        }else if(!password.matches(&quot;\d{3,8}&quot;)){<br>
-            msg.put(&quot;password&quot;,&quot;密码为3-8的数字组成&quot;);<br>
-        }<br>
-        if(!password.equals(repassword)){<br>
-            msg.put(&quot;repassword&quot;,&quot;2次密码不一致&quot;);<br>
-        }<br>
-        if(&quot;&quot;.equals(email)){<br>
-            msg.put(&quot;email&quot;,&quot;邮箱不能为空&quot;);<br>
-        }else if(!email.matches(&quot;\b^[&#39;_a-z0-9-\+]+(\.[&#39;_a-z0-9-\+]+)<em>@[a-z0-9-]+(\.[a-z0-9-]+)</em>\.([a-z]{2}|aero|arpa|asia|biz|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|nato|net|org|pro|tel|travel|xxx)$\b&quot;)){<br>
-            msg.put(&quot;email&quot;,&quot;邮箱格式不正确&quot;);<br>
-        }<br>
-        if(&quot;&quot;.equals(birthday)){<br>
-            msg.put(&quot;birthday&quot;,&quot;生日不能为空&quot;);<br>
-        }else {<br>
-            SimpleDateFormat sdf=new SimpleDateFormat(&quot;yyy-MM-dd&quot;);<br>
-            try {<br>
-                sdf.parse(birthday);<br>
-            } catch (ParseException e) {<br>
-                e.printStackTrace();<br>
-                msg.put(&quot;birthday&quot;,&quot;生日格式不正确&quot;);<br>
-            }<br>
-        }<br>
-        return msg.isEmpty();<br>
-    }<br>
-//----------------------------------------------------------------------------------------------<br>
-//LoginServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    resp.setContentType(&quot;text/html;charset=utf&quot;);<br>
-    User u = new User();<br>
-    try {<br>
-        BeanUtils.populate(u,req.getParameterMap());<br>
-        UserService service = new UserServiceImpl();<br>
-        User user = service.login(u);<br>
-        if(user!=null) {<br>
-            req.getSession().setAttribute(&quot;u&quot;, user);<br>
-            req.getRequestDispatcher(&quot;/index.jsp&quot;).forward(req, resp);<br>
-        }else {<br>
-            resp.sendRedirect(req.getContextPath()+&quot;/login.jsp&quot;);<br>
-        }<br>
-    } catch (Exception e) {<br>
-        e.printStackTrace();<br>
-        req.setAttribute(&quot;msg&quot;,e.getMessage());<br>
-        req.getRequestDispatcher(req.getContextPath()+&quot;/login.jsp&quot;).forward(req,resp);<br>
-    }</p>
-
-<p>}<br>
-/----------------------------------------------------------------------------------------------<br>
-//RegistServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.setCharacterEncoding(&quot;utf-8&quot;);<br>
-    resp.setContentType(&quot;text/html;charset=utf-8&quot;);<br>
-    UserFrom from=new UserFrom();<br>
-    try {<br>
-        BeanUtils.populate(from,req.getParameterMap());<br>
-    } catch (Exception e) {<br>
-        e.printStackTrace();<br>
-    }<br>
-    if(!from.validate()){//验证不通过<br>
-        req.setAttribute(&quot;uf&quot;,from);<br>
-        req.getRequestDispatcher(req.getContextPath()+&quot;/reg.jsp&quot;).forward(req,resp);<br>
-        return;<br>
-    }<br>
-    User u=new User();<br>
-    try {<br>
-        ConvertUtils.register(new Converter() {<br>
-            @Override<br>
-            public Object convert(Class type, Object value) {<br>
-                if(value instanceof String) {<br>
-                    SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);<br>
-                    try {<br>
-                        return sdf.parse((String)value);<br>
-                    } catch (ParseException e) {<br>
-                        e.printStackTrace();<br>
-                    }<br>
-                }<br>
-                return null;<br>
-            }<br>
-        },Date.class);<br>
-        BeanUtils.populate(u,req.getParameterMap());<br>
-    } catch (Exception e) {<br>
-        e.printStackTrace();<br>
-    }<br>
-    UserService service=new UserServiceImpl();<br>
-    try {<br>
-        service.findUserByName(u.getName());<br>
-        service.rigest(u);<br>
-        resp.getWriter().println(&quot;注册成功!1秒跳到主页&quot;);<br>
-        resp.setHeader(&quot;refresh&quot;,&quot;1,url=&quot;+req.getContextPath()+&quot;/index.jsp&quot;);<br>
-    } catch (UserExistException e) {<br>
-        e.printStackTrace();<br>
-        req.setAttribute(&quot;error&quot;,&quot;用户名已存在&quot;);<br>
-        req.getRequestDispatcher(req.getContextPath()+&quot;/reg.jsp&quot;).forward(req,resp);<br>
-    }catch (Exception e) {<br>
-        e.printStackTrace();<br>
-    }<br>
-}<br>
-/----------------------------------------------------------------------------------------------<br>
-//LoginOutServlet<br>
-protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
-    req.getSession().removeAttribute(&quot;u&quot;);<br>
-    resp.sendRedirect(req.getContextPath()+&quot;/index.jsp&quot;);<br>
-}<br>
-/----------------------------------------------------------------------------------------------<br>
-//UserServiceImpl<br>
-public class UserServiceImpl implements UserService {<br>
-    UserDao dao=new UserDaoImpl();<br>
-    @Override<br>
-    public void rigest(User u) throws Exception {<br>
-        dao.addUser(u);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-public User login(User u) throws Exception {
-    User user = dao.findUser(u);
-    if(user==null)
-        throw new UserException("用户名或者密码不正确");
-    return user;
-}
-
-@Override
-public boolean findUserByName(String name) throws Exception {
-    boolean b = dao.findUserByName(name);
-    if(b){
-        throw new UserExistException("用户已存在");
+//----------------------------------------------------------------------------------------------
+//login.jsp
+&lt;head&gt;
+    &lt;title&gt;登录&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    ${msg}
+    &lt;form action="${pageContext.request.contextPath}/loginServlet" method="post"&gt;
+        用户名:&lt;input type="text" name="name"&gt;&lt;br/&gt;
+        密码:&lt;input type="password" name="password"&gt;&lt;br/&gt;
+        &lt;input type="submit" value="登陆"&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+//----------------------------------------------------------------------------------------------
+//reg.jsp
+&lt;head&gt;
+    &lt;title&gt;注册&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form method="post" action="${pageContext.request.contextPath}/regservlet"&gt;
+        用户名:&lt;input type="text" name="name" value="${uf.name}"&gt;${uf.msg.name }${error}&lt;br/&gt;
+        密码:&lt;input type="password" name="password"&gt;${uf.msg.password}&lt;br/&gt;
+        确认密码:&lt;input type="password" name="repassword"&gt;${uf.msg.repassword}&lt;br/&gt;
+        邮箱:&lt;input type="text" name="email" value="${uf.email}"&gt;${uf.msg.email}&lt;br/&gt;
+        生日:&lt;input type="text" name="birthday" value="${uf.birthday}"&gt;${uf.msg.birthday}&lt;br/&gt;
+        &lt;input type="submit" value="注册"&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+//----------------------------------------------------------------------------------------------
+//UserFrom
+public class UserFrom {
+    private int id;
+    private String name;
+    private String password;
+    private String repassword;
+    private String email;
+    private String birthday;
+    private Map&lt;String,String&gt; msg=new HashMap&lt;&gt;();
+    public boolean validate(){
+        if("".equals(name)){
+            msg.put("name","用户名不能为空");
+        }else if(!name.matches("\\w{3,8}")){
+            msg.put("name","用户名为3-8的字符组成");
+        }
+        if("".equals(password)){
+            msg.put("password","密码不能为空");
+        }else if(!password.matches("\\d{3,8}")){
+            msg.put("password","密码为3-8的数字组成");
+        }
+        if(!password.equals(repassword)){
+            msg.put("repassword","2次密码不一致");
+        }
+        if("".equals(email)){
+            msg.put("email","邮箱不能为空");
+        }else if(!email.matches("\\b^['_a-z0-9-\\+]+(\\.['_a-z0-9-\\+]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*\\.([a-z]{2}|aero|arpa|asia|biz|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|nato|net|org|pro|tel|travel|xxx)$\\b")){
+            msg.put("email","邮箱格式不正确");
+        }
+        if("".equals(birthday)){
+            msg.put("birthday","生日不能为空");
+        }else {
+            SimpleDateFormat sdf=new SimpleDateFormat("yyy-MM-dd");
+            try {
+                sdf.parse(birthday);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                msg.put("birthday","生日格式不正确");
+            }
+        }
+        return msg.isEmpty();
     }
-    return b;
-}
-</code></pre></div>
-<p>}<br>
-/----------------------------------------------------------------------------------------------<br>
-//UserDaoImpl<br>
-public class UserDaoImpl implements UserDao{<br>
-    @Override<br>
-    public void addUser(User u) throws Exception {<br>
-        Connection conn = DBUtils.getConnection();<br>
-        String sql=&quot;insert into users values(?,?,?,?,?)&quot;;<br>
-        PreparedStatement ps=conn.prepareStatement(sql);<br>
-        ps.setInt(1,u.getId());<br>
-        ps.setString(2,u.getName());<br>
-        ps.setString(3,u.getPassword());<br>
-        ps.setString(4,u.getEmail());<br>
-        SimpleDateFormat sdf=new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);<br>
-        ps.setString(5,sdf.format(u.getBirthday()));<br>
-        ps.executeUpdate();<br>
-        DBUtils.close(null,ps,conn);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-public User findUser(User u) throws Exception {
-    Connection conn = DBUtils.getConnection();
-    PreparedStatement ps=conn.prepareStatement("select * from users where name=? and password=?");
-    ps.setString(1,u.getName());
-    ps.setString(2,u.getPassword());
-    ResultSet rs=ps.executeQuery();
-    User user=null;
-    if(rs.next()){
-        user=new User();
-        user.setId(rs.getInt("id"));
-        user.setName(rs.getString("name"));
-        user.setPassword(rs.getString("password"));
-        user.setEmail(rs.getString("email"));
-        user.setBirthday(rs.getDate("birthday"));
+//----------------------------------------------------------------------------------------------
+//LoginServlet
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
+    resp.setContentType("text/html;charset=utf");
+    User u = new User();
+    try {
+        BeanUtils.populate(u,req.getParameterMap());
+        UserService service = new UserServiceImpl();
+        User user = service.login(u);
+        if(user!=null) {
+            req.getSession().setAttribute("u", user);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        }else {
+            resp.sendRedirect(req.getContextPath()+"/login.jsp");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        req.setAttribute("msg",e.getMessage());
+        req.getRequestDispatcher(req.getContextPath()+"/login.jsp").forward(req,resp);
     }
-    DBUtils.close(rs,ps,conn);
-    return user;
-}
 
-@Override
-public boolean findUserByName(String name) throws Exception {
-    Connection conn=DBUtils.getConnection();
-    PreparedStatement ps=conn.prepareStatement("select * from users where name = ?");
-    ps.setString(1,name);
-    ResultSet rs=ps.executeQuery();
-    if(rs.next()){
+}
+/----------------------------------------------------------------------------------------------
+//RegistServlet
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding("utf-8");
+    resp.setContentType("text/html;charset=utf-8");
+    UserFrom from=new UserFrom();
+    try {
+        BeanUtils.populate(from,req.getParameterMap());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    if(!from.validate()){//验证不通过
+        req.setAttribute("uf",from);
+        req.getRequestDispatcher(req.getContextPath()+"/reg.jsp").forward(req,resp);
+        return;
+    }
+    User u=new User();
+    try {
+        ConvertUtils.register(new Converter() {
+            @Override
+            public Object convert(Class type, Object value) {
+                if(value instanceof String) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        return sdf.parse((String)value);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+        },Date.class);
+        BeanUtils.populate(u,req.getParameterMap());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    UserService service=new UserServiceImpl();
+    try {
+        service.findUserByName(u.getName());
+        service.rigest(u);
+        resp.getWriter().println("注册成功!1秒跳到主页");
+        resp.setHeader("refresh","1,url="+req.getContextPath()+"/index.jsp");
+    } catch (UserExistException e) {
+        e.printStackTrace();
+        req.setAttribute("error","用户名已存在");
+        req.getRequestDispatcher(req.getContextPath()+"/reg.jsp").forward(req,resp);
+    }catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+/----------------------------------------------------------------------------------------------
+//LoginOutServlet
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.getSession().removeAttribute("u");
+    resp.sendRedirect(req.getContextPath()+"/index.jsp");
+}
+/----------------------------------------------------------------------------------------------
+//UserServiceImpl
+public class UserServiceImpl implements UserService {
+    UserDao dao=new UserDaoImpl();
+    @Override
+    public void rigest(User u) throws Exception {
+        dao.addUser(u);
+    }
+
+    @Override
+    public User login(User u) throws Exception {
+        User user = dao.findUser(u);
+        if(user==null)
+            throw new UserException("用户名或者密码不正确");
+        return user;
+    }
+
+    @Override
+    public boolean findUserByName(String name) throws Exception {
+        boolean b = dao.findUserByName(name);
+        if(b){
+            throw new UserExistException("用户已存在");
+        }
+        return b;
+    }
+}
+/----------------------------------------------------------------------------------------------
+//UserDaoImpl
+public class UserDaoImpl implements UserDao{
+    @Override
+    public void addUser(User u) throws Exception {
+        Connection conn = DBUtils.getConnection();
+        String sql="insert into users values(?,?,?,?,?)";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ps.setInt(1,u.getId());
+        ps.setString(2,u.getName());
+        ps.setString(3,u.getPassword());
+        ps.setString(4,u.getEmail());
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        ps.setString(5,sdf.format(u.getBirthday()));
+        ps.executeUpdate();
+        DBUtils.close(null,ps,conn);
+    }
+
+    @Override
+    public User findUser(User u) throws Exception {
+        Connection conn = DBUtils.getConnection();
+        PreparedStatement ps=conn.prepareStatement("select * from users where name=? and password=?");
+        ps.setString(1,u.getName());
+        ps.setString(2,u.getPassword());
+        ResultSet rs=ps.executeQuery();
+        User user=null;
+        if(rs.next()){
+            user=new User();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
+            user.setBirthday(rs.getDate("birthday"));
+        }
         DBUtils.close(rs,ps,conn);
-        return true;
+        return user;
     }
-    DBUtils.close(rs,ps,conn);
-    return false;
-}
-</code></pre></div>
-<p>}<br>
-/----------------------------------------------------------------------------------------------<br>
-//DBUtils<br>
-public class DBUtils {<br>
-    private final static String  url;<br>
-    private final static String user;<br>
-    private final static String password;<br>
-    static {<br>
-        ResourceBundle rb=ResourceBundle.getBundle(&quot;dbinfo&quot;);<br>
-        url=rb.getString(&quot;url&quot;);<br>
-        user=rb.getString(&quot;user&quot;);<br>
-        password=rb.getString(&quot;password&quot;);<br>
-        String clazz=rb.getString(&quot;classDriver&quot;);<br>
-        try {<br>
-            Class.forName(clazz);<br>
-        } catch (ClassNotFoundException e) {<br>
-            e.printStackTrace();<br>
-        }<br>
-    }<br>
-    public static Connection getConnection()throws Exception{<br>
-        return DriverManager.getConnection(url,user,password);<br>
-    }<br>
-    public static void close(ResultSet rs, Statement stmt,Connection conn){<br>
-        try{<br>
-            if(rs!=null)<br>
-                rs.close();<br>
-        }catch (Exception e){<br>
-            e.printStackTrace();<br>
-        }finally {<br>
-            try {<br>
-                if (stmt != null)<br>
-                    stmt.close();<br>
-            }catch (Exception e){<br>
-                e.printStackTrace();<br>
-            }finally {<br>
-                try{<br>
-                    if(conn!=null)<br>
-                        conn.close();<br>
-                }catch (Exception e){<br>
-                    e.printStackTrace();<br>
-                }<br>
-            }<br>
-        }<br>
-    }</p>
 
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+    @Override
+    public boolean findUserByName(String name) throws Exception {
+        Connection conn=DBUtils.getConnection();
+        PreparedStatement ps=conn.prepareStatement("select * from users where name = ?");
+        ps.setString(1,name);
+        ResultSet rs=ps.executeQuery();
+        if(rs.next()){
+            DBUtils.close(rs,ps,conn);
+            return true;
+        }
+        DBUtils.close(rs,ps,conn);
+        return false;
+    }
+}
+/----------------------------------------------------------------------------------------------
+//DBUtils
+public class DBUtils {
+    private final static String  url;
+    private final static String user;
+    private final static String password;
+    static {
+        ResourceBundle rb=ResourceBundle.getBundle("dbinfo");
+        url=rb.getString("url");
+        user=rb.getString("user");
+        password=rb.getString("password");
+        String clazz=rb.getString("classDriver");
+        try {
+            Class.forName(clazz);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Connection getConnection()throws Exception{
+        return DriverManager.getConnection(url,user,password);
+    }
+    public static void close(ResultSet rs, Statement stmt,Connection conn){
+        try{
+            if(rs!=null)
+                rs.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                try{
+                    if(conn!=null)
+                        conn.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+}
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -593,9 +593,10 @@ public class DBUtils {<br>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

@@ -129,7 +129,7 @@
 <li>下载地址
 <a href="http://cxf.apache.org/download.html">http://cxf.apache.org/download.html</a></li>
 <li>包结构介绍
-<code>
+<code>html
 目录结构
 |
 |--bin 二进制文件
@@ -177,46 +177,46 @@
 </ul>
 
 <h5 id="服务端">服务端</h5>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 第一步：导入Jar包 cxf里面所有的jar包</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 第一步：导入Jar包 cxf里面所有的jar包</span>
 <span class="c1">// 第二步：创建SEI接口，要加入@WebService</span>
-<span class="nd">@WebService</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WeatherInterface</span> <span class="o">{</span>
+<span class="err">@</span><span class="nx">WebService</span>
+<span class="kr">public</span> <span class="kr">interface</span> <span class="nx">WeatherInterface</span> <span class="p">{</span>
 
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">queryWeather</span><span class="o">(</span><span class="n">String</span> <span class="n">cityName</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryWeather</span><span class="p">(</span><span class="nb">String</span> <span class="nx">cityName</span><span class="p">);</span>
+<span class="p">}</span>
 
 <span class="c1">//第三步：创建SEI实现类</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WeatherInterfaceImpl</span> <span class="kd">implements</span> <span class="n">WeatherInterface</span> <span class="o">{</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">WeatherInterfaceImpl</span> <span class="kr">implements</span> <span class="nx">WeatherInterface</span> <span class="p">{</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">queryWeather</span><span class="o">(</span><span class="n">String</span> <span class="n">cityName</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"from client..."</span><span class="o">+</span><span class="n">cityName</span><span class="o">);</span>
-        <span class="k">if</span><span class="o">(</span><span class="s">"北京"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">cityName</span><span class="o">)){</span>
-            <span class="k">return</span> <span class="s">"冷且霾"</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="s">"暖且晴"</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryWeather</span><span class="p">(</span><span class="nb">String</span> <span class="nx">cityName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"from client..."</span><span class="o">+</span><span class="nx">cityName</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="s2">"北京"</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">cityName</span><span class="p">)){</span>
+            <span class="k">return</span> <span class="s2">"冷且霾"</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s2">"暖且晴"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-<span class="o">}</span>
+<span class="p">}</span>
 
 <span class="c1">// 第四步：发布服务, JaxWsServerFactoryBean发布，设置3个参数，1.服务接口；2.服务实现类；3.服务地址；</span>
 <span class="c1">// endpoint仅支持发布实现类，JaxWsServerFactoryBean支持发布接口。</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WeatherServer</span> <span class="o">{</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">WeatherServer</span> <span class="p">{</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">//JaxWsServerFactoryBean发布服务</span>
-        <span class="n">JaxWsServerFactoryBean</span> <span class="n">jaxWsServerFactoryBean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JaxWsServerFactoryBean</span><span class="o">();</span>
+        <span class="nx">JaxWsServerFactoryBean</span> <span class="nx">jaxWsServerFactoryBean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JaxWsServerFactoryBean</span><span class="p">();</span>
         <span class="c1">//设置服务接口</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setServiceClass</span><span class="o">(</span><span class="n">WeatherInterface</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setServiceClass</span><span class="p">(</span><span class="nx">WeatherInterface</span><span class="p">.</span><span class="kr">class</span><span class="p">);</span>
         <span class="c1">//设置服务实现类</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setServiceBean</span><span class="o">(</span><span class="k">new</span> <span class="n">WeatherInterfaceImpl</span><span class="o">());</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setServiceBean</span><span class="p">(</span><span class="k">new</span> <span class="nx">WeatherInterfaceImpl</span><span class="p">());</span>
         <span class="c1">//设置服务地址</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">"http://127.0.0.1:12345/weather"</span><span class="o">);</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setAddress</span><span class="p">(</span><span class="s2">"http://127.0.0.1:12345/weather"</span><span class="p">);</span>
         <span class="c1">//发布</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 <span class="c1">// 第五步：测试服务是否发布成功，阅读使用说明书，确定关键点</span>
 <span class="c1">// 如果在CXF发布的服务下，直接访问服务地址 报异常No binding operation info while invoking</span>
@@ -240,18 +240,18 @@
 拦截器必须加到服务端，在服务端发布之前<br>
 获取拦截器列表，将自己的拦截器加入列表中</p></li>
 </ul>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WeatherServer</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">JaxWsServerFactoryBean</span> <span class="n">jaxWsServerFactoryBean</span><span class="o">=</span><span class="k">new</span> <span class="n">JaxWsServerFactoryBean</span><span class="o">();</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setServiceClass</span><span class="o">(</span><span class="n">WeatherInterface</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setServiceBean</span><span class="o">(</span><span class="k">new</span> <span class="n">WeatherInterfaceImpl</span><span class="o">());</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">"http://127.0.0.1:12345/weather"</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">WeatherServer</span> <span class="p">{</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">JaxWsServerFactoryBean</span> <span class="nx">jaxWsServerFactoryBean</span><span class="o">=</span><span class="k">new</span> <span class="nx">JaxWsServerFactoryBean</span><span class="p">();</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setServiceClass</span><span class="p">(</span><span class="nx">WeatherInterface</span><span class="p">.</span><span class="kr">class</span><span class="p">);</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setServiceBean</span><span class="p">(</span><span class="k">new</span> <span class="nx">WeatherInterfaceImpl</span><span class="p">());</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">setAddress</span><span class="p">(</span><span class="s2">"http://127.0.0.1:12345/weather"</span><span class="p">);</span>
         <span class="c1">//添加拦截器</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">getInInterceptors</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">LoggingInInterceptor</span><span class="o">());</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">getOutInterceptors</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">LoggingOutInterceptor</span><span class="o">());</span>
-        <span class="n">jaxWsServerFactoryBean</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">getInInterceptors</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">LoggingInInterceptor</span><span class="p">());</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">getOutInterceptors</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">LoggingOutInterceptor</span><span class="p">());</span>
+        <span class="nx">jaxWsServerFactoryBean</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h5 id="客户端">客户端</h5>
 
@@ -266,83 +266,83 @@ Wsdl2java支持SOAP1.1和SOAP1.2</p></li>
 <li><p>第二步：使用说明书，使用生成代码调用服务端<br>
 JaxWsProxyFactoryBean调用服务端，设置2个参数，1.设置服务接口；2.设置服务地址</p></li>
 </ul>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WeatherClient</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">WeatherClient</span> <span class="p">{</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">//JaxWsProxyFactoryBean调用服务端</span>
-        <span class="n">JaxWsProxyFactoryBean</span> <span class="n">jaxWsProxyFactoryBean</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JaxWsProxyFactoryBean</span><span class="o">();</span>
+        <span class="nx">JaxWsProxyFactoryBean</span> <span class="nx">jaxWsProxyFactoryBean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JaxWsProxyFactoryBean</span><span class="p">();</span>
         <span class="c1">//设置服务接口</span>
-        <span class="n">jaxWsProxyFactoryBean</span><span class="o">.</span><span class="na">setServiceClass</span><span class="o">(</span><span class="n">WeatherInterface</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="nx">jaxWsProxyFactoryBean</span><span class="p">.</span><span class="nx">setServiceClass</span><span class="p">(</span><span class="nx">WeatherInterface</span><span class="p">.</span><span class="kr">class</span><span class="p">);</span>
         <span class="c1">//设置服务地址</span>
-        <span class="n">jaxWsProxyFactoryBean</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">"http://127.0.0.1:12345/weather"</span><span class="o">);</span>
+        <span class="nx">jaxWsProxyFactoryBean</span><span class="p">.</span><span class="nx">setAddress</span><span class="p">(</span><span class="s2">"http://127.0.0.1:12345/weather"</span><span class="p">);</span>
         <span class="c1">//获取服务接口实例</span>
-        <span class="n">WeatherInterface</span> <span class="n">weatherInterface</span> <span class="o">=</span> <span class="n">jaxWsProxyFactoryBean</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">WeatherInterface</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="nx">WeatherInterface</span> <span class="nx">weatherInterface</span> <span class="o">=</span> <span class="nx">jaxWsProxyFactoryBean</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">WeatherInterface</span><span class="p">.</span><span class="kr">class</span><span class="p">);</span>
         <span class="c1">//调用查询方法</span>
-        <span class="n">String</span> <span class="n">weather</span> <span class="o">=</span> <span class="n">weatherInterface</span><span class="o">.</span><span class="na">queryWeather</span><span class="o">(</span><span class="s">"保定"</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">weather</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="nb">String</span> <span class="nx">weather</span> <span class="o">=</span> <span class="nx">weatherInterface</span><span class="p">.</span><span class="nx">queryWeather</span><span class="p">(</span><span class="s2">"保定"</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">weather</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="cxf-spring整合发布soap协议的服务">CXF+Spring整合发布SOAP协议的服务</h4>
 
 <h5 id="服务端">服务端</h5>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 第一步：创建web项目（引入jar包）</span>
-<span class="c1">// 第二步：创建SEI接口</span>
-<span class="c1">// 第三步：创建SEI实现类</span>
-<span class="c1">// 第四步：配置spring配置文件，applicationContext.xml，用&lt;jaxws:server标签发布服务，设置1.服务地址；2.设置服务接口；3设置服务实现类</span>
-<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
-<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
-    <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nl">xmlns:</span><span class="n">jaxws</span><span class="o">=</span><span class="s">"http://cxf.apache.org/jaxws"</span>
-    <span class="nl">xmlns:</span><span class="n">jaxrs</span><span class="o">=</span><span class="s">"http://cxf.apache.org/jaxrs"</span> <span class="nl">xmlns:</span><span class="n">cxf</span><span class="o">=</span><span class="s">"http://cxf.apache.org/core"</span>
-    <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans
-                            http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
-                            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-                            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"</span><span class="o">&gt;</span>
-    <span class="o">&lt;!--</span> <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">server</span><span class="err">发布</span><span class="n">SOAP</span><span class="err">协议的服务</span> <span class="err">，对</span><span class="n">JaxWsServerFactoryBean</span><span class="err">类封装</span><span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">server</span> <span class="n">address</span><span class="o">=</span><span class="s">"/weather"</span> <span class="n">serviceClass</span><span class="o">=</span><span class="s">"cn.itcast.ws.cxf.server.WeatherInterface"</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">serviceBean</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">ref</span> <span class="n">bean</span><span class="o">=</span><span class="s">"weatherInterface"</span><span class="o">/&gt;</span>
-        <span class="o">&lt;/</span><span class="nl">jaxws:</span><span class="n">serviceBean</span><span class="o">&gt;</span>
-    <span class="o">&lt;/</span><span class="nl">jaxws:</span><span class="n">server</span><span class="o">&gt;</span>
-    <span class="o">&lt;!--</span> <span class="err">配置服务实现类</span> <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">name</span><span class="o">=</span><span class="s">"weatherInterface"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">cn</span><span class="o">.</span><span class="na">itcast</span><span class="o">.</span><span class="na">ws</span><span class="o">.</span><span class="na">cxf</span><span class="o">.</span><span class="na">server</span><span class="o">.</span><span class="na">WeatherInterfaceImpl</span><span class="s">"/&gt;
-&lt;/beans&gt;
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">// 第一步：创建web项目（引入jar包）
+// 第二步：创建SEI接口
+// 第三步：创建SEI实现类
+// 第四步：配置spring配置文件，applicationContext.xml，用<span class="nt">&lt;jaxws:server</span><span class="err">标签发布服务，设置1.服务地址；2.设置服务接口；3设置服务实现类</span>
+<span class="err">&lt;?xml</span> <span class="na">version=</span><span class="s">"1.0"</span> <span class="na">encoding=</span><span class="s">"UTF-8"</span><span class="err">?</span><span class="nt">&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:jaxws=</span><span class="s">"http://cxf.apache.org/jaxws"</span>
+    <span class="na">xmlns:jaxrs=</span><span class="s">"http://cxf.apache.org/jaxrs"</span> <span class="na">xmlns:cxf=</span><span class="s">"http://cxf.apache.org/core"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans</span>
+                            <span class="err">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+                            <span class="err">http://cxf.apache.org/jaxrs</span> <span class="err">http://cxf.apache.org/schemas/jaxrs.xsd</span>
+                            <span class="err">http://cxf.apache.org/jaxws</span> <span class="err">http://cxf.apache.org/schemas/jaxws.xsd</span>
+                            <span class="err">http://cxf.apache.org/core</span> <span class="err">http://cxf.apache.org/schemas/core.xsd"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- &lt;jaxws:server发布SOAP协议的服务 ，对JaxWsServerFactoryBean类封装--&gt;</span>
+    <span class="nt">&lt;jaxws:server</span> <span class="na">address=</span><span class="s">"/weather"</span> <span class="na">serviceClass=</span><span class="s">"cn.itcast.ws.cxf.server.WeatherInterface"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;jaxws:serviceBean&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"weatherInterface"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/jaxws:serviceBean&gt;</span>
+    <span class="nt">&lt;/jaxws:server&gt;</span>
+    <span class="c">&lt;!-- 配置服务实现类 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">name=</span><span class="s">"weatherInterface"</span> <span class="na">class=</span><span class="s">"cn.itcast.ws.cxf.server.WeatherInterfaceImpl"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
 
 
 第五步：配置web.xml，配置spring配置文件地址和加载的listener，配置CXF的servlet
-&lt;?xml version="</span><span class="mf">1.0</span><span class="s">" encoding="</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="s">"?&gt;
-&lt;web-app xmlns:xsi="</span><span class="nl">http:</span><span class="c1">//www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0"&gt;</span>
-  <span class="o">&lt;</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">ws_2_cxf_spring_server</span><span class="o">&lt;/</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;web-app</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/javaee"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span> <span class="na">id=</span><span class="s">"WebApp_ID"</span> <span class="na">version=</span><span class="s">"3.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;display-name&gt;</span>ws_2_cxf_spring_server<span class="nt">&lt;/display-name&gt;</span>
 
-  <span class="o">&lt;!--</span> <span class="err">设置</span><span class="n">spring</span><span class="err">的环境</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="n">context</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
-    <span class="o">&lt;!--</span><span class="n">contextConfigLocation</span><span class="err">是不能修改的</span>  <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">contextConfigLocation</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span><span class="nl">classpath:</span><span class="n">applicationContext</span><span class="o">.</span><span class="na">xml</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span>
-  <span class="o">&lt;/</span><span class="n">context</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">listener</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">listener</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">context</span><span class="o">.</span><span class="na">ContextLoaderListener</span><span class="o">&lt;/</span><span class="n">listener</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
-  <span class="err">&lt;/</span><span class="nc">listener</span><span class="o">&gt;</span>
+  <span class="c">&lt;!-- 设置spring的环境 --&gt;</span>
+  <span class="nt">&lt;context-param&gt;</span>
+    <span class="c">&lt;!--contextConfigLocation是不能修改的  --&gt;</span>
+    <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+    <span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
+  <span class="nt">&lt;/context-param&gt;</span>
+  <span class="nt">&lt;listener&gt;</span>
+    <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
+  <span class="nt">&lt;/listener&gt;</span>
 
-  <span class="o">&lt;!--</span> <span class="err">配置</span><span class="n">CXF</span><span class="err">的</span><span class="n">Servlet</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">CXF</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">cxf</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">CXFServlet</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
-  <span class="err">&lt;/</span><span class="nc">servlet</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">CXF</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;/</span><span class="n">ws</span><span class="o">/*&lt;/</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;</span>
-  <span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+  <span class="c">&lt;!-- 配置CXF的Servlet --&gt;</span>
+  <span class="nt">&lt;servlet&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>CXF<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>org.apache.cxf.transport.servlet.CXFServlet<span class="nt">&lt;/servlet-class&gt;</span>
+  <span class="nt">&lt;/servlet&gt;</span>
+  <span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>CXF<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/ws/*<span class="nt">&lt;/url-pattern&gt;</span>
+  <span class="nt">&lt;/servlet-mapping&gt;</span>
 
-<span class="o">&lt;/</span><span class="n">web</span><span class="o">-</span><span class="n">app</span><span class="o">&gt;</span>
+<span class="nt">&lt;/web-app&gt;</span>
 
 
-<span class="err">第六步：部署到</span><span class="n">tomcat</span><span class="err">下，启动</span><span class="n">tomcat</span>
+第六步：部署到tomcat下，启动tomcat
 
-<span class="err">第七步：测试服务，阅读使用说明书</span>
-    <span class="n">WSDL</span><span class="err">地址规则：</span><span class="nl">http:</span><span class="c1">//ip:端口号/项目名称/servlet拦截路径/服务名称?wsdl</span>
-        <span class="nl">http:</span><span class="c1">//localhost:8080/ws/weather?wsdl</span>
+第七步：测试服务，阅读使用说明书
+    WSDL地址规则：http://ip:端口号/项目名称/servlet拦截路径/服务名称?wsdl
+        http://localhost:8080/ws/weather?wsdl
 
 </code></pre></div>
 <h5 id="拦截器配置">拦截器配置</h5>
@@ -645,154 +645,154 @@ http://127.0.0.1:12345/user/student/queryList/110?_type=xml  查询多个学生�
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
 <h5 id="综合案例-集成公网手机号归属地查询服务">综合案例 集成公网手机号归属地查询服务</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">// 第一步：创建web项目（引入jar包）
-// 第二步：生成公网客户端代码
-// 第三步：创建SEI接口
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 第一步：创建web项目（引入jar包）</span>
+<span class="c1">// 第二步：生成公网客户端代码</span>
+<span class="c1">// 第三步：创建SEI接口</span>
 
-@WebService
-public interface MobileInterface {
+<span class="err">@</span><span class="nx">WebService</span>
+<span class="kr">public</span> <span class="kr">interface</span> <span class="nx">MobileInterface</span> <span class="p">{</span>
 
-    public String queryMobile(String phoneNum);
-}
-
-
-// 第四步：创建SEI实现类
-public class MobileInterfaceImpl implements MobileInterface {
-
-    private MobileCodeWSSoap mobileClient;
-
-    @Override
-    public String queryMobile(String phoneNum) {
-        return mobileClient.getMobileCodeInfo(phoneNum, "");
-    }
-
-    public MobileCodeWSSoap getMobileClient() {
-        return mobileClient;
-    }
-
-    public void setMobileClient(MobileCodeWSSoap mobileClient) {
-        this.mobileClient = mobileClient;
-    }
-
-}
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryMobile</span><span class="p">(</span><span class="nb">String</span> <span class="nx">phoneNum</span><span class="p">);</span>
+<span class="p">}</span>
 
 
-// 第五步：创建queryMobile.jsp
-<span class="err">&lt;</span>%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%&gt;
-<span class="cp">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;title&gt;</span>手机号归属查询网站<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"queryMobile.action"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
-        手机号归属地查询：<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"phoneNum"</span><span class="nt">/&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"查询"</span><span class="nt">/&gt;&lt;br/&gt;</span>
-        查询结果：${result}
-    <span class="nt">&lt;/form&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
+<span class="c1">// 第四步：创建SEI实现类</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MobileInterfaceImpl</span> <span class="kr">implements</span> <span class="nx">MobileInterface</span> <span class="p">{</span>
 
-// 第六步：创建MobileServlet.java
-public class MobileServlet extends HttpServlet {
+    <span class="kr">private</span> <span class="nx">MobileCodeWSSoap</span> <span class="nx">mobileClient</span><span class="p">;</span>
 
-    private MobileInterface mobileServer;
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryMobile</span><span class="p">(</span><span class="nb">String</span> <span class="nx">phoneNum</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">mobileClient</span><span class="p">.</span><span class="nx">getMobileCodeInfo</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String phoneNum = request.getParameter("phoneNum");
-        if(null != phoneNum <span class="err">&amp;&amp;</span> !"".equals(phoneNum)){
-            ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
-            mobileServer = (MobileInterface) context.getBean("mobileServer");
-            String result = mobileServer.queryMobile(phoneNum);
-            request.setAttribute("result", result);
-        }
-        request.getRequestDispatcher("/WEB-INF/jsp/queryMobile.jsp").forward(request, response);
-    }
+    <span class="kr">public</span> <span class="nx">MobileCodeWSSoap</span> <span class="nx">getMobileClient</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">mobileClient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doGet(request, response);
-    }
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setMobileClient</span><span class="p">(</span><span class="nx">MobileCodeWSSoap</span> <span class="nx">mobileClient</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">mobileClient</span> <span class="o">=</span> <span class="nx">mobileClient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-}
+<span class="p">}</span>
 
 
+<span class="c1">// 第五步：创建queryMobile.jsp</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html; charset=utf-8"</span>
+    <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=utf-8"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">手机号归属查询网站</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"queryMobile.action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+        <span class="err">手机号归属地查询：</span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"phoneNum"</span><span class="o">/&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"submit"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"查询"</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
+        <span class="err">查询结果：</span><span class="nx">$</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span>
+<span class="c1">// 第六步：创建MobileServlet.java</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MobileServlet</span> <span class="kr">extends</span> <span class="nx">HttpServlet</span> <span class="p">{</span>
 
-// 第七步：配置spring配置文件，applicationContext.xml
+    <span class="kr">private</span> <span class="nx">MobileInterface</span> <span class="nx">mobileServer</span><span class="p">;</span>
 
-<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
-    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns:jaxws=</span><span class="s">"http://cxf.apache.org/jaxws"</span>
-    <span class="na">xmlns:jaxrs=</span><span class="s">"http://cxf.apache.org/jaxrs"</span> <span class="na">xmlns:cxf=</span><span class="s">"http://cxf.apache.org/core"</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">response</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
+        <span class="nb">String</span> <span class="nx">phoneNum</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="s2">"phoneNum"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="nx">phoneNum</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="s2">""</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">)){</span>
+            <span class="nx">ApplicationContext</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">WebApplicationContextUtils</span><span class="p">.</span><span class="nx">getWebApplicationContext</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">());</span>
+            <span class="nx">mobileServer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">MobileInterface</span><span class="p">)</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getBean</span><span class="p">(</span><span class="s2">"mobileServer"</span><span class="p">);</span>
+            <span class="nb">String</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">mobileServer</span><span class="p">.</span><span class="nx">queryMobile</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">);</span>
+            <span class="nx">request</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"result"</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">getRequestDispatcher</span><span class="p">(</span><span class="s2">"/WEB-INF/jsp/queryMobile.jsp"</span><span class="p">).</span><span class="nx">forward</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">response</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">doGet</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+
+
+<span class="c1">// 第七步：配置spring配置文件，applicationContext.xml</span>
+
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">beans</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans"</span>
+    <span class="nl">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">jaxws</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/jaxws"</span>
+    <span class="nl">xmlns</span><span class="p">:</span><span class="nx">jaxrs</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/jaxrs"</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">cxf</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/core"</span>
+    <span class="nl">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans
                             http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
                             http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-                            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- &lt;jaxws:server发布服务--&gt;</span>
-    <span class="nt">&lt;jaxws:server</span> <span class="na">address=</span><span class="s">"/mobile"</span> <span class="na">serviceClass=</span><span class="s">"cn.itcast.mobile.server.MobileInterface"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;jaxws:serviceBean&gt;</span>
-            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"mobileServer"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/jaxws:serviceBean&gt;</span>
-    <span class="nt">&lt;/jaxws:server&gt;</span>
-    <span class="c">&lt;!-- 配置服务实现类 --&gt;</span>
-    <span class="nt">&lt;bean</span> <span class="na">name=</span><span class="s">"mobileServer"</span> <span class="na">class=</span><span class="s">"cn.itcast.mobile.server.MobileInterfaceImpl"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"mobileClient"</span> <span class="na">ref=</span><span class="s">"mobileClient"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/bean&gt;</span>
+                            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span> <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">server</span><span class="err">发布服务</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">server</span> <span class="nx">address</span><span class="o">=</span><span class="s2">"/mobile"</span> <span class="nx">serviceClass</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.server.MobileInterface"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">serviceBean</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">ref</span> <span class="nx">bean</span><span class="o">=</span><span class="s2">"mobileServer"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/jaxws:serviceBean</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/jaxws:server</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span> <span class="err">配置服务实现类</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">bean</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mobileServer"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.server.MobileInterfaceImpl"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mobileClient"</span> <span class="nx">ref</span><span class="o">=</span><span class="s2">"mobileClient"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/bean</span><span class="err">&gt;
+</span>
+    <span class="c">&lt;!--</span> <span class="err">配置公网客户端</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">client</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"mobileClient"</span> <span class="nx">address</span><span class="o">=</span><span class="s2">"http://webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx"</span>
+        <span class="nx">serviceClass</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.MobileCodeWSSoap"</span><span class="o">/&gt;</span>
 
-    <span class="c">&lt;!-- 配置公网客户端 --&gt;</span>
-    <span class="nt">&lt;jaxws:client</span> <span class="na">id=</span><span class="s">"mobileClient"</span> <span class="na">address=</span><span class="s">"http://webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx"</span>
-        <span class="na">serviceClass=</span><span class="s">"cn.itcast.mobile.MobileCodeWSSoap"</span><span class="nt">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/beans</span><span class="err">&gt;
+</span>
 
-<span class="nt">&lt;/beans&gt;</span>
+<span class="c1">// 第八步：配置web.xml</span>
 
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/javaee"</span> <span class="nx">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"WebApp_ID"</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"3.0"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">display</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">ws_2_cxf_spring_server</span><span class="o">&lt;</span><span class="sr">/display-name&gt; </span><span class="err"> 
+</span>  <span class="c">&lt;!--</span> <span class="err">设置</span><span class="nx">spring</span><span class="err">的环境</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="nx">context</span><span class="o">-</span><span class="nx">param</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span><span class="nx">contextConfigLocation</span><span class="err">是不能修改的</span>  <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">contextConfigLocation</span><span class="o">&lt;</span><span class="sr">/param-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">value</span><span class="o">&gt;</span><span class="nx">classpath</span><span class="err">:</span><span class="nx">applicationContext</span><span class="p">.</span><span class="nx">xml</span><span class="o">&lt;</span><span class="sr">/param-value</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/context-param</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">listener</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">listener</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">springframework</span><span class="p">.</span><span class="nx">web</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">ContextLoaderListener</span><span class="o">&lt;</span><span class="sr">/listener-class</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/listener</span><span class="err">&gt;
+</span>
+  <span class="c">&lt;!--</span> <span class="err">配置</span><span class="nx">CXF</span><span class="err">的</span><span class="nx">Servlet</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">CXF</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">apache</span><span class="p">.</span><span class="nx">cxf</span><span class="p">.</span><span class="nx">transport</span><span class="p">.</span><span class="nx">servlet</span><span class="p">.</span><span class="nx">CXFServlet</span><span class="o">&lt;</span><span class="sr">/servlet-class</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/servlet</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">mapping</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">CXF</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">url</span><span class="o">-</span><span class="nx">pattern</span><span class="o">&gt;</span><span class="sr">/ws/</span><span class="o">*&lt;</span><span class="sr">/url-pattern</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/servlet-mapping</span><span class="err">&gt;
+</span>  <span class="c">&lt;!--</span> <span class="err">配置</span><span class="nx">mobileServlet</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">mobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">cn</span><span class="p">.</span><span class="nx">itcast</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nx">servlet</span><span class="p">.</span><span class="nx">MobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-class</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/servlet</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">mapping</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">mobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">url</span><span class="o">-</span><span class="nx">pattern</span><span class="o">&gt;*</span><span class="p">.</span><span class="nx">action</span><span class="o">&lt;</span><span class="sr">/url-pattern</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/servlet-mapping</span><span class="err">&gt;
+</span>
+  <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">-</span><span class="nx">list</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">htm</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">html</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">htm</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/welcome-file-list</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/web-app</span><span class="err">&gt;
+</span>
 
-// 第八步：配置web.xml
-
-<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;web-app</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/javaee"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span> <span class="na">id=</span><span class="s">"WebApp_ID"</span> <span class="na">version=</span><span class="s">"3.0"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;display-name&gt;</span>ws_2_cxf_spring_server<span class="nt">&lt;/display-name&gt;</span>  
-  <span class="c">&lt;!-- 设置spring的环境 --&gt;</span>
-  <span class="nt">&lt;context-param&gt;</span>
-    <span class="c">&lt;!--contextConfigLocation是不能修改的  --&gt;</span>
-    <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
-    <span class="nt">&lt;param-value&gt;</span>classpath:applicationContext.xml<span class="nt">&lt;/param-value&gt;</span>
-  <span class="nt">&lt;/context-param&gt;</span>
-  <span class="nt">&lt;listener&gt;</span>
-    <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="nt">&lt;/listener-class&gt;</span>
-  <span class="nt">&lt;/listener&gt;</span>
-
-  <span class="c">&lt;!-- 配置CXF的Servlet --&gt;</span>
-  <span class="nt">&lt;servlet&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>CXF<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;servlet-class&gt;</span>org.apache.cxf.transport.servlet.CXFServlet<span class="nt">&lt;/servlet-class&gt;</span>
-  <span class="nt">&lt;/servlet&gt;</span>
-  <span class="nt">&lt;servlet-mapping&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>CXF<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;url-pattern&gt;</span>/ws/*<span class="nt">&lt;/url-pattern&gt;</span>
-  <span class="nt">&lt;/servlet-mapping&gt;</span>
-  <span class="c">&lt;!-- 配置mobileServlet --&gt;</span>
-  <span class="nt">&lt;servlet&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>mobileServlet<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;servlet-class&gt;</span>cn.itcast.mobile.server.servlet.MobileServlet<span class="nt">&lt;/servlet-class&gt;</span>
-  <span class="nt">&lt;/servlet&gt;</span>
-  <span class="nt">&lt;servlet-mapping&gt;</span>
-    <span class="nt">&lt;servlet-name&gt;</span>mobileServlet<span class="nt">&lt;/servlet-name&gt;</span>
-    <span class="nt">&lt;url-pattern&gt;</span>*.action<span class="nt">&lt;/url-pattern&gt;</span>
-  <span class="nt">&lt;/servlet-mapping&gt;</span>
-
-  <span class="nt">&lt;welcome-file-list&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>index.html<span class="nt">&lt;/welcome-file&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>index.htm<span class="nt">&lt;/welcome-file&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>index.jsp<span class="nt">&lt;/welcome-file&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>default.html<span class="nt">&lt;/welcome-file&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>default.htm<span class="nt">&lt;/welcome-file&gt;</span>
-    <span class="nt">&lt;welcome-file&gt;</span>default.jsp<span class="nt">&lt;/welcome-file&gt;</span>
-  <span class="nt">&lt;/welcome-file-list&gt;</span>
-<span class="nt">&lt;/web-app&gt;</span>
-
-
-// 第九步：部署到tomcat下，启动tomcat
+<span class="c1">// 第九步：部署到tomcat下，启动tomcat</span>
 </code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
@@ -946,9 +946,10 @@ public class MobileServlet extends HttpServlet {
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

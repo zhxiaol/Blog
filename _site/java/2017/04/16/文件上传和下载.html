@@ -126,7 +126,7 @@
 <li>提供input type=&#39;file&#39;类的上传输入域
 ##### enctype(encodingType)
 告知服务器请求正文的MIME类型(文件类型，请求消息头:Content-type作用是一致的)
-<code>
+<code>javascript
 可选值
 |
 |--application/x-www-form-urlencode(默认)
@@ -157,7 +157,7 @@
 <blockquote>
 <p>fileupload是由apache的comons组件提供的上传组件，他最主要的工作就是帮我们解析request.getInputStrem()<br>
 核心类: DiskFileItemFactory、ServletFileUpload、FileItem。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">FileUpload组件实现文件上传
+<div class="highlight"><pre><code class="language-html" data-lang="html">FileUpload组件实现文件上传
         |
         |--导入相关jar包
         |       |
@@ -185,7 +185,7 @@
         |
         |--使用解析器来解析request对象：
         |       |
-        |       |--List&lt;FileItem&gt; list=fileUploadRequest(request)
+        |       |--List<span class="nt">&lt;FileItem&gt;</span> list=fileUploadRequest(request)
         |
         |--FileItem对象对应一个表单项
                 |
@@ -200,11 +200,11 @@
                 |--delete() 删除临时文件
 </code></pre></div>
 <h6 id="文件上传">文件上传</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class UploadServlet2 extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UploadServlet2</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">doGet</span><span class="o">(</span><span class="n">req</span><span class="o">,</span><span class="n">resp</span><span class="o">);</span>
+    <span class="o">}</span>
 </code></pre></div></blockquote>
 <div class="highlight"><pre><code class="language-" data-lang="">@Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -452,9 +452,10 @@ private void processFormField(FileItem item) throws UnsupportedEncodingException
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

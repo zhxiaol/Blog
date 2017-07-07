@@ -118,140 +118,140 @@
 		<p>1.1.1Hibernate的关联关系映射:(多对多)</p>
 
 <p>1.1.1.1多对多的配置:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">Bean.hbm.xml
+<div class="highlight"><pre><code class="language-html" data-lang="html">Bean.hbm.xml
     |
-    |--&lt;set&gt;&lt;/set&gt;表示集合
+    |--<span class="nt">&lt;set&gt;&lt;/set&gt;</span>表示集合
             |
             |--name:集合的名称
             |--table:多对多中间表名
-            |--&lt;key&gt;&lt;/key&gt;
+            |--<span class="nt">&lt;key&gt;&lt;/key&gt;</span>
             |       |
             |       |--column:引用我的外键名称
             |
-            |--&lt;many-to-many&gt;
+            |--<span class="nt">&lt;many-to-many&gt;</span>
                     |
                     |--class:集合引用方的类型
                     |--column:对方在中间表的外键名
 inverse:我是否要放弃维护外键
 cascade:是否需要级联操作
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">public class Student {
-    private Integer id;
-    private String name;
-    private Set&lt;Course&gt; courses=new HashSet&lt;&gt;();
-}
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Student</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">Integer</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nx">Set</span><span class="o">&lt;</span><span class="nx">Course</span><span class="o">&gt;</span> <span class="nx">courses</span><span class="o">=</span><span class="k">new</span> <span class="nx">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="p">}</span>
 
 
-public class Course {
-    private Integer id;
-    private String name;
-    private Set&lt;Student&gt;students=new HashSet&lt;&gt;();
-}
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Course</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">Integer</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nx">Set</span><span class="o">&lt;</span><span class="nx">Student</span><span class="o">&gt;</span><span class="nx">students</span><span class="o">=</span><span class="k">new</span> <span class="nx">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="p">}</span>
 
-//student.hbm.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;
-&lt;hibernate-mapping package="com.itheima.domain"&gt;
-    &lt;class name="Student" table="t_student"&gt;
-        &lt;id type="int" name="id" column="id"&gt;
-            &lt;generator class="native"/&gt;
-        &lt;/id&gt;
-        &lt;property name="name" column="name" type="string"/&gt;
-        &lt;!--多对多--&gt;
-        &lt;!--
-            set 表达集合
-                name:集合的名称
-                table:多对多中间表名
-            key:表达外键
-              column:引用我的外键
-            many-to-many 表达多对多
-             class:集合引用方的类型
-             column:对方在中间表的外键名
-        --&gt;
-        &lt;set name="courses" table="t_student_course" inverse="false" cascade="save-update"&gt;
-            &lt;key column="sid"&gt;&lt;/key&gt;
-            &lt;many-to-many class="Course" column="cid"/&gt;
-        &lt;/set&gt;
-    &lt;/class&gt;
-&lt;/hibernate-mapping&gt;
+<span class="c1">//student.hbm.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">mapping</span> <span class="nx">PUBLIC</span>
+        <span class="s2">"-//Hibernate/Hibernate Mapping DTD 3.0//EN"</span>
+        <span class="s2">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">hibernate</span><span class="o">-</span><span class="nx">mapping</span> <span class="kr">package</span><span class="o">=</span><span class="s2">"com.itheima.domain"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="kr">class</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"Student"</span> <span class="nx">table</span><span class="o">=</span><span class="s2">"t_student"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">id</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"int"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"id"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">generator</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"native"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/id</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"string"</span><span class="o">/&gt;</span>
+        <span class="c">&lt;!--</span><span class="err">多对多</span><span class="o">--&gt;</span>
+        <span class="c">&lt;!--</span>
+            <span class="nx">set</span> <span class="err">表达集合</span>
+                <span class="nl">name</span><span class="p">:</span><span class="err">集合的名称</span>
+                <span class="nl">table</span><span class="p">:</span><span class="err">多对多中间表名</span>
+            <span class="nl">key</span><span class="p">:</span><span class="err">表达外键</span>
+              <span class="nl">column</span><span class="p">:</span><span class="err">引用我的外键</span>
+            <span class="nx">many</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">many</span> <span class="err">表达多对多</span>
+             <span class="nl">class</span><span class="p">:</span><span class="err">集合引用方的类型</span>
+             <span class="nl">column</span><span class="p">:</span><span class="err">对方在中间表的外键名</span>
+        <span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">set</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courses"</span> <span class="nx">table</span><span class="o">=</span><span class="s2">"t_student_course"</span> <span class="nx">inverse</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">cascade</span><span class="o">=</span><span class="s2">"save-update"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">key</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"sid"</span><span class="o">&gt;&lt;</span><span class="sr">/key</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">many</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">many</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"Course"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"cid"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/set</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/class</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/hibernate-mapping</span><span class="err">&gt;
+</span>
+<span class="c1">//Course.hbm.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">mapping</span> <span class="nx">PUBLIC</span>
+        <span class="s2">"-//Hibernate/Hibernate Mapping DTD 3.0//EN"</span>
+        <span class="s2">"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">hibernate</span><span class="o">-</span><span class="nx">mapping</span> <span class="kr">package</span><span class="o">=</span><span class="s2">"com.itheima.domain"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="kr">class</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"Course"</span> <span class="nx">table</span><span class="o">=</span><span class="s2">"t_course"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">id</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"int"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"id"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">generator</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"native"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/id</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"string"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">set</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"students"</span> <span class="nx">table</span><span class="o">=</span><span class="s2">"t_student_course"</span> <span class="nx">inverse</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">key</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"cid"</span><span class="o">&gt;&lt;</span><span class="sr">/key</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">many</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">many</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"Student"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"sid"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/set</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/class</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/hibernate-mapping</span><span class="err">&gt;
+</span>
+<span class="c1">//Hibernate.cfg.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">configuration</span> <span class="nx">PUBLIC</span>
+   <span class="s2">"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span>
+   <span class="s2">"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"</span><span class="o">&gt;</span>
 
-//Course.hbm.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;
-&lt;hibernate-mapping package="com.itheima.domain"&gt;
-    &lt;class name="Course" table="t_course"&gt;
-        &lt;id type="int" name="id" column="id"&gt;
-            &lt;generator class="native"/&gt;
-        &lt;/id&gt;
-        &lt;property name="name" column="name" type="string"/&gt;
-        &lt;set name="students" table="t_student_course" inverse="true"&gt;
-            &lt;key column="cid"&gt;&lt;/key&gt;
-            &lt;many-to-many class="Student" column="sid"/&gt;
-        &lt;/set&gt;
-    &lt;/class&gt;
-&lt;/hibernate-mapping&gt;
-
-//Hibernate.cfg.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE hibernate-configuration PUBLIC
-   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-   "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;
-
-&lt;hibernate-configuration&gt;
-   &lt;session-factory &gt;
-      &lt;property name="hibernate.connection.driver_class"&gt;com.mysql.jdbc.Driver&lt;/property&gt;
-      &lt;property name="hibernate.connection.username"&gt;root&lt;/property&gt;
-      &lt;property name="hibernate.connection.password"&gt;root&lt;/property&gt;
-      &lt;property name="hibernate.connection.url"&gt;jdbc:mysql://localhost:3306/ee19day03?characterEncoding=utf-8&lt;/property&gt;
-      &lt;property name="show_sql"&gt;true&lt;/property&gt;
-      &lt;property name="format_sql"&gt;true&lt;/property&gt;
-      &lt;property name="hbm2ddl.auto"&gt;update&lt;/property&gt;
-      &lt;property name="hibernate.dialect"&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;
-      &lt;property name="hibernate.connection.autocommit"&gt;true&lt;/property&gt;
-      &lt;property name="hibernate.current_session_context_class"&gt;thread&lt;/property&gt;
-      &lt;mapping resource="com/itheima/domain/Student.hbm.xml"/&gt;
-      &lt;mapping resource="com/itheima/domain/Course.hbm.xml"/&gt;
-   &lt;/session-factory&gt;
-&lt;/hibernate-configuration&gt;
-
-//Demo1.java
-public class Demo1 {
-    /**
+<span class="o">&lt;</span><span class="nx">hibernate</span><span class="o">-</span><span class="nx">configuration</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">session</span><span class="o">-</span><span class="nx">factory</span> <span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.connection.driver_class"</span><span class="o">&gt;</span><span class="nx">com</span><span class="p">.</span><span class="nx">mysql</span><span class="p">.</span><span class="nx">jdbc</span><span class="p">.</span><span class="nx">Driver</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.connection.username"</span><span class="o">&gt;</span><span class="nx">root</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.connection.password"</span><span class="o">&gt;</span><span class="nx">root</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.connection.url"</span><span class="o">&gt;</span><span class="nx">jdbc</span><span class="p">:</span><span class="nx">mysql</span><span class="p">:</span><span class="c1">//localhost:3306/ee19day03?characterEncoding=utf-8&lt;/property&gt;</span>
+      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"show_sql"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"format_sql"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hbm2ddl.auto"</span><span class="o">&gt;</span><span class="nx">update</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.dialect"</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">hibernate</span><span class="p">.</span><span class="nx">dialect</span><span class="p">.</span><span class="nx">MySQLDialect</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.connection.autocommit"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernate.current_session_context_class"</span><span class="o">&gt;</span><span class="nx">thread</span><span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">mapping</span> <span class="nx">resource</span><span class="o">=</span><span class="s2">"com/itheima/domain/Student.hbm.xml"</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="nx">mapping</span> <span class="nx">resource</span><span class="o">=</span><span class="s2">"com/itheima/domain/Course.hbm.xml"</span><span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="sr">/session-factory</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/hibernate-configuration</span><span class="err">&gt;
+</span>
+<span class="c1">//Demo1.java</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo1</span> <span class="p">{</span>
+    <span class="cm">/**
      * 保存学生:通过学生保存课程，由学生维护外键
      * student的inverse=false;casecade=save-update
      * course的inverse=true
-     */
-    @Test
-    public  void fun1(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Student stu1 = new Student();
-        stu1.setName("tom");
-        Student stu2 = new Student();
-        stu2.setName("jerry");
-        Course c1=new Course();
-        c1.setName("Struts2");
-        Course c2=new Course();
-        c2.setName("Hibernate");
-        Course c3=new Course();
-        c3.setName("Spring");
-        stu1.getCourses().add(c1);//维护关系，级联保存
-        stu1.getCourses().add(c2);
-        stu1.getCourses().add(c3);
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun1</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Student</span> <span class="nx">stu1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">();</span>
+        <span class="nx">stu1</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"tom"</span><span class="p">);</span>
+        <span class="nx">Student</span> <span class="nx">stu2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">();</span>
+        <span class="nx">stu2</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"jerry"</span><span class="p">);</span>
+        <span class="nx">Course</span> <span class="nx">c1</span><span class="o">=</span><span class="k">new</span> <span class="nx">Course</span><span class="p">();</span>
+        <span class="nx">c1</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"Struts2"</span><span class="p">);</span>
+        <span class="nx">Course</span> <span class="nx">c2</span><span class="o">=</span><span class="k">new</span> <span class="nx">Course</span><span class="p">();</span>
+        <span class="nx">c2</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"Hibernate"</span><span class="p">);</span>
+        <span class="nx">Course</span> <span class="nx">c3</span><span class="o">=</span><span class="k">new</span> <span class="nx">Course</span><span class="p">();</span>
+        <span class="nx">c3</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s2">"Spring"</span><span class="p">);</span>
+        <span class="nx">stu1</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c1</span><span class="p">);</span><span class="c1">//维护关系，级联保存</span>
+        <span class="nx">stu1</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c2</span><span class="p">);</span>
+        <span class="nx">stu1</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c3</span><span class="p">);</span>
 
-        stu2.getCourses().add(c1);
-        stu2.getCourses().add(c2);
-        stu1.getCourses().add(c3);
-        session.save(stu1);
-        session.save(stu2);
+        <span class="nx">stu2</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c1</span><span class="p">);</span>
+        <span class="nx">stu2</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c2</span><span class="p">);</span>
+        <span class="nx">stu1</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="nx">c3</span><span class="p">);</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">stu1</span><span class="p">);</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">stu2</span><span class="p">);</span>
 
-        ts.commit();
-        session.close();
-    }
-}
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 </code></pre></div>
 <p>2      抓取策略（优化查询）<br>
@@ -270,26 +270,26 @@ l  关联级别的加载：当前类 关联 另一个类是否需要延迟。</p
 <p>l  get：立即检索。get方法一执行，立即查询所有字段的数据。<br>
 l  load：延迟检索。默认情况，load方法执行后，如果只使用OID的值不进行查询，如果要使用其他属性值将查询 。 （先返回一个代理对象，使用代理对象的属性时，再加载）Customer.hbm.xml<class  lazy="true | false"><br>
               lazy 默认值true，表示延迟检索，如果设置false表示立即检索。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo {
-    /**
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo</span> <span class="p">{</span>
+    <span class="cm">/**
      类级别懒加载
      load方法
      class lazy属性 默认是true
-     */
-    @Test
-    public  void fun1(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        //立即
-        //Customer c = (Customer)session.get(Customer.class,1);
-        //延迟
-        Customer c = (Customer) session.load(Customer.class, 1);
-        System.out.println(c.getName());
-        System.out.println(c.getId());
-        ts.commit();
-        session.close();
-    }
-}
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun1</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="c1">//立即</span>
+        <span class="c1">//Customer c = (Customer)session.get(Customer.class,1);</span>
+        <span class="c1">//延迟</span>
+        <span class="nx">Customer</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Customer</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">Customer</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getId</span><span class="p">());</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>2.4关联级别懒加载</p>
 
@@ -322,105 +322,105 @@ l  load：延迟检索。默认情况，load方法执行后，如果只使用OID
 |select|true|采用延迟检索|<br>
 |select|extra|采用延迟检索|<br>
 |subselect|false/true/extra|嵌套子查询，Lazy决定检索策略|</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo2 {
-    /**
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo2</span> <span class="p">{</span>
+    <span class="cm">/**
      关联级别懒加载
      默认:与我关联的数据，在使用时才会加载
-     */
-    @Test
-    public  void fun1(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c = (Customer) session.load(Customer.class, 1);
-        for(Order order:c.getOrders()){
-            System.out.println(order);
-        }
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun1</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Customer</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Customer</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">Customer</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Order</span> <span class="nx">order</span><span class="err">:</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">()){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">order</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        ts.commit();
-        session.close();
-    }
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    /**
+    <span class="cm">/**
      关联级别懒加载
      默认:与我关联的数据，在使用时才会加载
      &lt;set&gt;&lt;/set&gt;lazy为false 立即加载
-     */
-    @Test
-    public  void fun2(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c = (Customer) session.load(Customer.class, 1);
-        for(Order order:c.getOrders()){
-            System.out.println(order);
-        }
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun2</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Customer</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Customer</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">Customer</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Order</span> <span class="nx">order</span><span class="err">:</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">()){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">order</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        ts.commit();
-        session.close();
-    }
-    /**
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="cm">/**
      关联级别懒加载
      默认:与我关联的数据，在使用时才会加载
      &lt;set&gt;&lt;/set&gt;lazy为false 立即加载 fetch join(使用多表链接查询)
-     */
-    @Test
-    public  void fun3(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c = (Customer) session.load(Customer.class, 1);
-        for(Order order:c.getOrders()){
-            System.out.println(order);
-        }
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun3</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Customer</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Customer</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="nx">Customer</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Order</span> <span class="nx">order</span><span class="err">:</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">()){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">order</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        ts.commit();
-        session.close();
-    }
-    //关联级别
-    //fetch subselect
-    @Test
-    public void fun4(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        List&lt;Customer&gt; list = session.createQuery("from Customer ").list();
-        for(Customer c:list){
-            System.out.println(c.getOrders());
-        }
-        ts.commit();
-        session.close();
-    }
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="c1">//关联级别</span>
+    <span class="c1">//fetch subselect</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">fun4</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Customer</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createQuery</span><span class="p">(</span><span class="s2">"from Customer "</span><span class="p">).</span><span class="nx">list</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Customer</span> <span class="nx">c</span><span class="err">:</span><span class="nx">list</span><span class="p">){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    //关联级别
-    //fetch extra
-    @Test
-    public void fun5(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c = (Customer) session.get(Customer.class, 2);
-        int size = c.getOrders().size();
-        System.out.println(size);
-        for(Order o:c.getOrders()){
-            System.out.println(o.getName());
-        }
-        ts.commit();
-        session.close();
-    }
+    <span class="c1">//关联级别</span>
+    <span class="c1">//fetch extra</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">fun5</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Customer</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Customer</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">Customer</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="kr">int</span> <span class="nx">size</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">().</span><span class="nx">size</span><span class="p">();</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">size</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Order</span> <span class="nx">o</span><span class="err">:</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">()){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    //关联级别
-    //fetch extra fetch:subselect
-    @Test
-    public void fun6(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        List&lt;Customer&gt; list = session.createQuery("from Customer ").list();
-        for(Customer c:list){
-            System.out.println(c.getOrders().size());
-            for(Order o:c.getOrders()){
-                System.out.println(o.getName());
-            }
-        }
-        ts.commit();
-        session.close();
-    }
-}
+    <span class="c1">//关联级别</span>
+    <span class="c1">//fetch extra fetch:subselect</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">fun6</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Customer</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createQuery</span><span class="p">(</span><span class="s2">"from Customer "</span><span class="p">).</span><span class="nx">list</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">Customer</span> <span class="nx">c</span><span class="err">:</span><span class="nx">list</span><span class="p">){</span>
+            <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">().</span><span class="nx">size</span><span class="p">());</span>
+            <span class="k">for</span><span class="p">(</span><span class="nx">Order</span> <span class="nx">o</span><span class="err">:</span><span class="nx">c</span><span class="p">.</span><span class="nx">getOrders</span><span class="p">()){</span>
+                <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="多对一检索策略">多对一检索策略</h2>
 
@@ -435,58 +435,59 @@ l  load：延迟检索。默认情况，load方法执行后，如果只使用OID
 
 <p>fetch和Lazy组合<br>
 |fetch|Lazy|结果|<br>
+|-----|----|----|<br>
 |select|false|加载订单时，立即加载客户数据,普通select语句加载客户|<br>
 |select|proxy|类加载策略lazy=false:同上|<br>
 |select|proxy|类加载策略lazy=true:加载订单时，先不加载客户数据，使用时再加载|<br>
 |join|false|使用表连接查询订单以及对应客户数据,lazy失效|<br>
 |join|proxy|使用表连接查询订单以及对应客户数据,lazy失效|</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo3 {
-    /**
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo3</span> <span class="p">{</span>
+    <span class="cm">/**
      关联级别懒加载 多对一
      fetch select lazy false
-     */
-    @Test
-    public  void fun1(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Order o = (Order) session.get(Order.class, 2);
-        System.out.println(o.getCustomer().getName());
-        ts.commit();
-        session.close();
-    }
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun1</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Order</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Order</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">Order</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">getCustomer</span><span class="p">().</span><span class="nx">getName</span><span class="p">());</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    /**
+    <span class="cm">/**
      关联级别懒加载 多对一
      fetch select lazy proxy
      customer类加载策略是flase 同上 直接select加载客户数据
      customer类加载测试是true 先不加载客户数据 使用时再加载
-     */
-    @Test
-    public  void fun2(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Order o = (Order) session.get(Order.class, 2);
-        System.out.println(o.getCustomer().getName());
-        ts.commit();
-        session.close();
-    }
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun2</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Order</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Order</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">Order</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">getCustomer</span><span class="p">().</span><span class="nx">getName</span><span class="p">());</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    /**
+    <span class="cm">/**
      关联级别懒加载 多对一
      fetch join lazy false/proxy
      customer类加载策略是flase 同上 直接select加载客户数据
      customer类加载测试是true 先不加载客户数据 使用时再加载
-     */
-    @Test
-    public  void fun3(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Order o = (Order) session.get(Order.class, 2);
-        System.out.println(o.getCustomer().getName());
-        ts.commit();
-        session.close();
-    }
-}
+     */</span>
+    <span class="err">@</span><span class="nx">Test</span>
+    <span class="kr">public</span>  <span class="k">void</span> <span class="nx">fun3</span><span class="p">(){</span>
+        <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+        <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+        <span class="nx">Order</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Order</span><span class="p">)</span> <span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">Order</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">getCustomer</span><span class="p">().</span><span class="nx">getName</span><span class="p">());</span>
+        <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+        <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="批量查询">批量查询</h2>
 
@@ -539,32 +540,32 @@ l  load：延迟检索。默认情况，load方法执行后，如果只使用OID
 
 <blockquote>
 <p>HQL(Hibernate Query Language) 对象操作查询语言 Hibernate特有</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class Demo1 {
-@Test
-public void fun1(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    Query query=session.createQuery("select  c from Customer c");//添加别名
-    List&lt;Customer&gt; list = query.list();
-    System.out.println(list);
-    ts.commit();
-    session.close();
-}
-@Test
-public void fun2(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    Query query = session.createQuery("select c.name from Customer  c");//对应属性的名称
-    Query query2 = session.createQuery("select c.name ,c.id from Customer c");
-    List&lt;Object&gt; list = query.list();
-    List&lt;Object[]&gt; list2 = query2.list();
-    System.out.println("list1:"+list);
-    for(Object[] arr:list2){
-        System.out.println("list2:"+Arrays.toString(arr));
-    }
-    ts.commit();
-    session.close();
-}
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">Demo1</span> <span class="p">{</span>
+<span class="err">@</span><span class="nx">Test</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">fun1</span><span class="p">(){</span>
+    <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+    <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+    <span class="nx">Query</span> <span class="nx">query</span><span class="o">=</span><span class="nx">session</span><span class="p">.</span><span class="nx">createQuery</span><span class="p">(</span><span class="s2">"select  c from Customer c"</span><span class="p">);</span><span class="c1">//添加别名</span>
+    <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Customer</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">query</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
+    <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span>
+    <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+    <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="err">@</span><span class="nx">Test</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">fun2</span><span class="p">(){</span>
+    <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">HibernateUtils</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+    <span class="nx">Transaction</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">beginTransaction</span><span class="p">();</span>
+    <span class="nx">Query</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createQuery</span><span class="p">(</span><span class="s2">"select c.name from Customer  c"</span><span class="p">);</span><span class="c1">//对应属性的名称</span>
+    <span class="nx">Query</span> <span class="nx">query2</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">createQuery</span><span class="p">(</span><span class="s2">"select c.name ,c.id from Customer c"</span><span class="p">);</span>
+    <span class="nx">List</span><span class="o">&lt;</span><span class="nb">Object</span><span class="o">&gt;</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">query</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
+    <span class="nx">List</span><span class="o">&lt;</span><span class="nb">Object</span><span class="p">[]</span><span class="o">&gt;</span> <span class="nx">list2</span> <span class="o">=</span> <span class="nx">query2</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
+    <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"list1:"</span><span class="o">+</span><span class="nx">list</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="nb">Object</span><span class="p">[]</span> <span class="nx">arr</span><span class="err">:</span><span class="nx">list2</span><span class="p">){</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"list2:"</span><span class="o">+</span><span class="nx">Arrays</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="nx">arr</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="nx">ts</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+    <span class="nx">session</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div></blockquote>
 
 <p>/**</p>
@@ -678,194 +679,172 @@ public void fun8(){<br>
 }<br>
 }</p>
 <div class="highlight"><pre><code class="language-" data-lang="">## HQL表连接
-</code></pre></div>
-<p>/**</p>
-
-<ul>
-<li>HQL表连接</li>
-<li>交叉连接 ==&gt; 笛卡尔积</li>
-<li>内连接</li>
-<li>左外连接</li>
-<li>右外连接
+```javascript
+/**
+* HQL表连接
+* 交叉连接 ==&gt; 笛卡尔积
+* 内连接
+* 左外连接
+* 右外连接
 */
 public class Demo2 {
 //笛卡尔积 开发时要避免
 @Test
 public void fun1(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c,Order o&quot;);
-List<Object[]> list = query.list();
-for(Object[] arr:list){
-    System.out.println(Arrays.toString(arr));
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c,Order o");
+    List&lt;Object[]&gt; list = query.list();
+    for(Object[] arr:list){
+        System.out.println(Arrays.toString(arr));
+    }
+    ts.commit();
+    session.close();
 }
-ts.commit();
-session.close();
-}</li>
-</ul>
 
-<p>/**</p>
-
-<ul>
-<li>内连接 隐式内连接</li>
-<li>隐式内连接：在笛卡尔积中过滤</li>
-<li>显示内连接:inner join
-*/
+/**
+ * 内连接 隐式内连接
+ * 隐式内连接：在笛卡尔积中过滤
+ * 显示内连接:inner join
+ */
 @Test
 public void fun2(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer  c ,Order  o where o.customer.id=c.id&quot;);
-List<Object[]> list = query.list();
-for(Object[] arr:list){
-    System.out.println(Arrays.toString(arr));
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer  c ,Order  o where o.customer.id=c.id");
+    List&lt;Object[]&gt; list = query.list();
+    for(Object[] arr:list){
+        System.out.println(Arrays.toString(arr));
+    }
+    ts.commit();
+    session.close();
 }
-ts.commit();
-session.close();
-}</li>
-</ul>
 
-<p>/**</p>
-
-<ul>
-<li>内连接 显示内连接</li>
-<li>隐式内连接：在笛卡尔积中过滤</li>
-<li>显示内连接:inner join</li>
-<li>List<Object[]> {Customer,Oder} 将子和父分别装入数组中
-*/
+/**
+ * 内连接 显示内连接
+ * 隐式内连接：在笛卡尔积中过滤
+ * 显示内连接:inner join
+ * List&lt;Object[]&gt; {Customer,Oder} 将子和父分别装入数组中
+ */
 @Test
 public void fun3(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer  c inner join c.orders&quot;);
-List<Object[]> list = query.list();
-for(Object[]arr:list){
-    System.out.println(Arrays.toString(arr));
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer  c inner join c.orders");
+    List&lt;Object[]&gt; list = query.list();
+    for(Object[]arr:list){
+        System.out.println(Arrays.toString(arr));
+    }
+    ts.commit();
+    session.close();
 }
-ts.commit();
-session.close();
-}</li>
-</ul>
 
-<p>/**</p>
-
-<ul>
-<li>内连接 迫切显示内连接</li>
-<li>隐式内连接：在笛卡尔积中过滤</li>
-<li>显示内连接:inner join</li>
-<li>list<Object> 迫切会将子装入父封装成一个对象
-*/
+/**
+ * 内连接 迫切显示内连接
+ * 隐式内连接：在笛卡尔积中过滤
+ * 显示内连接:inner join
+ * list&lt;Object&gt; 迫切会将子装入父封装成一个对象
+ */
 @Test
 public void fun4(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c inner join fetch c.orders&quot;);
-List<Object> list = query.list();
-System.out.println(list);
-ts.commit();
-session.close();
-}</li>
-</ul>
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c inner join fetch c.orders");
+    List&lt;Object&gt; list = query.list();
+    System.out.println(list);
+    ts.commit();
+    session.close();
+}
 
-<p>/**</p>
-
-<ul>
-<li>左外连接</li>
-<li>left [outer] join
-*/
+/**
+ * 左外连接
+ * left [outer] join
+ */
 @Test
 public void fun5(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c left outer join c.orders&quot;);
-List<Object[]> list = query.list();
-for(Object[]arr:list){
-    System.out.println(Arrays.toString(arr));
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c left outer join c.orders");
+    List&lt;Object[]&gt; list = query.list();
+    for(Object[]arr:list){
+        System.out.println(Arrays.toString(arr));
+    }
+    ts.commit();
+    session.close();
 }
-ts.commit();
-session.close();
-}</li>
-</ul>
 
-<p>/**</p>
-
-<ul>
-<li>左外连接 迫切</li>
-<li>left [outer] join
-*/
+/**
+ * 左外连接 迫切
+ * left [outer] join
+ */
 @Test
 public void fun6(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c left outer join fetch c.orders&quot;);
-List<Customer> list = query.list();
-System.out.println(list);
-ts.commit();
-session.close();
-}</li>
-</ul>
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c left outer join fetch c.orders");
+    List&lt;Customer&gt; list = query.list();
+    System.out.println(list);
+    ts.commit();
+    session.close();
+}
 
-<p>/**</p>
-
-<ul>
-<li>右外连接</li>
-<li>right [outer] join
-*/
+/**
+ * 右外连接
+ * right [outer] join
+ */
 @Test
 public void fun7(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c right outer join c.orders&quot;);
-List<Object[]> list = query.list();
-for(Object[]arr:list){
-    System.out.println(Arrays.toString(arr));
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c right outer join c.orders");
+    List&lt;Object[]&gt; list = query.list();
+    for(Object[]arr:list){
+        System.out.println(Arrays.toString(arr));
+    }
+    ts.commit();
+    session.close();
 }
-ts.commit();
-session.close();
-}</li>
-</ul>
 
-<p>/**</p>
-
-<ul>
-<li>右外连接 迫切</li>
-<li>right [outer] join
-*/
+/**
+ * 右外连接 迫切
+ * right [outer] join
+ */
 @Test
 public void fun8(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-Query query = session.createQuery(&quot;from Customer c right outer join fetch c.orders&quot;);
-List<Customer> list = query.list();
-System.out.println(list);
-ts.commit();
-session.close();
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Query query = session.createQuery("from Customer c right outer join fetch c.orders");
+    List&lt;Customer&gt; list = query.list();
+    System.out.println(list);
+    ts.commit();
+    session.close();
 }
 }
-<code>
-## HQL命名查询
-&gt; 可以在配置文件中注册SQL语句
-&gt;全局 bean.hbm.xml中配置 局部 class标签里面
-</code>
-//Customer.hbm.xml
-<hibernate-mapping package="com.itheima.domain">
-<class name="Customer" table="t_customer" >
-<id name="id" column="id" type="int">
-    <generator class="native"></generator>
-</id>
-<property name="name" column="name" type="string" ></property>
-&lt;!--表达一对多集合--&gt;
-<set name="orders" inverse="false" batch-size="2">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;
-    <key column="cid"></key>&lt;!--外键的值--&gt;
-    <one-to-many class="Order"/>&lt;!--对应关系--&gt;
-</set>
-&lt;!--局部配置--&gt;
-<query name="bcd">&lt;![CDATA[from Order]]&gt; </query>
-</class>
-&lt;!--全局配置--&gt;
-<query name="abc">&lt;![CDATA[from Customer]]&gt; </query>
-</hibernate-mapping></li>
-</ul></li>
+</code></pre></div>
+<h2 id="hql命名查询">HQL命名查询</h2>
+
+<blockquote>
+<p>可以在配置文件中注册SQL语句<br>
+全局 bean.hbm.xml中配置 局部 class标签里面</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Customer.hbm.xml</span>
+<span class="o">&lt;</span><span class="nx">hibernate</span><span class="o">-</span><span class="nx">mapping</span> <span class="kr">package</span><span class="o">=</span><span class="s2">"com.itheima.domain"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="kr">class</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"Customer"</span> <span class="nx">table</span><span class="o">=</span><span class="s2">"t_customer"</span> <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">id</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"id"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"int"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">generator</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"native"</span><span class="o">&gt;&lt;</span><span class="sr">/generator</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/id</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"name"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"string"</span> <span class="o">&gt;&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span><span class="err">表达一对多集合</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">set</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"orders"</span> <span class="nx">inverse</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">batch</span><span class="o">-</span><span class="nx">size</span><span class="o">=</span><span class="s2">"2"</span><span class="o">&gt;</span><span class="c">&lt;!--</span><span class="nx">inverse</span><span class="err">是否将关系的维护反转给对方</span><span class="p">,</span><span class="kc">true</span> <span class="err">放弃维护外键</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">key</span> <span class="nx">column</span><span class="o">=</span><span class="s2">"cid"</span><span class="o">&gt;&lt;</span><span class="sr">/key&gt;&lt;!--外键的值--</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">one</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">many</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"Order"</span><span class="o">/&gt;</span><span class="c">&lt;!--</span><span class="err">对应关系</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/set</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span><span class="err">局部配置</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">query</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"bcd"</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span><span class="nx">from</span> <span class="nx">Order</span><span class="p">]]</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="sr">/query</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/class</span><span class="err">&gt;
+</span><span class="c">&lt;!--</span><span class="err">全局配置</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">query</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"abc"</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span><span class="nx">from</span> <span class="nx">Customer</span><span class="p">]]</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="sr">/query</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/hibernate-mapping</span><span class="err">&gt;
+</span></code></pre></div></blockquote></li>
 </ol>
 
 <p>public class Demo3 {<br>
@@ -895,44 +874,40 @@ session.close();
 ## QBC查询
 &gt; Query by Criteria 面向对象查询方式
 &gt; 离线查询 一般使用在web层或者service层拼凑
+```javascript
+@Test
+public void fun1(){
+    //service层
+    DetachedCriteria dc = DetachedCriteria.forClass(Customer.class);
+    dc.add(Restrictions.eq("id",1));
+    //dao层
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Criteria c = dc.getExecutableCriteria(session);
+    System.out.println(c.list());
+    ts.commit();
+    session.close();
+}
 </code></pre></div>
-<p>@Test<br>
-public void fun1(){<br>
-    //service层<br>
-    DetachedCriteria dc = DetachedCriteria.forClass(Customer.class);<br>
-    dc.add(Restrictions.eq(&quot;id&quot;,1));<br>
-    //dao层<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Criteria c = dc.getExecutableCriteria(session);<br>
-    System.out.println(c.list());<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">## 整合C3P0连接池
-1. 导入c3p0 jar包   hibernate目录/optional/
-1. 配置hibernate.cgf.xml  hibernate目录/product/etc/hibernate.properties中
-1. 具体配置连接池属性
-</code></pre></div>
-<p>//hibernate.cfg.xml<br>
-<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property></p>
+<h2 id="整合c3p0连接池">整合C3P0连接池</h2>
 
-<!--#hibernate.c3p0.max_size 2-->
-
-<!--#hibernate.c3p0.min_size 2-->
-
-<!--#hibernate.c3p0.timeout 5000-->
-
-<!--#hibernate.c3p0.max_statements 100-->
-
-<!--#hibernate.c3p0.idle_test_period 3000-->
-
-<!--#hibernate.c3p0.acquire_increment 2-->
-
-<!--#hibernate.c3p0.validate false-->
-
-<p><property name="c3p0.max_size">5</property><br>
-<property name="c3p0.min_size">2</property></p>
+<ol>
+<li>导入c3p0 jar包   hibernate目录/optional/</li>
+<li>配置hibernate.cgf.xml  hibernate目录/product/etc/hibernate.properties中</li>
+<li>具体配置连接池属性
+```javascript
+//hibernate.cfg.xml
+<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+&lt;!--#hibernate.c3p0.max_size 2--&gt;
+&lt;!--#hibernate.c3p0.min_size 2--&gt;
+&lt;!--#hibernate.c3p0.timeout 5000--&gt;
+&lt;!--#hibernate.c3p0.max_statements 100--&gt;
+&lt;!--#hibernate.c3p0.idle_test_period 3000--&gt;
+&lt;!--#hibernate.c3p0.acquire_increment 2--&gt;
+&lt;!--#hibernate.c3p0.validate false--&gt;
+<property name="c3p0.max_size">5</property>
+<property name="c3p0.min_size">2</property></li>
+</ol>
 <div class="highlight"><pre><code class="language-" data-lang="">## 事务
 &gt; 自动提交事务，开发中不用
 &gt; 在hibernate中设置隔离级别 &amp;lt;property name="hibernate.connection.isolation"&gt;4
@@ -946,42 +921,37 @@ public void fun1(){<br>
 1. 写锁/排他锁   我不仅要读还要对数据修改，为读取的数据加上写锁
 &gt; select * from table for update
 ##### 在Hibernate中的悲观锁
-</code></pre></div>
-<p>//悲观锁 写锁<br>
-@Test<br>
-public void fun1(){<br>
-    Session session = HibernateUtils.openSession();<br>
-    Transaction ts = session.beginTransaction();<br>
-    Customer c = (Customer) session.get(Customer.class, 1, LockOptions.UPGRADE);<br>
-    System.out.println(c);<br>
-    ts.commit();<br>
-    session.close();<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
+```java
+//悲观锁 写锁
+@Test
+public void fun1(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Customer c = (Customer) session.get(Customer.class, 1, LockOptions.UPGRADE);
+    System.out.println(c);
+    ts.commit();
+    session.close();
+}
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//乐观锁</span>
+<span class="c1">//Customer.java</span>
+<span class="kd">private</span> <span class="n">Integer</span> <span class="n">version</span><span class="o">;</span><span class="c1">//javabean类添加一个版本号字段</span>
 
-</code></pre></div>
-<p>//乐观锁<br>
-//Customer.java<br>
-private Integer version;//javabean类添加一个版本号字段</p>
+<span class="c1">//Customer.hbm.xml</span>
+<span class="o">&lt;!--</span><span class="err">在</span><span class="n">id</span><span class="err">后面配置乐观锁版本号的属性名</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">version</span> <span class="n">name</span><span class="o">=</span><span class="s">"version"</span><span class="o">/&gt;</span>
 
-<p>//Customer.hbm.xml</p>
-
-<!--在id后面配置乐观锁版本号的属性名-->
-
-<p><version name="version"/></p>
-
-<p>public class Demo3 {<br>
-    @Test<br>
-    public void fun1(){<br>
-        Session session = HibernateUtils.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Customer c = (Customer) session.get(Customer.class, 1);<br>
-        c.setName(&quot;张三&quot;);//每次版本号都会加1<br>
-        ts.commit();<br>
-        session.close();<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo3</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="o">(){</span>
+        <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">HibernateUtils</span><span class="o">.</span><span class="na">openSession</span><span class="o">();</span>
+        <span class="n">Transaction</span> <span class="n">ts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+        <span class="n">Customer</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span> <span class="n">session</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">Customer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"张三"</span><span class="o">);</span><span class="c1">//每次版本号都会加1</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -1134,9 +1104,10 @@ private Integer version;//javabean类添加一个版本号字段</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

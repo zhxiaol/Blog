@@ -19,7 +19,7 @@ description: xml&tomcat
 dtd 外部dtd 本地文件:<!DOCUTYPE students SYSTEM "student.dtd">
 dtd 外部dtd 网络文件:<!DOCUTYPE students PUBLIC  "名称空间" "student.dtd">
 ##### student.dtd
-```dtd
+```xml
 <!ELEMENT students (student*)><!-- 根标签 student可以出现0至多个-->
 <!ELEMENT student (name,age,sex)><!--student标签要出现的内容，顺序-->
 <!ELEMENT name (#PCDATA)><!-- name标签中可以写文本-->
@@ -86,7 +86,7 @@ dtd 外部dtd 网络文件:<!DOCUTYPE students PUBLIC  "名称空间" "student.d
 </xsd:schema>
 ```
 ##### student.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <students xmlns="http://www.itcast.cn/xml"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -138,7 +138,7 @@ String name=secondBook.element("name").getText();
 System.out.println(name);
 }
 ```
-```
+```java
 @Test
 public  void test2() throws DocumentException {
 SAXReader reader=new SAXReader();
@@ -164,6 +164,7 @@ for(int i=0;i<e.nodeCount();i++){
 1.导入jaxen..jar
 2.创建解析器 SaxReader reader=new SaxReader()
 3.获得decument Document document = reader.read(url)
+
 |符号|备注|
 |----|------|
 |nodename| 选取此节点|
@@ -173,7 +174,7 @@ for(int i=0;i<e.nodeCount();i++){
 |@ |选取属性|
 |[@属性名] |属性过滤|
 |[标签名]  | 子元素过滤|
-```
+```java
 @Test
 public void test1() throws DocumentException {
 SAXReader reader=new SAXReader();
@@ -182,7 +183,7 @@ Node node = document.selectSingleNode("/books/book[2]/name");//第二本书名
 System.out.println(node.getText());
 }
 ```
-```
+```java
 @Test
 public void test2() throws DocumentException {
 SAXReader reader=new SAXReader();
@@ -194,7 +195,7 @@ for(int i=0;i<list.size();i++){
 }
 }
 ```
-```
+```java
 @Test
 public void test3() throws  DocumentException {
 SAXReader reader=new SAXReader();
@@ -217,7 +218,7 @@ http://tomcat.apache.org/ 下载tomcat tar.gz版本 解压拷贝到/usr/local/�
 ## 修改tomcat端口
 > tomcat目录/conf/server.xml 第70行 &lt;Conector port="8081"/&gt;
 ## Tomcat主要目录
-```
+```html
 Tomcat主要目录
 |
 |--bin 可执行文件
@@ -244,7 +245,7 @@ Tomcat主要目录
 ```
 
 ## 标准JavaWeb应用的目录结构
-```
+```html
 webapp
 |
 |---xx.html
@@ -296,7 +297,7 @@ Project Structure >> Modules >> Dependencies >> +(libraries/tomcat) +jars or dir
 ##URI和URI
 > URL:统一资源定位符(网址)
 > URI:统一资源标识符
-```
+```html
 URL统一资源定位符http://localhost:8080/myapp.index.html
 --------------------------------------------------------------------
 http://[协议]											
@@ -309,7 +310,7 @@ http://[协议]
 ```
 
 ## 虚拟目录
-```
+```html
 Tomcat目录
 |
 |--conf

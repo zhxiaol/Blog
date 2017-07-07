@@ -157,66 +157,66 @@ AspectJ是一个基于Java语言的AOP框架，Spring2.0开始，Spring AOP引�
 2.切面类：用于存通知 MyAspect<br>
 3.工厂类：编写工厂生成代理<br>
 4.测试</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface UserService {
-    public void addUser();
-    public void updateUser();
-    public void deleteUser();
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">();</span>
+<span class="o">}</span>
 
-public class UserServiceImpl implements UserService {
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">UserService</span> <span class="o">{</span>
 
-    @Override
-    public void addUser() {
-        System.out.println("a_proxy.a_jdk addUser");
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.a_jdk addUser"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void updateUser() {
-        System.out.println("a_proxy.a_jdk updateUser");
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.a_jdk updateUser"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void deleteUser() {
-        System.out.println("a_proxy.a_jdk deleteUser");
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.a_jdk deleteUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-public class MyAspect {
-    public void before(){
-        System.out.println("前方法");
-    }
-    public void alter(){
-        System.out.println("后方法");
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">alter</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-public class MyBeanFactory {
-    public static UserService createService(){
-        UserService userService=new UserServiceImpl();
-        MyAspect myAspect = new MyAspect();
-        return (UserService) Proxy.newProxyInstance(userService.getClass().getClassLoader(), userService.getClass().getInterfaces(),
-                new InvocationHandler() {
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        myAspect.before();
-                        Object obj = method.invoke(userService);
-                        myAspect.alter();
-                        return obj;
-                    }
-                });
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBeanFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">UserService</span> <span class="nf">createService</span><span class="o">(){</span>
+        <span class="n">UserService</span> <span class="n">userService</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceImpl</span><span class="o">();</span>
+        <span class="n">MyAspect</span> <span class="n">myAspect</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyAspect</span><span class="o">();</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">UserService</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">userService</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="n">userService</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span>
+                <span class="k">new</span> <span class="nf">InvocationHandler</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+                        <span class="n">myAspect</span><span class="o">.</span><span class="na">before</span><span class="o">();</span>
+                        <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">userService</span><span class="o">);</span>
+                        <span class="n">myAspect</span><span class="o">.</span><span class="na">alter</span><span class="o">();</span>
+                        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-public class TestJDK {
-    @Test
-    public void demo01(){
-        UserService service = MyBeanFactory.createService();
-        service.addUser();
-        service.updateUser();
-        service.deleteUser();
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestJDK</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo01</span><span class="o">(){</span>
+        <span class="n">UserService</span> <span class="n">service</span> <span class="o">=</span> <span class="n">MyBeanFactory</span><span class="o">.</span><span class="na">createService</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">addUser</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">updateUser</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">deleteUser</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 </code></pre></div>
 <h2 id="cglib字节码增强">CGLIB字节码增强</h2>
@@ -230,61 +230,61 @@ public class TestJDK {
         依赖：struts-2.3.15.3\apps\struts2-blank\WEB-INF\lib\asm-3.3.jar<br>
     spring-core..jar 已经整合以上两个内容</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">public class UserServiceImpl  {
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span>  <span class="o">{</span>
 
-    public void addUser() {
-        System.out.println("a_proxy.b_cglib addUser");
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.b_cglib addUser"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public void updateUser() {
-        System.out.println("a_proxy.b_cglib updateUser");
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.b_cglib updateUser"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public void deleteUser() {
-        System.out.println("a_proxy.b_cglib deleteUser");
-    }
-}
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"a_proxy.b_cglib deleteUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-public class MyAspect {
-    public void before(){
-        System.out.println("前方法");
-    }
-    public void alter(){
-        System.out.println("后方法");
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">alter</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-public class MyBeanFactory {
-    public static UserServiceImpl createService(){
-        UserServiceImpl userService=new UserServiceImpl();
-        MyAspect myAspect = new MyAspect();
-        Enhancer enhancer=new Enhancer();
-        enhancer.setSuperclass(userService.getClass());
-        enhancer.setCallback(new MethodInterceptor() {
-            @Override
-            public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-                myAspect.before();
-                Object obj = method.invoke(userService, args);
-                methodProxy.invokeSuper(proxy,args);
-                myAspect.alter();
-                return obj;
-            }
-        });
-        UserServiceImpl proxyService= (UserServiceImpl) enhancer.create();
-        return proxyService;
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBeanFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">UserServiceImpl</span> <span class="nf">createService</span><span class="o">(){</span>
+        <span class="n">UserServiceImpl</span> <span class="n">userService</span><span class="o">=</span><span class="k">new</span> <span class="n">UserServiceImpl</span><span class="o">();</span>
+        <span class="n">MyAspect</span> <span class="n">myAspect</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyAspect</span><span class="o">();</span>
+        <span class="n">Enhancer</span> <span class="n">enhancer</span><span class="o">=</span><span class="k">new</span> <span class="n">Enhancer</span><span class="o">();</span>
+        <span class="n">enhancer</span><span class="o">.</span><span class="na">setSuperclass</span><span class="o">(</span><span class="n">userService</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+        <span class="n">enhancer</span><span class="o">.</span><span class="na">setCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">MethodInterceptor</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="n">Object</span> <span class="nf">intercept</span><span class="o">(</span><span class="n">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">,</span> <span class="n">MethodProxy</span> <span class="n">methodProxy</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+                <span class="n">myAspect</span><span class="o">.</span><span class="na">before</span><span class="o">();</span>
+                <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">userService</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+                <span class="n">methodProxy</span><span class="o">.</span><span class="na">invokeSuper</span><span class="o">(</span><span class="n">proxy</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+                <span class="n">myAspect</span><span class="o">.</span><span class="na">alter</span><span class="o">();</span>
+                <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">UserServiceImpl</span> <span class="n">proxyService</span><span class="o">=</span> <span class="o">(</span><span class="n">UserServiceImpl</span><span class="o">)</span> <span class="n">enhancer</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">proxyService</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-public class TestCglib {
-    @Test
-    public void demo01(){
-        UserServiceImpl service = MyBeanFactory.createService();
-        service.addUser();
-        service.updateUser();
-        service.deleteUser();
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCglib</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo01</span><span class="o">(){</span>
+        <span class="n">UserServiceImpl</span> <span class="n">service</span> <span class="o">=</span> <span class="n">MyBeanFactory</span><span class="o">.</span><span class="na">createService</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">addUser</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">updateUser</span><span class="o">();</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">deleteUser</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="aop联盟通知类型">AOP联盟通知类型</h2>
 
@@ -301,14 +301,14 @@ Spring按照通知Advice在目标类方法的连接点位置，可以分为5类<
 引介通知 org.springframework.aop.IntroductionInterceptor<br>
 在目标类中添加一些新的方法和属性</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">环绕通知，必须手动执行目标方法
-try{
-   //前置通知
-   //执行目标方法
-   //后置通知
-} catch(){
-   //抛出异常通知
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="err">环绕通知，必须手动执行目标方法</span>
+<span class="k">try</span><span class="o">{</span>
+   <span class="c1">//前置通知</span>
+   <span class="c1">//执行目标方法</span>
+   <span class="c1">//后置通知</span>
+<span class="o">}</span> <span class="k">catch</span><span class="o">(){</span>
+   <span class="c1">//抛出异常通知</span>
+<span class="o">}</span>
 </code></pre></div>
 <h2 id="spring编写代理-半自动">spring编写代理:半自动</h2>
 
@@ -318,70 +318,70 @@ try{
 核心：4+1
 AOP：AOP联盟（规范）、spring-aop （实现）</li>
 </ol>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface UserService {
-    public void addUser();
-    public void updateUser();
-    public void deleteUser();
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">();</span>
+<span class="o">}</span>
 
-public class UserServiceImpl implements UserService {
-    @Override
-    public void addUser() {
-        System.out.println("b_factory_bean addUser");
-    }
-    @Override
-    public void updateUser() {
-        System.out.println("b_factory_bean updateUser");
-    }
-    @Override
-    public void deleteUser() {
-        System.out.println("b_factory_bean deleteUser");
-    }
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">UserService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"b_factory_bean addUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"b_factory_bean updateUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"b_factory_bean deleteUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-public class MyAspect implements MethodInterceptor{
-    public void before(){
-        System.out.println("前方法");
-    }
-    public void alter(){
-        System.out.println("后方法");
-    }
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span> <span class="kd">implements</span> <span class="n">MethodInterceptor</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">alter</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后方法"</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public Object invoke(MethodInvocation mi) throws Throwable {
-        System.out.println("前");
-        Object obj = mi.proceed();
-        System.out.println("后");
-        return obj;
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">MethodInvocation</span> <span class="n">mi</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前"</span><span class="o">);</span>
+        <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-//bean.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
-    &lt;bean id="userServiceId" class="com.itheima.b_factory_bean.UserServiceImpl"&gt;&lt;/bean&gt;
-    &lt;bean id="myAspectId" class="com.itheima.b_factory_bean.MyAspect"&gt;&lt;/bean&gt;
-    &lt;bean id="proxyServiceId" class="org.springframework.aop.framework.ProxyFactoryBean"&gt;
-        &lt;property name="interfaces" value="com.itheima.b_factory_bean.UserService"/&gt;
-        &lt;property name="target" ref="userServiceId"/&gt;
-        &lt;property name="interceptorNames" value="myAspectId"/&gt;
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userServiceId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">b_factory_bean</span><span class="o">.</span><span class="na">UserServiceImpl</span><span class="s">"&gt;&lt;/bean&gt;
+    &lt;bean id="</span><span class="n">myAspectId</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">b_factory_bean</span><span class="o">.</span><span class="na">MyAspect</span><span class="s">"&gt;&lt;/bean&gt;
+    &lt;bean id="</span><span class="n">proxyServiceId</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">aop</span><span class="o">.</span><span class="na">framework</span><span class="o">.</span><span class="na">ProxyFactoryBean</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">interfaces</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">b_factory_bean</span><span class="o">.</span><span class="na">UserService</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">target</span><span class="s">" ref="</span><span class="n">userServiceId</span><span class="s">"/&gt;
+        &lt;property name="</span><span class="n">interceptorNames</span><span class="s">" value="</span><span class="n">myAspectId</span><span class="s">"/&gt;
         &lt;!--强制使用cglib--&gt;
-        &lt;property name="optimize" value="true"&gt;&lt;/property&gt;
+        &lt;property name="</span><span class="n">optimize</span><span class="s">" value="</span><span class="kc">true</span><span class="s">"&gt;&lt;/property&gt;
     &lt;/bean&gt;
 &lt;/beans&gt;
 
 @Test
     public void demo01(){
-        String xmlPath="com/itheima/b_factory_bean/beans.xml";
+        String xmlPath="</span><span class="n">com</span><span class="o">/</span><span class="n">itheima</span><span class="o">/</span><span class="n">b_factory_bean</span><span class="o">/</span><span class="n">beans</span><span class="o">.</span><span class="na">xml</span><span class="s">";
         ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);
-          UserService bean = (UserService) applicationContext.getBean("proxyServiceId");
-          bean.addUser();
-          bean.updateUser();
-          bean.deleteUser();
-    }
+          UserService bean = (UserService) applicationContext.getBean("</span><span class="n">proxyServiceId</span><span class="err">"</span><span class="o">);</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">addUser</span><span class="o">();</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">updateUser</span><span class="o">();</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">deleteUser</span><span class="o">();</span>
+    <span class="o">}</span>
 
 </code></pre></div>
 <h2 id="spring-aop编程：全自动">spring aop编程：全自动</h2>
@@ -390,147 +390,154 @@ public class MyAspect implements MethodInterceptor{
 <p>从spring容器获得目标类，如果配置aop，spring将自动生成代理。<br>
 要确定目标类，aspectj 切入点表达式，导入jar包<br>
     spring-framework-3.0.2.RELEASE-dependencies\org.aspectj\com.springsource.org.aspectj.weaver\1.6.8.RELEASE</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface UserService {
-    public void addUser();
-    public void updateUser();
-    public void deleteUser();
-}
+</blockquote>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span> <span class="kd">implements</span> <span class="n">MethodInterceptor</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">alter</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后方法"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">MethodInvocation</span> <span class="n">mi</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前"</span><span class="o">);</span>
+        <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns:</span><span class="n">aop</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;!--</span> <span class="mi">1</span> <span class="err">创建目标类</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userServiceId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">c_spring_aop</span><span class="o">.</span><span class="na">UserServiceImpl</span><span class="s">"&gt;&lt;/bean&gt;
+    &lt;!-- 2 创建切面类（通知） --&gt;
+    &lt;bean id="</span><span class="n">myAspectId</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">c_spring_aop</span><span class="o">.</span><span class="na">MyAspect</span><span class="s">"&gt;&lt;/bean&gt;
+    &lt;!-- 3 aop编程
+        3.1 导入命名空间
+        3.2 使用 &lt;aop:config&gt;进行配置
+                proxy-target-class="</span><span class="kc">true</span><span class="s">" 声明时使用cglib代理
+            &lt;aop:pointcut&gt; 切入点 ，从目标对象获得具体方法
+            &lt;aop:advisor&gt; 特殊的切面，只有一个通知 和 一个切入点
+                advice-ref 通知引用
+                pointcut-ref 切入点引用
+        3.3 切入点表达式
+            execution(* com.itheima.c_spring_aop.*.*(..))
+            选择方法         返回值任意   包             类名任意   方法名任意   参数任意
+
+    --&gt;
+    &lt;aop:config proxy-target-class="</span><span class="kc">true</span><span class="s">"&gt;
+        &lt;aop:pointcut expression="</span><span class="n">execution</span><span class="o">(*</span> <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">c_spring_aop</span><span class="o">.*.*(..))</span><span class="s">" id="</span><span class="n">myPointCut</span><span class="s">"/&gt;
+        &lt;aop:advisor advice-ref="</span><span class="n">myAspectId</span><span class="s">" pointcut-ref="</span><span class="n">myPointCut</span><span class="s">"/&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;
+
+public class TestSpringAOP {
+    @Test
+    public void demo01(){
+        String xmlPath="</span><span class="n">com</span><span class="o">/</span><span class="n">itheima</span><span class="o">/</span><span class="n">c_spring_aop</span><span class="o">/</span><span class="n">beans</span><span class="o">.</span><span class="na">xml</span><span class="s">";
+        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);
+          UserService bean = (UserService) applicationContext.getBean("</span><span class="n">userServiceId</span><span class="err">"</span><span class="o">);</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">addUser</span><span class="o">();</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">updateUser</span><span class="o">();</span>
+          <span class="n">bean</span><span class="o">.</span><span class="na">deleteUser</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="aspectj">AspectJ</h2>
+
+<blockquote>
+<p>AspectJ是一个基于Java语言的AOP框架<br>
+Spring2.0以后新增了对AspectJ切点表达式支持<br>
+@AspectJ 是AspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面<br>
+新版本Spring框架，建议使用AspectJ方式来开发AOP<br>
+主要用途：自定义开发</p>
+</blockquote>
+
+<h2 id="切入点表达式">切入点表达式</h2>
+
+<h3 id="execution-用于描述方法">execution()  用于描述方法</h3>
+<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="err">语法：</span><span class="n">execution</span><span class="o">(</span><span class="err">修饰符</span>  <span class="err">返回值</span>  <span class="err">包</span><span class="o">.</span><span class="err">类</span><span class="o">.</span><span class="err">方法名</span><span class="o">(</span><span class="err">参数</span><span class="o">)</span> <span class="n">throws</span><span class="err">异常</span><span class="o">)</span>
+        <span class="err">修饰符，一般省略</span>
+            <span class="kd">public</span>      <span class="err">公共方法</span>
+            <span class="o">*</span>           <span class="err">任意</span>
+        <span class="err">返回值，不能省略</span>
+            <span class="kt">void</span>            <span class="err">返回没有值</span>
+            <span class="n">String</span>      <span class="err">返回值字符串</span>
+            <span class="o">*</span>           <span class="err">任意</span>
+        <span class="err">包，</span><span class="o">[</span><span class="err">省略</span><span class="o">]</span>
+            <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span>         <span class="err">固定包</span>
+            <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span><span class="o">.*.</span><span class="na">service</span>   <span class="n">crm</span><span class="err">包下面子包任意</span> <span class="err">（例如：</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span><span class="o">.</span><span class="na">staff</span><span class="o">.</span><span class="na">service</span><span class="err">）</span>
+            <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span><span class="o">..</span>           <span class="n">crm</span><span class="err">包下面的所有子包（含自己）</span>
+            <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span><span class="o">.*.</span><span class="na">service</span><span class="o">..</span> <span class="n">crm</span><span class="err">包下面任意子包，固定目录</span><span class="n">service</span><span class="err">，</span><span class="n">service</span><span class="err">目录任意包</span>
+        <span class="err">类，</span><span class="o">[</span><span class="err">省略</span><span class="o">]</span>
+            <span class="n">UserServiceImpl</span>         <span class="err">指定类</span>
+            <span class="o">*</span><span class="n">Impl</span>                   <span class="err">以</span><span class="n">Impl</span><span class="err">结尾</span>
+            <span class="n">User</span><span class="o">*</span>                   <span class="err">以</span><span class="n">User</span><span class="err">开头</span>
+            <span class="o">*</span>                       <span class="err">任意</span>
+        <span class="err">方法名，不能省略</span>
+            <span class="n">addUser</span>                 <span class="err">固定方法</span>
+            <span class="n">add</span><span class="o">*</span>                        <span class="err">以</span><span class="n">add</span><span class="err">开头</span>
+            <span class="o">*</span><span class="n">Do</span>                     <span class="err">以</span><span class="n">Do</span><span class="err">结尾</span>
+            <span class="o">*</span>                       <span class="err">任意</span>
+        <span class="o">(</span><span class="err">参数</span><span class="o">)</span>
+            <span class="o">()</span>                      <span class="err">无参</span>
+            <span class="o">(</span><span class="kt">int</span><span class="o">)</span>                       <span class="err">一个整型</span>
+            <span class="o">(</span><span class="kt">int</span> <span class="o">,</span><span class="kt">int</span><span class="o">)</span>                  <span class="err">两个</span>
+            <span class="o">(..)</span>                        <span class="err">参数任意</span>
+        <span class="kd">throws</span> <span class="o">,</span><span class="err">可省略，一般不写。</span>
+
+<span class="err">综合</span><span class="mi">1</span>
+    <span class="n">execution</span><span class="o">(*</span> <span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">crm</span><span class="o">.*.</span><span class="na">service</span><span class="o">..*.*(..))</span>
+<span class="err">综合</span><span class="mi">2</span>
+    <span class="o">&lt;</span><span class="nl">aop:</span><span class="n">pointcut</span> <span class="n">expression</span><span class="o">=</span><span class="s">"execution(* com.itheima.*WithCommit.*(..)) ||
+                          execution(* com.itheima.*Service.*(..))"</span> <span class="n">id</span><span class="o">=</span><span class="s">"myPointCut"</span><span class="o">/&gt;</span>
+<span class="mi">2</span><span class="o">.</span><span class="na">within</span><span class="o">:</span><span class="err">匹配包或子包中的方法</span><span class="o">(</span><span class="err">了解</span><span class="o">)</span>
+    <span class="n">within</span><span class="o">(</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">aop</span><span class="o">..*)</span>
+<span class="mi">3</span><span class="o">.</span><span class="na">this</span><span class="o">:</span><span class="err">匹配实现接口的代理对象中的方法</span><span class="o">(</span><span class="err">了解</span><span class="o">)</span>
+    <span class="k">this</span><span class="o">(</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">aop</span><span class="o">.</span><span class="na">user</span><span class="o">.</span><span class="na">UserDAO</span><span class="o">)</span>
+<span class="mi">4</span><span class="o">.</span><span class="na">target</span><span class="o">:</span><span class="err">匹配实现接口的目标对象中的方法</span><span class="o">(</span><span class="err">了解</span><span class="o">)</span>
+    <span class="n">target</span><span class="o">(</span><span class="n">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">aop</span><span class="o">.</span><span class="na">user</span><span class="o">.</span><span class="na">UserDAO</span><span class="o">)</span>
+<span class="mi">5</span><span class="o">.</span><span class="na">args</span><span class="o">:</span><span class="err">匹配参数格式符合标准的方法</span><span class="o">(</span><span class="err">了解</span><span class="o">)</span>
+    <span class="n">args</span><span class="o">(</span><span class="kt">int</span><span class="o">,</span><span class="kt">int</span><span class="o">)</span>
+<span class="mi">6</span><span class="o">.</span><span class="na">bean</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>  <span class="err">对指定的</span><span class="n">bean</span><span class="err">所有的方法</span><span class="o">(</span><span class="err">了解</span><span class="o">)</span>
+    <span class="n">bean</span><span class="o">(</span><span class="err">'</span><span class="n">userServiceId</span><span class="err">'</span><span class="o">)</span>
+
+</code></pre></div>
+<h2 id="aspectj-通知类型">AspectJ 通知类型</h2>
+
+<blockquote>
+<p>aop联盟定义通知类型，具有特性接口，必须实现，从而确定方法名称。<br>
+aspectj 通知类型，只定义类型名称。已经方法格式。</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="err">个数：</span><span class="mi">6</span><span class="err">种</span>
+    <span class="nl">before</span><span class="p">:</span><span class="err">前置通知</span><span class="p">(</span><span class="err">应用：各种校验</span><span class="p">)</span>
+        <span class="err">在方法执行前执行，如果通知抛出异常，阻止方法运行</span>
+    <span class="nl">afterReturning</span><span class="p">:</span><span class="err">后置通知</span><span class="p">(</span><span class="err">应用：常规数据处理</span><span class="p">)</span>
+        <span class="err">方法正常返回后执行，如果方法中抛出异常，通知无法执行</span>
+        <span class="err">必须在方法执行后才执行，所以可以获得方法的返回值。</span>
+    <span class="nl">around</span><span class="p">:</span><span class="err">环绕通知</span><span class="p">(</span><span class="err">应用：十分强大，可以做任何事情</span><span class="p">)</span>
+        <span class="err">方法执行前后分别执行，可以阻止方法的执行</span>
+        <span class="err">必须手动执行目标方法</span>
+    <span class="nl">afterThrowing</span><span class="p">:</span><span class="err">抛出异常通知</span><span class="p">(</span><span class="err">应用：包装异常信息</span><span class="p">)</span>
+        <span class="err">方法抛出异常后执行，如果方法没有抛出异常，无法执行</span>
+    <span class="nl">after</span><span class="p">:</span><span class="err">最终通知</span><span class="p">(</span><span class="err">应用：清理现场</span><span class="p">)</span>
+        <span class="err">方法执行完毕后执行，无论方法中是否出现异常</span>
+<span class="err">环绕</span>
 </code></pre></div></blockquote>
-
-<p>public class MyAspect implements MethodInterceptor{<br>
-    public void before(){<br>
-        System.out.println(&quot;前方法&quot;);<br>
-    }<br>
-    public void alter(){<br>
-        System.out.println(&quot;后方法&quot;);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-public Object invoke(MethodInvocation mi) throws Throwable {
-    System.out.println("前");
-    Object obj = mi.proceed();
-    System.out.println("后");
-    return obj;
-}
-</code></pre></div>
-<p>}</p>
-
-<p>//bean.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
-<beans xmlns="http://www.springframework.org/schema/beans"<br>
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
-       xmlns:aop="http://www.springframework.org/schema/aop"<br>
-       xsi:schemaLocation="http://www.springframework.org/schema/beans<br>
-                           http://www.springframework.org/schema/beans/spring-beans.xsd<br>
-                           http://www.springframework.org/schema/aop<br>
-                           http://www.springframework.org/schema/aop/spring-aop.xsd"><br>
-    &lt;!-- 1 创建目标类 --&gt;<br>
-    <bean id="userServiceId" class="com.itheima.c_spring_aop.UserServiceImpl"></bean><br>
-    &lt;!-- 2 创建切面类（通知） --&gt;<br>
-    <bean id="myAspectId" class="com.itheima.c_spring_aop.MyAspect"></bean><br>
-    &lt;!-- 3 aop编程<br>
-        3.1 导入命名空间<br>
-        3.2 使用 <a href="aop:config">aop:config</a>进行配置<br>
-                proxy-target-class=&quot;true&quot; 声明时使用cglib代理<br>
-            <a href="aop:pointcut">aop:pointcut</a> 切入点 ，从目标对象获得具体方法<br>
-            <a href="aop:advisor">aop:advisor</a> 特殊的切面，只有一个通知 和 一个切入点<br>
-                advice-ref 通知引用<br>
-                pointcut-ref 切入点引用<br>
-        3.3 切入点表达式<br>
-            execution(* com.itheima.c_spring_aop.<em>.</em>(..))<br>
-            选择方法         返回值任意   包             类名任意   方法名任意   参数任意</p>
-<div class="highlight"><pre><code class="language-" data-lang="">--&gt;
-&lt;aop:config proxy-target-class="true"&gt;
-    &lt;aop:pointcut expression="execution(* com.itheima.c_spring_aop.*.*(..))" id="myPointCut"/&gt;
-    &lt;aop:advisor advice-ref="myAspectId" pointcut-ref="myPointCut"/&gt;
-&lt;/aop:config&gt;
-</code></pre></div>
-<p></beans></p>
-
-<p>public class TestSpringAOP {<br>
-    @Test<br>
-    public void demo01(){<br>
-        String xmlPath=&quot;com/itheima/c_spring_aop/beans.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-          UserService bean = (UserService) applicationContext.getBean(&quot;userServiceId&quot;);<br>
-          bean.addUser();<br>
-          bean.updateUser();<br>
-          bean.deleteUser();<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## AspectJ
-&gt; AspectJ是一个基于Java语言的AOP框架
-&gt; Spring2.0以后新增了对AspectJ切点表达式支持
-&gt; @AspectJ 是AspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面
-新版本Spring框架，建议使用AspectJ方式来开发AOP
-&gt; 主要用途：自定义开发
-
-##切入点表达式
-### execution()  用于描述方法
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">语法：execution(修饰符  返回值  包.类.方法名(参数) throws异常)
-    修饰符，一般省略
-        public      公共方法
-        *           任意
-    返回值，不能省略
-        void            返回没有值
-        String      返回值字符串
-        *           任意
-    包，[省略]
-        com.itheima.crm         固定包
-        com.itheima.crm.*.service   crm包下面子包任意 （例如：com.itheima.crm.staff.service）
-        com.itheima.crm..           crm包下面的所有子包（含自己）
-        com.itheima.crm.*.service.. crm包下面任意子包，固定目录service，service目录任意包
-    类，[省略]
-        UserServiceImpl         指定类
-        *Impl                   以Impl结尾
-        User*                   以User开头
-        *                       任意
-    方法名，不能省略
-        addUser                 固定方法
-        add*                        以add开头
-        *Do                     以Do结尾
-        *                       任意
-    (参数)
-        ()                      无参
-        (int)                       一个整型
-        (int ,int)                  两个
-        (..)                        参数任意
-    throws ,可省略，一般不写。
-</code></pre></div>
-<p>综合1<br>
-    execution(* com.itheima.crm.<em>.service..</em>.<em>(..))<br>
-综合2<br>
-    &lt;aop:pointcut expression=&quot;execution(</em> com.itheima.<em>WithCommit.</em>(..)) ||<br>
-                          execution(* com.itheima.<em>Service.</em>(..))&quot; id=&quot;myPointCut&quot;/&gt;<br>
-2.within:匹配包或子包中的方法(了解)<br>
-    within(com.itheima.aop..*)<br>
-3.this:匹配实现接口的代理对象中的方法(了解)<br>
-    this(com.itheima.aop.user.UserDAO)<br>
-4.target:匹配实现接口的目标对象中的方法(了解)<br>
-    target(com.itheima.aop.user.UserDAO)<br>
-5.args:匹配参数格式符合标准的方法(了解)<br>
-    args(int,int)<br>
-6.bean(id)  对指定的bean所有的方法(了解)<br>
-    bean(&#39;userServiceId&#39;)</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## AspectJ 通知类型
-&gt; aop联盟定义通知类型，具有特性接口，必须实现，从而确定方法名称。
-&gt; aspectj 通知类型，只定义类型名称。已经方法格式。
-</code></pre></div>
-<p>个数：6种<br>
-    before:前置通知(应用：各种校验)<br>
-        在方法执行前执行，如果通知抛出异常，阻止方法运行<br>
-    afterReturning:后置通知(应用：常规数据处理)<br>
-        方法正常返回后执行，如果方法中抛出异常，通知无法执行<br>
-        必须在方法执行后才执行，所以可以获得方法的返回值。<br>
-    around:环绕通知(应用：十分强大，可以做任何事情)<br>
-        方法执行前后分别执行，可以阻止方法的执行<br>
-        必须手动执行目标方法<br>
-    afterThrowing:抛出异常通知(应用：包装异常信息)<br>
-        方法抛出异常后执行，如果方法没有抛出异常，无法执行<br>
-    after:最终通知(应用：清理现场)<br>
-        方法执行完毕后执行，无论方法中是否出现异常<br>
-环绕</p>
 
 <p>try{<br>
      //前置：before<br>
@@ -555,442 +562,439 @@ public Object invoke(MethodInvocation mi) throws Throwable {
 3.aop编程，将通知应用到目标类
 4.测试
 
+```java
+public interface UserService {
+    public void addUser();
+    public void updateUser();
+    public void deleteUser();
+}
+
+public class UserServiceImpl implements UserService {
+    @Override
+    public void addUser() {
+        System.out.println("d_aspect.a_xml addUser");
+    }
+    @Override
+    public void updateUser() {
+        System.out.println("d_aspect.a_xml updateUser");
+        int i=10/0;
+    }
+    @Override
+    public void deleteUser() {
+        System.out.println("d_aspect.a_xml deleteUser");
+    }
+}
+
+public class MyAspect{
+    //前置通知
+    public void myBefore(JoinPoint joinPoint){
+        System.out.println("前置通知:"+joinPoint.getSignature().getName());
+    }
+    //后置通知
+    public void myAfterReturning(JoinPoint joinpoint,Object ret){
+        System.out.println("后置通知:"+joinpoint.getSignature().getName()+",--&gt;"+ret);
+    }
+
+    //环绕通知
+    public Object myAround(ProceedingJoinPoint joinPoint) throws Throwable{
+        System.out.println("前置通知");
+        Object obj = joinPoint.proceed();//手动执行目标方法
+        System.out.println("后置通知");
+        return obj;
+
+    }
+    //抛出异常通知
+    public void myAfterThrowing(JoinPoint joinPoint,Throwable e){
+        System.out.println("抛出异常通知:"+joinPoint.getSignature().getName()+",--&gt;"+e.getMessage());
+    }
+
+    //最终通知
+    public void myAfter(JoinPoint joinPoint){
+        System.out.println("最终通知:"+joinPoint.getSignature().getName());
+    }
+}
+
+public class TestAspectXml {
+    @Test
+    public void demo01(){
+        String xmlPath="com/itheima/d_aspect/a_xml/beans.xml";
+        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);
+          UserService bean = (UserService) applicationContext.getBean("userServiceId");
+          bean.addUser();
+          bean.updateUser();
+          bean.deleteUser();
+    }
+}
+
+//bean.xml
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd"
+&gt;
+    &lt;bean id="userServiceId" class="com.itheima.d_aspect.a_xml.UserServiceImpl"&gt;&lt;/bean&gt;
+    &lt;bean id="myAspectId" class="com.itheima.d_aspect.a_xml.MyAspect"&gt;&lt;/bean&gt;
+    &lt;!--aop编程
+        &lt;aop:aspect&gt;将切面类声明"切面"，从而获得通知方法
+                ref:切面类的引用
+        &lt;aop:pointcut&gt;声明一个切入点，所有的通知都可以使用
+                expression 切入点你表达式
+                id 名称，用于其他通知引用
+    --&gt;
+    &lt;aop:config&gt;
+        &lt;aop:aspect ref="myAspectId"&gt;
+            &lt;aop:pointcut id="myPointcut" expression="execution(* com.itheima.d_aspect.a_xml.UserServiceImpl.*(..))"&gt;&lt;/aop:pointcut&gt;
+            &lt;!--前置通知
+                method:方法名
+                pointcut:切入点表达式,此表达式当前通知使用
+                pointcut-ref:切入点的引用，可以与其他通知共享通知
+                通知方法可以有参数myBefore(JoinPoint joinPoint)
+                参数1:org.aspectj.lang.JoinPoint 用于描述连接点(目标方法)，可以获得目标方法名等
+                &lt;aop:before method="myBefore"  pointcut-ref="myPointcut"/&gt;
+            --&gt;
+
+            &lt;!--后置通知，目标方法后执行，获得返回值
+                &lt;aop:after-returning method="myAfterReturning" pointcut-ref="myPointcut"/&gt;
+                returning:通知方法第二个参数的名称
+             通知方法格式:public void myAfterReturning(JoinPoint joinpoint,Object ret)
+                参数1：连接点描述
+                参数2：类型Object,参数名returning配置的
+
+                &lt;aop:after-returning method="myAfterReturning" pointcut-ref="myPointcut" returning="ret" /&gt;
+            --&gt;
+
+            &lt;!--环绕通知
+                &lt;aop:around method="" pointcut-ref=""/&gt;
+                通知方法格式public Object myAround(ProceedingJoinPoint joinPoint) throws Throwable
+                返回类型:Object
+                方法名:任意
+                参数:org.aspectj.lang.ProceedingJoinPoint
+                执行目标方法:Object obj=joinpoint.proceed(）
+                例如:
+                &lt;aop:around method="myAround" pointcut-ref="myPointcut"&gt;&lt;/aop:around&gt;
+            --&gt;
+
+            &lt;!--抛出异常
+                &lt;aop:after-throwing method="" pointcut-ref=""/&gt;
+                通知方法格式:public void myAfterThrowing(JoinPoint joinPoint)
+                throwing:通知方法的第二个参数名称
+                参数1:链接点描述对象
+                参数2:获得异常信息，类型Throwable ,参数名称由throwing控制
+                列如:
+                &lt;aop:after-throwing method="myAfterThrowing" pointcut-ref="myPointcut" throwing="e"/&gt;
+            --&gt;
+            &lt;!--最终通知--&gt;
+            &lt;aop:after method="myAfter" pointcut-ref="myPointcut"/&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;
 </code></pre></div>
-<p>public interface UserService {<br>
-    public void addUser();<br>
-    public void updateUser();<br>
-    public void deleteUser();<br>
-}</p>
+<h2 id="aspectj基于注解">AspectJ基于注解</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">updateUser</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">();</span>
+<span class="o">}</span>
 
-<p>public class UserServiceImpl implements UserService {<br>
-    @Override<br>
-    public void addUser() {<br>
-        System.out.println(&quot;d_aspect.a_xml addUser&quot;);<br>
-    }<br>
-    @Override<br>
-    public void updateUser() {<br>
-        System.out.println(&quot;d_aspect.a_xml updateUser&quot;);<br>
-        int i=10/0;<br>
-    }<br>
-    @Override<br>
-    public void deleteUser() {<br>
-        System.out.println(&quot;d_aspect.a_xml deleteUser&quot;);<br>
-    }<br>
-}</p>
+<span class="nd">@Service</span><span class="o">(</span><span class="s">"userServiceId"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">UserService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"d_aspect.b_anno addUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">updateUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"d_aspect.b_anno updateUser"</span><span class="o">);</span>
+        <span class="c1">//int i=10/0;</span>
+        <span class="k">return</span> <span class="s">"返回值"</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteUser</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"d_aspect.b_anno deleteUser"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>public class MyAspect{<br>
-    //前置通知<br>
-    public void myBefore(JoinPoint joinPoint){<br>
-        System.out.println(&quot;前置通知:&quot;+joinPoint.getSignature().getName());<br>
-    }<br>
-    //后置通知<br>
-    public void myAfterReturning(JoinPoint joinpoint,Object ret){<br>
-        System.out.println(&quot;后置通知:&quot;+joinpoint.getSignature().getName()+&quot;,--&gt;&quot;+ret);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//环绕通知
-public Object myAround(ProceedingJoinPoint joinPoint) throws Throwable{
-    System.out.println("前置通知");
-    Object obj = joinPoint.proceed();//手动执行目标方法
-    System.out.println("后置通知");
-    return obj;
 
-}
-//抛出异常通知
-public void myAfterThrowing(JoinPoint joinPoint,Throwable e){
-    System.out.println("抛出异常通知:"+joinPoint.getSignature().getName()+",--&gt;"+e.getMessage());
-}
 
-//最终通知
-public void myAfter(JoinPoint joinPoint){
-    System.out.println("最终通知:"+joinPoint.getSignature().getName());
-}
+<span class="nd">@Component</span>
+<span class="nd">@Aspect</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyAspect</span><span class="o">{</span>
+    <span class="c1">//切入点当前有效</span>
+    <span class="c1">//@Before("execution(* com.itheima.d_aspect.b_anno.UserServiceImpl.*(..))")</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myBefore</span><span class="o">(</span><span class="n">JoinPoint</span> <span class="n">joinPoint</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知:"</span><span class="o">+</span><span class="n">joinPoint</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="c1">//声明公共的切入点</span>
+    <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.itheima.d_aspect.b_anno.UserServiceImpl.*(..))"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">myPointCut</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+    <span class="c1">//@AfterReturning(value = "myPointCut()",returning = "ret")</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myAfterReturning</span><span class="o">(</span><span class="n">JoinPoint</span> <span class="n">joinpoint</span><span class="o">,</span><span class="n">Object</span> <span class="n">ret</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知:"</span><span class="o">+</span><span class="n">joinpoint</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">",--&gt;"</span><span class="o">+</span><span class="n">ret</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//@Around(value="myPointCut()")</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">myAround</span><span class="o">(</span><span class="n">ProceedingJoinPoint</span> <span class="n">joinPoint</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span><span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知"</span><span class="o">);</span>
+        <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">joinPoint</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span><span class="c1">//手动执行目标方法</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+
+    <span class="o">}</span>
+    <span class="c1">//@AfterThrowing(value = "myPointCut()",throwing = "e")</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myAfterThrowing</span><span class="o">(</span><span class="n">JoinPoint</span> <span class="n">joinPoint</span><span class="o">,</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"抛出异常通知:"</span><span class="o">+</span><span class="n">joinPoint</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">",--&gt;"</span><span class="o">+</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="nd">@After</span><span class="o">(</span><span class="s">"myPointCut()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myAfter</span><span class="o">(</span><span class="n">JoinPoint</span> <span class="n">joinPoint</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"最终通知:"</span><span class="o">+</span><span class="n">joinPoint</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestAspectAnno</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo01</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">xmlPath</span> <span class="o">=</span> <span class="s">"com/itheima/d_aspect/b_anno/beans.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">applicationContext</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+        <span class="n">UserService</span> <span class="n">bean</span> <span class="o">=</span> <span class="o">(</span><span class="n">UserService</span><span class="o">)</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"userServiceId"</span><span class="o">);</span>
+        <span class="n">bean</span><span class="o">.</span><span class="na">addUser</span><span class="o">();</span>
+        <span class="n">bean</span><span class="o">.</span><span class="na">updateUser</span><span class="o">();</span>
+        <span class="n">bean</span><span class="o">.</span><span class="na">deleteUser</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns:</span><span class="n">aop</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xmlns:</span><span class="n">context</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="o">&gt;</span>
+    <span class="o">&lt;!--</span><span class="mi">1</span><span class="o">.</span><span class="err">扫描注解类</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nl">context:</span><span class="n">component</span><span class="o">-</span><span class="n">scan</span> <span class="n">base</span><span class="o">-</span><span class="kn">package</span><span class="o">=</span><span class="s">"com.itheima.d_aspect.b_anno"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;!--</span><span class="mi">2</span><span class="o">.</span><span class="err">确定</span><span class="n">AOP</span><span class="err">注解生效</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nl">aop:</span><span class="n">aspectj</span><span class="o">-</span><span class="n">autoproxy</span><span class="o">&gt;&lt;/</span><span class="nl">aop:</span><span class="n">aspectj</span><span class="o">-</span><span class="n">autoproxy</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beans</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>}</p>
-
-<p>public class TestAspectXml {<br>
-    @Test<br>
-    public void demo01(){<br>
-        String xmlPath=&quot;com/itheima/d_aspect/a_xml/beans.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-          UserService bean = (UserService) applicationContext.getBean(&quot;userServiceId&quot;);<br>
-          bean.addUser();<br>
-          bean.updateUser();<br>
-          bean.deleteUser();<br>
-    }<br>
-}</p>
-
-<p>//bean.xml<br>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;beans xmlns=&quot;<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a>&quot;<br>
-       xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>&quot;<br>
-       xmlns:aop=&quot;<a href="http://www.springframework.org/schema/aop">http://www.springframework.org/schema/aop</a>&quot;<br>
-       xsi:schemaLocation=&quot;<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a><br>
-                           <a href="http://www.springframework.org/schema/beans/spring-beans.xsd">http://www.springframework.org/schema/beans/spring-beans.xsd</a><br>
-                           <a href="http://www.springframework.org/schema/aop">http://www.springframework.org/schema/aop</a><br>
-                           <a href="http://www.springframework.org/schema/aop/spring-aop.xsd">http://www.springframework.org/schema/aop/spring-aop.xsd</a>&quot;</p>
+<h2 id="jdbctemplate">JdbcTemplate</h2>
 
 <blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;bean id="userServiceId" class="com.itheima.d_aspect.a_xml.UserServiceImpl"&gt;&lt;/bean&gt;
-&lt;bean id="myAspectId" class="com.itheima.d_aspect.a_xml.MyAspect"&gt;&lt;/bean&gt;
-&lt;!--aop编程
-    &lt;aop:aspect&gt;将切面类声明"切面"，从而获得通知方法
-            ref:切面类的引用
-    &lt;aop:pointcut&gt;声明一个切入点，所有的通知都可以使用
-            expression 切入点你表达式
-            id 名称，用于其他通知引用
---&gt;
-&lt;aop:config&gt;
-    &lt;aop:aspect ref="myAspectId"&gt;
-        &lt;aop:pointcut id="myPointcut" expression="execution(* com.itheima.d_aspect.a_xml.UserServiceImpl.*(..))"&gt;&lt;/aop:pointcut&gt;
-        &lt;!--前置通知
-            method:方法名
-            pointcut:切入点表达式,此表达式当前通知使用
-            pointcut-ref:切入点的引用，可以与其他通知共享通知
-            通知方法可以有参数myBefore(JoinPoint joinPoint)
-            参数1:org.aspectj.lang.JoinPoint 用于描述连接点(目标方法)，可以获得目标方法名等
-            &lt;aop:before method="myBefore"  pointcut-ref="myPointcut"/&gt;
-        --&gt;
-</code></pre></div></blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">        &lt;!--后置通知，目标方法后执行，获得返回值
-            &lt;aop:after-returning method="myAfterReturning" pointcut-ref="myPointcut"/&gt;
-            returning:通知方法第二个参数的名称
-         通知方法格式:public void myAfterReturning(JoinPoint joinpoint,Object ret)
-            参数1：连接点描述
-            参数2：类型Object,参数名returning配置的
+<p>spring 提供用于操作JDBC工具类，类似：DBUtils。<br>
+依赖 连接池DataSource （数据源）</p>
+</blockquote>
 
-            &lt;aop:after-returning method="myAfterReturning" pointcut-ref="myPointcut" returning="ret" /&gt;
-        --&gt;
+<h2 id="导入jar包">导入jar包</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">spring</span> <span class="mi">4</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">beans</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">context</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">expression</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
 
-        &lt;!--环绕通知
-            &lt;aop:around method="" pointcut-ref=""/&gt;
-            通知方法格式public Object myAround(ProceedingJoinPoint joinPoint) throws Throwable
-            返回类型:Object
-            方法名:任意
-            参数:org.aspectj.lang.ProceedingJoinPoint
-            执行目标方法:Object obj=joinpoint.proceed(）
-            例如:
-            &lt;aop:around method="myAround" pointcut-ref="myPointcut"&gt;&lt;/aop:around&gt;
-        --&gt;
+<span class="n">mysql</span><span class="err">驱动</span><span class="o">:</span>
+<span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mi">7</span><span class="o">-</span><span class="n">bin</span><span class="o">.</span><span class="na">jar</span>
 
-        &lt;!--抛出异常
-            &lt;aop:after-throwing method="" pointcut-ref=""/&gt;
-            通知方法格式:public void myAfterThrowing(JoinPoint joinPoint)
-            throwing:通知方法的第二个参数名称
-            参数1:链接点描述对象
-            参数2:获得异常信息，类型Throwable ,参数名称由throwing控制
-            列如:
-            &lt;aop:after-throwing method="myAfterThrowing" pointcut-ref="myPointcut" throwing="e"/&gt;
-        --&gt;
-        &lt;!--最终通知--&gt;
-        &lt;aop:after method="myAfter" pointcut-ref="myPointcut"/&gt;
-    &lt;/aop:aspect&gt;
-&lt;/aop:config&gt;
+<span class="n">jdbc</span><span class="err">和事务</span><span class="o">:</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">jdbc</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
+<span class="n">spring</span><span class="o">-</span><span class="n">tx</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="na">RELEASE</span><span class="o">.</span><span class="na">jar</span>
+
+<span class="n">c3p0</span><span class="err">连接池</span><span class="o">:</span>
+<span class="n">com</span><span class="o">.</span><span class="na">springsource</span><span class="o">.</span><span class="na">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mf">1.2</span><span class="o">.</span><span class="na">jar</span>
+
+<span class="n">dbcp</span><span class="err">连接池</span><span class="o">:</span>
+<span class="n">com</span><span class="o">.</span><span class="na">springsource</span><span class="o">.</span><span class="na">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">commons</span><span class="o">.</span><span class="na">dbcp</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="na">osgi</span><span class="o">.</span><span class="na">jar</span>
+<span class="n">com</span><span class="o">.</span><span class="na">springsource</span><span class="o">.</span><span class="na">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">commons</span><span class="o">.</span><span class="na">pool</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="na">jar</span>
+
 </code></pre></div>
-<p></beans></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## AspectJ基于注解
+<h2 id="jdbctemplate">JDBCTemplate</h2>
+
+<h6 id="api">api</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">BasicDataSource</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BasicDataSource</span><span class="o">();</span>
+    <span class="n">dataSource</span><span class="o">.</span><span class="na">setDriverClassName</span><span class="o">(</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="o">);</span>
+    <span class="n">dataSource</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/ee19_spring_day02?characterEncoding=utf-8"</span><span class="o">);</span>
+    <span class="n">dataSource</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"root"</span><span class="o">);</span>
+    <span class="n">dataSource</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"root"</span><span class="o">);</span>
+    <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">=</span><span class="k">new</span> <span class="n">JdbcTemplate</span><span class="o">();</span>
+    <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">setDataSource</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+    <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"insert into t_user(username,password) values(?,?)"</span><span class="o">,</span><span class="s">"tom"</span><span class="o">,</span><span class="mi">998</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>public interface UserService {<br>
-    public void addUser();<br>
-    public String updateUser();<br>
-    public void deleteUser();<br>
-}</p>
+<h6 id="dbcp">dbcp</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDao</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">sql</span><span class="o">=</span><span class="s">"update t_user set username = ? ,password = ? where id = ?"</span><span class="o">;</span>
+        <span class="n">Object</span><span class="o">[]</span><span class="n">args</span><span class="o">={</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()};</span>
+        <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
 
-<p>@Service(&quot;userServiceId&quot;)<br>
-public class UserServiceImpl implements UserService {<br>
-    @Override<br>
-    public void addUser() {<br>
-        System.out.println(&quot;d_aspect.b_anno addUser&quot;);<br>
-    }<br>
-    @Override<br>
-    public String updateUser() {<br>
-        System.out.println(&quot;d_aspect.b_anno updateUser&quot;);<br>
-        //int i=10/0;<br>
-        return &quot;返回值&quot;;<br>
-    }<br>
-    @Override<br>
-    public void deleteUser() {<br>
-        System.out.println(&quot;d_aspect.b_anno deleteUser&quot;);<br>
-    }<br>
-}</p>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setJdbcTemplate</span><span class="o">(</span><span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcTemplate</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>@Component<br>
-@Aspect<br>
-public class MyAspect{<br>
-    //切入点当前有效<br>
-    //@Before(&quot;execution(* com.itheima.d_aspect.b_anno.UserServiceImpl.<em>(..))&quot;)<br>
-    public void myBefore(JoinPoint joinPoint){<br>
-        System.out.println(&quot;前置通知:&quot;+joinPoint.getSignature().getName());<br>
-    }<br>
-    //声明公共的切入点<br>
-    @Pointcut(&quot;execution(</em> com.itheima.d_aspect.b_anno.UserServiceImpl.*(..))&quot;)<br>
-    private void myPointCut(){</p>
-<div class="highlight"><pre><code class="language-" data-lang="">}
-//@AfterReturning(value = "myPointCut()",returning = "ret")
-public void myAfterReturning(JoinPoint joinpoint,Object ret){
-    System.out.println("后置通知:"+joinpoint.getSignature().getName()+",--&gt;"+ret);
-}
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestDBCP</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo1</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">xmlPath</span><span class="o">=</span><span class="s">"com/itheima/c_dbcp/bean.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+        <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">=</span> <span class="o">(</span><span class="n">UserDao</span><span class="o">)</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"userDaoId"</span><span class="o">);</span>
+        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"杰克"</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"998"</span><span class="o">);</span>
+        <span class="n">userDao</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-//@Around(value="myPointCut()")
-public Object myAround(ProceedingJoinPoint joinPoint) throws Throwable{
-    System.out.println("前置通知");
-    Object obj = joinPoint.proceed();//手动执行目标方法
-    System.out.println("后置通知");
-    return obj;
-
-}
-//@AfterThrowing(value = "myPointCut()",throwing = "e")
-public void myAfterThrowing(JoinPoint joinPoint,Throwable e){
-    System.out.println("抛出异常通知:"+joinPoint.getSignature().getName()+",--&gt;"+e.getMessage());
-}
-
-@After("myPointCut()")
-public void myAfter(JoinPoint joinPoint){
-    System.out.println("最终通知:"+joinPoint.getSignature().getName());
-}
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userDaoId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">c_dbcp</span><span class="o">.</span><span class="na">UserDao</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">jdbcTemplate</span><span class="s">" ref="</span><span class="n">jdbcTemplate</span><span class="s">"/&gt;
+&lt;/bean&gt;
+&lt;bean id="</span><span class="n">jdbcTemplate</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">JdbcTemplate</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
+&lt;/bean&gt;
+&lt;bean id="</span><span class="n">dataSource</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">commons</span><span class="o">.</span><span class="na">dbcp</span><span class="o">.</span><span class="na">BasicDataSource</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">driverClassName</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+    &lt;property name="</span><span class="n">url</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"username"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>}</p>
+<h6 id="c3p0">C3P0</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDao</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">sql</span><span class="o">=</span><span class="s">"update t_user set username = ? ,password = ? where id = ?"</span><span class="o">;</span>
+        <span class="n">Object</span><span class="o">[]</span><span class="n">args</span><span class="o">={</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()};</span>
+        <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from t_user"</span><span class="o">,</span><span class="n">ParameterizedBeanPropertyRowMapper</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
 
-<p>public class TestAspectAnno {<br>
-    @Test<br>
-    public void demo01() {<br>
-        String xmlPath = &quot;com/itheima/d_aspect/b_anno/beans.xml&quot;;<br>
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);<br>
-        UserService bean = (UserService) applicationContext.getBean(&quot;userServiceId&quot;);<br>
-        bean.addUser();<br>
-        bean.updateUser();<br>
-        bean.deleteUser();<br>
-    }<br>
-}</p>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setJdbcTemplate</span><span class="o">(</span><span class="n">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcTemplate</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>//bean.xml<br>
-<beans xmlns="http://www.springframework.org/schema/beans"<br>
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
-       xmlns:aop="http://www.springframework.org/schema/aop"<br>
-       xmlns:context="http://www.springframework.org/schema/context"<br>
-       xsi:schemaLocation="http://www.springframework.org/schema/beans<br>
-                           http://www.springframework.org/schema/beans/spring-beans.xsd<br>
-                           http://www.springframework.org/schema/aop<br>
-                           http://www.springframework.org/schema/aop/spring-aop.xsd<br>
-                           http://www.springframework.org/schema/context<br>
-                           http://www.springframework.org/schema/context/spring-context.xsd"><br>
-    &lt;!--1.扫描注解类--&gt;<br>
-    <context:component-scan base-package="com.itheima.d_aspect.b_anno"/><br>
-    &lt;!--2.确定AOP注解生效--&gt;<br>
-    <a href="aop:aspectj-autoproxy">aop:aspectj-autoproxy</a><a href="/aop:aspectj-autoproxy">/aop:aspectj-autoproxy</a><br>
-</beans></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## JdbcTemplate
-&gt; spring 提供用于操作JDBC工具类，类似：DBUtils。
-&gt; 依赖 连接池DataSource （数据源）
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestC3P0</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo1</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">xmlPath</span><span class="o">=</span><span class="s">"com/itheima/d_c3p0/bean.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+        <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">=</span> <span class="o">(</span><span class="n">UserDao</span><span class="o">)</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"userDaoId"</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">lists</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">lists</span><span class="o">);</span>
 
-
-## 导入jar包
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userDaoId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">d_c3p0</span><span class="o">.</span><span class="na">UserDao</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">jdbcTemplate</span><span class="s">" ref="</span><span class="n">jdbcTemplate</span><span class="s">"/&gt;
+&lt;/bean&gt;
+&lt;bean id="</span><span class="n">jdbcTemplate</span><span class="s">" class="</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">JdbcTemplate</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
+&lt;/bean&gt;
+&lt;bean id="</span><span class="n">dataSource</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+    &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"user"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>spring 4+1:<br>
-spring-beans-3.2.0.RELEASE.jar<br>
-spring-context-3.2.0.RELEASE.jar<br>
-spring-core-3.2.0.RELEASE.jar<br>
-spring-expression-3.2.0.RELEASE.jar</p>
+<h6 id="jdbcdaosupport">jdbcDaoSupport</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JdbcDaoSupport</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">sql</span><span class="o">=</span><span class="s">"update t_user set username = ? ,password = ? where id = ?"</span><span class="o">;</span>
+        <span class="n">Object</span><span class="o">[]</span><span class="n">args</span><span class="o">={</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()};</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from t_user"</span><span class="o">,</span><span class="n">ParameterizedBeanPropertyRowMapper</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>mysql驱动:<br>
-mysql-connector-java-5.1.7-bin.jar</p>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestJdbcDaoSupport</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo1</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">xmlPath</span><span class="o">=</span><span class="s">"com/itheima/e_jdbcdaosupport/bean.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+        <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">=</span> <span class="o">(</span><span class="n">UserDao</span><span class="o">)</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"userDaoId"</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">lists</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">lists</span><span class="o">);</span>
 
-<p>jdbc和事务:<br>
-spring-jdbc-3.2.0.RELEASE.jar<br>
-spring-tx-3.2.0.RELEASE.jar</p>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>c3p0连接池:<br>
-com.springsource.com.mchange.v2.c3p0-0.9.1.2.jar</p>
+<span class="c1">//bean.xml</span>
+<span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userDaoId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">e_jdbcdaosupport</span><span class="o">.</span><span class="na">UserDao</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
+&lt;/bean&gt;
+&lt;bean id="</span><span class="n">dataSource</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+    &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="n">com</span><span class="o">.</span><span class="na">mysql</span><span class="o">.</span><span class="na">jdbc</span><span class="o">.</span><span class="na">Driver</span><span class="s">"/&gt;
+    &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="nl">jdbc:mysql:</span><span class="c1">//localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"user"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">property</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">"root"</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></div>
+<h6 id="properties">properties</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDao</span> <span class="kd">extends</span> <span class="n">JdbcDaoSupport</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">sql</span><span class="o">=</span><span class="s">"update t_user set username = ? ,password = ? where id = ?"</span><span class="o">;</span>
+        <span class="n">Object</span><span class="o">[]</span><span class="n">args</span><span class="o">={</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getPassword</span><span class="o">(),</span><span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">()};</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from t_user"</span><span class="o">,</span><span class="n">ParameterizedBeanPropertyRowMapper</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+    <span class="o">}</span>
 
-<p>dbcp连接池:<br>
-com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar<br>
-com.springsource.org.apache.commons.pool-1.5.3.jar</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## JDBCTemplate
-###### api
-</code></pre></div>
-<p>public static void main(String[] args) {<br>
-    BasicDataSource dataSource = new BasicDataSource();<br>
-    dataSource.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);<br>
-    dataSource.setUrl(&quot;jdbc:mysql://localhost:3306/ee19_spring_day02?characterEncoding=utf-8&quot;);<br>
-    dataSource.setUsername(&quot;root&quot;);<br>
-    dataSource.setPassword(&quot;root&quot;);<br>
-    JdbcTemplate jdbcTemplate=new JdbcTemplate();<br>
-    jdbcTemplate.setDataSource(dataSource);<br>
-    jdbcTemplate.update(&quot;insert into t_user(username,password) values(?,?)&quot;,&quot;tom&quot;,998);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### dbcp
-</code></pre></div>
-<p>public class UserDao {<br>
-    private JdbcTemplate jdbcTemplate;<br>
-    public void update(User user){<br>
-        String sql=&quot;update t_user set username = ? ,password = ? where id = ?&quot;;<br>
-        Object[]args={user.getUsername(),user.getPassword(),user.getId()};<br>
-        jdbcTemplate.update(sql,args);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-}
-</code></pre></div>
-<p>}</p>
 
-<p>public class TestDBCP {<br>
-    @Test<br>
-    public void demo1(){<br>
-        String xmlPath=&quot;com/itheima/c_dbcp/bean.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-        UserDao userDao= (UserDao) applicationContext.getBean(&quot;userDaoId&quot;);<br>
-        User user = new User();<br>
-        user.setId(1);<br>
-        user.setUsername(&quot;杰克&quot;);<br>
-        user.setPassword(&quot;998&quot;);<br>
-        userDao.update(user);<br>
-    }<br>
-}</p>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">findUserById</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getJdbcTemplate</span><span class="o">().</span><span class="na">queryForObject</span><span class="o">(</span><span class="s">"select * from t_user where id = ?"</span><span class="o">,</span><span class="n">ParameterizedBeanPropertyRowMapper</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">User</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>//bean.xml<br>
-<bean id="userDaoId" class="com.itheima.c_dbcp.UserDao"><br>
-    <property name="jdbcTemplate" ref="jdbcTemplate"/><br>
-</bean><br>
-<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"><br>
-    <property name="dataSource" ref="dataSource"/><br>
-</bean><br>
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"><br>
-    <property name="driverClassName" value="com.mysql.jdbc.Driver"/><br>
-    <property name="url" value="jdbc:mysql://localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/><br>
-    <property name="username" value="root"/><br>
-    <property name="password" value="root"/><br>
-</bean></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### C3P0
-</code></pre></div>
-<p>public class UserDao {<br>
-    private JdbcTemplate jdbcTemplate;<br>
-    public void update(User user){<br>
-        String sql=&quot;update t_user set username = ? ,password = ? where id = ?&quot;;<br>
-        Object[]args={user.getUsername(),user.getPassword(),user.getId()};<br>
-        jdbcTemplate.update(sql,args);<br>
-    }<br>
-    public List<User> findAll(){<br>
-        return jdbcTemplate.query(&quot;select * from t_user&quot;,ParameterizedBeanPropertyRowMapper.newInstance(User.class));<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-}
-</code></pre></div>
-<p>}</p>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestProps</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demo1</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">xmlPath</span><span class="o">=</span><span class="s">"com/itheima/f_properties/bean.xml"</span><span class="o">;</span>
+        <span class="n">ApplicationContext</span> <span class="n">applicationContext</span><span class="o">=</span><span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="n">xmlPath</span><span class="o">);</span>
+        <span class="n">UserDao</span> <span class="n">userDao</span><span class="o">=</span> <span class="o">(</span><span class="n">UserDao</span><span class="o">)</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"userDaoId"</span><span class="o">);</span>
+        <span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="n">userDao</span><span class="o">.</span><span class="na">findUserById</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
 
-<p>public class TestC3P0 {<br>
-    @Test<br>
-    public void demo1(){<br>
-        String xmlPath=&quot;com/itheima/d_c3p0/bean.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-        UserDao userDao= (UserDao) applicationContext.getBean(&quot;userDaoId&quot;);<br>
-        List<User> lists = userDao.findAll();<br>
-        System.out.println(lists);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">}
-</code></pre></div>
-<p>}<br>
-//bean.xml<br>
-<bean id="userDaoId" class="com.itheima.d_c3p0.UserDao"><br>
-    <property name="jdbcTemplate" ref="jdbcTemplate"/><br>
-</bean><br>
-<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"><br>
-    <property name="dataSource" ref="dataSource"/><br>
-</bean><br>
-<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"><br>
-    <property name="driverClass" value="com.mysql.jdbc.Driver"/><br>
-    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/><br>
-    <property name="user" value="root"/><br>
-    <property name="password" value="root"/><br>
-</bean></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### jdbcDaoSupport
-</code></pre></div>
-<p>public class UserDao extends JdbcDaoSupport{<br>
-    public void update(User user){<br>
-        String sql=&quot;update t_user set username = ? ,password = ? where id = ?&quot;;<br>
-        Object[]args={user.getUsername(),user.getPassword(),user.getId()};<br>
-        this.getJdbcTemplate().update(sql,args);<br>
-    }<br>
-    public List<User> findAll(){<br>
-        return this.getJdbcTemplate().query(&quot;select * from t_user&quot;,ParameterizedBeanPropertyRowMapper.newInstance(User.class));<br>
-    }<br>
-}</p>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>public class TestJdbcDaoSupport {<br>
-    @Test<br>
-    public void demo1(){<br>
-        String xmlPath=&quot;com/itheima/e_jdbcdaosupport/bean.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-        UserDao userDao= (UserDao) applicationContext.getBean(&quot;userDaoId&quot;);<br>
-        List<User> lists = userDao.findAll();<br>
-        System.out.println(lists);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">}
-</code></pre></div>
-<p>}</p>
-
-<p>//bean.xml<br>
-<bean id="userDaoId" class="com.itheima.e_jdbcdaosupport.UserDao"><br>
-    <property name="dataSource" ref="dataSource"/><br>
-</bean><br>
-<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"><br>
-    <property name="driverClass" value="com.mysql.jdbc.Driver"/><br>
-    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ee19_spring_day02?characterEncoding=utf-8"/><br>
-    <property name="user" value="root"/><br>
-    <property name="password" value="root"/><br>
-</bean></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### properties
-</code></pre></div>
-<p>public class UserDao extends JdbcDaoSupport{<br>
-    public void update(User user){<br>
-        String sql=&quot;update t_user set username = ? ,password = ? where id = ?&quot;;<br>
-        Object[]args={user.getUsername(),user.getPassword(),user.getId()};<br>
-        this.getJdbcTemplate().update(sql,args);<br>
-    }<br>
-    public List<User> findAll(){<br>
-        return this.getJdbcTemplate().query(&quot;select * from t_user&quot;,ParameterizedBeanPropertyRowMapper.newInstance(User.class));<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public User findUserById(int id) {
-    return this.getJdbcTemplate().queryForObject("select * from t_user where id = ?",ParameterizedBeanPropertyRowMapper.newInstance(User.class),id);
-}
-</code></pre></div>
-<p>}</p>
-
-<p>public class TestProps {<br>
-    @Test<br>
-    public void demo1(){<br>
-        String xmlPath=&quot;com/itheima/f_properties/bean.xml&quot;;<br>
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext(xmlPath);<br>
-        UserDao userDao= (UserDao) applicationContext.getBean(&quot;userDaoId&quot;);<br>
-        User user=userDao.findUserById(1);<br>
-        System.out.println(user);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">}
-</code></pre></div>
-<p>}</p>
-
-<p>//bean.xml<br>
-   &lt;!-- 加载配置文件<br>
-   &quot;classpath:&quot;前缀表示 src下<br>
-   在配置文件之后通过  ${key} 获得内容<br>
---&gt;<br>
-   <context:property-placeholder location="classpath:com/itheima/f_properties/jdbcInfo.properties"/><br>
-   &lt;bean id=&quot;userDaoId&quot; class=&quot;com.itheima.f_properties.UserDao&quot;</p>
-
-<blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">   &lt;property name="dataSource" ref="dataSource"/&gt;
-</code></pre></div>
-<p></bean><br>
-   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"><br>
-       <property name="driverClass" value="${jdbc.driverClass}"></property><br>
-       <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property><br>
-       <property name="user" value="${jdbc.user}"></property><br>
-       <property name="password"  value="${jdbc.password}"></property><br>
-   </bean></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div></blockquote>
-  
+<span class="c1">//bean.xml</span>
+   <span class="o">&lt;!--</span> <span class="err">加载配置文件</span>
+   <span class="s">"classpath:"</span><span class="err">前缀表示</span> <span class="n">src</span><span class="err">下</span>
+   <span class="err">在配置文件之后通过</span>  <span class="err">$</span><span class="o">{</span><span class="n">key</span><span class="o">}</span> <span class="err">获得内容</span>
+<span class="o">--&gt;</span>
+   <span class="o">&lt;</span><span class="nl">context:</span><span class="n">property</span><span class="o">-</span><span class="n">placeholder</span> <span class="n">location</span><span class="o">=</span><span class="s">"classpath:com/itheima/f_properties/jdbcInfo.properties"</span><span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">"userDaoId"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">f_properties</span><span class="o">.</span><span class="na">UserDao</span><span class="s">"
+   &gt;
+       &lt;property name="</span><span class="n">dataSource</span><span class="s">" ref="</span><span class="n">dataSource</span><span class="s">"/&gt;
+   &lt;/bean&gt;
+   &lt;bean id="</span><span class="n">dataSource</span><span class="s">" class="</span><span class="n">com</span><span class="o">.</span><span class="na">mchange</span><span class="o">.</span><span class="na">v2</span><span class="o">.</span><span class="na">c3p0</span><span class="o">.</span><span class="na">ComboPooledDataSource</span><span class="s">"&gt;
+       &lt;property name="</span><span class="n">driverClass</span><span class="s">" value="</span><span class="err">$</span><span class="o">{</span><span class="n">jdbc</span><span class="o">.</span><span class="na">driverClass</span><span class="o">}</span><span class="s">"&gt;&lt;/property&gt;
+       &lt;property name="</span><span class="n">jdbcUrl</span><span class="s">" value="</span><span class="err">$</span><span class="o">{</span><span class="n">jdbc</span><span class="o">.</span><span class="na">jdbcUrl</span><span class="o">}</span><span class="s">"&gt;&lt;/property&gt;
+       &lt;property name="</span><span class="n">user</span><span class="s">" value="</span><span class="err">$</span><span class="o">{</span><span class="n">jdbc</span><span class="o">.</span><span class="na">user</span><span class="o">}</span><span class="s">"&gt;&lt;/property&gt;
+       &lt;property name="</span><span class="n">password</span><span class="s">"  value="</span><span class="err">$</span><span class="o">{</span><span class="n">jdbc</span><span class="o">.</span><span class="na">password</span><span class="o">}</span><span class="err">"</span><span class="o">&gt;&lt;/</span><span class="n">property</span><span class="o">&gt;</span>
+   <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -1143,9 +1147,10 @@ com.springsource.org.apache.commons.pool-1.5.3.jar</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

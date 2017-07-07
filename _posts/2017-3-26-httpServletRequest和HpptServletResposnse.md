@@ -19,7 +19,7 @@ setHead(String name,String value)设置响应头
 getOutputSteam();字节流
 setCharacterEncoding(String)
 setContentType(String)
-```
+```java
 public class ServletDemo1 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class ServletDemo1 extends HttpServlet {
 ```
 ## 文件下载
 
-```
+```java
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String path = this.getServletContext().getRealPath("/WEB-INF/classes/hotgril.jpg");
     String name = path.substring(path.lastIndexOf("/") + 1);
@@ -64,7 +64,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 ```
 ## 验证码
 ###### ServletDemo4
-```
+```java
 public class ServletDemo4 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -103,7 +103,7 @@ public class ServletDemo4 extends HttpServlet {
     }
 ```
 ###### login.html
-```
+```html
 <body>
     <form action="#" method="post">
     用户名:<input type="text" name="username"><br/>
@@ -114,7 +114,7 @@ public class ServletDemo4 extends HttpServlet {
 </body>
 ```
 ###### 工具类验证码ValidateCode
-```
+```java
 public class ServletDemo4 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -132,7 +132,7 @@ public class ServletDemo4 extends HttpServlet {
 }
 ```
 ###### 告示客户端不缓存
-```
+```java
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IOException {
     //告知不同的客户端不缓存
@@ -142,7 +142,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 }
 ```
 ## 刷新功能
-```
+```java
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //      resp.setIntHeader("refresh",1);//设置1秒刷新一次
@@ -155,7 +155,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 ```
 
 ## 请求重定向
-```
+```java
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     //方式一
@@ -195,7 +195,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 |obj getAttribute(name)||
 |void removeAttribute(name)||
 
-```
+```java
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     System.out.println("method:"+req.getMethod());
@@ -226,7 +226,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
     }
 }
 ```
-```
+```javascript
 //RequestDemo3
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -258,7 +258,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
     </form>
 </body>
 ```
-```
+```java
 req.setCharacterEncoding("utf-8");
 Enumeration<String> names = req.getParameterNames();
 while(names.hasMoreElements()){
@@ -271,7 +271,7 @@ while(names.hasMoreElements()){
     System.out.println();
 }
 ```
-```
+```java
 req.setCharacterEncoding("utf-8");
 Map<String, String[]> map = req.getParameterMap();
 User u = new User();
@@ -292,7 +292,7 @@ for(Map.Entry<String, String[]> m:map.entrySet()){
 }
 System.out.println(u);
 ```
-```
+```java
 try {
     req.setCharacterEncoding("utf-8");
     User u = new User();
@@ -314,7 +314,7 @@ try {
 }
 ```
 ###### commons-beanutils.jar
-```
+```java
 req.setCharacterEncoding("utf-8");
 User u=new User();
 try {
@@ -324,7 +324,7 @@ try {
     e.printStackTrace();
 }
 ```
-```
+```java
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("utf-8");
@@ -338,7 +338,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
     }
 }
 ```
-```
+```java
 //reuqest5
 req.setCharacterEncoding("utf-8");
 resp.setContentType("text/html;charset=utf-8");

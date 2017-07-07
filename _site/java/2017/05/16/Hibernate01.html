@@ -122,7 +122,7 @@
 orm元数据:配置文件</p>
 
 <h6 id="步骤">步骤</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">Hibernate3.6.10使用步骤
+<div class="highlight"><pre><code class="language-html" data-lang="html">Hibernate3.6.10使用步骤
     |
     |--添加jar包
     |     |
@@ -163,11 +163,11 @@ orm元数据:配置文件</p>
           |--映射添加到核心配置文件
 </code></pre></div>
 <h6 id="示例">示例</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//hibernate.cfg.xml
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE hibernate-configuration PUBLIC
-   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-   "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//hibernate.cfg.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">configuration</span> <span class="nx">PUBLIC</span>
+   <span class="s2">"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span>
+   <span class="s2">"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"</span><span class="o">&gt;</span>
 </code></pre></div></blockquote>
 
 <p><hibernate-configuration><br>
@@ -266,360 +266,384 @@ public class User {<br>
 |criteria.setFirstResult(3)|从第几个开始取|
 |criteria.setMaxResults(2)|设置查询多少个|
 |criteria.add(Restrictions)|添加查询条件|
-</code></pre></div>
-<p>public class Configuration_test {<br>
-    @Test<br>
-    public void fun1(){<br>
-        Configuration conf=new Configuration().configure();<br>
-//        Configuration conf=new Configuration().configure(file);<br>
-//        Configuration conf=new Configuration().configure(path);<br>
-        //加载映射文件(不推荐)<br>
-        //推荐使用hibernate.cfg.xml mapping属性引入配置文件<br>
-        //规范orm文件 1.orm映射文件名与实体的简单名一致<br>
-        // 2.orm映射文件和实体类同路径</p>
-<div class="highlight"><pre><code class="language-" data-lang="">    conf.addClass(User.class);
+```java
+public class Configuration_test {
+    @Test
+    public void fun1(){
+        Configuration conf=new Configuration().configure();
+//        Configuration conf=new Configuration().configure(file);
+//        Configuration conf=new Configuration().configure(path);
+        //加载映射文件(不推荐)
+        //推荐使用hibernate.cfg.xml mapping属性引入配置文件
+        //规范orm文件 1.orm映射文件名与实体的简单名一致
+        // 2.orm映射文件和实体类同路径
+
+        conf.addClass(User.class);
+    }
+}
+
+//SeesionFactory
+public class SessionFactory_test {
+    @Test
+    public void fun1(){
+        Configuration conf=new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        factory.openSession();
+        factory.getCurrentSession();
+    }
+}
+
+//Session
+public class Session_test {
+    @Test
+    public void fun1() {
+        //添加
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        User user = new User();
+        user.setName("景甜");
+        user.setPassword("1234");
+        session.save(user);
+        session.close();
+        factory.close();
+    }
+
+    @Test
+    public void fun2() {
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        User user = (User) session.get(User.class, 1);
+        System.out.println(user);
+        user.setName("刘亦菲");
+        session.update(user);
+        ts.commit();
+
+    }
+    @Test
+    public void fun3(){
+        //删除
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        User user = (User) session.get(User.class, 1);
+        session.delete(user);
+        ts.commit();
+        session.close();
+        factory.close();
+    }
+    @Test
+    public void fun4(){
+        //查询
+        //get: get方法被调用时立刻发送sql语句
+        //load: 调用并没有查询数据库，当我们需要使用该对象的时候 查询对象
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        User user = (User) session.load(User.class, 2);
+        System.out.println(user);
+        ts.commit();
+        session.close();
+        factory.close();
+    }
+    @Test
+    public void fun5(){
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        Query query = session.createQuery("from com.itheima.a_hello.User");//传入hql语句
+        List&lt;User&gt; list = query.list();
+        System.out.println(list);
+        ts.commit();
+    }
+    @Test
+    public void fun6(){
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        Criteria criteria = session.createCriteria(User.class);
+        List&lt;User&gt; list = criteria.list();
+        System.out.println(list);
+        ts.commit();
+    }
+    @Test
+    public void fun7(){
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        SQLQuery query = session.createSQLQuery("select * from t_user");
+        query.addEntity(User.class);
+        List&lt;User&gt; list = query.list();
+        System.out.println(list);
+        ts.commit();
+    }
+
+}
+
+//Query
+public class Query_test {
+    @Test
+    public void fun1(){
+        Configuration config = new Configuration().configure();
+        SessionFactory factory = config.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        //Query对象 封装HQL语句的对象 封装查询细节的方法
+        Query query = session.createQuery("from com.itheima.a_hello.User");
+        query.setFirstResult(2);
+        query.setMaxResults(3);
+        List&lt;User&gt; list = query.list();
+        User u  = (User) query.uniqueResult();
+        System.out.println(u);
+        ts.commit();
+    }
+}
+
+//Cretiraira
+public class Cretiraira_test {
+    @Test
+    public void fun1(){
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction ts = session.beginTransaction();
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.setFirstResult(0);
+        criteria.setMaxResults(2);
+        List list = criteria.list();
+        System.out.println(list);
+        criteria=criteria.add(Restrictions.like("name","%周芷若%"));
+        User user = (User) criteria.uniqueResult();
+        System.out.println(user);
+        ts.commit();
+    }
+}
+
+//Transaction
+public class Transaction_test {
+    //封装了事务
+    @Test
+    public void fun1(){
+        Configuration conf = new Configuration().configure();
+        SessionFactory factory = conf.buildSessionFactory();
+        Session session = factory.getCurrentSession();
+        Transaction ts = session.beginTransaction();
+        ts.commit();
+        Session session2 = factory.getCurrentSession();
+        System.out.println(session==session2);
+
+        //事务关闭时，会自动把当前线程关联的session关闭，并删除
+
+        //ts.rollback();
+        //session.close();
+        factory.close();
+    }
 }
 </code></pre></div>
-<p>}</p>
+<h6 id="hibernateutils">HibernateUtils</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">public</span> <span class="kr">class</span> <span class="nx">HibernateUtils</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="kr">static</span> <span class="nx">SessionFactory</span> <span class="nx">factory</span><span class="p">;</span>
+    <span class="kr">static</span> <span class="p">{</span>
+        <span class="nx">Configuration</span> <span class="nx">conf</span><span class="o">=</span><span class="k">new</span> <span class="nx">Configuration</span><span class="p">().</span><span class="nx">configure</span><span class="p">();</span>
+        <span class="nx">factory</span><span class="o">=</span><span class="nx">conf</span><span class="p">.</span><span class="nx">buildSessionFactory</span><span class="p">();</span>
+        <span class="nx">Runtime</span><span class="p">.</span><span class="nx">getRuntime</span><span class="p">().</span><span class="nx">addShutdownHook</span><span class="p">(</span><span class="k">new</span> <span class="nx">Thread</span><span class="p">(</span><span class="k">new</span> <span class="nx">Runnable</span><span class="p">()</span> <span class="p">{</span>
+            <span class="err">@</span><span class="nx">Override</span>
+            <span class="kr">public</span> <span class="k">void</span> <span class="nx">run</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">factory</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+                <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="s2">"虚拟机关闭 释放资源"</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}));</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="nx">Session</span> <span class="nx">openSession</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="nx">factory</span><span class="p">.</span><span class="nx">openSession</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="nx">Session</span> <span class="nx">getCurrentSession</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="nx">factory</span><span class="p">.</span><span class="nx">getCurrentSession</span><span class="p">();</span>
+    <span class="p">}</span>
 
-<p>//SeesionFactory<br>
-public class SessionFactory_test {<br>
-    @Test<br>
-    public void fun1(){<br>
-        Configuration conf=new Configuration().configure();<br>
-        SessionFactory factory = conf.buildSessionFactory();<br>
-        factory.openSession();<br>
-        factory.getCurrentSession();<br>
-    }<br>
-}</p>
-
-<p>//Session<br>
-public class Session_test {<br>
-    @Test<br>
-    public void fun1() {<br>
-        //添加<br>
-        Configuration conf = new Configuration().configure();<br>
-        SessionFactory factory = conf.buildSessionFactory();<br>
-        Session session = factory.openSession();<br>
-        User user = new User();<br>
-        user.setName(&quot;景甜&quot;);<br>
-        user.setPassword(&quot;1234&quot;);<br>
-        session.save(user);<br>
-        session.close();<br>
-        factory.close();<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Test
-public void fun2() {
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    User user = (User) session.get(User.class, 1);
-    System.out.println(user);
-    user.setName("刘亦菲");
-    session.update(user);
-    ts.commit();
-
-}
-@Test
-public void fun3(){
-    //删除
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    User user = (User) session.get(User.class, 1);
-    session.delete(user);
-    ts.commit();
-    session.close();
-    factory.close();
-}
-@Test
-public void fun4(){
-    //查询
-    //get: get方法被调用时立刻发送sql语句
-    //load: 调用并没有查询数据库，当我们需要使用该对象的时候 查询对象
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    User user = (User) session.load(User.class, 2);
-    System.out.println(user);
-    ts.commit();
-    session.close();
-    factory.close();
-}
-@Test
-public void fun5(){
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    Query query = session.createQuery("from com.itheima.a_hello.User");//传入hql语句
-    List&lt;User&gt; list = query.list();
-    System.out.println(list);
-    ts.commit();
-}
-@Test
-public void fun6(){
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    Criteria criteria = session.createCriteria(User.class);
-    List&lt;User&gt; list = criteria.list();
-    System.out.println(list);
-    ts.commit();
-}
-@Test
-public void fun7(){
-    Configuration conf = new Configuration().configure();
-    SessionFactory factory = conf.buildSessionFactory();
-    Session session = factory.openSession();
-    Transaction ts = session.beginTransaction();
-    SQLQuery query = session.createSQLQuery("select * from t_user");
-    query.addEntity(User.class);
-    List&lt;User&gt; list = query.list();
-    System.out.println(list);
-    ts.commit();
-}
+    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">openSession</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>}</p>
+<h2 id="hbm2ddl-auto">hbm2ddl.auto</h2>
 
-<p>//Query<br>
-public class Query_test {<br>
-    @Test<br>
-    public void fun1(){<br>
-        Configuration config = new Configuration().configure();<br>
-        SessionFactory factory = config.buildSessionFactory();<br>
-        Session session = factory.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        //Query对象 封装HQL语句的对象 封装查询细节的方法<br>
-        Query query = session.createQuery(&quot;from com.itheima.a_hello.User&quot;);<br>
-        query.setFirstResult(2);<br>
-        query.setMaxResults(3);<br>
-        List<User> list = query.list();<br>
-        User u  = (User) query.uniqueResult();<br>
-        System.out.println(u);<br>
-        ts.commit();<br>
-    }<br>
-}</p>
+<blockquote>
+<p>是否自动生成表结构策略</p>
+</blockquote>
 
-<p>//Cretiraira<br>
-public class Cretiraira_test {<br>
-    @Test<br>
-    public void fun1(){<br>
-        Configuration conf = new Configuration().configure();<br>
-        SessionFactory factory = conf.buildSessionFactory();<br>
-        Session session = factory.openSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        Criteria criteria = session.createCriteria(User.class);<br>
-        criteria.setFirstResult(0);<br>
-        criteria.setMaxResults(2);<br>
-        List list = criteria.list();<br>
-        System.out.println(list);<br>
-        criteria=criteria.add(Restrictions.like(&quot;name&quot;,&quot;%周芷若%&quot;));<br>
-        User user = (User) criteria.uniqueResult();<br>
-        System.out.println(user);<br>
-        ts.commit();<br>
-    }<br>
-}</p>
+<p>update:</p>
 
-<p>//Transaction<br>
-public class Transaction_test {<br>
-    //封装了事务<br>
-    @Test<br>
-    public void fun1(){<br>
-        Configuration conf = new Configuration().configure();<br>
-        SessionFactory factory = conf.buildSessionFactory();<br>
-        Session session = factory.getCurrentSession();<br>
-        Transaction ts = session.beginTransaction();<br>
-        ts.commit();<br>
-        Session session2 = factory.getCurrentSession();<br>
-        System.out.println(session==session2);</p>
-<div class="highlight"><pre><code class="language-" data-lang="">    //事务关闭时，会自动把当前线程关联的session关闭，并删除
+<ol>
+<li>如果当前数据库中不存在表结构 自动创建表结构</li>
+<li>如果存在表结构，并且表结构与实体一致，那么不在修改</li>
+<li>如果存在表结构，并且表结构与实体不一致，那么修改表结构，并保留原有字段</li>
+</ol>
 
-    //ts.rollback();
-    //session.close();
-    factory.close();
-}
+<p>create:</p>
+
+<ol>
+<li>无论是否存在表结构，每次启动Hibernate都会重新创建表结构(数据会丢失)</li>
+</ol>
+
+<p>create-drop:<br>
+1.无论是否存在表结构，每次启动Hibernate都会重新创建表结构，每次Hibernate结束摧毁表</p>
+
+<p>validate:</p>
+
+<ol>
+<li>不会自动创建表结构</li>
+<li>也不会自动维护表结构</li>
+<li>只负责校验表结构</li>
+<li>如果表结构不一致抛异常</li>
+</ol>
+
+<h2 id="hibernate-dialect">hibernate.dialect</h2>
+
+<blockquote>
+<p>数据库方言配置<br>
+mysql 选择org.hibernate.dialect.MySQLDialect</p>
+</blockquote>
+
+<h2 id="hibernate-中持久类">Hibernate 中持久类</h2>
+
+<ul>
+<li>提供一个无參public访问的构造方法</li>
+<li>提供一个表示属性，映射数据库主键</li>
+<li>所有属性提供pulbic访问控制符的 set get方法</li>
+<li>标识属性尽量使用基本数据类型的包装类型</li>
+<li>不要用final修饰类（将无法生成代理对象进行优化）</li>
+</ul>
+
+<h4 id="持久化对象的唯一标识-oid">持久化对象的唯一标识 OID</h4>
+
+<ul>
+<li>Java按地址区分同一个的类的不同对象</li>
+<li>关系数据库主键区分同一条记录</li>
+<li>Hibernate使用OID来建立内存中的对象和数据库中的记录的对应关系，应该让Hibernate来个OID赋值</li>
+</ul>
+
+<h4 id="区分自然主键和代理主键">区分自然主键和代理主键</h4>
+
+<blockquote>
+<p>主键需要具备:不能为空/不能重复/不能改变</p>
+</blockquote>
+
+<ol>
+<li>自然主键: 在业务中，某个属性符合主键的三个要求，那么该属性可以做为主键列</li>
+<li>代理主键: 在业务中,不存在符合以上3个条件的属性。那么就添加一个没有意义的列，作为主键</li>
+</ol>
+
+<h2 id="bean-hbm-xml">Bean.hbm.xml</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">hibernate-mapping标签
+      |     |
+      |     |--package属性
+      |         |--指定包名，class里面可以使用简单类名
+      |
+      |--class标签(配置与表的关系)
+           |        |
+           |        |--name:实体类完整名称
+           |        |--table:与实体类对应表的名称
+           |        |--dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert
+           |        |--dynamic-update:动态更新 true:没有改动的字段 不参与update
+           |
+           |--id标签(配置主键)
+           |        |   |
+           |        |   |--name:实体类属性名
+           |        |   |--column：主键在表中的名称
+           |        |   |--length: 列的长度
+           |        |   |--unsaved-value(很少用):指定主键为什么值时当做空处理
+           |        |   |--access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set
+           |        |
+           |        |--generator标签(主键生成策略)
+           |             |
+           |             |--increment:数据库自己生成主键，先查询最大主键id值，然后id值+1
+           |             |--identity:依赖数据的主键自增功能
+           |             |--sequence:序列，依赖于数据库中的序列功能(Oracle)
+           |             |--hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)
+           |             |--native:自动根据数据库increment,sequence,hilo三选一
+           |             |--uuid:自动生成32位不重复的字符串
+           |             |--assigned:自己指定主键值，表的主键是自然主键时
+           |
+           |--property标签(实体中属性和表中列的对应)
+                    |
+                    |--name:实体属性名称
+                    |--column:表中列的名称
+                    |--length:数据长度
+                    |--scale:小数有效位数
+                    |--precision:小数点后面长度
+                    |--not-null:指定属性的约束是否使用非空
+                    |--unique:指定属性的约束是否唯一
+                    |--insert(一般不用):该属性是否加入insert语句，插入的不用该属性
+                    |--update(一般不用):update的时候不会管该属性
+                    |--type:表达该属性的类型
+                          |
+                          |--java类型 java.lang.String
+                          |--数据库类型指定 varchar
+                          |--Hibernate类型指定 string
 </code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### HibernateUtils
-</code></pre></div>
-<p>public class HibernateUtils {<br>
-    private static SessionFactory factory;<br>
-    static {<br>
-        Configuration conf=new Configuration().configure();<br>
-        factory=conf.buildSessionFactory();<br>
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {<br>
-            @Override<br>
-            public void run() {<br>
-                factory.close();<br>
-                System.out.println(&quot;虚拟机关闭 释放资源&quot;);<br>
-            }<br>
-        }));<br>
-    }<br>
-    public static Session openSession(){<br>
-        return factory.openSession();<br>
-    }<br>
-    public static Session getCurrentSession(){<br>
-        return factory.getCurrentSession();<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static void main(String[] args) {
-    System.out.println(openSession());
-}
-</code></pre></div>
-<p>}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-## hbm2ddl.auto
-&gt; 是否自动生成表结构策略
-
-update:
-1. 如果当前数据库中不存在表结构 自动创建表结构
-1. 如果存在表结构，并且表结构与实体一致，那么不在修改
-1. 如果存在表结构，并且表结构与实体不一致，那么修改表结构，并保留原有字段
-
-create:
-1. 无论是否存在表结构，每次启动Hibernate都会重新创建表结构(数据会丢失)
-
-create-drop:
-1.无论是否存在表结构，每次启动Hibernate都会重新创建表结构，每次Hibernate结束摧毁表
-
-validate:
-1. 不会自动创建表结构
-2. 也不会自动维护表结构
-3. 只负责校验表结构
-4. 如果表结构不一致抛异常
-
-## hibernate.dialect
-&gt; 数据库方言配置
-&gt; mysql 选择org.hibernate.dialect.MySQLDialect
-
-## Hibernate 中持久类
-* 提供一个无參public访问的构造方法
-* 提供一个表示属性，映射数据库主键
-* 所有属性提供pulbic访问控制符的 set get方法
-* 标识属性尽量使用基本数据类型的包装类型
-* 不要用final修饰类（将无法生成代理对象进行优化）
-
-#### 持久化对象的唯一标识 OID
-* Java按地址区分同一个的类的不同对象
-* 关系数据库主键区分同一条记录
-* Hibernate使用OID来建立内存中的对象和数据库中的记录的对应关系，应该让Hibernate来个OID赋值
-
-#### 区分自然主键和代理主键
-&gt; 主键需要具备:不能为空/不能重复/不能改变
-
-1. 自然主键: 在业务中，某个属性符合主键的三个要求，那么该属性可以做为主键列
-2. 代理主键: 在业务中,不存在符合以上3个条件的属性。那么就添加一个没有意义的列，作为主键
-
-## Bean.hbm.xml
-</code></pre></div>
-<p>hibernate-mapping标签<br>
-      |     |<br>
-      |     |--package属性<br>
-      |         |--指定包名，class里面可以使用简单类名<br>
-      |<br>
-      |--class标签(配置与表的关系)<br>
-           |        |<br>
-           |        |--name:实体类完整名称<br>
-           |        |--table:与实体类对应表的名称<br>
-           |        |--dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert<br>
-           |        |--dynamic-update:动态更新 true:没有改动的字段 不参与update<br>
-           |<br>
-           |--id标签(配置主键)<br>
-           |        |   |<br>
-           |        |   |--name:实体类属性名<br>
-           |        |   |--column：主键在表中的名称<br>
-           |        |   |--length: 列的长度<br>
-           |        |   |--unsaved-value(很少用):指定主键为什么值时当做空处理<br>
-           |        |   |--access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set<br>
-           |        |<br>
-           |        |--generator标签(主键生成策略)<br>
-           |             |<br>
-           |             |--increment:数据库自己生成主键，先查询最大主键id值，然后id值+1<br>
-           |             |--identity:依赖数据的主键自增功能<br>
-           |             |--sequence:序列，依赖于数据库中的序列功能(Oracle)<br>
-           |             |--hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)<br>
-           |             |--native:自动根据数据库increment,sequence,hilo三选一<br>
-           |             |--uuid:自动生成32位不重复的字符串<br>
-           |             |--assigned:自己指定主键值，表的主键是自然主键时<br>
-           |<br>
-           |--property标签(实体中属性和表中列的对应)<br>
-                    |<br>
-                    |--name:实体属性名称<br>
-                    |--column:表中列的名称<br>
-                    |--length:数据长度<br>
-                    |--scale:小数有效位数<br>
-                    |--precision:小数点后面长度<br>
-                    |--not-null:指定属性的约束是否使用非空<br>
-                    |--unique:指定属性的约束是否唯一<br>
-                    |--insert(一般不用):该属性是否加入insert语句，插入的不用该属性<br>
-                    |--update(一般不用):update的时候不会管该属性<br>
-                    |--type:表达该属性的类型<br>
-                          |<br>
-                          |--java类型 java.lang.String<br>
-                          |--数据库类型指定 varchar<br>
-                          |--Hibernate类型指定 string</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-##### User.hbm.xml
-</code></pre></div>
-<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
-&lt;!DOCTYPE hibernate-mapping PUBLIC<br>
-        &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;<br>
-        &quot;<a href="http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd%22%3E">http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&gt;</a><br>
-<hibernate-mapping package="com.itheima.a_hello"><br>
-    &lt;!--<br>
-    class:配置与表的关系<br>
-    name:实体类完整名称<br>
-    table:与实体类对应表的名称<br>
-    dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert<br>
-    dynamic-update:动态更新 true:没有改动的字段 不参与update<br>
-    --&gt;<br>
-    <class name="User" table="t_user" dynamic-insert="true" dynamic-update="true"><br>
-        &lt;!--<br>
-        id:配置主键<br>
-        column：主键在表中的名称<br>
-        length: 列的长度<br>
-        unsaved-value(很少用):指定主键为什么值时当做空处理<br>
-        access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set<br>
-        --&gt;<br>
-        <id name="id" column="id" length="9" unsaved-value="0"><br>
-            &lt;!--<br>
-            主键生成策略<br>
-            1.increment:数据库自己生成主键，先查询最大主键id值，然后id值+1<br>
-            2.identity:依赖数据的主键自增功能<br>
-            3.sequence:序列，依赖于数据库中的序列功能(Oracle)<br>
-            4.hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)<br>
-            5.native:自动根据数据库increment,sequence,hilo三选一<br>
-            6.uuid:自动生成32位不重复的字符串<br>
-            7.assigned:自己指定主键值，表的主键是自然主键时<br>
-            --&gt;<br>
-            <generator class="increment"></generator><br>
-        </id><br>
-        &lt;!--<br>
-        name:实体属性名称<br>
-        column:表中列的名称<br>
-        length:数据长度<br>
-        scale:小数有效位数<br>
-        precision:小数点后面长度<br>
-        insert(一般不用):该属性是否加入insert语句，插入的不用该属性<br>
-        not-null:指定属性的约束是否使用非空<br>
-        unique:指定属性的约束是否唯一<br>
-        update(一般不用):update的时候不会管该属性<br>
-        type:表达该属性的类型<br>
-        java类型 java.lang.String<br>
-        数据库类型指定 varchar<br>
-        Hibernate类型指定 string<br>
-        --&gt;<br>
-        <property name="name" column="name" insert="true" not-null="true" unique="true" update="true" type="java.lang.String"></property><br>
-        <property name="password" column="password"></property><br>
-        <property name="sal" column="sal" precision="2" scale="3"></property><br>
-    </class><br>
-</hibernate-mapping></p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<h5 id="user-hbm-xml">User.hbm.xml</h5>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;</span>
+<span class="nt">&lt;hibernate-mapping</span> <span class="na">package=</span><span class="s">"com.itheima.a_hello"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--
+    class:配置与表的关系
+    name:实体类完整名称
+    table:与实体类对应表的名称
+    dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert
+    dynamic-update:动态更新 true:没有改动的字段 不参与update
+    --&gt;</span>
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">"User"</span> <span class="na">table=</span><span class="s">"t_user"</span> <span class="na">dynamic-insert=</span><span class="s">"true"</span> <span class="na">dynamic-update=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--
+        id:配置主键
+        column：主键在表中的名称
+        length: 列的长度
+        unsaved-value(很少用):指定主键为什么值时当做空处理
+        access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set
+        --&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">name=</span><span class="s">"id"</span> <span class="na">column=</span><span class="s">"id"</span> <span class="na">length=</span><span class="s">"9"</span> <span class="na">unsaved-value=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--
+            主键生成策略
+            1.increment:数据库自己生成主键，先查询最大主键id值，然后id值+1
+            2.identity:依赖数据的主键自增功能
+            3.sequence:序列，依赖于数据库中的序列功能(Oracle)
+            4.hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)
+            5.native:自动根据数据库increment,sequence,hilo三选一
+            6.uuid:自动生成32位不重复的字符串
+            7.assigned:自己指定主键值，表的主键是自然主键时
+            --&gt;</span>
+            <span class="nt">&lt;generator</span> <span class="na">class=</span><span class="s">"increment"</span><span class="nt">&gt;&lt;/generator&gt;</span>
+        <span class="nt">&lt;/id&gt;</span>
+        <span class="c">&lt;!--
+        name:实体属性名称
+        column:表中列的名称
+        length:数据长度
+        scale:小数有效位数
+        precision:小数点后面长度
+        insert(一般不用):该属性是否加入insert语句，插入的不用该属性
+        not-null:指定属性的约束是否使用非空
+        unique:指定属性的约束是否唯一
+        update(一般不用):update的时候不会管该属性
+        type:表达该属性的类型
+        java类型 java.lang.String
+        数据库类型指定 varchar
+        Hibernate类型指定 string
+        --&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">column=</span><span class="s">"name"</span> <span class="na">insert=</span><span class="s">"true"</span> <span class="na">not-null=</span><span class="s">"true"</span> <span class="na">unique=</span><span class="s">"true"</span> <span class="na">update=</span><span class="s">"true"</span> <span class="na">type=</span><span class="s">"java.lang.String"</span><span class="nt">&gt;&lt;/property&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">column=</span><span class="s">"password"</span><span class="nt">&gt;&lt;/property&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"sal"</span> <span class="na">column=</span><span class="s">"sal"</span> <span class="na">precision=</span><span class="s">"2"</span> <span class="na">scale=</span><span class="s">"3"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/hibernate-mapping&gt;</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -772,9 +796,10 @@ validate:
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

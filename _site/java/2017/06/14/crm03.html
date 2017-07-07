@@ -118,52 +118,52 @@
 		<h2 id="课程类别">课程类别</h2>
 
 <h6 id="jsp">jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;s:form namespace="/" action="courseTypeAction_findAll"&gt;
-    &lt;table width="88%" border="0" class="emp_table" style="width:80%;"&gt;
-      &lt;tr&gt;
-        &lt;td width="10%"&gt;课程类别：&lt;/td&gt;
-        &lt;td&gt;&lt;s:textfield name="courseName" size="30"&gt;&lt;/s:textfield&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td &gt;课程简介：&lt;/td&gt;
-        &lt;td &gt;&lt;s:textfield name="remark" size="30" &gt;&lt;/s:textfield&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;  
-        &lt;td &gt;总学时：&lt;/td&gt;
-        &lt;td &gt;
-            &lt;s:textfield name="totalStart" size="12"&gt;&lt;/s:textfield&gt;  
-            至  
-            &lt;s:textfield name="totalEnd" size="12"&gt;&lt;/s:textfield&gt;
-        &lt;/td&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">namespace</span><span class="o">=</span><span class="s2">"/"</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"courseTypeAction_findAll"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"88%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"emp_table"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width:80%;"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"10%"</span><span class="o">&gt;</span><span class="err">课程类别：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courseName"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"30"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span><span class="err">课程简介：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"remark"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"30"</span> <span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>  
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span><span class="err">总学时：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"totalStart"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"12"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt; </span><span class="err"> 
+</span>            <span class="err">至</span>  
+            <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"totalEnd"</span> <span class="nx">size</span><span class="o">=</span><span class="s2">"12"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="修改po类-crmcoursetype">修改PO类 CrmCourseType</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">    //查询条件 -- 一般查询条件都是字符串
-    //1 总学时
-    private String totalStart;
-    private String totalEnd;
-    //2课程费用
-    private String courseCostStart;
-    private String courseCostEnd;
+<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//查询条件 -- 一般查询条件都是字符串</span>
+    <span class="c1">//1 总学时</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">totalStart</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">totalEnd</span><span class="o">;</span>
+    <span class="c1">//2课程费用</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">courseCostStart</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">courseCostEnd</span><span class="o">;</span>
 </code></pre></div>
 <h6 id="action获得条件">action获得条件</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">    /**
+<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="cm">/**
      * 查询所有
      * @return
-     */
-    public String findAll(){
-        /*1简单查询
+     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">findAll</span><span class="o">(){</span>
+        <span class="cm">/*1简单查询
         List&lt;CrmCourseType&gt; allCourseType = this.courseTypeService.findAll();
         // * 查询结果存在值栈 , jsp 通过“#key”获得
         ActionContext.getContext().put("allCourseType", allCourseType);
-        */
+        */</span>
 
-        /*2 条件查询
-         */
-        List&lt;CrmCourseType&gt; allCourseType = this.courseTypeService.findAll(courseType);
-        ActionContext.getContext().put("allCourseType", allCourseType);
+        <span class="cm">/*2 条件查询
+         */</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">CrmCourseType</span><span class="o">&gt;</span> <span class="n">allCourseType</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">courseTypeService</span><span class="o">.</span><span class="na">findAll</span><span class="o">(</span><span class="n">courseType</span><span class="o">);</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="s">"allCourseType"</span><span class="o">,</span> <span class="n">allCourseType</span><span class="o">);</span>
 
-        return "findAll";
-    }
+        <span class="k">return</span> <span class="s">"findAll"</span><span class="o">;</span>
+    <span class="o">}</span>
 </code></pre></div>
 <h6 id="service拼凑条件">service拼凑条件</h6>
 
@@ -174,53 +174,53 @@
     toArray 转成数组<br>
 commons-lang3 提供 StringUtils工具类  </p>
 </blockquote>
-<div class="highlight"><pre><code class="language-" data-lang="">@Override
-    public List&lt;CrmCourseType&gt; findAll(CrmCourseType courseType) {
-        //1.1 拼凑查询条件
-        StringBuilder builder = new StringBuilder();
-        //1.2 拼凑实际参数 , 可以重复，顺序 --&gt; List
-        List&lt;Object&gt; paramsList = new ArrayList&lt;Object&gt;();
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">CrmCourseType</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">(</span><span class="n">CrmCourseType</span> <span class="n">courseType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//1.1 拼凑查询条件</span>
+        <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+        <span class="c1">//1.2 拼凑实际参数 , 可以重复，顺序 --&gt; List</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">paramsList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
 
-        //2 过滤条件
-        // 2.1 课程类别
-        if(StringUtils.isNotBlank(courseType.getCourseName())){
-            builder.append(" and courseName like ?");
-            paramsList.add("%"+courseType.getCourseName()+"%");
-        }
-        // 2.2 课程简介
-        if(StringUtils.isNotBlank(courseType.getRemark())){
-            builder.append(" and remark like ?");
-            paramsList.add("%"+courseType.getRemark()+"%");
-        }
-        // 2.3 总学时：
-        if(StringUtils.isNotBlank(courseType.getTotalStart())){
-            builder.append(" and total &gt;= ?");
-            paramsList.add(Integer.parseInt(courseType.getTotalStart()));
-        }
-        if(StringUtils.isNotBlank(courseType.getTotalEnd())){
-            builder.append(" and total &lt;= ?");
-            paramsList.add(Integer.parseInt(courseType.getTotalEnd()));
-        }
-        // 2.4课程费用
-        if(StringUtils.isNotBlank(courseType.getCourseCostStart())){
-            builder.append(" and courseCost &gt;= ?");
-            paramsList.add(Double.parseDouble(courseType.getCourseCostStart()));
-        }
-        if(StringUtils.isNotBlank(courseType.getCourseCostEnd())){
-            builder.append(" and courseCost &lt;= ?");
-            paramsList.add(Double.parseDouble(courseType.getCourseCostEnd()));
-        }
+        <span class="c1">//2 过滤条件</span>
+        <span class="c1">// 2.1 课程类别</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseName</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and courseName like ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"%"</span><span class="o">+</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseName</span><span class="o">()+</span><span class="s">"%"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 2.2 课程简介</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getRemark</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and remark like ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"%"</span><span class="o">+</span><span class="n">courseType</span><span class="o">.</span><span class="na">getRemark</span><span class="o">()+</span><span class="s">"%"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 2.3 总学时：</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getTotalStart</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and total &gt;= ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getTotalStart</span><span class="o">()));</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getTotalEnd</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and total &lt;= ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getTotalEnd</span><span class="o">()));</span>
+        <span class="o">}</span>
+        <span class="c1">// 2.4课程费用</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseCostStart</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and courseCost &gt;= ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseCostStart</span><span class="o">()));</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseCostEnd</span><span class="o">())){</span>
+            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and courseCost &lt;= ?"</span><span class="o">);</span>
+            <span class="n">paramsList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">courseType</span><span class="o">.</span><span class="na">getCourseCostEnd</span><span class="o">()));</span>
+        <span class="o">}</span>
 
 
 
-        //3 使用
-        // 条件 , 格式：" and ..? and ..."
-        String condition = builder.toString();
-        // 实际参数
-        Object[] params = paramsList.toArray();
+        <span class="c1">//3 使用</span>
+        <span class="c1">// 条件 , 格式：" and ..? and ..."</span>
+        <span class="n">String</span> <span class="n">condition</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+        <span class="c1">// 实际参数</span>
+        <span class="n">Object</span><span class="o">[]</span> <span class="n">params</span> <span class="o">=</span> <span class="n">paramsList</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
 
-        return courseTypeDao.findAll(condition, params);
-    }
+        <span class="k">return</span> <span class="n">courseTypeDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">(</span><span class="n">condition</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+    <span class="o">}</span>
 </code></pre></div>
 <h6 id="dao查询">dao查询</h6>
 
@@ -261,233 +261,241 @@ commons-lang3 提供 StringUtils工具类  </p>
 ###### dao
 &gt; 编辑需要查询
 &gt; 添加和编辑直接执行saveOrUpdate
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Override
-public CrmCourseType findById(String courseTypeId) {
-    return this.getHibernateTemplate().get(CrmCourseType.class, courseTypeId);
-}
-
-@Override
-public void saveOrUpdate(CrmCourseType courseType) {
-    this.getHibernateTemplate().saveOrUpdate(courseType);
-}
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">###### service
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Override
-public CrmCourseType findById(String courseTypeId) {
-    return this.courseTypeDao.findById(courseTypeId);
-}
-@Override
-public void addOrEdit(CrmCourseType courseType) {
-    this.courseTypeDao.saveOrUpdate(courseType);
-}
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  action
-&gt;   添加需要显示jsp，不进行查询
-&gt;   更新需要显示jsp，进行查询，使用id进行区分。
-</code></pre></div>
-<p>/**<br>
-     * 添加或编辑显示jsp页面<br>
-     * @return<br>
-     */<br>
-    public String addOrEditUI(){<br>
-        //如果有id就是编辑，编辑需要查询详情<br>
-        if(StringUtils.isNotBlank(this.courseType.getCourseTypeId())){<br>
-            //将查询的详情压入到栈顶，方便标签自动的回显<br>
-            CrmCourseType findCourseType = this.courseTypeService.findById(this.courseType.getCourseTypeId());<br>
-            ActionContext.getContext().getValueStack().push(findCourseType);<br>
-        }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">    return "addOrEditUI";
-}
-
-/**
- * 添加或编辑 功能
- * @return
- */
-public String addOrEdit(){
-    this.courseTypeService.addOrEdit(courseType);
-    return "addOrEdit";
-}
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">##### jsp页面
-&gt; 使用标签进行回显
-&gt; 提供隐藏字段进行更新，添加不需要
-
-</code></pre></div>
-<p><s:form namespace="/" action="courseTypeAction_addOrEdit"><br>
-    &lt;%--隐藏域 ,如果有值，及更新时才显示--%&gt;<br>
-    <s:if test="courseTypeId != null"><br>
-        <s:hidden name="courseTypeId" value="%{courseTypeId}"><a href="/s:hidden">/s:hidden</a><br>
-    <a href="/s:if">/s:if</a><br>
-    <table width="88%" border="0" class="emp_table" style="width:80%;"><br>
-      <tr><br>
-        <td width="10%">课程类别：</td><br>
-        <td width="20%"><s:textfield name="courseName"><a href="/s:textfield">/s:textfield</a></td><br>
-        <td width="8%">总学时：</td><br>
-        <td width="62%"><s:textfield name="total"><a href="/s:textfield">/s:textfield</a></td><br>
-      </tr><br>
-      <tr><br>
-        <td>课程费用：</td><br>
-        <td><s:textfield name="courseCost"><a href="/s:textfield">/s:textfield</a></td><br>
-        <td></td><br>
-        <td></td><br>
-      </tr><br>
-      <tr><br>
-        <td>课程简介：</td><br>
-        <td>&nbsp;</td><br>
-        <td>&nbsp;</td><br>
-        <td>&nbsp;</td><br>
-      </tr><br>
-      <tr><br>
-        <td colspan="4"><br>
-            <s:textarea name="remark" cols="60" rows="10" ><a href="/s:textarea">/s:textarea</a><br>
-        </td><br>
-      </tr><br>
-    </table><br>
-<a href="/s:form">/s:form</a></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-
-
-
-
-
-## BaseAction
-&gt; 1.封装数据
-&gt; 2.所有的service
-&gt; 3.分页
-&gt; 4.值栈简化操作
-
-####    封装数据
-</code></pre></div>
-<p>public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//1 封装数据
-private T t;
-@Override
-public T getModel() {
-    return t;
-}
-// 1.1 实例化t
-public BaseAction() {
-    try {
-        //1 获得T运行时Class
-        ParameterizedType paramType = (ParameterizedType) this.getClass().getGenericSuperclass();
-        Class&lt;T&gt; clazz = (Class&lt;T&gt;) paramType.getActualTypeArguments()[0];
-        //2 反射创建实例
-        t = clazz.newInstance();
-    } catch (Exception e) {
-        throw new RuntimeException(e);
+```java
+    @Override
+    public CrmCourseType findById(String courseTypeId) {
+        return this.getHibernateTemplate().get(CrmCourseType.class, courseTypeId);
     }
-}
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  service注入
+
+    @Override
+    public void saveOrUpdate(CrmCourseType courseType) {
+        this.getHibernateTemplate().saveOrUpdate(courseType);
+    }
+
 </code></pre></div>
-<p>//2 spring注入service，多个<br>
-    // * 提供setter方法，让spring进行注入的<br>
-    // * 提供getter方法，让子类可以获得spring注入的对象的。<br>
-    //员工<br>
-    private StaffService staffService;<br>
-    public void setStaffService(StaffService staffService) {<br>
-        this.staffService = staffService;<br>
-    }<br>
-    public StaffService getStaffService() {<br>
-        return staffService;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//职务
-private PostService postService;
-public PostService getPostService() {
-    return postService;
-}
-public void setPostService(PostService postService) {
-    this.postService = postService;
-}
-//部门
-private DepartmentService departmentService;
-public DepartmentService getDepartmentService() {
-    return departmentService;
-}
-public void setDepartmentService(DepartmentService departmentService) {
-    this.departmentService = departmentService;
-}
-
-//课程类别
-private CourseTypeService courseTypeService;
-public void setCourseTypeService(CourseTypeService courseTypeService) {
-    this.courseTypeService = courseTypeService;
-}
-public CourseTypeService getCourseTypeService() {
-    return courseTypeService;
-}
-//班级
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">######  分页
+<h6 id="service">service</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java">    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">CrmCourseType</span> <span class="nf">findById</span><span class="o">(</span><span class="n">String</span> <span class="n">courseTypeId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">courseTypeDao</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="n">courseTypeId</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addOrEdit</span><span class="o">(</span><span class="n">CrmCourseType</span> <span class="n">courseType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">courseTypeDao</span><span class="o">.</span><span class="na">saveOrUpdate</span><span class="o">(</span><span class="n">courseType</span><span class="o">);</span>
+    <span class="o">}</span>
 </code></pre></div>
-<p>//3 分页数据<br>
-    private int pageNum = 1;<br>
-    public void setPageNum(int pageNum) {<br>
-        this.pageNum = pageNum;<br>
-    }<br>
-    public int getPageNum() {<br>
-        return pageNum;<br>
-    }<br>
-    private int pageSize = 2;  //固定值<br>
-    public void setPageSize(int pageSize) {<br>
-        this.pageSize = pageSize;<br>
-    }<br>
-    public int getPageSize() {<br>
-        return pageSize;<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 简化值栈操作
+<h6 id="action">action</h6>
+
+<blockquote>
+<p>添加需要显示jsp，不进行查询<br>
+  更新需要显示jsp，进行查询，使用id进行区分。</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**
+     * 添加或编辑显示jsp页面
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">addOrEditUI</span><span class="o">(){</span>
+        <span class="c1">//如果有id就是编辑，编辑需要查询详情</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">courseType</span><span class="o">.</span><span class="na">getCourseTypeId</span><span class="o">())){</span>
+            <span class="c1">//将查询的详情压入到栈顶，方便标签自动的回显</span>
+            <span class="n">CrmCourseType</span> <span class="n">findCourseType</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">courseTypeService</span><span class="o">.</span><span class="na">findById</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">courseType</span><span class="o">.</span><span class="na">getCourseTypeId</span><span class="o">());</span>
+            <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getValueStack</span><span class="o">().</span><span class="na">push</span><span class="o">(</span><span class="n">findCourseType</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="s">"addOrEditUI"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 添加或编辑 功能
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">addOrEdit</span><span class="o">(){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">courseTypeService</span><span class="o">.</span><span class="na">addOrEdit</span><span class="o">(</span><span class="n">courseType</span><span class="o">);</span>
+        <span class="k">return</span> <span class="s">"addOrEdit"</span><span class="o">;</span>
+    <span class="o">}</span>
 </code></pre></div>
-<p>//4 简化值栈操作<br>
-    public void push(Object o){<br>
-        ActionContext.getContext().getValueStack().push(o);<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public void set(String key ,Object o){
-    ActionContext.getContext().getValueStack().set(key, o);
-}
+<h5 id="jsp页面">jsp页面</h5>
 
-public void put(String key, Object value){
-    ActionContext.getContext().put(key, value);
-}
-
-public void putSession(String key, Object value){
-    ActionContext.getContext().getSession().put(key, value);
-}
-
-public void putApplication(String key, Object value){
-    ActionContext.getContext().getApplication().put(key, value);
-}
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">
-## 上传/下载
-
-###### 班级查询
+<blockquote>
+<p>使用标签进行回显<br>
+提供隐藏字段进行更新，添加不需要</p>
+</blockquote>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">form</span> <span class="nx">namespace</span><span class="o">=</span><span class="s2">"/"</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"courseTypeAction_addOrEdit"</span><span class="o">&gt;</span>
+    <span class="o">&lt;%--</span><span class="err">隐藏域</span> <span class="p">,</span><span class="err">如果有值，及更新时才显示</span><span class="o">--%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="k">if</span> <span class="nx">test</span><span class="o">=</span><span class="s2">"courseTypeId != null"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">hidden</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courseTypeId"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"%{courseTypeId}"</span><span class="o">&gt;&lt;</span><span class="sr">/s:hidden</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/s:if</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"88%"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"0"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"emp_table"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width:80%;"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"10%"</span><span class="o">&gt;</span><span class="err">课程类别：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"20%"</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courseName"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"8%"</span><span class="o">&gt;</span><span class="err">总学时：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">width</span><span class="o">=</span><span class="s2">"62%"</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"total"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="err">课程费用：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textfield</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"courseCost"</span><span class="o">&gt;&lt;</span><span class="sr">/s:textfield&gt;&lt;/</span><span class="nx">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="err">课程简介：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&amp;</span><span class="nx">nbsp</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">colspan</span><span class="o">=</span><span class="s2">"4"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">s</span><span class="err">:</span><span class="nx">textarea</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"remark"</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">"60"</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">"10"</span> <span class="o">&gt;&lt;</span><span class="sr">/s:textarea</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/s:form</span><span class="err">&gt;
+</span>
 </code></pre></div>
-<p>1.dao  --&gt; BaseDao  / BaseDaoImpl<br>
-2.service<br>
-3.spring配置 , 完成BaseAction<br>
-4.action  --&gt; BaseAction</p>
+<h2 id="baseaction">BaseAction</h2>
 
-<ol>
-<li>jsp  xml  action
-```</li>
-</ol>
+<blockquote>
+<p>1.封装数据<br>
+2.所有的service<br>
+3.分页<br>
+4.值栈简化操作</p>
+</blockquote>
 
+<h4 id="封装数据">封装数据</h4>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BaseAction</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">ActionSupport</span> <span class="kd">implements</span> <span class="n">ModelDriven</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="c1">//1 封装数据</span>
+    <span class="kd">private</span> <span class="n">T</span> <span class="n">t</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">getModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// 1.1 实例化t</span>
+    <span class="kd">public</span> <span class="nf">BaseAction</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//1 获得T运行时Class</span>
+            <span class="n">ParameterizedType</span> <span class="n">paramType</span> <span class="o">=</span> <span class="o">(</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getGenericSuperclass</span><span class="o">();</span>
+            <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">clazz</span> <span class="o">=</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">paramType</span><span class="o">.</span><span class="na">getActualTypeArguments</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
+            <span class="c1">//2 反射创建实例</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+</code></pre></div>
+<h6 id="service注入">service注入</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//2 spring注入service，多个</span>
+    <span class="c1">// * 提供setter方法，让spring进行注入的</span>
+    <span class="c1">// * 提供getter方法，让子类可以获得spring注入的对象的。</span>
+    <span class="c1">//员工</span>
+    <span class="kd">private</span> <span class="n">StaffService</span> <span class="n">staffService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStaffService</span><span class="o">(</span><span class="n">StaffService</span> <span class="n">staffService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">staffService</span> <span class="o">=</span> <span class="n">staffService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">StaffService</span> <span class="nf">getStaffService</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">staffService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="c1">//职务</span>
+    <span class="kd">private</span> <span class="n">PostService</span> <span class="n">postService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">PostService</span> <span class="nf">getPostService</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">postService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPostService</span><span class="o">(</span><span class="n">PostService</span> <span class="n">postService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">postService</span> <span class="o">=</span> <span class="n">postService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//部门</span>
+    <span class="kd">private</span> <span class="n">DepartmentService</span> <span class="n">departmentService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">DepartmentService</span> <span class="nf">getDepartmentService</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">departmentService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDepartmentService</span><span class="o">(</span><span class="n">DepartmentService</span> <span class="n">departmentService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">departmentService</span> <span class="o">=</span> <span class="n">departmentService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//课程类别</span>
+    <span class="kd">private</span> <span class="n">CourseTypeService</span> <span class="n">courseTypeService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCourseTypeService</span><span class="o">(</span><span class="n">CourseTypeService</span> <span class="n">courseTypeService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">courseTypeService</span> <span class="o">=</span> <span class="n">courseTypeService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">CourseTypeService</span> <span class="nf">getCourseTypeService</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">courseTypeService</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//班级</span>
+</code></pre></div>
+<h6 id="分页">分页</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//3 分页数据</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">pageNum</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPageNum</span><span class="o">(</span><span class="kt">int</span> <span class="n">pageNum</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pageNum</span> <span class="o">=</span> <span class="n">pageNum</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPageNum</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pageNum</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">pageSize</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>  <span class="c1">//固定值</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPageSize</span><span class="o">(</span><span class="kt">int</span> <span class="n">pageSize</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pageSize</span> <span class="o">=</span> <span class="n">pageSize</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPageSize</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pageSize</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div>
+<h6 id="简化值栈操作">简化值栈操作</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//4 简化值栈操作</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">){</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getValueStack</span><span class="o">().</span><span class="na">push</span><span class="o">(</span><span class="n">o</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span> <span class="o">,</span><span class="n">Object</span> <span class="n">o</span><span class="o">){</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getValueStack</span><span class="o">().</span><span class="na">set</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">o</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">put</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">){</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">putSession</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">){</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getSession</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">putApplication</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">){</span>
+        <span class="n">ActionContext</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getApplication</span><span class="o">().</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+</code></pre></div>
+<h2 id="上传-下载">上传/下载</h2>
+
+<h6 id="班级查询">班级查询</h6>
+<div class="highlight"><pre><code class="language-html" data-lang="html">1.dao  --&gt; BaseDao  / BaseDaoImpl
+2.service
+3.spring配置 , 完成BaseAction
+4.action  --&gt; BaseAction
+5. jsp  xml  action
+</code></pre></div>
 <h6 id="文件上传">文件上传</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">0.通过id查询详情
-1.表单 &lt;form method="post"  enctype="multipart/form-data"&gt;
-            &lt;input type="file" name="schedule"&gt;
-2.action类
-    private File schedule;  // 内容
-    private String scheduleFileName;    // 文件名
-    private String scheduleContentType; // 类型
-    提供setter方法即可
-3.将课表保存到硬盘，将路径、文件名、更新时间  更新到数据库
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="mi">0</span><span class="o">.</span><span class="err">通过</span><span class="n">id</span><span class="err">查询详情</span>
+<span class="mi">1</span><span class="o">.</span><span class="err">表单</span> <span class="o">&lt;</span><span class="n">form</span> <span class="n">method</span><span class="o">=</span><span class="s">"post"</span>  <span class="n">enctype</span><span class="o">=</span><span class="s">"multipart/form-data"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"file"</span> <span class="n">name</span><span class="o">=</span><span class="s">"schedule"</span><span class="o">&gt;</span>
+<span class="mi">2</span><span class="o">.</span><span class="na">action</span><span class="err">类</span>
+    <span class="kd">private</span> <span class="n">File</span> <span class="n">schedule</span><span class="o">;</span>  <span class="c1">// 内容</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">scheduleFileName</span><span class="o">;</span>    <span class="c1">// 文件名</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">scheduleContentType</span><span class="o">;</span> <span class="c1">// 类型</span>
+    <span class="err">提供</span><span class="n">setter</span><span class="err">方法即可</span>
+<span class="mi">3</span><span class="o">.</span><span class="err">将课表保存到硬盘，将路径、文件名、更新时间</span>  <span class="err">更新到数据库</span>
 
-4.拦截器设置
-&lt;!-- 给拦截器栈中的某一个拦截器注入内容时，
-                    格式：拦截器.属性 = 值
-                --&gt;
-                &lt;interceptor-ref name="defaultStack"&gt;
-                    &lt;param name="fileUpload.allowedExtensions"&gt;.xls,.xlsx&lt;/param&gt;
-                &lt;/interceptor-ref&gt;
+<span class="mi">4</span><span class="o">.</span><span class="err">拦截器设置</span>
+<span class="o">&lt;!--</span> <span class="err">给拦截器栈中的某一个拦截器注入内容时，</span>
+                    <span class="err">格式：拦截器</span><span class="o">.</span><span class="err">属性</span> <span class="o">=</span> <span class="err">值</span>
+                <span class="o">--&gt;</span>
+                <span class="o">&lt;</span><span class="n">interceptor</span><span class="o">-</span><span class="n">ref</span> <span class="n">name</span><span class="o">=</span><span class="s">"defaultStack"</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">"fileUpload.allowedExtensions"</span><span class="o">&gt;.</span><span class="na">xls</span><span class="o">,.</span><span class="na">xlsx</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">&gt;</span>
+                <span class="o">&lt;/</span><span class="n">interceptor</span><span class="o">-</span><span class="n">ref</span><span class="o">&gt;</span>
 
 </code></pre></div>
 <h6 id="下载">下载</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">struts.xml result 提供stream类型
+<div class="highlight"><pre><code class="language-html" data-lang="html">struts.xml result 提供stream类型
     inputName  设置InputStream 获得 属性值，需要提供getter方法
     contentDisposition 设置  attachment;filename=${imageFileName} 获得文件名称
 </code></pre></div>  
@@ -643,9 +651,10 @@ public void putApplication(String key, Object value){
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

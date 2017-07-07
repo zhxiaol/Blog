@@ -97,7 +97,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/02/22/mysql02" title="Mysql02" itemprop="url">Mysql02</a>
+      <a href="/Blog/java/2017/02/22/mysql" title="mysql" itemprop="url">mysql</a>
   </h1>
   <p class="article-author">By
        
@@ -110,19 +110,31 @@
 </header>
     <div class="article-content">
         
-        <p>layout: post<br>
-title: mysql02<br>
-tags:</p>
+        <h2 id="数据库">数据库</h2>
 
-<ul>
-<li>java</li>
-</ul>
+<blockquote>
+<p>存储，维护，管理数据的集合</p>
+
+<h2 id="mac卸载mysql">mac卸载mysql</h2>
+
+<p>打开终端，全部拷贝下面的内容，回车</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">cd ~/
+sudo rm /usr/local/mysql
+sudo rm -rf /usr/local/var/mysql
+sudo rm -rf /usr/local/mysql*
+sudo rm -rf /Library/StartupItems/MySQLCOM
+sudo rm -rf /Library/PreferencePanes/My*
+vim /etc/hostconfig and removed the line MYSQLCOM=-YES-rm -rf ~/Library/PreferencePanes/My*
+sudo rm -rf /Library/Receipts/mysql*
+sudo rm -rf /Library/Receipts/MySQL*
+sudo rm -rf /var/db/receipts/com.mysql.*
+</code></pre></div></blockquote>
 
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/02/22/mysql02#more">Read More</a>
+            <a href="/Blog/java/2017/02/22/mysql#more">Read More</a>
           
        </p>
     </div>
@@ -141,6 +153,8 @@ tags:</p>
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
 
@@ -152,6 +166,8 @@ tags:</p>
     }); %>-->
   <span></span> <!--<%- tags.join('') %>-->
   
+  
+  <a href="/Blog/tags/#java">java</a>
   
   </div>
 
@@ -2312,14 +2328,14 @@ Thank you ,Sir.</p>
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
     
-    <a class="extend prev" rel="prev" href="/page2"><span></span>Prev</a>
+    <a class="extend prev" rel="prev" href="/Blog//page2"><span></span>Prev</a>
     
     
     <a class="page-number" href="/">1</a>
     
     
     
-    <a class="page-number" href="/page2">2</a>
+    <a class="page-number" href="/Blog/page2">2</a>
     
     
     
@@ -2327,16 +2343,17 @@ Thank you ,Sir.</p>
     
     
     
-    <a class="page-number" href="/page4">4</a>
+    <a class="page-number" href="/Blog/page4">4</a>
     
     
      
-    <a class="extend next" rel="next" href="/page4">Next<span></span></a>
+    <a class="extend next" rel="next" href="/Blog//page4">Next<span></span></a>
     
   </nav>
   </nav>
 
 </div>
+
       
       
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
@@ -2410,9 +2427,10 @@ Thank you ,Sir.</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

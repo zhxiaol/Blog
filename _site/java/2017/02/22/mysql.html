@@ -24,7 +24,7 @@
     <meta property="og:type" content="article">
     
     <meta property="og:title" content="mysql">
-    <meta property="og:url" content="/Blog/java/2017/02/23/mysql">
+    <meta property="og:url" content="/Blog/java/2017/02/22/mysql">
     <meta property="og:site_name" content="zhxiaol">
     <meta property="og:description" content="mysql">
     <meta name="twitter:card" content="summary">
@@ -96,14 +96,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/java/2017/02/23/mysql" title="mysql" itemprop="url">mysql</a>
+      <a href="/Blog/java/2017/02/22/mysql" title="mysql" itemprop="url">mysql</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-23 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-02-23</time>
+    <time datetime="2017-02-22 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-02-22</time>
     
   </p>
 </header>
@@ -123,7 +123,7 @@
 <h2 id="mac卸载mysql">mac卸载mysql</h2>
 
 <p>打开终端，全部拷贝下面的内容，回车</p>
-<div class="highlight"><pre><code class="language-" data-lang="">cd ~/
+<div class="highlight"><pre><code class="language-html" data-lang="html">cd ~/
 sudo rm /usr/local/mysql
 sudo rm -rf /usr/local/var/mysql
 sudo rm -rf /usr/local/mysql*
@@ -260,33 +260,106 @@ collation-server = utf8_general_ci</li>
 </blockquote>
 
 <ul>
-<li>常用数据类型
-|类型|备注|
-|-----|-----|
-| int| 整型|
-| double |浮点型double(5,2)最多5位 小数2位||
-| char|固定长度字符串char(10),最多10个，不足10个用空格补全|
-| varchar|可变长度字符串varchar(10)|
-| text|字符串类型,大数据文本 4MB|
-| blob |字节类型，图片，音频|
-| date|日期类型 yyyy-MM-dd|
-| time|日期时间 hh:mm:ss|
-|timestamp|时间戳类型 yyyy-MM-dd hh:mm:ss 会自动赋值|
-|datetime|日期时间类型 yyyy-MM-dd hh:mm:ss|
-## 常用操作
-|方法|备注|
-|-----|-----|
-|show tables| 查看数据库所有表|
-|DESC 表名|查看表的字段信息|
-|alter table 表名 add 字段 字段类型|添加字段|
-|alter table 表名 modify 字段 字段类型|修改字段长度类型|
-|alter table 表名 drop 字段|删除字段|
-|rename table 表名 to 新表名|修改表名|
-|show create table 表名|查看表的创建源码|
-|alter table 表名 character set gbk|修改表的编码方式|
-|alter table 表名 change 字段 新字段 新字段类型|修改字段名|
-|drop table 表名|删除表|</li>
+<li>常用数据类型</li>
 </ul>
+
+<table><thead>
+<tr>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>int</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>double</td>
+<td>浮点型double(5,2)最多5位 小数2位</td>
+</tr>
+<tr>
+<td>char</td>
+<td>固定长度字符串char(10),最多10个，不足10个用空格补全</td>
+</tr>
+<tr>
+<td>varchar</td>
+<td>可变长度字符串varchar(10)</td>
+</tr>
+<tr>
+<td>text</td>
+<td>字符串类型,大数据文本 4MB</td>
+</tr>
+<tr>
+<td>blob</td>
+<td>字节类型，图片，音频</td>
+</tr>
+<tr>
+<td>date</td>
+<td>日期类型 yyyy-MM-dd</td>
+</tr>
+<tr>
+<td>time</td>
+<td>日期时间 hh:mm:ss</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>时间戳类型 yyyy-MM-dd hh:mm:ss 会自动赋值</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>日期时间类型 yyyy-MM-dd hh:mm:ss</td>
+</tr>
+</tbody></table>
+
+<h2 id="常用操作">常用操作</h2>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>show tables</td>
+<td>查看数据库所有表</td>
+</tr>
+<tr>
+<td>DESC 表名</td>
+<td>查看表的字段信息</td>
+</tr>
+<tr>
+<td>alter table 表名 add 字段 字段类型</td>
+<td>添加字段</td>
+</tr>
+<tr>
+<td>alter table 表名 modify 字段 字段类型</td>
+<td>修改字段长度类型</td>
+</tr>
+<tr>
+<td>alter table 表名 drop 字段</td>
+<td>删除字段</td>
+</tr>
+<tr>
+<td>rename table 表名 to 新表名</td>
+<td>修改表名</td>
+</tr>
+<tr>
+<td>show create table 表名</td>
+<td>查看表的创建源码</td>
+</tr>
+<tr>
+<td>alter table 表名 character set gbk</td>
+<td>修改表的编码方式</td>
+</tr>
+<tr>
+<td>alter table 表名 change 字段 新字段 新字段类型</td>
+<td>修改字段名</td>
+</tr>
+<tr>
+<td>drop table 表名</td>
+<td>删除表</td>
+</tr>
+</tbody></table>
 
 <h2 id="dml数据操作">DML数据操作</h2>
 
@@ -444,15 +517,36 @@ collation-server = utf8_general_ci</li>
 
 <h2 id="聚合函数">聚合函数</h2>
 
-<p>聚合函数是用来做纵向运算的函数,聚合函数自动滤空<br>
-|函数|备注|<br>
-|-----|-----|<br>
-|count()|统计指定列不为null的记录函数|<br>
-|max()|计算指定列的最大值|<br>
-|min()|计算指定列的最小值|<br>
-|sum()|计算指定列的最小值|<br>
-|avg()|计算指定列的平均值|</p>
+<p>聚合函数是用来做纵向运算的函数,聚合函数自动滤空</p>
 </blockquote>
+
+<table><thead>
+<tr>
+<th>函数</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count()</td>
+<td>统计指定列不为null的记录函数</td>
+</tr>
+<tr>
+<td>max()</td>
+<td>计算指定列的最大值</td>
+</tr>
+<tr>
+<td>min()</td>
+<td>计算指定列的最小值</td>
+</tr>
+<tr>
+<td>sum()</td>
+<td>计算指定列的最小值</td>
+</tr>
+<tr>
+<td>avg()</td>
+<td>计算指定列的平均值</td>
+</tr>
+</tbody></table>
 
 <h2 id="分组查询-group-by">分组查询 group by</h2>
 
@@ -514,7 +608,7 @@ from-where-group by-having-select-order by-limit</p>
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="/Blog/java/2017/02/23/mysql" data-title="mysql | zhxiaol" data-tsina="" class="share clearfix">
+	  <div data-url="/Blog/java/2017/02/22/mysql" data-title="mysql | zhxiaol" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -526,18 +620,18 @@ from-where-group by-having-select-order by-limit</p>
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/22/mysql02" title="Mysql02">
+ <a href="/java/2017/02/22/js" title="js">
   <strong>上一篇：</strong><br/>
   <span>
-  Mysql02</span>
+  js</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/java/2017/03/08/jdbc"  title="jdbc">
+<a href="/2017/02/23/mysql02"  title="Mysql02">
  <strong>下一篇：</strong><br/> 
- <span>jdbc
+ <span>Mysql02
 </span>
 </a>
 </div>
@@ -627,9 +721,10 @@ from-where-group by-having-select-order by-limit</p>
   
 
 
-  <div class="rsspart">
+  <div class="rsspart" style="display:none">
 	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
+
 
 
 </aside>

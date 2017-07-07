@@ -52,8 +52,8 @@
 /java/2017/03/23/servlet
 /java/2017/03/14/xml&tomcat
 /java/2017/03/08/jdbc
-/java/2017/02/23/mysql
-/2017/02/22/mysql02
+/2017/02/23/mysql02
+/java/2017/02/22/mysql
 /java/2017/02/22/js
 /java/2017/02/10/html
 /java/2017/02/10/css&js
