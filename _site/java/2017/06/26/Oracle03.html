@@ -218,44 +218,44 @@
 <h5 id="循环语句">循环语句</h5>
 
 <h6 id="格式">格式</h6>
-<div class="highlight"><pre><code class="language-plsql" data-lang="plsql">//第一种
-while total &lt;=25000
-loop
-...
-total:=total+salary;
-end loop;
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="o">//</span><span class="err">第一种</span>
+<span class="n">while</span> <span class="n">total</span> <span class="o">&lt;=</span><span class="mi">25000</span>
+<span class="n">loop</span>
+<span class="p">...</span>
+<span class="n">total</span><span class="p">:</span><span class="o">=</span><span class="n">total</span><span class="o">+</span><span class="n">salary</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
 
 
-//第二种
-loop
-exit[when 条件];
-...
-end loop;
+<span class="o">//</span><span class="err">第二种</span>
+<span class="n">loop</span>
+<span class="n">exit</span><span class="p">[</span><span class="k">when</span> <span class="err">条件</span><span class="p">];</span>
+<span class="p">...</span>
+<span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
 
 
-//第三种
-for i in 1..3
-loop
-语句序列
-end loop;
+<span class="o">//</span><span class="err">第三种</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="p">..</span><span class="mi">3</span>
+<span class="n">loop</span>
+<span class="err">语句序列</span>
+<span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
 </code></pre></div>
 <h6 id="循环案例">循环案例</h6>
-<div class="highlight"><pre><code class="language-plsql" data-lang="plsql">
-set serveroutput on
+<div class="highlight"><pre><code class="language-sql" data-lang="sql">
+<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span>
 
-declare
-  pnum number := 1;
-begin
-  loop
+<span class="k">declare</span>
+  <span class="n">pnum</span> <span class="n">number</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="n">loop</span>
 
-    exit when pnum &gt; 10;
+    <span class="n">exit</span> <span class="k">when</span> <span class="n">pnum</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">;</span>
 
-    dbms_output.put_line(pnum);
+    <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="n">pnum</span><span class="p">);</span>
 
-    pnum := pnum + 1;
-  end loop;
-end;
-/
+    <span class="n">pnum</span> <span class="p">:</span><span class="o">=</span> <span class="n">pnum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="o">/</span>
 </code></pre></div>
 <h6 id="光标-cursor-resultset">光标(Cursor)==ResultSet</h6>
 
@@ -530,7 +530,7 @@ count87 number := 0;
 <span class="o">/</span>
 </code></pre></div>
 <h6 id="案例二">案例二</h6>
-<div class="highlight"><pre><code class="language-plsql" data-lang="plsql">/*
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="cm">/*
 SQL语句：
 select empno,sal from emp order by sal;
 ---&gt; 光标 ---&gt; 退出：1. 总额 &gt; 5w   2. notfound
@@ -542,44 +542,44 @@ select empno,sal from emp order by sal;
 2. 涨后=涨前 + sal * 0.1
 
 练习： 人数:7   总额:50205.325
-*/
-set serveroutput on
-declare
-  cursor cemp is select empno,sal from emp order by sal;
-  pempno emp.empno%type;
-  psal   emp.sal%type;
-  --涨工资的人数:
-  countEmp number := 0;
-  --涨后的工资总额:
-  salTotal number;
-begin
-  --得到初始的工资总额
-  select sum(sal) into salTotal from emp;
+*/</span>
+<span class="k">set</span> <span class="n">serveroutput</span> <span class="k">on</span>
+<span class="k">declare</span>
+  <span class="k">cursor</span> <span class="n">cemp</span> <span class="k">is</span> <span class="k">select</span> <span class="n">empno</span><span class="p">,</span><span class="n">sal</span> <span class="k">from</span> <span class="n">emp</span> <span class="k">order</span> <span class="k">by</span> <span class="n">sal</span><span class="p">;</span>
+  <span class="n">pempno</span> <span class="n">emp</span><span class="p">.</span><span class="n">empno</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
+  <span class="n">psal</span>   <span class="n">emp</span><span class="p">.</span><span class="n">sal</span><span class="o">%</span><span class="k">type</span><span class="p">;</span>
+  <span class="c1">--涨工资的人数:</span>
+  <span class="n">countEmp</span> <span class="n">number</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">--涨后的工资总额:</span>
+  <span class="n">salTotal</span> <span class="n">number</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="c1">--得到初始的工资总额</span>
+  <span class="k">select</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">into</span> <span class="n">salTotal</span> <span class="k">from</span> <span class="n">emp</span><span class="p">;</span>
 
-  open cemp;
-  loop
-    --1. 总额 &gt; 5w
-    exit when salTotal &gt; 50000;
-    --取一个员工
-    fetch cemp into pempno,psal;
-    --2. notfound
-    exit when cemp%notfound;
+  <span class="k">open</span> <span class="n">cemp</span><span class="p">;</span>
+  <span class="n">loop</span>
+    <span class="c1">--1. 总额 &gt; 5w</span>
+    <span class="n">exit</span> <span class="k">when</span> <span class="n">salTotal</span> <span class="o">&gt;</span> <span class="mi">50000</span><span class="p">;</span>
+    <span class="c1">--取一个员工</span>
+    <span class="k">fetch</span> <span class="n">cemp</span> <span class="k">into</span> <span class="n">pempno</span><span class="p">,</span><span class="n">psal</span><span class="p">;</span>
+    <span class="c1">--2. notfound</span>
+    <span class="n">exit</span> <span class="k">when</span> <span class="n">cemp</span><span class="o">%</span><span class="n">notfound</span><span class="p">;</span>
 
-    --涨工资
-    update emp set sal=sal*1.1 where empno=pempno;
-    --人数+1
-    countEmp := countEmp + 1;
-    --2. 涨后=涨前 + sal * 0.1
-    salTotal := salTotal + psal * 0.1;
+    <span class="c1">--涨工资</span>
+    <span class="k">update</span> <span class="n">emp</span> <span class="k">set</span> <span class="n">sal</span><span class="o">=</span><span class="n">sal</span><span class="o">*</span><span class="mi">1</span><span class="p">.</span><span class="mi">1</span> <span class="k">where</span> <span class="n">empno</span><span class="o">=</span><span class="n">pempno</span><span class="p">;</span>
+    <span class="c1">--人数+1</span>
+    <span class="n">countEmp</span> <span class="p">:</span><span class="o">=</span> <span class="n">countEmp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">--2. 涨后=涨前 + sal * 0.1</span>
+    <span class="n">salTotal</span> <span class="p">:</span><span class="o">=</span> <span class="n">salTotal</span> <span class="o">+</span> <span class="n">psal</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
 
-  end loop;
-  close cemp;
+  <span class="k">end</span> <span class="n">loop</span><span class="p">;</span>
+  <span class="k">close</span> <span class="n">cemp</span><span class="p">;</span>
 
-  commit;
-  dbms_output.put_line('人数:'||countEmp||'   总额:'||salTotal);
+  <span class="k">commit</span><span class="p">;</span>
+  <span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="s1">'人数:'</span><span class="o">||</span><span class="n">countEmp</span><span class="o">||</span><span class="s1">'   总额:'</span><span class="o">||</span><span class="n">salTotal</span><span class="p">);</span>
 
-end;
-/
+<span class="k">end</span><span class="p">;</span>
+<span class="o">/</span>
 </code></pre></div>
 <h2 id="触发器">触发器</h2>
 

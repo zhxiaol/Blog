@@ -172,18 +172,18 @@
 <h4 id="创建maven工程">创建maven工程</h4>
 
 <h5 id="maven工程结构">Maven工程结构</h5>
-<div class="highlight"><pre><code class="language-html" data-lang="html">Project
-   |--src（源码包）
-   |   |--main（正常的源码包）
-   |   |   |--java（.java文件的目录）
-   |   |   |--resources（资源文件的目录）
-   |   |
-   |   |--test（测试的源码包）
-   |       |--java
-   |       |--resources
-   |       
-   |--target（class文件、报告等信息存储的地方）
-   |--pom.xml（maven工程的描述文件）
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Project</span>
+   <span class="o">|--</span><span class="n">src</span><span class="err">（源码包）</span>
+   <span class="o">|</span>   <span class="o">|--</span><span class="n">main</span><span class="err">（正常的源码包）</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="n">java</span><span class="err">（</span><span class="o">.</span><span class="na">java</span><span class="err">文件的目录）</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|--</span><span class="n">resources</span><span class="err">（资源文件的目录）</span>
+   <span class="o">|</span>   <span class="o">|</span>
+   <span class="o">|</span>   <span class="o">|--</span><span class="n">test</span><span class="err">（测试的源码包）</span>
+   <span class="o">|</span>       <span class="o">|--</span><span class="n">java</span>
+   <span class="o">|</span>       <span class="o">|--</span><span class="n">resources</span>
+   <span class="o">|</span>       
+   <span class="o">|--</span><span class="n">target</span><span class="err">（</span><span class="n">class</span><span class="err">文件、报告等信息存储的地方）</span>
+   <span class="o">|--</span><span class="n">pom</span><span class="o">.</span><span class="na">xml</span><span class="err">（</span><span class="n">maven</span><span class="err">工程的描述文件）</span>
 </code></pre></div>
 <h5 id="创建hellomaven工程">创建HelloMaven工程</h5>
 
@@ -206,20 +206,20 @@
 |mvn clean test|先执行clean，再执行test，通常应用于测试环节|<br>
 |mvn clean package|先执行clean，再执行package，将项目打包，通常应用于发布前|<br>
 |mvn clean install|先执行clean，再执行install，将项目打包，通常应用于发布前|</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html">mvn clean package
-    执行过程：
-      清理————清空环境
-      编译————编译源码
-      测试————测试源码
-      打包————将编译的非测试类打包
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">mvn</span> <span class="n">clean</span> <span class="kn">package</span>
+    <span class="err">执行过程：</span>
+      <span class="err">清理————清空环境</span>
+      <span class="err">编译————编译源码</span>
+      <span class="err">测试————测试源码</span>
+      <span class="err">打包————将编译的非测试类打包</span>
 
-cmd mvn clean install
-   执行过程：
-      清理————清空环境
-      编译————编译源码
-      测试————测试源码
-      打包————将编译的非测试类打包
-      部署————将打好的包发布到资源仓库中
+<span class="n">cmd</span> <span class="n">mvn</span> <span class="n">clean</span> <span class="n">install</span>
+   <span class="err">执行过程：</span>
+      <span class="err">清理————清空环境</span>
+      <span class="err">编译————编译源码</span>
+      <span class="err">测试————测试源码</span>
+      <span class="err">打包————将编译的非测试类打包</span>
+      <span class="err">部署————将打好的包发布到资源仓库中</span>
 </code></pre></div>
 <h5 id="m2eclipse">M2Eclipse</h5>
 
@@ -390,13 +390,13 @@ Maven世界拥有大量构建，我们需要找一个用来唯一标识一个构
 <span class="o">}</span>
 </code></pre></div>
 <h4 id="依赖范围传递">依赖范围传递</h4>
-<div class="highlight"><pre><code class="language-" data-lang="">MavenThird-------MavenSecond------------MavenFirst                            
-    |        |               |           |
-    |        |                   |           |
-    |    第一直接依赖         第二直接依赖       |
-    |                                        |
-    |                                        |
-    ----------------  间接依赖  ---------------     
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">MavenThird</span><span class="o">-------</span><span class="n">MavenSecond</span><span class="o">------------</span><span class="n">MavenFirst</span>                            
+    <span class="o">|</span>        <span class="o">|</span>               <span class="o">|</span>           <span class="o">|</span>
+    <span class="o">|</span>        <span class="o">|</span>                   <span class="o">|</span>           <span class="o">|</span>
+    <span class="o">|</span>    <span class="err">第一直接依赖</span>         <span class="err">第二直接依赖</span>       <span class="o">|</span>
+    <span class="o">|</span>                                        <span class="o">|</span>
+    <span class="o">|</span>                                        <span class="o">|</span>
+    <span class="o">----------------</span>  <span class="err">间接依赖</span>  <span class="o">---------------</span>     
 </code></pre></div>
 <p>总结：</p>
 

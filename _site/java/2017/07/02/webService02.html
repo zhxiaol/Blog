@@ -376,15 +376,15 @@ JaxWsProxyFactoryBean调用服务端，设置2个参数，1.设置服务接口�
 <span class="nt">&lt;/beans&gt;</span>
 </code></pre></div>
 <h5 id="endpoint标签发布服务">Endpoint标签发布服务</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;jaxws:endpoint address="/hello" implementor="cn.itcast.ws.cxf.server.HelloWorld"/&gt;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">endpoint</span> <span class="n">address</span><span class="o">=</span><span class="s">"/hello"</span> <span class="n">implementor</span><span class="o">=</span><span class="s">"cn.itcast.ws.cxf.server.HelloWorld"</span><span class="o">/&gt;</span>
 
-@WebService
-public class HelloWorld {
-    public String sayHello(String name){
-        return "hello,"+name;
-    }
+<span class="nd">@WebService</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">return</span> <span class="s">"hello,"</span><span class="o">+</span><span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
 
-}
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="客户端">客户端</h5>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//第一步：引入jar包</span>
@@ -645,152 +645,152 @@ http://127.0.0.1:12345/user/student/queryList/110?_type=xml  查询多个学生�
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
 <h5 id="综合案例-集成公网手机号归属地查询服务">综合案例 集成公网手机号归属地查询服务</h5>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 第一步：创建web项目（引入jar包）</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// 第一步：创建web项目（引入jar包）</span>
 <span class="c1">// 第二步：生成公网客户端代码</span>
 <span class="c1">// 第三步：创建SEI接口</span>
 
-<span class="err">@</span><span class="nx">WebService</span>
-<span class="kr">public</span> <span class="kr">interface</span> <span class="nx">MobileInterface</span> <span class="p">{</span>
+<span class="nd">@WebService</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MobileInterface</span> <span class="o">{</span>
 
-    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryMobile</span><span class="p">(</span><span class="nb">String</span> <span class="nx">phoneNum</span><span class="p">);</span>
-<span class="p">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">queryMobile</span><span class="o">(</span><span class="n">String</span> <span class="n">phoneNum</span><span class="o">);</span>
+<span class="o">}</span>
 
 
 <span class="c1">// 第四步：创建SEI实现类</span>
-<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MobileInterfaceImpl</span> <span class="kr">implements</span> <span class="nx">MobileInterface</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MobileInterfaceImpl</span> <span class="kd">implements</span> <span class="n">MobileInterface</span> <span class="o">{</span>
 
-    <span class="kr">private</span> <span class="nx">MobileCodeWSSoap</span> <span class="nx">mobileClient</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">MobileCodeWSSoap</span> <span class="n">mobileClient</span><span class="o">;</span>
 
-    <span class="err">@</span><span class="nx">Override</span>
-    <span class="kr">public</span> <span class="nb">String</span> <span class="nx">queryMobile</span><span class="p">(</span><span class="nb">String</span> <span class="nx">phoneNum</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">mobileClient</span><span class="p">.</span><span class="nx">getMobileCodeInfo</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
-    <span class="p">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">queryMobile</span><span class="o">(</span><span class="n">String</span> <span class="n">phoneNum</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">mobileClient</span><span class="o">.</span><span class="na">getMobileCodeInfo</span><span class="o">(</span><span class="n">phoneNum</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    <span class="kr">public</span> <span class="nx">MobileCodeWSSoap</span> <span class="nx">getMobileClient</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">mobileClient</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="kd">public</span> <span class="n">MobileCodeWSSoap</span> <span class="nf">getMobileClient</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">mobileClient</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setMobileClient</span><span class="p">(</span><span class="nx">MobileCodeWSSoap</span> <span class="nx">mobileClient</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">mobileClient</span> <span class="o">=</span> <span class="nx">mobileClient</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMobileClient</span><span class="o">(</span><span class="n">MobileCodeWSSoap</span> <span class="n">mobileClient</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mobileClient</span> <span class="o">=</span> <span class="n">mobileClient</span><span class="o">;</span>
+    <span class="o">}</span>
 
-<span class="p">}</span>
+<span class="o">}</span>
 
 
 <span class="c1">// 第五步：创建queryMobile.jsp</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html; charset=utf-8"</span>
-    <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">%&gt;</span>
-<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=utf-8"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">手机号归属查询网站</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"queryMobile.action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
-        <span class="err">手机号归属地查询：</span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"phoneNum"</span><span class="o">/&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"submit"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"查询"</span><span class="o">/&gt;&lt;</span><span class="nx">br</span><span class="o">/&gt;</span>
-        <span class="err">查询结果：</span><span class="nx">$</span><span class="p">{</span><span class="nx">result</span><span class="p">}</span>
-    <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
-</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html; charset=utf-8"</span>
+    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="n">DOCTYPE</span> <span class="n">html</span> <span class="n">PUBLIC</span> <span class="s">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s">"Content-Type"</span> <span class="n">content</span><span class="o">=</span><span class="s">"text/html; charset=utf-8"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="err">手机号归属查询网站</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">action</span><span class="o">=</span><span class="s">"queryMobile.action"</span> <span class="n">method</span><span class="o">=</span><span class="s">"post"</span><span class="o">&gt;</span>
+        <span class="err">手机号归属地查询：</span><span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"phoneNum"</span><span class="o">/&gt;&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="n">value</span><span class="o">=</span><span class="s">"查询"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+        <span class="err">查询结果：$</span><span class="o">{</span><span class="n">result</span><span class="o">}</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+
 <span class="c1">// 第六步：创建MobileServlet.java</span>
-<span class="kr">public</span> <span class="kr">class</span> <span class="nx">MobileServlet</span> <span class="kr">extends</span> <span class="nx">HttpServlet</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MobileServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
 
-    <span class="kr">private</span> <span class="nx">MobileInterface</span> <span class="nx">mobileServer</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="n">MobileInterface</span> <span class="n">mobileServer</span><span class="o">;</span>
 
-    <span class="kr">public</span> <span class="k">void</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">response</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
-        <span class="nb">String</span> <span class="nx">phoneNum</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="s2">"phoneNum"</span><span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="nx">phoneNum</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="s2">""</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">)){</span>
-            <span class="nx">ApplicationContext</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">WebApplicationContextUtils</span><span class="p">.</span><span class="nx">getWebApplicationContext</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getServletContext</span><span class="p">());</span>
-            <span class="nx">mobileServer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">MobileInterface</span><span class="p">)</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getBean</span><span class="p">(</span><span class="s2">"mobileServer"</span><span class="p">);</span>
-            <span class="nb">String</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">mobileServer</span><span class="p">.</span><span class="nx">queryMobile</span><span class="p">(</span><span class="nx">phoneNum</span><span class="p">);</span>
-            <span class="nx">request</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"result"</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="nx">request</span><span class="p">.</span><span class="nx">getRequestDispatcher</span><span class="p">(</span><span class="s2">"/WEB-INF/jsp/queryMobile.jsp"</span><span class="p">).</span><span class="nx">forward</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
-    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">phoneNum</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"phoneNum"</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">phoneNum</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="s">""</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">phoneNum</span><span class="o">)){</span>
+            <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">WebApplicationContextUtils</span><span class="o">.</span><span class="na">getWebApplicationContext</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">());</span>
+            <span class="n">mobileServer</span> <span class="o">=</span> <span class="o">(</span><span class="n">MobileInterface</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"mobileServer"</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">mobileServer</span><span class="o">.</span><span class="na">queryMobile</span><span class="o">(</span><span class="n">phoneNum</span><span class="o">);</span>
+            <span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">request</span><span class="o">.</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="s">"/WEB-INF/jsp/queryMobile.jsp"</span><span class="o">).</span><span class="na">forward</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    <span class="kr">public</span> <span class="k">void</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">HttpServletRequest</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">HttpServletResponse</span> <span class="nx">response</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">ServletException</span><span class="p">,</span> <span class="nx">IOException</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">doGet</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
-    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">doGet</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+    <span class="o">}</span>
 
-<span class="p">}</span>
+<span class="o">}</span>
 
 
 
 <span class="c1">// 第七步：配置spring配置文件，applicationContext.xml</span>
 
-<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">beans</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans"</span>
-    <span class="nl">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">jaxws</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/jaxws"</span>
-    <span class="nl">xmlns</span><span class="p">:</span><span class="nx">jaxrs</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/jaxrs"</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">cxf</span><span class="o">=</span><span class="s2">"http://cxf.apache.org/core"</span>
-    <span class="nl">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">beans</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+    <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nl">xmlns:</span><span class="n">jaxws</span><span class="o">=</span><span class="s">"http://cxf.apache.org/jaxws"</span>
+    <span class="nl">xmlns:</span><span class="n">jaxrs</span><span class="o">=</span><span class="s">"http://cxf.apache.org/jaxrs"</span> <span class="nl">xmlns:</span><span class="n">cxf</span><span class="o">=</span><span class="s">"http://cxf.apache.org/core"</span>
+    <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://www.springframework.org/schema/beans
                             http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
                             http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
                             http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"</span><span class="o">&gt;</span>
-    <span class="c">&lt;!--</span> <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">server</span><span class="err">发布服务</span><span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">server</span> <span class="nx">address</span><span class="o">=</span><span class="s2">"/mobile"</span> <span class="nx">serviceClass</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.server.MobileInterface"</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">serviceBean</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">ref</span> <span class="nx">bean</span><span class="o">=</span><span class="s2">"mobileServer"</span><span class="o">/&gt;</span>
-        <span class="o">&lt;</span><span class="sr">/jaxws:serviceBean</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="sr">/jaxws:server</span><span class="err">&gt;
-</span>    <span class="c">&lt;!--</span> <span class="err">配置服务实现类</span> <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nx">bean</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mobileServer"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.server.MobileInterfaceImpl"</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mobileClient"</span> <span class="nx">ref</span><span class="o">=</span><span class="s2">"mobileClient"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="sr">/bean</span><span class="err">&gt;
-</span>
-    <span class="c">&lt;!--</span> <span class="err">配置公网客户端</span> <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nx">jaxws</span><span class="err">:</span><span class="nx">client</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"mobileClient"</span> <span class="nx">address</span><span class="o">=</span><span class="s2">"http://webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx"</span>
-        <span class="nx">serviceClass</span><span class="o">=</span><span class="s2">"cn.itcast.mobile.MobileCodeWSSoap"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;!--</span> <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">server</span><span class="err">发布服务</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">server</span> <span class="n">address</span><span class="o">=</span><span class="s">"/mobile"</span> <span class="n">serviceClass</span><span class="o">=</span><span class="s">"cn.itcast.mobile.server.MobileInterface"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nl">jaxws:</span><span class="n">serviceBean</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ref</span> <span class="n">bean</span><span class="o">=</span><span class="s">"mobileServer"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="nl">jaxws:</span><span class="n">serviceBean</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nl">jaxws:</span><span class="n">server</span><span class="o">&gt;</span>
+    <span class="o">&lt;!--</span> <span class="err">配置服务实现类</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">name</span><span class="o">=</span><span class="s">"mobileServer"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">cn</span><span class="o">.</span><span class="na">itcast</span><span class="o">.</span><span class="na">mobile</span><span class="o">.</span><span class="na">server</span><span class="o">.</span><span class="na">MobileInterfaceImpl</span><span class="s">"&gt;
+        &lt;property name="</span><span class="n">mobileClient</span><span class="s">" ref="</span><span class="n">mobileClient</span><span class="s">"/&gt;
+    &lt;/bean&gt;
 
-<span class="o">&lt;</span><span class="sr">/beans</span><span class="err">&gt;
-</span>
+    &lt;!-- 配置公网客户端 --&gt;
+    &lt;jaxws:client id="</span><span class="n">mobileClient</span><span class="s">" address="</span><span class="nl">http:</span><span class="c1">//webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx"</span>
+        <span class="n">serviceClass</span><span class="o">=</span><span class="s">"cn.itcast.mobile.MobileCodeWSSoap"</span><span class="o">/&gt;</span>
+
+<span class="o">&lt;/</span><span class="n">beans</span><span class="o">&gt;</span>
+
 
 <span class="c1">// 第八步：配置web.xml</span>
 
-<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">web</span><span class="o">-</span><span class="nx">app</span> <span class="nx">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/javaee"</span> <span class="nx">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"WebApp_ID"</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"3.0"</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">display</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">ws_2_cxf_spring_server</span><span class="o">&lt;</span><span class="sr">/display-name&gt; </span><span class="err"> 
-</span>  <span class="c">&lt;!--</span> <span class="err">设置</span><span class="nx">spring</span><span class="err">的环境</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="nx">context</span><span class="o">-</span><span class="nx">param</span><span class="o">&gt;</span>
-    <span class="c">&lt;!--</span><span class="nx">contextConfigLocation</span><span class="err">是不能修改的</span>  <span class="o">--&gt;</span>
-    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">contextConfigLocation</span><span class="o">&lt;</span><span class="sr">/param-name</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">param</span><span class="o">-</span><span class="nx">value</span><span class="o">&gt;</span><span class="nx">classpath</span><span class="err">:</span><span class="nx">applicationContext</span><span class="p">.</span><span class="nx">xml</span><span class="o">&lt;</span><span class="sr">/param-value</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/context-param</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nx">listener</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">listener</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">springframework</span><span class="p">.</span><span class="nx">web</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">ContextLoaderListener</span><span class="o">&lt;</span><span class="sr">/listener-class</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/listener</span><span class="err">&gt;
-</span>
-  <span class="c">&lt;!--</span> <span class="err">配置</span><span class="nx">CXF</span><span class="err">的</span><span class="nx">Servlet</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">CXF</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">apache</span><span class="p">.</span><span class="nx">cxf</span><span class="p">.</span><span class="nx">transport</span><span class="p">.</span><span class="nx">servlet</span><span class="p">.</span><span class="nx">CXFServlet</span><span class="o">&lt;</span><span class="sr">/servlet-class</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/servlet</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">mapping</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">CXF</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">url</span><span class="o">-</span><span class="nx">pattern</span><span class="o">&gt;</span><span class="sr">/ws/</span><span class="o">*&lt;</span><span class="sr">/url-pattern</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/servlet-mapping</span><span class="err">&gt;
-</span>  <span class="c">&lt;!--</span> <span class="err">配置</span><span class="nx">mobileServlet</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">mobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="kr">class</span><span class="o">&gt;</span><span class="nx">cn</span><span class="p">.</span><span class="nx">itcast</span><span class="p">.</span><span class="nx">mobile</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nx">servlet</span><span class="p">.</span><span class="nx">MobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-class</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/servlet</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">mapping</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">servlet</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="nx">mobileServlet</span><span class="o">&lt;</span><span class="sr">/servlet-name</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">url</span><span class="o">-</span><span class="nx">pattern</span><span class="o">&gt;*</span><span class="p">.</span><span class="nx">action</span><span class="o">&lt;</span><span class="sr">/url-pattern</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/servlet-mapping</span><span class="err">&gt;
-</span>
-  <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">-</span><span class="nx">list</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">html</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">htm</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="nx">index</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">html</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">htm</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">welcome</span><span class="o">-</span><span class="nx">file</span><span class="o">&gt;</span><span class="k">default</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/welcome-file</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="sr">/welcome-file-list</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/web-app</span><span class="err">&gt;
-</span>
+<span class="o">&lt;?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="n">web</span><span class="o">-</span><span class="n">app</span> <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">"http://java.sun.com/xml/ns/javaee"</span> <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span> <span class="n">id</span><span class="o">=</span><span class="s">"WebApp_ID"</span> <span class="n">version</span><span class="o">=</span><span class="s">"3.0"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">ws_2_cxf_spring_server</span><span class="o">&lt;/</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>  
+  <span class="o">&lt;!--</span> <span class="err">设置</span><span class="n">spring</span><span class="err">的环境</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">context</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
+    <span class="o">&lt;!--</span><span class="n">contextConfigLocation</span><span class="err">是不能修改的</span>  <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">contextConfigLocation</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span><span class="nl">classpath:</span><span class="n">applicationContext</span><span class="o">.</span><span class="na">xml</span><span class="o">&lt;/</span><span class="n">param</span><span class="o">-</span><span class="n">value</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">context</span><span class="o">-</span><span class="n">param</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">listener</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">listener</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">context</span><span class="o">.</span><span class="na">ContextLoaderListener</span><span class="o">&lt;/</span><span class="n">listener</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
+  <span class="err">&lt;/</span><span class="nc">listener</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;!--</span> <span class="err">配置</span><span class="n">CXF</span><span class="err">的</span><span class="n">Servlet</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">CXF</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">cxf</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">CXFServlet</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
+  <span class="err">&lt;/</span><span class="nc">servlet</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">CXF</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;/</span><span class="n">ws</span><span class="o">/*&lt;/</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+  <span class="o">&lt;!--</span> <span class="err">配置</span><span class="n">mobileServlet</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">mobileServlet</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span><span class="nc">cn</span><span class="o">.</span><span class="na">itcast</span><span class="o">.</span><span class="na">mobile</span><span class="o">.</span><span class="na">server</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">MobileServlet</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="kd">class</span><span class="err">&gt;</span>
+  <span class="err">&lt;/</span><span class="nc">servlet</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="n">mobileServlet</span><span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;*.</span><span class="na">action</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">-</span><span class="n">pattern</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">servlet</span><span class="o">-</span><span class="n">mapping</span><span class="o">&gt;</span>
+
+  <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">list</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="na">html</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="na">htm</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="n">index</span><span class="o">.</span><span class="na">jsp</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="k">default</span><span class="o">.</span><span class="na">html</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="k">default</span><span class="o">.</span><span class="na">htm</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span><span class="k">default</span><span class="o">.</span><span class="na">jsp</span><span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">welcome</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">list</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">web</span><span class="o">-</span><span class="n">app</span><span class="o">&gt;</span>
+
 
 <span class="c1">// 第九步：部署到tomcat下，启动tomcat</span>
 </code></pre></div>  

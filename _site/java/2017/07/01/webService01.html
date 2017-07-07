@@ -208,14 +208,16 @@ wsimport -p cn.itcast.weather -s . file:///zhxiaol/WeatherWS.asmx.xml //本地�
 <ul>
 <li><p>定义<br>
 WSDL及web服务描述语言，他是webservice服务端使用说明书，说明服务端接口、方法、参数和返回值，WSDL是随服务发布成功，自动生成，无需编写</p></li>
-<li><p>文档结构</p>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;service&gt;    服务视图，webservice的服务结点，它包括了服务端点
-&lt;binding&gt;     为每个服务端点定义消息格式和协议细节
-&lt;portType&gt;   服务端点，描述 web service可被执行的操作方法，以及相关的消息，通过binding指向portType
-&lt;message&gt;   定义一个操作（方法）的数据参数(可有多个参数)
-&lt;types&gt;        定义 web service 使用的全部数据类型
-</code></pre></div></li>
-<li><p>阅读方式：从下往上</p></li>
+<li><p>文档结构</p></li>
+</ul>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;service&gt;</span>    服务视图，webservice的服务结点，它包括了服务端点
+<span class="nt">&lt;binding&gt;</span>     为每个服务端点定义消息格式和协议细节
+<span class="nt">&lt;portType&gt;</span>   服务端点，描述 web service可被执行的操作方法，以及相关的消息，通过binding指向portType
+<span class="nt">&lt;message&gt;</span>   定义一个操作（方法）的数据参数(可有多个参数)
+<span class="nt">&lt;types&gt;</span>        定义 web service 使用的全部数据类型
+</code></pre></div>
+<ul>
+<li>阅读方式：从下往上</li>
 </ul>
 
 <h4 id="soap">SOAP</h4>
