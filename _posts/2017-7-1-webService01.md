@@ -106,7 +106,8 @@ public class WeatherClient {
 WSDL及web服务描述语言，他是webservice服务端使用说明书，说明服务端接口、方法、参数和返回值，WSDL是随服务发布成功，自动生成，无需编写
 
 * 文档结构
-```
+
+```xml
 <service>    服务视图，webservice的服务结点，它包括了服务端点
 <binding>     为每个服务端点定义消息格式和协议细节
 <portType>   服务端点，描述 web service可被执行的操作方法，以及相关的消息，通过binding指向portType

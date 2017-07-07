@@ -272,7 +272,7 @@ public class WeatherClient {
 ```
 
 ##### Endpoint标签发布服务
-```
+```java
 <jaxws:endpoint address="/hello" implementor="cn.itcast.ws.cxf.server.HelloWorld"/>
 
 @WebService
@@ -550,7 +550,7 @@ public class HttpClient {
 ```
 
 ##### 综合案例 集成公网手机号归属地查询服务
-```javascript
+```java
 // 第一步：创建web项目（引入jar包）
 // 第二步：生成公网客户端代码
 // 第三步：创建SEI接口
