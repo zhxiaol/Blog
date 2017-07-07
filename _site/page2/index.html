@@ -97,25 +97,56 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-5-13-struts2-ActionContext%E5%92%8CValueStack" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/05/13/struts2-ActionContext%E5%92%8CValueStack" title="struts2 ActionContext和ValueStack" itemprop="url">struts2 ActionContext和ValueStack</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-05-13 00:00:00 +0800" itemprop="datePublished">  2017-05-13</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="contextmap">contextMap</h2>
+
+<blockquote>
+<p>在每次动作执行之前核心控制器StrutsPrepareAndExecuteFilter都会创建ActionContext和ValueStack对象，且每次访问都会创建<br>
+ValueStatck 是个list集合<br>
+ActionContext是一个Map<String,Map><br>
+|key|value|<br>
+|----|------|<br>
+|applicaton|map|<br>
+|session|map|<br>
+|request|map|<br>
+|attr|map|</p>
+
+<h2 id="actioncontext的存取">ActionContext的存取</h2>
+
+<p>OGNL取值  #key+名称</p>
+<div class="highlight"><pre><code class="language-" data-lang="">public class Demo1Action extends ActionSupport {
+    @Override
+    public String execute() throws Exception {
+        ActionContext context = ActionContext.getContext();//从当前线程局部变量获得
+        context.put("contextMap","helloContextMap");
+        Map&lt;String,Object&gt;sessionAttribute= (Map&lt;String, Object&gt;) context.get("session");
+        sessionAttribute.put("name1","张三");
+        context.getSession().put("name2","李四");
+        ServletActionContext.getRequest().getSession().putValue("name3","王五");
+        context.getApplication().put("name1","刘亦菲");
+        ServletActionContext.getServletContext().setAttribute("name2","周芷若");
+        return SUCCESS;
+    }
+}
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-5-13-struts2-ActionContext%E5%92%8CValueStack#more">Read More</a>
+            <a href="/Blog/java/2017/05/13/struts2-ActionContext%E5%92%8CValueStack#more">Read More</a>
           
        </p>
     </div>
@@ -134,8 +165,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -163,25 +209,54 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-5-10-struts2%E5%9B%BD%E9%99%85%E5%8C%96,%E6%8B%A6%E6%88%AA%E5%99%A8,OGNL" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/05/10/struts2%E5%9B%BD%E9%99%85%E5%8C%96,%E6%8B%A6%E6%88%AA%E5%99%A8,OGNL" title="struts2国际化,拦截器,OGNL" itemprop="url">struts2国际化,拦截器,OGNL</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-05-10 00:00:00 +0800" itemprop="datePublished">  2017-05-10</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <p>File failed to load: /extensions/MathMenu.js</p>
+
+<h2 id="国际化">国际化</h2>
+
+<blockquote>
+<p>主文件名 message 语言代码 zh/en 国家代码CN/US<br>
+ message_zh_CN.properties<br>
+ message_en_US.properties<br>
+ message.properties 默认的</p>
+
+<h5 id="1-在指定包名-如-com-itheima-resource-下配置message_en_us-properties的全局资源文件">1.在指定包名(如:com.itheima.resource)下配置message_en_US.properties的全局资源文件</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">key=english message resource
+jsp.login.title=i18n
+jsp.login.username=Username
+jsp.login.password=Password
+jsp.login.submit=Submit
+</code></pre></div>
+<h5 id="2-在指定报名-如com-itheima-resouce-下配置文件名为message_zh_cn-properties的全局资源文件">2.在指定报名(如com.itheima.resouce)下配置文件名为message_zh_CN.properties的全局资源文件</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">key=全局中文的消息资源包
+jsp.login.title=国际化
+jsp.login.username=用户名
+jsp.login.password=密码
+jsp.login.submit=登陆
+</code></pre></div>
+<h5 id="3-java中使用">3.java中使用</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">public class I18NDemo {
+    @Test
+    public void test1(){
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-5-10-struts2%E5%9B%BD%E9%99%85%E5%8C%96,%E6%8B%A6%E6%88%AA%E5%99%A8,OGNL#more">Read More</a>
+            <a href="/Blog/java/2017/05/10/struts2%E5%9B%BD%E9%99%85%E5%8C%96,%E6%8B%A6%E6%88%AA%E5%99%A8,OGNL#more">Read More</a>
           
        </p>
     </div>
@@ -200,8 +275,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -229,25 +319,40 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-5-08-struts2%E5%8F%82%E6%95%B0%E5%B0%81%E8%A3%85,%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2,%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/05/08/struts2%E5%8F%82%E6%95%B0%E5%B0%81%E8%A3%85,%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2,%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81" title="struts2参数封装,类型转换,数据验证" itemprop="url">struts2参数封装,类型转换,数据验证</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-05-08 00:00:00 +0800" itemprop="datePublished">  2017-05-08</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="参数封装">参数封装</h2>
+
+<h6 id="静态参数封装">静态参数封装</h6>
+
+<blockquote>
+<p>静态注入是struts-default.xml中的staticparams拦截器实现的</p>
+<div class="highlight"><pre><code class="language-" data-lang="">//Demo1Action
+public class Demo1Action extends ActionSupport {
+    private String username;
+    private int age;
+    public String addUser(){
+        System.out.println("username:"+username+" age:"+age);
+        return null;
+    }
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-5-08-struts2%E5%8F%82%E6%95%B0%E5%B0%81%E8%A3%85,%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2,%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81#more">Read More</a>
+            <a href="/Blog/java/2017/05/08/struts2%E5%8F%82%E6%95%B0%E5%B0%81%E8%A3%85,%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2,%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81#more">Read More</a>
           
        </p>
     </div>
@@ -266,8 +371,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -295,25 +415,158 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-5-02-struts2" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/05/02/struts2" title="struts2" itemprop="url">struts2</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-05-02 00:00:00 +0800" itemprop="datePublished">  2017-05-02</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <p>File failed to load: /extensions/MathZoom.js</p>
+
+<h2 id="三层架构和struts2">三层架构和Struts2</h2>
+
+<p>表示层: M mode  V view  C contol<br>
+业务层:Service<br>
+持久层:Data Access Object<br>
+Struts2处在表现层，是表现层框架</p>
+
+<h6 id="struts2配置">struts2配置</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">struts2
+    |
+    |--apps
+        |
+        |--struts-blank.war
+                |
+                |--WEB-INF/lib
+                    |
+                    |--asm-xxx.jar 基于子类动态代理的jar包
+                    |--commons-fileupliad-xx.jar  文件上传下载的jar包
+                    |--commons-io-xx.jar 对java.io的增强
+                    |--commons-lang-xx.jar 对java.lang包的增强
+                    |--commons-logging-xx.jar 日志增强jar
+                    |--freemarker-xx.jar 页面模板组件
+                    |--javassist-xx.jar jboss公司的关于字节码的一个开源项目
+                    |--log4j-xx.jar 日志开源组件
+                    |--ognl-xx.jar OGNL表达式的jar包
+                    |--struts2-core-xx.jar struts2的核心jar包
+                    |--xwork-core-xx.jar xwork的核心jar,也是struts2的核心jar包
+</code></pre></div>
+<h6 id="执行过程">执行过程</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">客户浏览器
+    |
+    |--启动Tomcat服务器
+        |
+        |--加载web.xml
+            |
+            |--加载初始化StrutsPrepareAndExecuteFilter
+                |
+                |--加载struts.xml
+                |   
+                |--匹配action
+                |   |
+                |   |--找到后，实例化动作类
+                |
+                |--调用动作对应的方法,得到返回值
+                |
+                |--根据返回值，找到name对应的结果视图
+</code></pre></div>
+<h6 id="struts2配置加载顺序">struts2配置加载顺序</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">struts2按如下顺序加载配置
+    |--default-properties 该文件保存在struts2-core-xx.jar中org.apache.struts包里面
+    |--struts-defaults.xml 该文件保存在struts2-core-xxx.jar中
+    |--struts-plugin 该文件保存在struts2-xxx-xx.jar中
+    |--struts.xml改文件是web应用默认的struts配置文件
+    |--struts.properties该文件是struts的默认配置文件
+    |--web.xml该文件是web应用的配置文件
+后面的配置覆盖前面的配置
+</code></pre></div>
+<h6 id="struts2-配置">struts2 配置</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">Package:定义一个struts的包按照面向对象的思想管理(分模块开发)
+    |
+    |--name属性:包的名称，在配置文件中唯一
+    |
+    |--extends属性:指定当前包的父包
+    |
+    |--abstract属性:把包声明为一个抽象包，抽象包就是用来被继承，没有action元素
+    |
+    |--namespace属性:名称空间。当指定了名称空间之后，访问路径就变成了了：
+    |     |          访问路径 = =名称空间 + 动作名称
+    |     |          默认值是""  
+    |     |
+    |     |--http://localhost:8080/a/b/c.action
+    |     |     |
+    |     |     |--搜索所有package的namesapce,找/a/b
+    |     |          |
+    |     |          |--找到了:找动作名称(只查找动作名称)没有找到去默认的namespace里面找
+    |     |          |--没找到:搜索package的namespace,找/a
+    |     |                 |
+    |     |                 |--找到了:找动作名称
+    |     |                 |--没找到:搜索package的namespace,找/
+    |     
+    |     
+    |--action元素:定义动作名称，动作类和动作方法的映射，以及当出现不同情况是前往指定的结果视图
+          |
+          |--name属性:动作名称.和请求url中的名称对应起来
+          |
+          |--class属性:指定动作类
+          |
+          |--method属性:指定要执行的动作方法
+          |
+          |--result元素:指定不同情况的结果视图
+                |
+                |--name属性：结果视图名称，默认值success,与动作方法的返回值对应，当一致时前往指定的jsp
+                |
+                |--type属性: 结果视图类型，默认值是dispatcher 转发
+                     |
+                     |--dispatcher 请求转发
+                     |--redirect 重定向
+                     |--chain 转发到另一个动作
+                     |    |
+                     |    |--转发同包(相同名称空间)的另一个动作
+                     |    |     |
+                     |    |     |--&lt;result name="success" type="chain"&gt;actionName&lt;/result&gt;
+                     |    |
+                     |    |--转发不同包的另一个动作
+                     |          |
+                     |          |--&lt;result name="success" type="chain"&gt;
+                     |                      &lt;param name="namespace"&gt;struts&lt;/param&gt;
+                     |                      &lt;param name="actionName"&gt;other_action&lt;/param&gt;
+                     |              &lt;/result&gt;
+                     |
+                     |--redirectAction 重定向到另一个动作
+                          |
+                          |--重定向到同包的另一个动作
+                          |--重定向到不同包的另一个动作
+</code></pre></div>
+<h6 id="示例">示例</h6>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">//web.xml
+<span class="c">&lt;!--配置struts的核心控制器,就是一个filter--&gt;</span>
+<span class="nt">&lt;filter&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>struts2<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;filter-class&gt;</span>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter<span class="nt">&lt;/filter-class&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>struts.action.extension<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>abcd<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+<span class="nt">&lt;/filter&gt;</span>
+<span class="nt">&lt;filter-mapping&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>struts2<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/filter-mapping&gt;</span>
+
+</code></pre></div>
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-5-02-struts2#more">Read More</a>
+            <a href="/Blog/java/2017/05/02/struts2#more">Read More</a>
           
        </p>
     </div>
@@ -332,8 +585,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -361,25 +629,71 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-29-Nginx" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/29/Nginx" title="Nginx" itemprop="url">Nginx</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-29 00:00:00 +0800" itemprop="datePublished">  2017-04-29</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="nginx">Nginx</h2>
+
+<blockquote>
+<p>Nginx(engine x)是一个高性能的HTTP和反向代理服务器。轻量级的web服务器/反向代理服务器。<br>
+特点:占有内存少，并发能力强</p>
+
+<h2 id="mac-配置nginx">mac 配置Nginx</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">mac配置Ngix
+    |
+    |--安装Nginx
+    |     |
+    |     |--终端: brew install nginx     
+    |
+    |--修改tomcat配置
+    |     |--tomcat目录
+    |           |--conf目录
+    |               |--server.xml
+    |                    |--注意修改端口不要冲突
+    |                    |--&lt;Engine name="Catalina" defaultHost="localhost" jvmRoute="tomcat2"&gt;
+    |
+    |--负载均衡配置
+    |      |--Nginx目录
+    |           |--nginx.conf
+    |                 |--添加  upstream server_lb{
+    |                 |          server 127.0.0.1:8080 weight=10;
+    |                 |          server 127.0.0.1:8081 weight=2;
+    |                 |         }
+    |                 |             |--weight 权重                 
+    |                 |
+    |                 |--location标签里添加 proxy_pass http://server_lb;
+    |
+    |
+    |--启动Nginx
+    |    |
+    |    |--终端: sudo nginx -c 完整目录
+    |        |--sudo nginx -c /usr/local/homebrew/etc/nginx/nginx.conf  
+    |
+    |--重新加载Nginx
+    |    |
+    |    |--终端: sudo nginx -s reload
+    |           
+    |
+    |--关闭Nginx
+    |    |
+    |    |--终端  sudo nginx -s stop/quit
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-29-Nginx#more">Read More</a>
+            <a href="/Blog/java/2017/04/29/Nginx#more">Read More</a>
           
        </p>
     </div>
@@ -398,8 +712,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -427,25 +756,59 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-21-%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/21/%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA" title="基础加强" itemprop="url">基础加强</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-21 00:00:00 +0800" itemprop="datePublished">  2017-04-21</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="代理模式">代理模式</h2>
+
+<blockquote>
+<p>Proxy Pattern(代理模式) 代理对象可以再客户端和目标对象之间起到中介的作用</p>
+
+<ul>
+<li>职责清晰</li>
+<li>中介作用保护了目标对象的作用</li>
+<li>高扩展性
+结构: 代理对象和目标对象实现同一个接口
+###### 静态代理
+```
+//出租者
+public interface Lessor {
+public void hire();
+public void collectRent();
+}
+//业主
+public class Owner implements Lessor{
+public void hire(){
+    System.out.println(&quot;业主出租房子&quot;);
+}
+public void collectRent(){
+    System.out.println(&quot;收房租&quot;);
+}
+}
+//中介
+public class Agent implements Lessor{
+private Lessor ower;
+public Agent(Lessor lessor){
+    ower=lessor;
+}</li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-21-%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA#more">Read More</a>
+            <a href="/Blog/java/2017/04/21/%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA#more">Read More</a>
           
        </p>
     </div>
@@ -464,8 +827,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -493,25 +871,61 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-16-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD" title="文件上传和下载" itemprop="url">文件上传和下载</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-16 00:00:00 +0800" itemprop="datePublished">  2017-04-16</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="文件上传">文件上传</h2>
+
+<blockquote>
+<p>前提条件:</p>
+
+<ul>
+<li>提供form表单，method必须是post</li>
+<li>form表单的enctype必须是 multipart/form-data</li>
+<li>提供input type=&#39;file&#39;类的上传输入域
+##### enctype(encodingType)
+告知服务器请求正文的MIME类型(文件类型，请求消息头:Content-type作用是一致的)
+<code>
+可选值
+|
+|--application/x-www-form-urlencode(默认)
+|                 |
+|                 |--正文:name=admin&amp;password=123
+|                 |--服务器获取数据:String name=request.getParameter(&quot;name&quot;)
+|
+|
+|--multipart/form-data
+|         |
+|         |--正文:multipart/form-data; boundary=----WebKitFormBoundaryuGq6WWODcJXyCkGv
+|         |       ------WebKitFormBoundaryuGq6WWODcJXyCkGv
+|         |       Content-Disposition: form-data; name=&quot;name&quot;
+|         |       跳跳
+|         |       ------WebKitFormBoundaryuGq6WWODcJXyCkGv
+|         |       Content-Disposition: form-data; name=&quot;photo&quot;; filename=&quot;头像.jpg&quot;
+|     |   Content-Dispositionontent-Type: image/jpeg
+|     |   ------WebKitFormBoundaryuGq6WWODcJXyCkGv--
+|         |
+|         |
+|         |--服务器获取数据:req.getInputStrem
+</code></li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-16-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD#more">Read More</a>
+            <a href="/Blog/java/2017/04/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD#more">Read More</a>
           
        </p>
     </div>
@@ -530,8 +944,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -559,25 +988,41 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-14-Listener%E5%92%8CFilter" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/14/Listener%E5%92%8CFilter" title="Listener和Filter" itemprop="url">Listener和Filter</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-14 00:00:00 +0800" itemprop="datePublished">  2017-04-14</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="javaweb常见监听">javaweb常见监听</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">监听域对象创建销毁
+    |
+    |--监听ServletContext创建和销毁
+    |           |
+    |           |--ServletContextListener
+    |
+    |--监听HttpSession创建和销毁
+    |           |
+    |           |--HttpSessionListener
+    |
+    |--监听HttpServletRequest
+    |           |
+    |           |--ServletRequestListener
+    |
+
+</code></pre></div>
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-14-Listener%E5%92%8CFilter#more">Read More</a>
+            <a href="/Blog/java/2017/04/14/Listener%E5%92%8CFilter#more">Read More</a>
           
        </p>
     </div>
@@ -596,8 +1041,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -625,25 +1085,101 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-11-Ajax" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/11/Ajax" title="Ajax" itemprop="url">Ajax</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-11 00:00:00 +0800" itemprop="datePublished">  2017-04-11</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="什么是ajax">什么是Ajax</h2>
+
+<blockquote>
+<p>Asynchonous JavaScript And Xml<br>
+是一种用于创建更好更快以及交互性更强的web应用程序</p>
+
+<ul>
+<li>Axja:只刷新布局页面技术
+<code>
+步骤
+|
+|--创建对象 var xmlHttp
+|      |
+|      |-- if(window.XMLHttpRequest){
+|              //IE7+ Firefox Chrome Opera Safari
+|              xmlHttp=new XMLHttpRequest();
+|          }else{
+|              //IE6 IE5
+|              xmlHttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+|          }       
+|
+|--事件处理onreadystatechange
+|    |
+|    |-- xmlHttp.onreadstatechange=function(){
+|           if(xmlHttp.readyState==4&amp;&amp;xmlHttp.status==200){
+|                  alert(xmlHttp.responseText);
+|              }
+|        }
+|
+|--创建连接open(&quot;get|post&quot;,&quot;url?name=tom&quot;,&quot;true|false&quot;)
+|          |
+|          |--请求方式  请求地址 是否异步
+|
+|
+|--发送请求send(content) content参数指定请求的参数或null
+|
+|
+|--设置消息头setRequestHeader(header,value)
+|
+|
+|--属性
+|   |
+|   |--readyState:类型short 只读
+|   |      |
+|   |      |--0:刚初始化
+|   |      |--1:调用open还没调用send
+|   |      |--2:send调用还没收到响应
+|   |      |--3:收到响应头还没收到响应正文
+|   |      |--4:一切都收到了
+|   |          
+|   |--responseText:类型String 只读
+|   |--responseXML: 类型Document 只读
+|   |--status:服务器响应状态码 类型short 只读
+|          |
+|          |--200 服务器响应正常
+|          |--400 无法找到请求的资源
+|          |--403 没有访问权限
+|          |--404 访问的资源不存在
+|          |--500 服务器内部错误
+|
+|
+</code>
+###### 初体验
+```
+//myJs.js
+function getXMLHttpRequest(){
+var xmlHttp;
+if(window.XMLHttpRequest){
+    xmlHttp=new XMLHttpRequest();
+}else {
+    xmlHttp=new ActiveXObject();
+}
+return xmlHttp;
+}</li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-11-Ajax#more">Read More</a>
+            <a href="/Blog/java/2017/04/11/Ajax#more">Read More</a>
           
        </p>
     </div>
@@ -662,8 +1198,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -691,25 +1242,114 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-10-%E5%9B%BE%E4%B9%A6%E5%95%86%E5%9F%8E" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/10/%E5%9B%BE%E4%B9%A6%E5%95%86%E5%9F%8E" title="图书商城" itemprop="url">图书商城</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-10 00:00:00 +0800" itemprop="datePublished">  2017-04-10</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h6 id="admin-product-list-jsp">admin/product/list.jsp</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;%@ page language="java" pageEncoding="UTF-8"%&gt;
+&lt;%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+   &lt;meta http-equiv="Content-Language" content="zh-cn"&gt;
+   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+   &lt;link href="${pageContext.request.contextPath}/admin/css/Style.css"
+        rel="stylesheet" type="text/css" /&gt;
+   &lt;script language="javascript"
+         src="${pageContext.request.contextPath}/admin/js/public.js"&gt;&lt;/script&gt;
+   &lt;script type="text/javascript"&gt;
+        function addProduct() {
+            window.location.href = "${pageContext.request.contextPath}/admin/products/add.jsp";
+        }
+        function delAllBooks(){
+            &lt;%--var ids=document.getElementsByName("ids");--%&gt;
+            &lt;%--var str="";--%&gt;
+            &lt;%--for(var i=0;i&lt;ids.length;i++){--%&gt;
+                &lt;%--if(ids[i].checked){--%&gt;
+                    &lt;%--str+="ids="+ids[i].value;--%&gt;
+                    &lt;%--if(i!=ids.length)--%&gt;
+                        &lt;%--str+="&amp;";--%&gt;
+                &lt;%--}--%&gt;
+            &lt;%--}--%&gt;
+            &lt;%--if(str!=""){--%&gt;
+                &lt;%--location.href="${pageContext.request.contextPath}/servlet/delAllBooksServlet?"+str;--%&gt;
+            &lt;%--}--%&gt;
+         var form2=document.getElementById("form2");
+         form2.submit();
+        }
+        function delBook(id){
+            if(confirm("是否确定删除")){
+                location.href="${pageContext.request.contextPath}/servlet/delBookServlet?id="+id;
+            }
+        }
+        function checkAll(){
+            var flag=document.getElementById("ckAll").checked;
+            var ids=document.getElementsByName("ids");
+            for(var i=0;i&lt;ids.length;i++){
+                ids[i].checked=flag;
+            }
+        }
+   &lt;/script&gt;
+&lt;/HEAD&gt;
+&lt;body&gt;
+&lt;br&gt;
+&lt;table cellSpacing="1" cellPadding="0" width="100%" align="center"
+      bgColor="#f5fafe" border="0"&gt;
+   &lt;form id="Form1" name="Form1"
+        action="${pageContext.request.contextPath}/servlet/searchBooksServlet"
+        method="post"&gt;
+      &lt;TBODY&gt;
+      &lt;tr&gt;
+         &lt;td class="ta_01" align="center" bgColor="#afd1f3"&gt;&lt;strong&gt;查
+            询 条 件&lt;/strong&gt;
+         &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+         &lt;td&gt;
+            &lt;table cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+               &lt;tr&gt;
+                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
+                     商品编号&lt;/td&gt;
+                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;input type="text"
+                                                   name="id" size="15" value="" id="Form1_userName" class="bg" /&gt;
+                  &lt;/td&gt;
+                  &lt;td height="22" align="center" bgColor="#f5fafe" class="ta_01"&gt;
+                     类别：&lt;/td&gt;
+                  &lt;td class="ta_01" bgColor="#ffffff"&gt;&lt;select name="category"
+                                                   id="category"&gt;
+                     &lt;option value="" selected="selected"&gt;--选择商品类加--&lt;/option&gt;
+                     &lt;option value="文学"&gt;文学&lt;/option&gt;
+                     &lt;option value="生活"&gt;生活&lt;/option&gt;
+                     &lt;option value="计算机"&gt;计算机&lt;/option&gt;
+                     &lt;option value="外语"&gt;外语&lt;/option&gt;
+                     &lt;option value="经营"&gt;经营&lt;/option&gt;
+                     &lt;option value="励志"&gt;励志&lt;/option&gt;
+                     &lt;option value="社科"&gt;社科&lt;/option&gt;
+                     &lt;option value="学术"&gt;学术&lt;/option&gt;
+                     &lt;option value="少儿"&gt;少儿&lt;/option&gt;
+                     &lt;option value="艺术"&gt;艺术&lt;/option&gt;
+                     &lt;option value="原版"&gt;原版&lt;/option&gt;
+                     &lt;option value="科技"&gt;科技&lt;/option&gt;
+                     &lt;option value="考试"&gt;考试&lt;/option&gt;
+                     &lt;option value="生活百科"&gt;生活百科&lt;/option&gt;
+                  &lt;/select&gt;&lt;/td&gt;
+               &lt;/tr&gt;
+
+</code></pre></div>
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-10-%E5%9B%BE%E4%B9%A6%E5%95%86%E5%9F%8E#more">Read More</a>
+            <a href="/Blog/java/2017/04/10/%E5%9B%BE%E4%B9%A6%E5%95%86%E5%9F%8E#more">Read More</a>
           
        </p>
     </div>
@@ -728,8 +1368,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -757,25 +1412,111 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-08-DBUtils" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/08/DBUtils" title="DBUtils" itemprop="url">DBUtils</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-08 00:00:00 +0800" itemprop="datePublished">  2017-04-08</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="什么是dbutils">什么是DBUtils</h2>
+
+<blockquote>
+<p>DBUtils是java编程中的数据库操作实用工具，小巧简单实用<br>
+DBUtils封装了对JDBC的操作,简化了JDBC操作，可以少些代码<br>
+1.对于数据表的读操作，他可以把结果转换成List,Array,set的java集合<br>
+2.对于数据表的写操作，也变得很简单<br>
+3.可以使用数据源，使用JNDE,数据库连接池等技术来优化性能</p>
+
+<h2 id="dbuuils的三个核心对象">DBUuils的三个核心对象</h2>
+
+<ul>
+<li>QueryRunner类
+query()查询
+update() insert update delete
+batch()批处理</li>
+<li>ResultSetHandler接口
+用于定义select 结果集</li>
+<li>DBUtils类
+关闭资源，事务管理
+<code>
+使用步骤
+|
+|--导入jar包
+|      |
+|      |--commons-dbutil-1.4.jar     
+|
+|--创建QueryRunner对象
+|      |
+|      |--QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());  
+|            |
+|            |--查询:List&lt;T&gt;list=qr.query(sql,ResultSetHandler,Object...params)  params:给?赋值
+|            |
+|            |--修改:qr.update(sql,Object...params) params:给sql中？赋值
+|            |
+|            |--批量:qr.batch(sql,Object[][]params) params:高纬执行的sql次数，低纬每条sql中？赋值
+|
+|
+|--ResultSetHandler
+|         |
+|         |--new ArrayHandler() 把每一行数据封装到Object[]里面
+|         |
+|         |--new ArrayListHandler() 将结果封装到List&lt;Object[]&gt;里面 每个Object[]封装一行数据
+|         |
+|         |--new ColumnListHandler(int index) 将每行第index列封装到List&lt;Object&gt;里面
+|         |
+|         |--new KeyedHandler(int index) 将每行数据封装成map,再将第index列作为key,map作为value封装成Map&lt;Object, Map&lt;String, Object&gt;&gt;       
+|         |
+|         |--new MapHandler() 将一行的数据封装成Map&lt;String, Object&gt;
+|         |
+|         |--new MapListHandler() 将每行数据封装成map,再将所有的map放到list集合里面 List&lt;Map&lt;String, Object&gt;&gt;
+|         |
+|         |--new ScalarHandler(index) 单行第index列的数据
+|         |
+|         |--new BeanHandler&lt;T&gt;(T.class) 将一行数据封装成一个实体类 T
+|         |
+|         |--new BeanListHandler&lt;T&gt;(T.class) 将每行数据封装成实体类存放到list集合 List&lt;T&gt;
+|                
+|
+|--使用DBUtils释放资源     
+</code>
+```
+@Test
+public void testSelect1()throws Exception{
+QueryRunner qr=new QueryRunner(C3P0Util.getDataSource());
+List<User> list=qr.query(&quot;select * from users&quot;, new ResultSetHandler&lt; ArrayList<User>&gt;() {
+    @Override
+    public  ArrayList<User> handle(ResultSet resultSet) throws SQLException {
+        ArrayList<User> users = new ArrayList&lt;&gt;();
+        while ((resultSet.next())){
+            User u = new User();
+            u.setId(resultSet.getInt(&quot;id&quot;));
+            u.setName(resultSet.getString(&quot;name&quot;));
+            u.setBirthday(resultSet.getString(&quot;birthday&quot;));
+            u.setEmail(resultSet.getString(&quot;email&quot;));
+            u.setPassword(resultSet.getString(&quot;password&quot;));
+            users.add(u);
+        }
+        return users;
+    }
+});
+for(User u:list){
+    System.out.println(u);
+}</li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-08-DBUtils#more">Read More</a>
+            <a href="/Blog/java/2017/04/08/DBUtils#more">Read More</a>
           
        </p>
     </div>
@@ -794,8 +1535,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -823,25 +1579,62 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-05-%E4%BA%8B%E5%8A%A1%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0" title="事务和连接池" itemprop="url">事务和连接池</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-05 00:00:00 +0800" itemprop="datePublished">  2017-04-05</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="事务">事务</h2>
+
+<blockquote>
+<p>mysql引擎支持事务<br>
+mysql默认自动提交事务。每条语句都处在单独的事务中<br>
+手动控制事务</p>
+
+<ul>
+<li>开启事务: start transaction | begin</li>
+<li>提交事务: commit</li>
+<li>回滚事务: rollback
+<code>
+try(Connection conn= DBUtils.getConnetion();    
+PreparedStatement ps1=conn.prepareStatement(&quot;update account set money =money-100 where name =&#39;aaa&#39;&quot;);
+PreparedStatement ps2=conn.prepareStatement(&quot;update account set money = money +100 where name =&#39;bbb&#39;&quot;);
+){
+conn.setAutoCommit(false);
+ps1.executeUpdate();
+int i=1/0;
+ps2.executeUpdate();
+conn.commit();
+}catch (SQLException e) {
+e.printStackTrace();
+}catch (Exception e){
+}
+</code>
+## 事务的特性
+##### 原子性:
+要么都成功，要么都失败,不可分割
+##### 一致性:
+事务必须使数据库从一个一致性变换到另一个一致性
+##### 隔离性:
+事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务间要隔离
+##### 持久性:
+只一个事务一旦提交，它对数据库中的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响</li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-05-%E4%BA%8B%E5%8A%A1%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0#more">Read More</a>
+            <a href="/Blog/java/2017/04/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0#more">Read More</a>
           
        </p>
     </div>
@@ -860,8 +1653,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -889,25 +1697,42 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-04-javaweb%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/04/javaweb%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="javaweb设计模式和案例" itemprop="url">javaweb设计模式和案例</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-04 00:00:00 +0800" itemprop="datePublished">  2017-04-04</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <p>一、JavaWeb开发模式</p>
+
+<blockquote>
+<p>C/S:客户端/服务器(胖客户端)<br>
+B/S:浏览器/服务器(瘦客户端)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">开发模式
+   |
+   |--Model1模式  (过时)
+   |      |
+   |      |--jsp+javabean
+   |
+   |
+   |
+   |--Model2模式(MVC)
+         |
+         |--jsp+servlet+javabean
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-04-javaweb%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F#more">Read More</a>
+            <a href="/Blog/java/2017/04/04/javaweb%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F#more">Read More</a>
           
        </p>
     </div>
@@ -926,8 +1751,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -955,25 +1795,42 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-4-02-jsp" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/04/02/jsp" title="jsp" itemprop="url">jsp</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-04-02 00:00:00 +0800" itemprop="datePublished">  2017-04-02</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="jsp-概述">JSP 概述</h2>
+
+<blockquote>
+<p>Java Server Pages，它和servlet技术一样,都是sun公司定义用于开发动态资源的技术,jsp实际上就是Servlet<br>
+jsp=html+java<br>
+html静态内容，servlet服务端小应用程序适合编写java逻辑代码 ，jsp:适合编写输出动态内容，单不适合编写java逻辑</p>
+
+<h2 id="jsp运行原理">JSP运行原理</h2>
+
+<p>服务器会将.jsp转译成.java文件，再将.java编译成.class,html内容直接输出<br>
+mac idea .jsp编译目录:<br>
+/Users/zhangxiaolong/Library/Caches/IntelliJIdea2017.1/tomcat/Unnamed_Learn38/work/Catalina/localhost/ROOT/org/apache/jsp</p>
+
+<h6 id="转译后">转译后</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+      throws java.io.IOException, javax.servlet.ServletException {
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-4-02-jsp#more">Read More</a>
+            <a href="/Blog/java/2017/04/02/jsp#more">Read More</a>
           
        </p>
     </div>
@@ -992,8 +1849,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1021,25 +1893,52 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-3-8-jdbc" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/03/29/%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86" title="Oracle02" itemprop="url">Oracle02</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-03-29 00:00:00 +0800" itemprop="datePublished">  2017-03-29</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="什么是会话">什么是会话</h2>
+
+<blockquote>
+<p>用户打开一个浏览器，访问服务器多个web资源，然后关闭浏览器，整个过程称之为会话</p>
+
+<h2 id="cookie">Cookie</h2>
+
+<p>Cookie是客服端技术，把用户数据存储在各自浏览器，再去访问带着数据访问。这样web资源就能处理各自数据<br>
+|方法|备注|<br>
+|-----|-----|<br>
+|response.addCookie()|可以多次调用|<br>
+|request.getCookies()||<br>
+|new Cookie(name,value)|一个cookie里面有一个名字,一个值，多个cookie名字可以相同|<br>
+|cookie.getName()|获得cookie名称|<br>
+|cookie.getValue()|获得cookie值|<br>
+|cookie.getMaxAge()|得到cookie保留时间单位秒，-1表示保留到浏览器关闭|<br>
+|cookie.setMaxAge(expiry)|设置cookie缓存到硬盘上的时间单位秒，浏览器关闭之后保留的时间|<br>
+|cookie.setMaxAge(0)|删除cookie|<br>
+|cookie.getPath()|默认值是写Cookie程序的访问路径，URI。名字和path都相同为同一个cookie|</p>
+
+<h6 id="servletdemo1">ServletDemo1</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public class CookieDemo1 extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-3-8-jdbc#more">Read More</a>
+            <a href="/Blog/java/2017/03/29/%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86#more">Read More</a>
           
        </p>
     </div>
@@ -1058,8 +1957,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1087,25 +2001,46 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-3-29-%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/03/26/httpServletRequest%E5%92%8CHpptServletResposnse" title="Oracle02" itemprop="url">Oracle02</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-03-26 00:00:00 +0800" itemprop="datePublished">  2017-03-26</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <p>HttpServletResponse</p>
+
+<ul>
+<li>响应消息行
+&gt; TTP/1.1 200
+setStatus(int sc)设置响应状态码</li>
+<li>响应消息头
+&gt;sendRedirect(String location)请求重定向
+setHead(String name,String value)设置响应头</li>
+<li>响应正文
+&gt;getWrite();字符流
+getOutputSteam();字节流
+setCharacterEncoding(String)
+setContentType(String)
+```
+public class ServletDemo1 extends HttpServlet {
+@Override
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    doGet(req,resp);
+}</li>
+</ul>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-3-29-%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86#more">Read More</a>
+            <a href="/Blog/java/2017/03/26/httpServletRequest%E5%92%8CHpptServletResposnse#more">Read More</a>
           
        </p>
     </div>
@@ -1124,8 +2059,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1153,25 +2103,30 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-3-26-httpServletRequest%E5%92%8CHpptServletResposnse" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/03/23/servlet" title="servlet" itemprop="url">servlet</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-03-23 00:00:00 +0800" itemprop="datePublished">  2017-03-23</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="servlet">Servlet</h2>
+
+<blockquote>
+<p>servlet 是运行在web服务器的小型java程序。servlet通常通过HTTP接受和响应来自web客户端的请求</p>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-3-26-httpServletRequest%E5%92%8CHpptServletResposnse#more">Read More</a>
+            <a href="/Blog/java/2017/03/23/servlet#more">Read More</a>
           
        </p>
     </div>
@@ -1190,8 +2145,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1219,25 +2189,39 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-3-23-servlet" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/03/14/xml&tomcat" title="xml&tomcat" itemprop="url">xml&tomcat</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-03-14 00:00:00 +0800" itemprop="datePublished">  2017-03-14</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="xml-xtensible-markup-language-可扩展标记语言">XML Xtensible Markup Language 可扩展标记语言</h2>
+
+<blockquote>
+<p>可扩展:所有标签自定义<br>
+功能:数据存储，配置文件，数据传输</p>
+
+<h3 id="转义">转义</h3>
+
+<p>&lt;![CDATA[1&gt;2&amp;&amp;3&gt;4]]&gt;</p>
+
+<h3 id="dtd约束">DTD约束</h3>
+
+<p>xml的书写规则</p>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-3-23-servlet#more">Read More</a>
+            <a href="/Blog/java/2017/03/14/xml&tomcat#more">Read More</a>
           
        </p>
     </div>
@@ -1256,8 +2240,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1285,25 +2284,184 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-3-14-xml&tomcat" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/03/08/jdbc" title="jdbc" itemprop="url">jdbc</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-03-08 00:00:00 +0800" itemprop="datePublished">  2017-03-08</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="jdbc">jdbc</h2>
+
+<blockquote>
+<p>java database connectivity<br>
+sun公司提供的一套操作数据库的标准规范</p>
+
+<h2 id="jdbc-规范">jdbc 规范</h2>
+
+<ul>
+<li>DriverManager 用于注册驱动</li>
+<li>Connection 表示与数据库创建的链接</li>
+<li>Statement 操作数据库sql语句的对象</li>
+<li>ResultSet 结果集或者虚拟表
+<code>java
+//注册驱动
+DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+//获取链接Connection
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
+//得到执行语句对象statement
+Statement stmt = conn.createStatement();
+//执行sql语句，并返回结果
+ResultSet rs = stmt.executeQuery(&quot;select * from users&quot;);
+//处理结果
+while(rs.next()){
+System.out.println(rs.getObject(1));
+System.out.println(rs.getObject(2));
+System.out.println(rs.getObject(3));
+System.out.println(rs.getObject(4));
+System.out.println(rs.getObject(5));
+System.out.println(&quot;-------------&quot;);
+}
+//关闭资源
+rs.close();
+stmt.close();
+conn.close();
+</code>
+## java.sql.DriverManager
+<code>
+注册驱动
+DriverManage.registDriver(Driver driver) 不建议使用(1.导致驱动被注册2次,2.强烈依赖jar包)
+加载驱动 Class.froNmae(&quot;com.mysql.jdbc.Driver&quot;); Driver里面有静态代码块注册驱动
+jdbc:mysql://localhost:3306/day06
+协议:子协议://ip:端口/数据库
+oracle:jdbc:oracle:thin:@localhost:1521:sid
+//第二种方式
+Properties info=new Properties();
+info.setProperty(&quot;user&quot;,&quot;root&quot;);
+info.setProperty(&quot;password&quot;,&quot;root&quot;);
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, info);
+//第三种方式
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06?user=root&amp;password=root&quot;);
+</code>
+## java.sql.Connection
+<code>
+1.接口的实现在数据库驱动中，所有与数据库交互都是基于链接对象
+2.Statement createStatement();
+</code>
+## java.sql.Statement
+<code>
+1. 接口的实现在数据库驱动中。用于执行静态sql语句并返回它所生成结果的对象
+2. ResultSet executeQuery(String sql) 根据查询语句返回结果集，只能执行查询。
+3. int executeUpdate(String sql) 执行insert,delete,update语句返回受影响的行数
+4. boolean execute(String sql) 执行任意sql,仅当执行select语句且有结果返回true ，
+ResultSet getResultSet()。
+</code>
+## java.sql.ResultSet
+<code>
+封装结果集
+提供一个游标，默认游标在第一行之前
+调用next()方法，游标向下移动一行
+Object getObject(int index)
+Object getObject(String name)
+java的数据类型与数据库类型关系
+int-int folat-float double -double String-char varchar Date-date
+可移动游标的方法
+boolean next()
+boolean previous()
+boolean afterLast()将游标移动到末尾，最后一行之后
+boolean beforeFirst() 移动到开头，第一行之前
+</code>
+<code>
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
+Statement stmt=conn.createStatement();
+ResultSet rs=stmt.executeQuery(&quot;select * from users&quot;);
+ArrayList&lt;User&gt; users = new ArrayList&lt;&gt;();
+while(rs.next()){
+User user = new User();
+user.setId(rs.getInt(&quot;id&quot;));
+user.setName(rs.getString(&quot;name&quot;));
+user.setPassword(rs.getString(&quot;password&quot;));
+user.setBirthday(rs.getDate(&quot;birthday&quot;));
+user.setEmail(rs.getString(&quot;email&quot;));
+users.add(user);
+}
+System.out.println(users);
+rs.close();
+stmt.close();
+conn.close();
+</code>
+## 释放资源
+<code>
+Connection conn=null;
+Statement stmt=null;
+ResultSet rs=null;
+try {
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+conn=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;,&quot;root&quot;,&quot;root&quot;);
+stmt=conn.createStatement();
+rs=stmt.executeQuery(&quot;select * from users&quot;);
+} catch (Exception e) {
+e.printStackTrace();
+}finally {
+if(conn!=null){
+    try {
+        conn.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if(stmt!=null){
+    try {
+        stmt.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if(rs!=null){
+    try {
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+}
+</code>
+## CRUD
+```
+public class DBUtils {
+private static String driverClass;
+private static String url;
+private static String username;
+private static String password;
+static {
+    ResourceBundle rb= ResourceBundle.getBundle(&quot;dbinfo&quot;);
+    driverClass=rb.getString(&quot;driverClass&quot;);
+    url=rb.getString(&quot;url&quot;);
+    username=rb.getString(&quot;username&quot;);
+    password=rb.getString(&quot;password&quot;);
+    try {
+        Class.forName(driverClass);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+//得到链接的方法
+public static Connection getConnection()throws Exception{</li>
+</ul>
+</blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-3-14-xml&tomcat#more">Read More</a>
+            <a href="/Blog/java/2017/03/08/jdbc#more">Read More</a>
           
        </p>
     </div>
@@ -1322,8 +2480,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1351,25 +2524,44 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/Blog/2017/07/07/2017-2-23-mysql" title="" itemprop="url"></a>
+      <a href="/Blog/java/2017/02/23/mysql" title="mysql" itemprop="url">mysql</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-07 11:59:37 +0800" itemprop="datePublished">  2017-07-07</time>
+    <time datetime="2017-02-23 00:00:00 +0800" itemprop="datePublished">  2017-02-23</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
+        <h2 id="数据库">数据库</h2>
+
+<blockquote>
+<p>存储，维护，管理数据的集合</p>
+
+<h2 id="mac卸载mysql">mac卸载mysql</h2>
+
+<p>打开终端，全部拷贝下面的内容，回车</p>
+<div class="highlight"><pre><code class="language-" data-lang="">cd ~/
+sudo rm /usr/local/mysql
+sudo rm -rf /usr/local/var/mysql
+sudo rm -rf /usr/local/mysql*
+sudo rm -rf /Library/StartupItems/MySQLCOM
+sudo rm -rf /Library/PreferencePanes/My*
+vim /etc/hostconfig and removed the line MYSQLCOM=-YES-rm -rf ~/Library/PreferencePanes/My*
+sudo rm -rf /Library/Receipts/mysql*
+sudo rm -rf /Library/Receipts/MySQL*
+sudo rm -rf /var/db/receipts/com.mysql.*
+</code></pre></div></blockquote>
+
         
         
         <p class="article-more-link">
           
-            <a href="/Blog/2017/07/07/2017-2-23-mysql#more">Read More</a>
+            <a href="/Blog/java/2017/02/23/mysql#more">Read More</a>
           
        </p>
     </div>
@@ -1388,8 +2580,23 @@
   }) %>
   -->
   
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
 </div>
 
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
 
 </div>
 
@@ -1456,7 +2663,7 @@
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>19</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
 		  
 		
 		  
@@ -1481,7 +2688,7 @@
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>19</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
 			
 		
 			

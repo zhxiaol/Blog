@@ -1,0 +1,796 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>servlet | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="servlet">
+    <meta property="og:url" content="/Blog/java/2017/03/23/servlet">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="servlet">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="servlet">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/03/23/servlet" title="servlet" itemprop="url">servlet</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-23 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-03-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="servlet">Servlet</h2>
+
+<blockquote>
+<p>servlet 是运行在web服务器的小型java程序。servlet通常通过HTTP接受和响应来自web客户端的请求</p>
+</blockquote>
+
+<p>1.创建一个实现servlet的实列</p>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo1 implements Servlet{}
+</code></pre></div>
+<p>2.配置web.xml</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;!--创建一个servlet实列--&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.itheima.servlet.ServletDemo1&lt;/servlet-class&gt;
+    &lt;!--服务器启动时就创建--&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;!--给servlet提供(映射)一个可供客户端访问的URI--&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ServletDemo1&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/demo1&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre></div>
+<h2 id="servlet运行过程">servlet运行过程</h2>
+<div class="highlight"><pre><code class="language-sequence" data-lang="sequence">客户端-&gt; tomcat:1.http://localhost:8080/ demo
+tomcat--&gt; web.xml:2.找到默认项目下的&lt;url-pattern&gt;/demo1
+web.xml--&gt; tomcat:3.返回对应的&lt;servlet-class&gt;ServletDemo1
+tomcat--&gt; servletDemo1:4.创建ServletDemo1实列
+tomcat--&gt; servletDemo1:5.调用init()方法
+tomcat--&gt; servletDemo1:6.调用service()方法
+servletDemo1--&gt;客户端:7.将信息响应给客户端
+tomcat--&gt; servletDemo1:8.调用distory()方法
+</code></pre></div>
+<h2 id="servlet-生命周期">servlet 生命周期</h2>
+
+<blockquote>
+<p>实例化 --&gt; 初始化 --&gt; 服务 --&gt; 销毁<br>
+出生:（实列化--初始化）第一次访问就出生了（默认情况）<br>
+活着: (服务)应用活着，servlet就活着<br>
+死亡: (销毁)应用卸载了 servlet就销毁</p>
+</blockquote>
+
+<h2 id="genericservlet-适配器模式">GenericServlet(适配器模式)</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo2 extends GenericServlet {
+    @Override
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+            System.out.println("service");
+    }
+}
+</code></pre></div>
+<h2 id="httpservlet-模板方法设计模式">HttpServlet(模板方法设计模式)</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">public class ServletDemo3 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("******doGet*********");
+        System.out.println(req.getRemoteAddr());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("******doPost*********");
+    }
+}
+</code></pre></div>
+<h2 id="servlet的一些细节">servlet的一些细节</h2>
+
+<blockquote>
+<p>一个servlet可以对应多个映射<br>
+优先级 绝对匹配--&gt;/开头匹配--&gt;扩展名匹配<br>
+如果url-pattern的值是/,表示执行的默认映射。所有资源都是servlet</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/abc/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/abc<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>ServletDemo4<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>*.do<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</code></pre></div>
+<h2 id="servlet的线程安全">Servlet的线程安全</h2>
+
+<p>解决线程安全的问题的最佳方法，不要写全局变量，写局部变量</p>
+
+<h2 id="servletconfig">ServletConfig</h2>
+
+<p>获取配置文件的信息，获取servletContext对象</p>
+<div class="highlight"><pre><code class="language-" data-lang="">@Override
+public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    this.config=config;
+}
+</code></pre></div></blockquote>
+
+<p>@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    String e1 = config.getInitParameter(&quot;encoding&quot;);<br>
+    String e2 = getServletConfig().getInitParameter(&quot;encoding&quot;);<br>
+    String e3 = this.getInitParameter(&quot;encoding&quot;);<br>
+    System.out.println(e1);<br>
+    System.out.println(e2);<br>
+    System.out.println(e3);<br>
+}<br>
+// web.xml<br>
+<servlet><br>
+    <servlet-name>ServletDemo5</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo5</servlet-class><br>
+    <init-param><br>
+        <param-name>encoding</param-name><br>
+        <param-value>utf-8</param-value><br>
+    </init-param><br>
+</servlet></p>
+<div class="highlight"><pre><code class="language-" data-lang="">## ServletContext
+&gt; 代表整个应用，一个应用只有一个servletContext对象，单实例.
+&gt; 域对象:在一定范围内(当前应用),使多个Servlet共享数据。
+|常用方法|备注|
+|------|-----|
+|void setAttribute(String name,Object value)|向ServletContext对象map中添加数据
+|Object getAttribute(String name)|从ServletContext对象的map中取数据|
+|void removeAttibute(String name)|根据name移出数据|
+###### 共享数据
+</code></pre></div>
+<p>//ServletDemo6<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    application.setAttribute(&quot;name&quot;,&quot;tom&quot;);<br>
+    System.out.println(&quot;存储name=tom&quot;);<br>
+}<br>
+//ServletDemo7<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    String name = (String) application.getAttribute(&quot;name&quot;);<br>
+    System.out.println(&quot;name:&quot;+name);<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 获取全局配置信息
+</code></pre></div>
+<p>//ServletDemo7<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    ServletContext application = this.getServletContext();<br>
+    String e = application.getInitParameter(&quot;encoding&quot;);<br>
+    System.out.println(&quot;encoding:&quot;+e);<br>
+}<br>
+//web.xml<br>
+<context-param><br>
+    <param-name>encoding</param-name><br>
+    <param-value>utf-8</param-value><br>
+</context-param></p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 获取资源路径
+String getRealPath(String path);//根据资源名称得到资源的绝对路径
+&gt; 可以得到当前应用任何位置的任何资源
+</code></pre></div>
+<p>//在WEB-INF/a.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/a.properties&quot;);<br>
+Properties properties = new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String value = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(value);</p>
+
+<p>//在src/b.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/classes/b.properties&quot;);<br>
+Properties properties=new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String value = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(value);</p>
+
+<p>//在src/com.itheima.servlet/c.properties<br>
+String path = this.getServletContext().getRealPath(&quot;/WEB-INF/classess/com/itheima/servlet/c.properties&quot;);<br>
+Properties properties = new Properties();<br>
+properties.load(new FileInputStream(path));<br>
+String key = properties.getProperty(&quot;key&quot;);<br>
+System.out.println(key);</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## Servlet转发
+&gt; 一次请求响应
+</code></pre></div>
+<p>//ServletDemo9<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    System.out.println(&quot;我要办事&quot;);<br>
+    System.out.println(&quot;你的事我办不了，我可以帮你找人办&quot;);<br>
+    ServletContext application = this.getServletContext();<br>
+    RequestDispatcher rd = application.getRequestDispatcher(&quot;/demo10&quot;);<br>
+    rd.forward(req,resp);<br>
+    System.out.println(&quot;事办完了&quot;);<br>
+}<br>
+//ServletDemo10<br>
+@Override<br>
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {<br>
+    System.out.println(&quot;这个事我能办&quot;);<br>
+}<br>
+//web.xml<br>
+<servlet><br>
+    <servlet-name>ServletDemo9</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo9</servlet-class><br>
+</servlet><br>
+<servlet-mapping><br>
+    <servlet-name>ServletDemo9</servlet-name><br>
+    <url-pattern>/demo9</url-pattern><br>
+</servlet-mapping><br>
+<servlet><br>
+    <servlet-name>ServletDemo10</servlet-name><br>
+    <servlet-class>com.itheima.servlet.ServletDemo10</servlet-class><br>
+</servlet><br>
+<servlet-mapping><br>
+    <servlet-name>ServletDemo10</servlet-name><br>
+    <url-pattern>/demo10</url-pattern><br>
+</servlet-mapping></p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/03/23/servlet" data-title="servlet | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/03/14/xml&tomcat" title="xml&tomcat">
+  <strong>上一篇：</strong><br/>
+  <span>
+  xml&tomcat</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/03/26/httpServletRequest%E5%92%8CHpptServletResposnse"  title="Oracle02">
+ <strong>下一篇：</strong><br/> 
+ <span>Oracle02
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

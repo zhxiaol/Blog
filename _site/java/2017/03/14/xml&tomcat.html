@@ -1,0 +1,994 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>xml&tomcat | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="xml&tomcat">
+    <meta property="og:url" content="/Blog/java/2017/03/14/xml&tomcat">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="xml&tomcat">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="xml&tomcat">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/03/14/xml&tomcat" title="xml&tomcat" itemprop="url">xml&tomcat</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-14 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-03-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="xml-xtensible-markup-language-可扩展标记语言">XML Xtensible Markup Language 可扩展标记语言</h2>
+
+<blockquote>
+<p>可扩展:所有标签自定义<br>
+功能:数据存储，配置文件，数据传输</p>
+
+<h3 id="转义">转义</h3>
+
+<p>&lt;![CDATA[1&gt;2&amp;&amp;3&gt;4]]&gt;</p>
+
+<h3 id="dtd约束">DTD约束</h3>
+
+<p>xml的书写规则</p>
+</blockquote>
+
+<ul>
+<li>dtd 内部dtd
+dtd 外部dtd 本地文件:&lt;!DOCUTYPE students SYSTEM &quot;student.dtd&quot;&gt;
+dtd 外部dtd 网络文件:&lt;!DOCUTYPE students PUBLIC  &quot;名称空间&quot; &quot;student.dtd&quot;&gt;
+##### student.dtd
+<code>dtd
+&lt;!ELEMENT students (student*)&gt;&lt;!-- 根标签 student可以出现0至多个--&gt;
+&lt;!ELEMENT student (name,age,sex)&gt;&lt;!--student标签要出现的内容，顺序--&gt;
+&lt;!ELEMENT name (#PCDATA)&gt;&lt;!-- name标签中可以写文本--&gt;
+&lt;!ELEMENT age (#PCDATA)&gt;
+&lt;!ELEMENT sex (#PCDATA)&gt;
+&lt;!ATTLIST student number ID #REQUIRED&gt;&lt;!-- student里面可以写属性 属性名称ID --&gt;
+</code>
+##### student.xml
+<code>xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE students SYSTEM &quot;student.dtd&quot;&gt;
+&lt;students&gt;
+&lt;student number=&quot;s001&quot;&gt;
+&lt;name&gt;张三&lt;/name&gt;
+&lt;age&gt;23&lt;/age&gt;
+&lt;sex&gt;男&lt;/sex&gt;
+&lt;/student&gt;
+&lt;/students&gt;
+</code></li>
+<li>shema
+编写根标签
+引入实列名称空间 xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>&quot;
+引入名称空间 xsi:schemaLocation=&quot;<a href="http://www.itcast.cn/xml">http://www.itcast.cn/xml</a> student.xsd &quot;
+引入默认的名称空间
+##### student.sxd
+```xsd
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<xsd:schema xmlns="http://www.itcast.cn/xml"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.itcast.cn/xml"
+    elementFormDefault="qualified">
+<xsd:element name="students" type="studentsType"/>
+<xsd:complexType name="studentsType">
+<a href="xsd:sequence">xsd:sequence</a>
+    <xsd:element name="student" type="studentType" minOccurs="0" maxOccurs="unbounded"><a href="/xsd:element">/xsd:element</a>
+<a href="/xsd:sequence">/xsd:sequence</a>
+<a href="/xsd:complexType">/xsd:complexType</a>
+<xsd:complexType name="studentType">
+<a href="xsd:sequence">xsd:sequence</a>
+    <xsd:element name="name" type="xsd:string"/>
+    <xsd:element name="age" type="ageType"/>
+    <xsd:element name="sex" type="sexType"/>
+<a href="/xsd:sequence">/xsd:sequence</a>
+<xsd:attribute name="number" type="numberType" use="required"/>
+<a href="/xsd:complexType">/xsd:complexType</a>
+<xsd:simpleType name="sexType">
+<xsd:restriction base="xsd:string">
+    <xsd:enumeration value="男"/>
+    <xsd:enumeration value="女"/>
+<a href="/xsd:restriction">/xsd:restriction</a>
+<a href="/xsd:simpleType">/xsd:simpleType</a>
+<xsd:simpleType name="ageType">
+<xsd:restriction base="xsd:integer">
+    <xsd:minInclusive value="0"><a href="/xsd:minInclusive">/xsd:minInclusive</a>
+    <xsd:maxInclusive value="256"><a href="/xsd:maxInclusive">/xsd:maxInclusive</a>
+<a href="/xsd:restriction">/xsd:restriction</a>
+<a href="/xsd:simpleType">/xsd:simpleType</a>
+<xsd:simpleType name="numberType">
+<xsd:restriction base="xsd:string">
+    <xsd:pattern value="itcast_\d{4}"/>
+<a href="/xsd:restriction">/xsd:restriction</a>
+<a href="/xsd:simpleType">/xsd:simpleType</a></li>
+</ul>
+
+<p><a href="/xsd:schema">/xsd:schema</a></p>
+<div class="highlight"><pre><code class="language-" data-lang="">##### student.xml
+</code></pre></div>
+<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;<br>
+<students xmlns="http://www.itcast.cn/xml"<br>
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
+xsi:schemaLocation="http://www.itcast.cn/xml  student.xsd"><br>
+<student number="itcast_1001"><br>
+    <name>张三</name><br>
+    <age>23</age><br>
+    <sex>男</sex><br>
+</student><br>
+</students></p>
+<div class="highlight"><pre><code class="language-" data-lang="">```xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+     version="3.1"&gt;
+&lt;/web-app&gt;
+</code></pre></div>
+<h2 id="xml解析">xml解析</h2>
+
+<ul>
+<li><p>DOM<br>
+将文档加载到内存，形成一颗dom树，将文档的各个组成部分封装为一些对象<br>
+优点：可以增删改查<br>
+缺点: dom树非常占内存，解析速度慢</p></li>
+<li><p>SAX<br>
+逐行读取，基于事件驱动<br>
+优点：不占内存，速度快<br>
+缺点：只能读取，不能回写</p></li>
+<li><p>JAXP:sun公司提供的解析。支持dom和sax</p></li>
+<li><p>JDOM:</p></li>
+<li><p>DOM4J: dom for java 民间方式，但是是事实方式。非常好。支持dom<br>
+1.导入jar包 dom4j.jar<br>
+2.创建解析器  SAXReader reader=new SAXReader();<br>
+3.解析xml 获得document对象<br>
+Document document=reader.read(url);</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test1</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+<span class="n">SAXReader</span> <span class="n">reader</span><span class="o">=</span><span class="k">new</span> <span class="n">SAXReader</span><span class="o">();</span>
+<span class="n">Document</span> <span class="n">document</span><span class="o">=</span><span class="n">reader</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="s">"src/book.xml"</span><span class="o">);</span>
+<span class="n">Element</span> <span class="n">root</span><span class="o">=</span><span class="n">document</span><span class="o">.</span><span class="na">getRootElement</span><span class="o">();</span>
+<span class="n">Element</span> <span class="n">booksNode</span><span class="o">=</span><span class="n">root</span><span class="o">.</span><span class="na">element</span><span class="o">(</span><span class="s">"book"</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">booksNode</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+<span class="n">List</span> <span class="n">list</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">elements</span><span class="o">();</span>
+<span class="n">Element</span> <span class="n">secondBook</span><span class="o">=</span> <span class="o">(</span><span class="n">Element</span><span class="o">)</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">String</span> <span class="n">name</span><span class="o">=</span><span class="n">secondBook</span><span class="o">.</span><span class="na">element</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">getText</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">@Test
+public  void test2() throws DocumentException {
+SAXReader reader=new SAXReader();
+Document document=reader.read("src/book.xml");
+Element root=document.getRootElement();
+treeWalk(root);
+}
+</code></pre></div></li>
+</ul>
+
+<p>private  void treeWalk(Element e) {<br>
+System.out.println(e.getName());<br>
+for(int i=0;i&lt;e.nodeCount();i++){<br>
+    Node node = e.node(i);<br>
+    if(node instanceof Element){<br>
+        treeWalk((Element) node);<br>
+    }<br>
+}<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">* XPATH: 专门用于查询
+定义一种规则
+使用的方法1.selectSingleNode(); 2.selectNodes();
+使用步骤
+1.导入jaxen..jar
+2.创建解析器 SaxReader reader=new SaxReader()
+3.获得decument Document document = reader.read(url)
+|符号|备注|
+|----|------|
+|nodename| 选取此节点|
+|/ |从根节点选取|
+|//| 不考虑他的位置|
+|.. | 父节点|
+|@ |选取属性|
+|[@属性名] |属性过滤|
+|[标签名]  | 子元素过滤|
+</code></pre></div>
+<p>@Test<br>
+public void test1() throws DocumentException {<br>
+SAXReader reader=new SAXReader();<br>
+Document document = reader.read(&quot;src/book.xml&quot;);<br>
+Node node = document.selectSingleNode(&quot;/books/book[2]/name&quot;);//第二本书名<br>
+System.out.println(node.getText());<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>@Test<br>
+public void test2() throws DocumentException {<br>
+SAXReader reader=new SAXReader();<br>
+Document document = reader.read(&quot;src/book.xml&quot;);<br>
+List list = document.selectNodes(&quot;//*&quot;);<br>
+for(int i=0;i&lt;list.size();i++){<br>
+    Node node = (Node) list.get(i);<br>
+    System.out.println(node.getName()+&quot;\t&quot;+node.getText());<br>
+}<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>@Test<br>
+public void test3() throws  DocumentException {<br>
+SAXReader reader=new SAXReader();<br>
+Document document = reader.read(&quot;src/Dom4JTest.xml&quot;);<br>
+List list = document.selectNodes(&quot;bookstore//book/title&quot;);<br>
+for(int i=0;i&lt;list.size();i++){<br>
+    Node node = (Node) list.get(i);<br>
+    System.out.println(node.getText());<br>
+}</p>
+
+<p>}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## Tomcat
+&gt; 小型Servlet/jsp调试工具 免费 稳定 高效 可以配合Apache搭建集群 是企业javaweb应用最佳servlet容器选择之一
+
+## 配置tomact
+http://tomcat.apache.org/ 下载tomcat tar.gz版本 解压拷贝到/usr/local/目录下
+启动 sudo /usr/local/tomcat目录名称/bin/startup.sh
+停止 sudo /usr/local/tomcat目录名称/bin/shutdown.sh
+## 修改tomcat端口
+&gt; tomcat目录/conf/server.xml 第70行 &amp;lt;Conector port="8081"/&amp;gt;
+## Tomcat主要目录
+</code></pre></div>
+<p>Tomcat主要目录<br>
+|<br>
+|--bin 可执行文件<br>
+|   |<br>
+|   |--start.sh 启动tomcat<br>
+|   |--shutdown.sh  关闭tomcat<br>
+|<br>
+|--conf 配置文件<br>
+|   |<br>
+|   |--server.xml<br>
+|   |--Catalina<br>
+|         |<br>
+|         |--localhost 配置虚拟目录<br>
+|<br>
+|--lib tomcat运行时依赖的jar包<br>
+|<br>
+|--logs tomcat运行时产生的日志文件<br>
+|<br>
+|--temp tomcat运行时的临时文件<br>
+|<br>
+|--webapps 存放应用的目录<br>
+|<br>
+|--work tomcat运行时的工作目录</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## 标准JavaWeb应用的目录结构
+</code></pre></div>
+<p>webapp<br>
+|<br>
+|---xx.html<br>
+|<br>
+|---css<br>
+|   |--myStyle.css<br>
+|<br>
+|---js<br>
+|    |--myjs.js<br>
+|<br>
+|---WEB-INF 固定写法 此目录不能被外部直接访问<br>
+  |<br>
+  |--classes    程序代码.class<br>
+  |     |--xxx.class<br>
+  |<br>
+  |--lib  应用需要的jar<br>
+  |   |--xxx.jar<br>
+  |<br>
+  |--web.xml  应用配置信息</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## 集成Tomcat和自动部署
+### eclipse
+&gt;集成
+window--Prefereces--Servers--Tomcat--Tomcat Home directory
+&gt;部署
+
+servers窗口 &gt;&gt; Tomcat右键 add Deployment
+### idea
+&gt; 集成
+
+References &gt;&gt; Application Servers +&gt;&gt; Tomcat目录  
+&gt; 部署 (tomcat9 要配置jdk8才能运行)
+
+1. Project Structure &gt;&gt; Project &gt;&gt; Project compiler out(WEB-INF/classes)
+2. Project Structure &gt;&gt; Modules &gt;&gt; Sources &gt;&gt; 右键src(Sources)
+Project Structure &gt;&gt; Modules &gt;&gt; Paths &gt;&gt; output path(WEB-INF/classes)
+Project Structure &gt;&gt; Modules &gt;&gt; Dependencies &gt;&gt; +(libraries/tomcat) +jars or directories(WEB-INF/lib)
+3. double shift 输入 Edit Configurations &gt;&gt; + &gt;&gt; Tomcat Server
+## 部署应用到Tomcat
+&gt; 开发目录部署方式
+
+把应用直接复制到tomcat/webapps 目录下
+&gt;把应用打成war包
+
+打war包命令: jar -cvf 应用名称.war .
+把war包直接复制到tomcat/webapps下，应用会自动解压
+
+##URI和URI
+&gt; URL:统一资源定位符(网址)
+&gt; URI:统一资源标识符
+</code></pre></div>
+<h2 id="url统一资源定位符http-localhost-8080-myapp-index-html">URL统一资源定位符<a href="http://localhost:8080/myapp.index.html">http://localhost:8080/myapp.index.html</a></h2>
+
+<p>http://[协议]<br><br>
+|<br><br>
+|--localhost:[主机]<br><br>
+  |<br><br>
+  |--8080[端口]<br><br>
+    |<br><br>
+    |--/myapp/index.html[URI资源标识符]</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## 虚拟目录
+</code></pre></div>
+<p>Tomcat目录<br>
+|<br>
+|--conf<br>
+|    |--Catalina(方式一:推荐使用，无需重启服务器)<br>
+|    |      |<br>
+ |      |--localhost<br>
+ |              |<br>
+ |              |--添加myapp.xml<br>
+ |                      |<br>
+ |                      |--<Context docBase="D:\myApp"/><br>
+ |<br>
+ |--server.xml(方式二:不推荐使用，需重启服务器)<br>
+    |<br>
+    |--<Host> 标签内添加配置<br>
+      |<br>
+      |--添加<Context path="" docBase=""></Context><br><br>
+            |<br>
+            |-- path:虚拟目录，docBase:实际目录</p>
+<div class="highlight"><pre><code class="language-" data-lang="">##### myapp.xml
+```xml
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Context docBase="D:\myApp"/&gt;
+</code></pre></div>
+<h2 id="默认主页">默认主页</h2>
+
+<blockquote>
+<p>web.xml</p>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;welcome-file-list&gt;
+&lt;welcome-file&gt;1.html&lt;/welcome-file&gt;
+&lt;welcome-file&gt;2.html&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+</code></pre></div>
+<h2 id="http">HTTP</h2>
+
+<p>HyperText Transfer Protocol 超文本传输协议<br>
+封装了请求和响应的数据</p>
+
+<h3 id="请求部分">请求部分</h3>
+</blockquote>
+
+<h5 id="请求消息行">请求消息行</h5>
+
+<p>GET  /day08_02/1.html  HTTP/1.1<br>
+请求方式：Get（默认）  POST  DELETE  HEAD等<br>
+GET：明文传输 不安全，数据量有限，不超过1kb<br>
+GET /day08_02/1.html?uName=tom&amp;pwd=123 HTTP/1.1<br>
+POST: 暗文传输，安全。数据量没有限制。<br>
+URI：统一资源标识符。去协议和IP地址。<br>
+协议/版本 ：</p>
+
+<h5 id="请求消息头">请求消息头</h5>
+
+<p>从第2行到空行处，都叫消息头<br>
+Accept:浏览器可接受的MIME类型<br>
+告诉服务器客户端能接收什么样类型的文件。<br>
+Accept-Charset: 浏览器通过这个头告诉服务器，它支持哪种字符集<br>
+Accept-Encoding:浏览器能够进行解码的数据编码方式，比如gzip<br>
+Accept-Language:浏览器所希望的语言种类，当服务器能够提供一种以上的语言版本时要用到。 可以在浏览器中进行设置。<br>
+Host:初始URL中的主机和端口<br>
+Referrer:包含一个URL，用户从该URL代表的页面出发访问当前请求的页面<br>
+Content-Type:内容类型<br>
+告诉服务器浏览器传输数据的MIME类型，文件传输的类型<br>
+application/x-www-form-urlencoded<br>
+If-Modified-Since: Wed, 02 Feb 2011 12:04:56 GMT利用这个头与服务器的文件进行比对，如果一致，则从缓存中直接读取文件。<br>
+User-Agent:浏览器类型.<br>
+Content-Length:表示请求消息正文的长度<br>
+Connection:表示是否需要持久连接。如果服务器看到这里的值为“Keep -Alive”，或者看到请求使用的是HTTP 1.1（HTTP 1.1默认进行持久连接<br>
+Cookie:这是最重要的请求头信息之一 (在讲会话时解析)<br>
+Date：Date: Mon, 22 Aug 2011 01:55:39 GMT请求时间GMT</p>
+
+<h5 id="请求正文">请求正文</h5>
+
+<p>当请求方式是POST方式时，才能看见消息正文<br>
+Name=tom&amp;pwd=123</p>
+
+<h3 id="响应">响应</h3>
+
+<h5 id="响应信息行">响应信息行</h5>
+
+<p>第一行：<br>
+HTTP/1.1   200   OK<br>
+协议/版本   响应状态码  对响应码的描述（一切正常）<br>
+响应状态码：<br>
+常用的就40多个。<br>
+200(正常)  一切正常<br>
+302/307(临时重定向)<br>
+304(未修改)<br>
+表示客户机缓存的版本是最新的，客户机可以继续使用它，无需到服务器请求。<br>
+404(找不到)  服务器上不存在客户机所请求的资源。<br>
+500(服务器内部错误)</p>
+
+<h5 id="响应消息头">响应消息头</h5>
+
+<p>Location: <a href="http://www.it315.org/index.jsp%E6%8C%87%E7%A4%BA%E6%96%B0%E7%9A%84%E8%B5%84%E6%BA%90%E7%9A%84%E4%BD%8D%E7%BD%AE">http://www.it315.org/index.jsp指示新的资源的位置</a><br>
+通常和302/307一起使用，完成请求重定向<br>
+Server:apache tomcat指示服务器的类型<br>
+Content-Encoding: gzip服务器发送的数据采用的编码类型<br>
+Content-Length: 80 告诉浏览器正文的长度<br>
+Content-Language: zh-cn服务发送的文本的语言<br>
+Content-Type: text/html; charset=GB2312服务器发送的内容的MIME类型<br>
+Last-Modified: Tue, 11 Jul 2000 18:23:51 GMT文件的最后修改时间<br>
+Refresh: 1;url=<a href="http://www.it315.org%E6%8C%87%E7%A4%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%B7%E6%96%B0%E9%A2%91%E7%8E%87%E3%80%82%E5%8D%95%E4%BD%8D%E6%98%AF%E7%A7%92">http://www.it315.org指示客户端刷新频率。单位是秒</a><br>
+Content-Disposition: attachment; filename=aaa.zip指示客户端下载文件<br>
+Set-Cookie:SS=Q0=5Lb_nQ; path=/search服务器端发送的Cookie<br>
+Expires: -1<br>
+Cache-Control: no-cache (1.1)<br><br>
+Pragma: no-cache   (1.0)  表示告诉客户端不要使用缓存<br>
+Connection: close/Keep-Alive<br><br>
+Date: Tue, 11 Jul 2000 18:23:51 GMT</p>
+
+<h5 id="响应消息正文">响应消息正文</h5>
+
+<p>和网页右键“查看源码”看到的内容一样。</p>
+  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/03/14/xml&tomcat" data-title="xml&tomcat | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/03/08/jdbc" title="jdbc">
+  <strong>上一篇：</strong><br/>
+  <span>
+  jdbc</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/03/23/servlet"  title="servlet">
+ <strong>下一篇：</strong><br/> 
+ <span>servlet
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

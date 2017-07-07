@@ -1,0 +1,1206 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>js | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="js">
+    <meta property="og:url" content="/Blog/java/2017/02/22/js">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="js">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="js">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/02/22/js" title="js" itemprop="url">js</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-22 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-02-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="javascript常用对象">Javascript常用对象</h2>
+
+<h6 id="boolean-number">Boolean Number</h6>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>new Number(value)</td>
+<td>构造方法</td>
+</tr>
+<tr>
+<td>Number(value)</td>
+<td>创建函数</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>转换成string</td>
+</tr>
+<tr>
+<td>valueOf()</td>
+<td>拆装成原始类型</td>
+</tr>
+</tbody></table>
+
+<h6 id="string">String</h6>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>new String(value)</td>
+<td>创建对象</td>
+</tr>
+<tr>
+<td>String(value)</td>
+<td>构造函数</td>
+</tr>
+<tr>
+<td>length</td>
+<td>字符串长度</td>
+</tr>
+<tr>
+<td>charAt(index)</td>
+<td>获得指定下标的字符</td>
+</tr>
+<tr>
+<td>indexOf(str)</td>
+<td>查找指定字符串的下标</td>
+</tr>
+<tr>
+<td>lastIndexOf(str)</td>
+<td>从后查找指定字符串的下标</td>
+</tr>
+<tr>
+<td>split(value)</td>
+<td>分割成字符串数组</td>
+</tr>
+<tr>
+<td>substr(start,num)</td>
+<td>从start开始截取num个字符</td>
+</tr>
+<tr>
+<td>substring(start,end)</td>
+<td>从start开始截取到end字符</td>
+</tr>
+<tr>
+<td>toUpperCase()</td>
+<td>转换成大写</td>
+</tr>
+<tr>
+<td>toLowerCase()</td>
+<td>转换成小写</td>
+</tr>
+</tbody></table>
+
+<h6 id="array">Array</h6>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>new Array()</td>
+<td>构造方法</td>
+</tr>
+<tr>
+<td>new Array(size)</td>
+<td>构造方法</td>
+</tr>
+<tr>
+<td>new Array(element0, element1, ..., elementn)</td>
+<td>构造方法</td>
+</tr>
+<tr>
+<td>length</td>
+<td>数组长度</td>
+</tr>
+<tr>
+<td>join(str)</td>
+<td>用str拼接成字符串</td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>删除数组最后一个元素</td>
+</tr>
+<tr>
+<td>push(value)</td>
+<td>将value添加到数组尾部</td>
+</tr>
+<tr>
+<td>reverse()</td>
+<td>反转</td>
+</tr>
+<tr>
+<td>sort()</td>
+<td>排序</td>
+</tr>
+</tbody></table>
+
+<h6 id="date">Date</h6>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>new Date()</td>
+<td>当前时间</td>
+</tr>
+<tr>
+<td>new Date(millis)</td>
+<td>指定毫秒</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>Wed Feb 22 2017 16:13:31 GMT+0800 (CST)</td>
+</tr>
+<tr>
+<td>toLocaleString()</td>
+<td>2017/2/22 下午4:13:31</td>
+</tr>
+<tr>
+<td>getFullYear()</td>
+<td>年</td>
+</tr>
+<tr>
+<td>getMonth()</td>
+<td>月</td>
+</tr>
+<tr>
+<td>getDate()</td>
+<td>星期</td>
+</tr>
+<tr>
+<td>getDay()</td>
+<td>天</td>
+</tr>
+<tr>
+<td>getTime()</td>
+<td>毫秒</td>
+</tr>
+</tbody></table>
+
+<h6 id="math">Math</h6>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>abs</td>
+<td>绝对值</td>
+</tr>
+<tr>
+<td>ceil</td>
+<td>向上取整</td>
+</tr>
+<tr>
+<td>floor</td>
+<td>向下取整</td>
+</tr>
+<tr>
+<td>round</td>
+<td>四舍五入</td>
+</tr>
+<tr>
+<td>pow(x,y)</td>
+<td>x的y次幂</td>
+</tr>
+<tr>
+<td>randoom</td>
+<td>0-1之间的随机数</td>
+</tr>
+</tbody></table>
+
+<h6 id="regexp">Regexp</h6>
+
+<p><code>var reg=/^正则表达式$/;<br>
+reg.test(str) 判断字符串是否匹配正则表达式</code></p>
+
+<h2 id="在ecmascript中函数有以下几种创建方式">在ECMAScript中函数有以下几种创建方式</h2>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">function</span> <span class="nx">fun1</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"普通方式"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">fun1</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">fun2</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"匿名方式"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">fun2</span><span class="p">();</span>
+    <span class="kd">function</span> <span class="nx">fun3</span><span class="p">(</span><span class="nx">fun</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fun</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">fun3</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"匿名方式使用场景"</span><span class="p">)</span>
+    <span class="p">})</span>
+    <span class="kd">var</span> <span class="nx">fun4</span><span class="o">=</span><span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">,</span><span class="s2">"alert(a+b)"</span><span class="p">);</span>
+    <span class="nx">fun4</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
+    <span class="c1">//在javascript中有一个特殊的对象arguments,我们可以通过它来获取所有函数中的参数。</span>
+    <span class="kd">function</span> <span class="nx">fun5</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+           <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">fun5</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">fun6</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">;</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"return之后不执行"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">fun6</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">));</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="javascript全局函数">Javascript全局函数</h2>
+
+<h6 id="encodeuri-encodeuricomponent-和-escape">encodeURI encodeURIComponent 和 escape</h6>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">url</span><span class="o">=</span><span class="s2">"http://www.baidu.com?name=张三&amp;password=1234"</span><span class="p">;</span>
+<span class="c1">//http://www.baidu.com?name=%E5%BC%A0%E4%B8%89&amp;password=1234</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">encodeURI</span><span class="p">(</span><span class="nx">url</span><span class="p">));</span>
+<span class="c1">//http%3A%2F%2Fwww.baidu.com%3Fname%3D%E5%BC%A0%E4%B8%89%26password%3D1234</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">url</span><span class="p">));</span>
+<span class="c1">//http%3A//www.baidu.com%3Fname%3D%u5F20%u4E09%26password%3D1234</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">escape</span><span class="p">(</span><span class="nx">url</span><span class="p">));</span>
+</code></pre></div>
+<h6 id="eval">eval</h6>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">"var a=3;var b=4;alert(a+b)"</span><span class="p">;</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">print</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">eval</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">print</span><span class="p">(</span><span class="s2">"alert('代码注入')"</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="事件绑定">事件绑定</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"内嵌到标签中"</span> <span class="na">onclick=</span><span class="s">"alert('绑定事件:内嵌到标签中')"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"事件内嵌html中响应行为用函数封装"</span> <span class="na">onclick=</span><span class="s">"fn()"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"事件和响应都和html分离"</span> <span class="na">id=</span><span class="s">"btn"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">function</span> <span class="nx">fn</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"事件内嵌响应用函数封装"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"btn"</span><span class="p">).</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"事件和响应都和html分离"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="this">this</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">this经过事件传递给函数的是html标签对象
+</code></pre></div><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"btn"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"fun(this)"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">function</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>
+<h2 id="onchange">onchange</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"city"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"bj"</span><span class="nt">&gt;</span>北京<span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"tj"</span><span class="nt">&gt;</span>天津<span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"sh"</span><span class="nt">&gt;</span>上海<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;/select&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"area"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;option</span> <span class="nt">&gt;</span>海淀区<span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;option</span> <span class="nt">&gt;</span>朝阳区<span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;option</span> <span class="nt">&gt;</span>东城区<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+
+    <span class="kd">var</span> <span class="nx">select</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"city"</span><span class="p">);</span>
+    <span class="nx">select</span><span class="p">.</span><span class="nx">onchange</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">optionVal</span><span class="o">=</span><span class="nx">select</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">optionVal</span><span class="p">){</span>
+            <span class="k">case</span> <span class="s2">"bj"</span><span class="err">:</span>
+                <span class="kd">var</span> <span class="nx">area</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"area"</span><span class="p">);</span>
+                <span class="nx">area</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"&lt;option&gt;海淀区&lt;/option&gt;&lt;option&gt;朝阳区&lt;/option&gt;&lt;option&gt;东城区&lt;/option&gt;"</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">"tj"</span><span class="err">:</span>
+                <span class="kd">var</span> <span class="nx">area</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"area"</span><span class="p">);</span>
+                <span class="nx">area</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"&lt;option&gt;南开区&lt;/option&gt;&lt;option&gt;西青区&lt;/option&gt;&lt;option&gt;河西区&lt;/option&gt;"</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">"sh"</span><span class="err">:</span>
+                <span class="kd">var</span> <span class="nx">area</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"area"</span><span class="p">);</span>
+                <span class="nx">area</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"&lt;option&gt;浦东区&lt;/option&gt;&lt;option&gt;杨浦区&lt;/option&gt;"</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="onfocus和onblur">onfocus和onblur</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"txt"</span><span class="nt">&gt;</span>name<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"txt"</span><span class="nt">&gt;&lt;span</span> <span class="na">id=</span><span class="s">"hint"</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="kd">var</span> <span class="nx">txt</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"txt"</span><span class="p">);</span>
+        <span class="nx">txt</span><span class="p">.</span><span class="nx">onfocus</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">span</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"hint"</span><span class="p">);</span>
+            <span class="nx">span</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"用户名格式最少8位"</span><span class="p">;</span>
+            <span class="nx">span</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span><span class="o">=</span><span class="s2">"green"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">txt</span><span class="p">.</span><span class="nx">onblur</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">span</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"hint"</span><span class="p">);</span>
+            <span class="nx">span</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"对不起 格式不正确"</span><span class="p">;</span>
+            <span class="nx">span</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="onmouseover和onmouseout">onmouseover和onmouseout</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"d1"</span> <span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">var</span> <span class="nx">div</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"d1"</span><span class="p">);</span>
+    <span class="nx">div</span><span class="p">.</span><span class="nx">onmouseover</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span><span class="o">=</span><span class="s2">"green"</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="nx">div</span><span class="p">.</span><span class="nx">onmouseout</span><span class="o">=</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span><span class="o">=</span><span class="s2">"red"</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="onload">onload</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body</span> <span class="nt">&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"span"</span><span class="nt">&gt;&lt;/span&gt;</span>  
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"span"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"hello js"</span><span class="p">;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"span"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">"hello js"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+</code></pre></div>
+<h2 id="阻止事件的默认行为">阻止事件的默认行为</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://www.baidu. com"</span> <span class="na">onclick=</span><span class="s">"fun(event)"</span><span class="nt">&gt;</span>点击我把<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://www.baidu.com"</span> <span class="na">onclick=</span><span class="s">"return false"</span><span class="nt">&gt;</span>再点我<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">function</span> <span class="nx">fun</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="o">&amp;&amp;</span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">){</span><span class="c1">//W3C</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="p">}</span><span class="k">else</span> <span class="p">{</span><span class="c1">//IE</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">returnValue</span><span class="o">=</span><span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="阻止事件的传播">阻止事件的传播</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 100px;height: 100px;background-color: green;padding: 50px"</span>  <span class="na">onclick=</span><span class="s">"fun1()"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 100px;height: 100px;background-color: red"</span> <span class="na">onclick=</span><span class="s">"fun2(event)"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">function</span> <span class="nx">fun1</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"fun1"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">fun2</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"fun2"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="o">&amp;&amp;</span><span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">){</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+        <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">cancelBubble</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h2 id="window">window</h2>
+
+<h3 id="弹框方法">弹框方法</h3>
+<div class="highlight"><pre><code class="language-" data-lang="">提示框: alert("提示信息")
+确认框: confirm("确认信息) 返回值（true flase）
+     输入框: prompt("提示信息") 返回值（取消-null 确认-输入内容）
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">var</span> <span class="nx">res</span><span class="o">=</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"您确认要删除吗"</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span><span class="c1">//true flase</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="kd">var</span> <span class="nx">res</span><span class="o">=</span><span class="nx">prompt</span><span class="p">(</span><span class="s2">"请输入密码"</span><span class="p">);</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h3 id="open方法">open方法</h3>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nx">open</span><span class="p">(</span><span class="s2">"http://www.baidu.com"</span><span class="p">)</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h3 id="定时器">定时器</h3>
+
+<p>setTimeOut(function,millis)<br>
+   clearTimeOut(定时器名称)<br>
+   setInterval(function,millis)间隔millis执行一次function<br>
+   clearInterval()</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">"定时器"</span><span class="p">)</span>
+        <span class="p">},</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"span"</span><span class="nt">&gt;&lt;/span&gt;&lt;br&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"button"</span> <span class="na">onclick=</span><span class="s">"closeTime()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">fun</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">date</span><span class="o">=</span><span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"span"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span><span class="o">+</span><span class="s2">":"</span><span class="o">+</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>
+            <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">fun</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">fun</span><span class="p">();</span>
+        <span class="kd">function</span> <span class="nx">closeTime</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">fun</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"span"</span><span class="nt">&gt;&lt;/span&gt;&lt;br&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"button"</span> <span class="na">onclick=</span><span class="s">"stop()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="kd">var</span> <span class="nx">id</span><span class="o">=</span><span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="kd">var</span> <span class="nx">date</span><span class="o">=</span><span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"span"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span><span class="o">+</span><span class="s2">":"</span><span class="o">+</span><span class="nx">date</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">();</span>
+        <span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="kd">function</span> <span class="nx">stop</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
+    恭喜您注册成功，<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"span"</span> <span class="na">style=</span><span class="s">"color: red;"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/span&gt;</span>秒后跳转到首页，如果不跳转请<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>点击这里<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="kd">var</span> <span class="nx">num</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">id</span><span class="o">=</span><span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">num</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"span"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=--</span><span class="nx">num</span><span class="p">;</span>
+            <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+                <span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"http://www.baidu.com"</span><span class="p">;</span>
+            <span class="p">}</span>
+
+        <span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+<h3 id="location">location</h3>
+
+<p>location.href=&quot;跳转url&quot;;</p>
+
+<h3 id="history">history</h3>
+
+<p>back();后退<br>
+forward();前进<br>
+go();</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"上一页"</span> <span class="na">onclick=</span><span class="s">"history.back()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"下一页"</span> <span class="na">onclick=</span><span class="s">"history.forward()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"上一页"</span> <span class="na">onclick=</span><span class="s">"history.go(-1)"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"下一页"</span> <span class="na">onclick=</span><span class="s">"history.go(1)"</span><span class="nt">&gt;</span>
+</code></pre></div>
+<h2 id="dom的结构">dom的结构</h2>
+
+<p>window --&gt; document ---&gt; 根标签<code>&lt;html&gt;</code>---&gt;元素<code>&lt;head&gt;</code>+元素<code>&lt;body&gt;</code></p>
+
+<h2 id="dom属性和方法">dom属性和方法</h2>
+
+<table><thead>
+<tr>
+<th>方法</th>
+<th>备注</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>document.getElementById(id)</td>
+<td>通过id获得元素节点对象</td>
+</tr>
+<tr>
+<td>document.getElementsByName(name)</td>
+<td>通过属性name获得节点对象集合</td>
+</tr>
+<tr>
+<td>document.getElementsByTagName(tag)</td>
+<td>通过标签名称获得元素节点的集合</td>
+</tr>
+<tr>
+<td>element.hasChildNodes()</td>
+<td>元素是否含有子节点</td>
+</tr>
+<tr>
+<td>node.nodeName</td>
+<td>文本[返回#text</td>
+</tr>
+<tr>
+<td>node.nodeType</td>
+<td>文本-3 标签-1 属性-2</td>
+</tr>
+<tr>
+<td>node.nodeValue</td>
+<td>标签-null 文本-文本内容 属性-属性值</td>
+</tr>
+<tr>
+<td>node.replaceChild(new,old)</td>
+<td>父节点替换子节点</td>
+</tr>
+<tr>
+<td>element.getAttribute(name)</td>
+<td>返回属性值</td>
+</tr>
+<tr>
+<td>element.setAttribute(&quot;key&quot;,&quot;value&quot;)</td>
+<td>修改属性值</td>
+</tr>
+<tr>
+<td>document.createElement(tagName)</td>
+<td>创建标签</td>
+</tr>
+<tr>
+<td>document.createTextNode(str)</td>
+<td>创建文本节点</td>
+</tr>
+<tr>
+<td>parent.appendChild(child)</td>
+<td>添加子节点</td>
+</tr>
+<tr>
+<td>parent.insertBefore(new,old)</td>
+<td>在old前面添加子节点</td>
+</tr>
+<tr>
+<td>nextSibling</td>
+<td>下一个兄弟节点</td>
+</tr>
+<tr>
+<td>parent.removeChild(child)</td>
+<td>删除子节点</td>
+</tr>
+<tr>
+<td>innerHTML</td>
+<td>获取对象的内容 或 向对象插入内容</td>
+</tr>
+<tr>
+<td>innerText</td>
+<td>和innerHTML一样 但是去除Html标签</td>
+</tr>
+</tbody></table>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"btn"</span><span class="p">).</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">select</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"select"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">ops</span><span class="o">=</span><span class="nx">select</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"option"</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">ops</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">op</span><span class="o">=</span><span class="nx">ops</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">selected</span><span class="p">){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">op</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">var</span> <span class="nx">e</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"h1"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">txt</span><span class="o">=</span><span class="nx">e</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">;</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">txt</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">);</span>
+    <span class="nx">txt</span><span class="p">.</span><span class="nx">nodeValue</span><span class="o">=</span><span class="s2">"明天要上班"</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">arr</span><span class="o">=</span><span class="nx">e</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">nodeValue</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">var</span> <span class="nx">bj</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bj"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">fk</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"fk"</span><span class="p">);</span>
+    <span class="nx">bj</span><span class="p">.</span><span class="nx">onclick</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">bj</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">fk</span><span class="p">,</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"btn"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="kd">var</span> <span class="nx">btn</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"btn"</span><span class="p">);</span>
+    <span class="nx">btn</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"value"</span><span class="p">,</span><span class="s2">"按钮"</span><span class="p">);</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">btn</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"value"</span><span class="p">));</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div><div class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+<span class="c1">// 创建新的节点 &lt;li id="tj" name="tianjin"&gt;天津&lt;/li&gt;</span>
+<span class="kd">var</span> <span class="nx">li</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"li"</span><span class="p">);</span>
+<span class="nx">li</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span><span class="s2">"tj"</span><span class="p">);</span>
+<span class="nx">li</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="s2">"tianjin"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">txt</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">"天津"</span><span class="p">);</span>
+<span class="nx">li</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">txt</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">cq</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"cq"</span><span class="p">);</span>
+<span class="c1">// 在 &lt;li id="cq" name="chongqing"&gt;重庆&lt;/li&gt;的前面</span>
+<span class="nx">cq</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">li</span><span class="p">,</span><span class="nx">cq</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/02/22/js" data-title="js | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/02/10/html" title="html">
+  <strong>上一篇：</strong><br/>
+  <span>
+  html</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/22/mysql02"  title="Mysql02">
+ <strong>下一篇：</strong><br/> 
+ <span>Mysql02
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

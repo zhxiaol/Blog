@@ -1,0 +1,809 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>hibernate log4j和二级缓存 | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="hibernate log4j和二级缓存">
+    <meta property="og:url" content="/Blog/java/2017/05/23/Hibernate04">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="hibernate log4j和二级缓存">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="hibernate log4j和二级缓存">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/05/23/Hibernate04" title="hibernate log4j和二级缓存" itemprop="url">hibernate log4j和二级缓存</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-23 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-05-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="hibernate中的log4j配置">Hibernate中的log4j配置</h2>
+
+<ol>
+<li>添加jar包 slf4j-log4j12-xx.jar log4j-1.2.16.jar</li>
+<li>添加log4j.properties设置
+## Hibernate中配置一对一
+###### 外键的方式
+```
+public class Address {
+private Integer id;
+private String name;
+private Company company;
+}
+//Address.hbm.xml
+&lt;!--unique 外键唯一--&gt;
+<many-to-one name="company" class="Company" column="cid" unique="true"/></li>
+</ol>
+
+<p>public class Company {<br>
+    private Integer id;<br>
+    private String name;<br>
+    private Address address;<br>
+}</p>
+
+<p>//Company.hbm.xml</p>
+
+<!--配置一对-->
+
+<!--one to one 默认使用主键同步策略完成-->
+
+<!--property-ref 指定company一对一关联时指向那个属性-->
+
+<p><one-to-one name="address" class="Address" property-ref="company"></one-to-one></p>
+
+<p>//Demo1<br>
+//保存一对一<br>
+@Test<br>
+public void fun1(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Company company = new Company();<br>
+    company.setName(&quot;传智播客&quot;);<br>
+    Address address = new Address();<br>
+    address.setName(&quot;金燕龙&quot;);<br>
+    //在一对一使用外键时，外键所在的才能维护关系，另一方无法维护关系<br>
+    address.setCompany(company);<br>
+    session.save(company);<br>
+    session.save(address);</p>
+<div class="highlight"><pre><code class="language-" data-lang="">ts.commit();
+session.close();
+</code></pre></div>
+<p>}<br>
+@Test<br>
+public void fun2(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Company c = (Company) session.get(Company.class, 1);<br>
+    System.out.println(c);<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+###### 主键同步
+</code></pre></div>
+<p>//Address.hbm.xml<br>
+<id name="id" column="id" type="int"><br>
+    &lt;!--foreign既是主键又是外键--&gt;<br>
+    <generator class="foreign"><br>
+        &lt;!--作为外键时引用那个属性--&gt;<br>
+        <param name="property">company</param><br>
+    </generator><br>
+</id></p>
+
+<!--constrained主键约束-->
+
+<p><one-to-one name="company" class="Company" constrained="true"></one-to-one></p>
+
+<p>//company.hbm.xml<br>
+<one-to-one name="address" class="Address" ></one-to-one></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## 二级缓存
+&gt; 级别:transactional(事务型) read-write(读写型) nostrict-read-write(非常严格的读写型)  read-only(只读型)
+&gt; 应用场景:很少被修改，不是很重要，经常被读取。
+
+## eacache
+</code></pre></div>
+<p>eacache使用步骤<br>
+    |<br>
+    |--导入jar包<br>
+    |    |<br>
+    |    |--backport-util-concurrent-2.1.jar 依赖<br>
+    |    |--commons-loggin-1.1.1.jar 依赖<br>
+    |    |--ehcache-1.5.0.jar 核心<br>
+    |<br>
+    |--开启二级缓存(hibernate.cfg.xml中)<br>
+    |    |<br>
+    |    |--<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property><br>
+    |    |--<property name="hibernate.cache.use_second_level_cache">true</property><br>
+    |<br>
+    |<br>
+    |--确定缓存内容(hibernate.cfg.xml中)<br>
+         |<br>
+         |--<class-cache class="Customer" usage="read-only"></class-cache></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+###### 二级缓存:类缓存
+
+</code></pre></div>
+<p>//hibernate.cfg.xml</p>
+
+<!--配置二级缓存-->
+
+<p><property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property><br>
+<property name="hibernate.cache.use_second_level_cache">true</property><br>
+<mapping resource="com/itheima/domain/Customer_hbm.xml"></mapping><br>
+<mapping resource="com/itheima/domain/Order_hbm.xml"></mapping><br>
+<class-cache class="com.itheima.domain.Customer" usage="read-only"></class-cache><br>
+<class-cache class="com.itheima.domain.Order" usage="read-only"></class-cache></p>
+
+<p>//类缓存<br>
+@Test<br>
+public void fun1(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
+    session.clear();//清空一级缓存<br>
+    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
+    System.out.println(c1==c2);//false 二级缓存数据并不是以对象形式缓存。缓存的对象的散列<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+###### 二级缓存:集合缓存
+</code></pre></div>
+<p>//Hibernate.cfg.xml</p>
+
+<!--集合缓存配置-->
+
+<p><collection-cache collection="com.itheima.domain.Customer.orders" usage="read-only"></collection-cache></p>
+
+<p>//集合缓存<br>
+@Test<br>
+public void fun1(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
+    for(Order o:c1.getOrders()){<br>
+        System.out.println(o.getName());<br>
+    }<br>
+    session.clear();<br>
+    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
+    for(Order o:c2.getOrders()){<br>
+        System.out.println(o.getName());<br>
+    }<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">###### 二级缓存:查询缓存(HQL缓存)
+</code></pre></div>
+<p>//Hibernate.cfg.xml</p>
+
+<!--开启查询缓存-->
+
+<p><property name="hibernate.cache.use_query_cache">true</property></p>
+
+<p>//HQL查询缓存<br>
+@Test<br>
+public void fun1(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Query query = session.createQuery(&quot;from Customer &quot;);<br>
+    //使用二级缓存，查询时先从二级缓存中去结果，如果取不到执行语句将结果放到二级缓存中<br>
+    query.setCacheable(true);<br>
+    List<Customer> list = query.list();<br>
+    session.clear();<br>
+    Query query2 = session.createQuery(&quot;from Customer &quot;);<br>
+    query2.setCacheable(true);<br>
+    List list2 = query2.list();<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+###### 时间戳区
+&gt; 记录的是表和最后操作的时间
+&gt; 判断二级缓存的时效性
+</code></pre></div>
+<p>//时间戳区<br>
+@Test<br>
+public void fun1(){<br>
+    Session session = HibernateUtil.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    Customer c1 = (Customer) session.get(Customer.class, 1);<br>
+    session.createQuery(&quot;update Customer  set name =:name where id=:id&quot;)<br>
+            .setString(&quot;name&quot;,&quot;rose&quot;).setInteger(&quot;id&quot;,1)<br>
+            .executeUpdate();<br>
+    session.clear();<br>
+    Customer c2 = (Customer) session.get(Customer.class, 1);<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## ehcache二级缓存配置
+&gt; ehcache-1.5.0.jar 中 ehcache-failsafe.xml 复制到src下改名ehcache.xml
+</code></pre></div>
+<p>maxElementsInMemory=&quot;10000&quot;  内存最大数<br>
+eternal=&quot;false&quot;  是否永久（内存常驻留）<br>
+timeToIdleSeconds=&quot;120&quot; 最多空闲多少秒<br>
+timeToLiveSeconds=&quot;120&quot; 最多存活多少秒<br>
+overflowToDisk=&quot;true&quot;  内存满了，是否写入到硬盘<br>
+maxElementsOnDisk=&quot;10000000&quot;  硬盘最大数<br>
+diskPersistent=&quot;false&quot;  关闭JVM，是否将内存保存硬盘中<br>
+diskExpiryThreadIntervalSeconds=&quot;120&quot;  轮询<br>
+memoryStoreEvictionPolicy=&quot;LRU&quot; 移出策略 LRU最近最少使用 LFU最不常用 FIFO先进先出</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+</code></pre></div>
+<p><ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd"><br>
+    &lt;!--缓存路径--&gt;<br>
+    <diskStore path="java.io.tmpdir"/><br>
+    <defaultCache<br>
+            maxElementsInMemory="10000"<br>
+            eternal="false"<br>
+            timeToIdleSeconds="120"<br>
+            timeToLiveSeconds="120"<br>
+            overflowToDisk="true"<br>
+            maxElementsOnDisk="10000000"<br>
+            diskPersistent="false"<br>
+            diskExpiryThreadIntervalSeconds="120"<br>
+            memoryStoreEvictionPolicy="LRU"<br>
+            /></p>
+
+<p></ehcache></p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/05/23/Hibernate04" data-title="hibernate log4j和二级缓存 | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/05/22/Hibernate03" title="hibernate 多对多关系,加载策略,查询总结和事务连接池">
+  <strong>上一篇：</strong><br/>
+  <span>
+  hibernate 多对多关系,加载策略,查询总结和事务连接池</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/05/25/Spring01"  title="Spring IOC控制反转和依赖注入">
+ <strong>下一篇：</strong><br/> 
+ <span>Spring IOC控制反转和依赖注入
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

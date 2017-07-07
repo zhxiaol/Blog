@@ -1,0 +1,1053 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>hibernate对象状态,一级缓存和多表关联 | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="hibernate对象状态,一级缓存和多表关联">
+    <meta property="og:url" content="/Blog/java/2017/05/18/Hibernate02">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="hibernate对象状态,一级缓存和多表关联">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="hibernate对象状态,一级缓存和多表关联">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/05/18/Hibernate02" title="hibernate对象状态,一级缓存和多表关联" itemprop="url">hibernate对象状态,一级缓存和多表关联</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-18 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-05-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="对象状态">对象状态</h2>
+
+<ol>
+<li>瞬时状态|临时态
+&gt; 1.没有于Hibernate产生关联 2.与数据的记录没有产生关联(有关联就是与数据库id有对应)</li>
+<li>持久态
+&gt; 1.于Hibernate有关联，2.与数据库有关联(对象有id对应)</li>
+<li>游离态|托管态
+&gt; 1.与Hibernate没有关联 2.跟数据库有关联(曾经是持久态)</li>
+</ol>
+
+<p>对象状态特点</p>
+
+<ol>
+<li>session.evict(obj) 移除对象和数据库的关联</li>
+<li>Hibernate会自动将持久化状态对象的变化同步到数据库中</li>
+<li>持久态的id是不允许修改的
+```
+@Test
+public void fun1(){
+Session session = HibernateUtils.openSession();
+Transaction ts = session.beginTransaction();
+User u=new User();//瞬时态
+u.setName(&quot;大黄蜂&quot;);//瞬时态
+u.setPassword(&quot;12345&quot;);//瞬时态
+session.save(u);//持久态
+ts.commit();//持久态
+session.close();
+//游离态</li>
+</ol>
+
+<p>}<br>
+//瞬时==》持久<br>
+@Test<br>
+public void fun2(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u=new User();<br>
+    u.setName(&quot;柯镇恶&quot;);<br>
+    u.setPassword(&quot;4567&quot;);<br>
+    /***<br>
+     * save方法会使用主键生成策略，为User指定id,插入数据 打印insert语句<br>
+     * 如果是incrment的策略 会打印select max(id) from  语句<br>
+     * 如果是assigned 报错,save方法之前要手动指定id<br>
+     */</p>
+<div class="highlight"><pre><code class="language-" data-lang="">session.save(u);
+
+ts.commit();
+session.close();
+</code></pre></div>
+<p>}<br>
+//瞬时==&gt;游离<br>
+//瞬时：没有关联，没有id<br>
+//游离:没有关联，有id<br>
+@Test<br>
+public void fun3(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u=new User();<br>
+    u.setId(2);<br>
+    ts.commit();<br>
+}<br>
+//持久==&gt;瞬时<br>
+//持久:有关联，有id<br>
+//瞬时:无关联，无id<br>
+public void fun4(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    session.close();<br>
+    user.setId(null);<br>
+}<br>
+//持久==&gt;瞬时<br>
+//持久:有关联，有id<br>
+//瞬时:无关联，无id<br>
+public void fun5(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    session.evict(user);<br>
+    user.setId(null);<br>
+    session.save(user);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//持久==》游离<br>
+//持久:有关联，有ID<br>
+//游离:无管理，无ID<br>
+public void fun6(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    User u = (User) session.get(User.class, 2);<br>
+    session.evict(u);<br>
+}<br>
+//游离==》瞬时<br>
+public void fun7(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u = (User) session.get(User.class, 2);<br>
+    u.setId(null);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//游离==&gt;持久<br>
+public void fun8(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u = (User) session.get(User.class, 2);<br>
+    session.evict(u);<br>
+    session.update(u);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+public void fun9(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    user.setName(&quot;自动同步&quot;);//<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## 一级缓存
+缓存:Hibernate中野村缓存，Hibernate中存在的缓存也是用来提高效率的
+Hibernate中存在两种缓存
+1.线程级别缓存 session缓存
+2.进程级别的缓存 Hibernate 二级缓存
+session缓存：就是session对象中存在的缓存，缓存中存在的持久化状态 map&lt;Serializable,Object&gt;
+快照:get方法。数据库取得数据时一式两份 缓存和快照 将缓存返回 当update时候比对快照是否做了修改。如果自己创建的对象， 没有快照 close的时候执行update语句更新
+持久化状态:本质就是存在缓存中的对象，就是持久化状态。
+</code></pre></div>
+<p>public void fun1(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u1 = (User) session.get(User.class, 2);<br>
+    User u2 = (User) session.get(User.class, 2);//再次查找不会执行语句，会从缓存中查找<br>
+    User u3 = (User) session.get(User.class, 2);<br>
+    System.out.println(u1==u2);<br>
+    System.out.println(u1==u3);<br>
+    session.getTransaction().commit();<br>
+    session.close();<br>
+}<br>
+@Test<br>
+public void fun2(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u1 = (User) session.get(User.class, 2);<br>
+    session.update(u1);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+@Test<br>
+public void fun3(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User u1 = new User();<br>
+    u1.setId(2);<br>
+    u1.setName(&quot;擎天柱&quot;);<br>
+    u1.setPassword(&quot;1234&quot;);<br>
+    session.update(u1);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+public void fun4(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    user.setName(&quot;张三&quot;);<br>
+    session.update(user);<br>
+    user.setName(&quot;李四&quot;);<br>
+    session.update(user);<br>
+    user.setName(&quot;赵六&quot;);<br>
+    session.update(user);<br>
+    ts.commit();<br>
+    session.close();<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">#### 一级缓存细节
+1. HQL语句批量查询时，查询结果是否进入缓存，再次查询会比对缓存对象是否需要封装成对象
+1. SQL查询 如果把查询结果封装到对象中，放入缓存结果了
+1. criterira 会将查询结果放入一级缓存，再次查询会比对缓存对象是否需要封装成对象
+</code></pre></div>
+<p>//HQL语句批量查询时，查询结果是否进入缓存，不会使用一级缓存<br>
+@Test<br>
+public void fun2(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    List<User> list1 = session.createQuery(&quot;from User&quot;).list();<br>
+    List<User> list2 = session.createQuery(&quot;from User&quot;).list();<br>
+    List<User> list3 = session.createQuery(&quot;from User&quot;).list();<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//HQL语句批量查询时，查询结果是否进入缓存 结果会放入缓存中<br>
+//HQL查询是否会使用一级缓存,HQL不会使用一级缓存<br>
+@Test<br>
+public void fun3(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    List<User> list1 = session.createQuery(&quot;from User&quot;).list();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//SQL查询 如果把查询结果封装到对象中，放入缓存结果了。<br>
+@Test<br>
+public void fun4(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    List<User> list1 = session.createSQLQuery(&quot;select * from t_user&quot;).addEntity(User.class).list();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//不封装成对象不会放入一级缓存<br>
+@Test<br>
+public void fun5(){<br>
+    Session session = HibernateUtils.openSession();<br>
+    Transaction ts = session.beginTransaction();<br>
+    List list1 = session.createSQLQuery(&quot;select * from t_user&quot;).list();<br>
+    User user = (User) session.get(User.class, 2);<br>
+    ts.commit();<br>
+    session.close();<br>
+}<br>
+//criterira 会将查询结果放入一级缓存，但是查询不会使用一级缓存</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## 一对多
+</code></pre></div>
+<!--表达一对多集合-->
+
+<p><set name="orders" inverse="true">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;<br>
+    <key column="cid"></key>&lt;!--外键的值--&gt;<br>
+    <one-to-many class="Order"/>&lt;!--对应关系--&gt;<br>
+</set></p>
+
+<p><many-to-one name="customer" class="Customer" column="cid"/></p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+</code></pre></div>
+<p>//Customer<br>
+public class Customer implements Serializable {<br>
+    private Integer cid;<br>
+    private String name;<br>
+    private Set<Order> orders=new HashSet&lt;&gt;();<br>
+}<br>
+//Customer.hbm.xml<br>
+<hibernate-mapping package="com.itheima.domain"><br>
+    <class name="Customer" table="t_customer" dynamic-insert="true" dynamic-update="true"><br>
+        <id name="cid" column="cid" type="int"><br>
+            <generator class="native"></generator><br>
+        </id><br>
+        <property name="name" column="name" type="string"></property><br>
+        &lt;!--表达一对多集合--&gt;<br>
+        <set name="orders" inverse="true">&lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&gt;<br>
+            <key column="cid"></key>&lt;!--外键的值--&gt;<br>
+            <one-to-many class="Order"/>&lt;!--对应关系--&gt;<br>
+        </set><br>
+    </class><br>
+</hibernate-mapping></p>
+
+<p>//Order.java<br>
+public class Order {<br>
+    private Integer id;<br>
+    private String name;<br>
+    private Customer customer=new Customer();<br>
+}</p>
+
+<p>//Order.hbm.xml<br>
+<hibernate-mapping package="com.itheima.domain"><br>
+    <class name="Order" table="t_order"><br>
+        <id name="id" column="id" type="int"><br>
+            <generator class="native" /><br>
+        </id><br>
+        <property name="name" column="name" type="string"/><br>
+        <many-to-one name="customer" class="Customer" column="cid"/><br>
+    </class><br>
+</hibernate-mapping></p>
+
+<p>//demo1.java<br>
+public class Demo1 {<br>
+    //指定关系游其中一方来维护，另一方不维护，有外键的一方来维护<br>
+    @Test<br>
+    public void fun1(){<br>
+        Session session = HibernateUtils.openSession();<br>
+        Transaction ts = session.beginTransaction();<br>
+        Customer c=new Customer();<br>
+        c.setName(&quot;tom&quot;);<br>
+        Order o1=new Order();<br>
+        o1.setName(&quot;肥皂&quot;);<br>
+        Order o2=new Order();<br>
+        o2.setName(&quot;蜡烛&quot;);<br>
+//        c.getOrders().add(o1);//维护关系<br>
+//        c.getOrders().add(o2);//维护关系<br>
+        o1.setCustomer(c);//维护关系<br>
+        o2.setCustomer(c);//维护关系<br>
+        session.save(c);<br>
+        session.save(o1);<br>
+        session.save(o2);<br>
+        ts.commit();<br>
+        session.close();<br>
+    }<br>
+    //删除用户时，会先移除Customer中引用的外键，然后再删除customer<br>
+    //维护一方的对象,会自动维护另一方的关系<br>
+    @Test<br>
+    public void fun2(){<br>
+        Session session = HibernateUtils.openSession();<br>
+        Transaction ts = session.beginTransaction();<br>
+        Customer c = (Customer) session.get(Customer.class, 2);<br>
+        if(c!=null) {<br>
+            Set<Order> orders = c.getOrders();<br>
+            for (Order o : orders) {<br>
+                o.setCustomer(null);<br>
+            }<br>
+            session.delete(c);<br>
+            ts.commit();<br>
+            session.close();<br>
+        }<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+</code></pre></div>
+<p>表达一对多关系<br>
+    |<br>
+    |--Bean.hbm.xml<br>
+            |<br>
+            |--<set></set>标签<br>
+                 |<br>
+                 |--name:关系的字段名<br>
+                 |--inverse:是否放弃维护外键<br>
+                 |--cascade:<br>
+                 |      |<br>
+                 |      |--save-update:级联保存和修改<br>
+                 |      |--delete:级联删除<br>
+                 |      |--delete-orphan:孤儿删除 当没有任何外键引用Order时，Order 会被删除<br>
+                 |      |--all:save-update和delete整合<br>
+                 |      |--all-delete-orphan:save-update,delete和delete-orphan整合<br>
+                 |<br>
+                 |<br>
+                 |--<key></key>标签<br>
+                 |      |<br>
+                 |      |--cloumn:外键字段<br>
+                 |<br>
+                 |--<one-to-many/>一对多关系<br>
+                        |<br>
+                        |--class:对应的javaBean</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>//Demo2.java<br>
+ //增<br>
+    //我们希望在保存Customer时,自动将未保存的Orders当中的Order保存<br>
+    //cascade: save-update<br>
+    @Test<br>
+    public void fun1(){<br>
+        Session session = HibernateUtils.openSession();<br>
+        Transaction ts = session.beginTransaction();<br>
+        Customer c=new Customer();<br>
+        c.setName(&quot;tom&quot;);<br>
+        Order o1=new Order();<br>
+        o1.setName(&quot;肥皂&quot;);<br>
+        Order o2=new Order();<br>
+        o2.setName(&quot;蜡烛&quot;);<br>
+        c.getOrders().add(o1);<br>
+        c.getOrders().add(o2);<br>
+//        o1.setCustomer(c);//维护关系<br>
+//        o2.setCustomer(c);//维护关系<br>
+        session.save(c);<br>
+        ts.commit();<br>
+        session.close();<br>
+    }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">//增
+//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存
+//cascade: save-update
+@Test
+public void fun2(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Customer c = (Customer) session.get(Customer.class, 3);
+    if(c!=null){
+        Set&lt;Order&gt; orders = c.getOrders();
+        for(Order o:orders){
+            o.setName("哇哈哈");
+        }
+    }
+    ts.commit();//因为设置级联修改,自动将订单的修改保存到数据
+    session.close();
+}
+
+//cascade: delete
+//删除Customer时 ,会将Customer下的订单一并删除
+//inverse : false   6条sql语句
+//inverse : true    5条sql语句 比上面少一条维护外键
+@Test
+public void fun3(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Customer c = (Customer) session.get(Customer.class, 8);
+    session.delete(c);
+    ts.commit();
+    session.close();
+}
+
+/**
+ * cascade:delete
+ * 操作的两方值都为delete
+ * 需要注意:千万不要在两方都配置级删除，删除任何一方，会导致整个关系链对象全部删除
+ */
+@Test
+public void fun4(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Order o = (Order) session.get(Order.class, 13);
+    session.delete(o);//delete删除当前order
+                      //找到所有关联的Customer 删除
+                      //删除Customer会删除关联的所有的order再删除Customer
+    ts.commit();
+    session.close();
+}
+</code></pre></div>
+<p>//demo3.java<br>
+public class Demo3 {<br>
+    //cascade:delete-orphan 孤儿删除 当没有任何外键引用Order时，Order 会被删除<br>
+    @Test<br>
+    public void fun1(){<br>
+        Session session = HibernateUtils.openSession();<br>
+        Transaction ts = session.beginTransaction();<br>
+        Customer c = (Customer) session.get(Customer.class, 12);<br>
+        Iterator<Order> it = c.getOrders().iterator();//获得所有用户下的订单,将订单移出集合 维护关系<br>
+        while (it.hasNext()){<br>
+            it.next();<br>
+            it.remove();<br>
+        }<br>
+        ts.commit();<br>
+        session.close();<br>
+    }<br>
+}</p>
+
+<p>//Demo4.java<br>
+public class Demo4 {<br>
+    @Test<br>
+    //cascade:all-delete-orhan=save-update+delete+delete-orphan<br>
+    public void fun1(){<br>
+        Session session = HibernateUtils.openSession();<br>
+        Transaction ts = session.beginTransaction();<br>
+        Customer c=new Customer();<br>
+        c.setName(&quot;tom&quot;);<br>
+        Order o1=new Order();<br>
+        o1.setName(&quot;肥皂&quot;);<br>
+        Order o2=new Order();<br>
+        o2.setName(&quot;蜡烛&quot;);<br>
+        c.getOrders().add(o1);<br>
+        c.getOrders().add(o2);<br>
+        session.save(c);<br>
+        ts.commit();<br>
+        session.close();<br>
+    }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">@Test
+public void fun2(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Customer c = (Customer) session.get(Customer.class, 14);
+    session.delete(c);
+    ts.commit();
+    session.close();
+}
+
+@Test
+public void fun3(){
+    Session session = HibernateUtils.openSession();
+    Transaction ts = session.beginTransaction();
+    Customer c = (Customer) session.get(Customer.class, 15);
+    Iterator&lt;Order&gt; it = c.getOrders().iterator();
+    while (it.hasNext()){
+        it.next();
+        it.remove();
+    }
+    ts.commit();
+    session.close();
+}
+</code></pre></div>
+<p>}</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/05/18/Hibernate02" data-title="hibernate对象状态,一级缓存和多表关联 | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/05/16/Hibernate01" title="Hibernate配置和api">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Hibernate配置和api</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/05/22/Hibernate03"  title="hibernate 多对多关系,加载策略,查询总结和事务连接池">
+ <strong>下一篇：</strong><br/> 
+ <span>hibernate 多对多关系,加载策略,查询总结和事务连接池
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

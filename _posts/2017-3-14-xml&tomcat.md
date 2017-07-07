@@ -5,7 +5,7 @@ tags:
 - java
 
 categories: java
-description:xml&tomcat
+description: xml&tomcat
 ---
 ## XML Xtensible Markup Language 可扩展标记语言
 > 可扩展:所有标签自定义

@@ -5,7 +5,7 @@ tags:
 - java
 
 categories: java
-description:webService
+description: webService
 ---
 ## Webservice
 * Webservice就是一种远程调用技术，他的作用就是从远程系统中获取业务数据

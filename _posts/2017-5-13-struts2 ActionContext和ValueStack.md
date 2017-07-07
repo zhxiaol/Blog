@@ -5,7 +5,7 @@ tags:
 - java
 
 categories: java
-description:struts2 ActionContext和ValueStack
+description: struts2 ActionContext和ValueStack
 ---
 ## contextMap
 > 在每次动作执行之前核心控制器StrutsPrepareAndExecuteFilter都会创建ActionContext和ValueStack对象，且每次访问都会创建

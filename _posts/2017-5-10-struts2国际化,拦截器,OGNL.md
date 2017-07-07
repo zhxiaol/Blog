@@ -5,7 +5,7 @@ tags:
 - java
 
 categories: java
-description:struts2国际化,拦截器,OGNL
+description: struts2国际化,拦截器,OGNL
 ---
 File failed to load: /extensions/MathMenu.js
 ## 国际化

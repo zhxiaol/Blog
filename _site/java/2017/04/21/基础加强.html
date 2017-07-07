@@ -1,0 +1,914 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>基础加强 | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="基础加强">
+    <meta property="og:url" content="/Blog/java/2017/04/21/%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="基础加强">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="基础加强">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/04/21/%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA" title="基础加强" itemprop="url">基础加强</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-04-21 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-04-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h2 id="代理模式">代理模式</h2>
+
+<blockquote>
+<p>Proxy Pattern(代理模式) 代理对象可以再客户端和目标对象之间起到中介的作用</p>
+
+<ul>
+<li>职责清晰</li>
+<li>中介作用保护了目标对象的作用</li>
+<li>高扩展性
+结构: 代理对象和目标对象实现同一个接口
+###### 静态代理
+```
+//出租者
+public interface Lessor {
+public void hire();
+public void collectRent();
+}
+//业主
+public class Owner implements Lessor{
+public void hire(){
+    System.out.println(&quot;业主出租房子&quot;);
+}
+public void collectRent(){
+    System.out.println(&quot;收房租&quot;);
+}
+}
+//中介
+public class Agent implements Lessor{
+private Lessor ower;
+public Agent(Lessor lessor){
+    ower=lessor;
+}</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre><code class="language-" data-lang="">@Override
+public void hire() {
+    System.out.println("挂到网上出租房子");
+    ower.hire();
+}
+
+@Override
+public void collectRent() {
+    System.out.println("收取中介费");
+    ower.collectRent();
+}
+</code></pre></div>
+<p>}<br>
+//客户<br>
+public class Client {<br>
+    public static void main(String[] args) {<br>
+        Owner owner = new Owner();<br>
+        Agent agent = new Agent(owner);<br>
+        Lessor proxy= (Lessor) Proxy.newProxyInstance(owner.getClass().getClassLoader(), owner.getClass().getInterfaces(), new InvocationHandler() {<br>
+            @Override<br>
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {<br>
+                return method.invoke(owner,args);<br>
+            }<br>
+        });<br>
+        proxy.hire();<br>
+        proxy.collectRent();<br>
+        agent.hire();<br>
+        agent.collectRent();<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">### 动态代理
+&gt; 直接通过反射生成一个代理对象，没有具体的代理类
+&gt; Proxy类可以实现，cglib(spring)
+</code></pre></div>
+<p>Proxy动态代理<br>
+    |<br>
+    |--产生代理类的实例<br>
+    |       |<br>
+    |       |--Proxy.newProxyInstance(classLoader,interfaces,invocationHandler);<br>
+    |<br>
+    |--ClassLoader:类加载器，固定写法和被代理类使用相同的即可<br>
+    |<br>
+    |<br>
+    |--Class[]interface:代理类要实现的接口，固定写法，和被代理类使用相同即可<br>
+    |<br>
+    |<br>
+    |--InvocationHandler:策略设计模式的应用<br>
+            |<br>
+            |--invoke(Object proxy,Method method,Object[]args)<br>
+                    |<br>
+                    |--proxy:代理对象本身的引用，一般用不着<br>
+                    |--method：当前调用的方法<br>
+                    |--Object[]args:当前方法用的参数</p>
+<div class="highlight"><pre><code class="language-" data-lang="">### AOP (切面编程)
+</code></pre></div>
+<p>public class ObjectFactory {<br>
+    public static AccountService getAccountService(){<br>
+        AccountService as=new AccountServiceImpl();<br>
+        return (AccountService) Proxy.newProxyInstance(as.getClass().getClassLoader(), as.getClass().getInterfaces(), new InvocationHandler() {<br>
+            @Override<br>
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {<br>
+                Object o=null;<br>
+                try {<br>
+                    ManagerThreadLocal.startTransacation();<br>
+                    o= method.invoke(as, args);<br>
+                    ManagerThreadLocal.commit();<br>
+                } catch (Exception e) {<br>
+                    e.printStackTrace();<br>
+                    ManagerThreadLocal.rollback();<br>
+                }finally {<br>
+                    ManagerThreadLocal.release();<br>
+                }</p>
+<div class="highlight"><pre><code class="language-" data-lang="">            return o;
+        }
+    });
+}
+</code></pre></div>
+<p>}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## 注解
+&gt; 给程序看的，用于描述程序如何运行以及在什么阶段运行,最大功能用于替换配置文件
+&gt; 注解是jdk1.5新特性，可以通过反色让注解具有功能
+###### 三个基本注解
++ @Override:检查子类确实是覆盖了父类的方法
++ @Deprecated: 说明已经过时了
++ @Suppress Warnings({"unused","deprecation"}):抑制程序中的警告。unused 警告的类型{}数组，all抑制所有的警告
+###### 自定义注解的语法
+</code></pre></div>
+<p>@interface AnnotationName<br>
+    |<br>
+    |--反编译后:interface AnnotationName extends java.lang.annotation.Annotation<br>
+    |<br>
+    |--属性格式: int field()<br>
+    |       |<br>
+    |       |--规定只能包含属性，属性格式为int field() default -1;<br>
+    |       |<br>
+    |       |--属性类型<br>
+    |            |<br>
+    |            |--基本类型<br>
+    |            |--String<br>
+    |            |--注解类型<br>
+    |            |--Class类型<br>
+    |            |--以上类型的一维数组<br>
+    |<br>
+    |--创建<br>
+    |   |<br>
+    |   |--public @interface MyAnnocation {<br>
+    |           int age();//属性<br>
+    |           String name();<br>
+    |       }<br>
+    |<br>
+    |<br>
+    |--使用<br>
+        |<br>
+        |--  @MyAnnocation(age=18,name = &quot;张三&quot;)<br>
+             public void fun(){}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## 注解的反射
+&gt; 被注解的元素
+
+## 元注解
+&gt; 只能用在注解上的叫做元注解(用于修饰注解的注解)
+</code></pre></div>
+<p>元注解<br>
+  |<br>
+  |--@Retention作用:改变自定义的注解的存活范围<br>
+  |    |<br>
+  |    |--RetentionPolicy 默认Class级别<br>
+  |            |<br>
+  |            |--SOURCE  .java<br>
+  |            |--Class   .class<br>
+  |            |--RUNTIME  内存中<br>
+  |<br>
+  |<br>
+  |--@Target作用:指定该注解能用在什么地方<br>
+  |    |<br>
+  |    |--ElementType<br>
+  |            |<br>
+  |            |--TYPE  类<br>
+  |            |--METHOD 方法<br>
+  |            |--FIELD 属性<br>
+  |<br>
+  |--@Documented 如果注解使用了documented修饰了，那么使用这个注解的类的API文档中会出现这个注解的身影<br>
+  |<br>
+  |<br>
+  |--@Inherited 说明该注解可以被继承下去 如果注解使用了Inherited修饰，那么使用这个注解的类的子类也会有这个注解</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>//MyTest<br>
+@Documented<br>
+@Inherited<br>
+@Retention(RetentionPolicy.RUNTIME)<br>
+@Target({ElementType.METHOD,ElementType.TYPE})<br>
+public @interface MyTest {<br>
+    long timeout() default Long.MAX_VALUE;<br>
+}</p>
+
+<p>//SomeDaoImpl<br>
+public class SomeDaoImpl {<br>
+    @MyTest(timeout = 1000)<br>
+    public void testAdd(){<br>
+        System.out.println(&quot;add方法执行&quot;);<br>
+    }<br>
+    @MyTest<br>
+    public void testUpdate(){<br>
+        System.out.println(&quot;update方法执行了&quot;);<br>
+    }<br>
+}</p>
+
+<p>//TestRunner<br>
+public static void main(String[] args) throws Exception {<br>
+    //test1();<br>
+    Class clazz=SomeDaoImpl.class;<br>
+    SomeDaoImpl s= (SomeDaoImpl) clazz.newInstance();<br>
+    Method[] methods = clazz.getMethods();<br>
+    for(Method m:methods){<br>
+        MyTest myTest = m.getAnnotation(MyTest.class);<br>
+        if(myTest!=null){<br>
+            long timeout = myTest.timeout();<br>
+            long start = System.nanoTime();<br>
+            m.invoke(s,null);<br>
+            long end = System.nanoTime();<br>
+            long duration = end - start;<br>
+            if(duration&gt;timeout){<br>
+                System.out.println(&quot;执行时间&quot;+duration+&quot;纳秒，超时&quot;);<br>
+            }else {<br>
+                System.out.println(&quot;执行时间&quot;+duration+&quot;纳秒，没有超时&quot;);<br>
+            }<br>
+        }<br>
+    }<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang="">## Servlet3.0注解
+|类型|优点|缺点|
+|-----|-----|-----|
+|web.xml|可配置，不用改源码|不直观，开发效率低|
+|注解|直观，开发效率高|硬编码|
+</code></pre></div>
+<p>servlet3.0注解<br>
+    |<br>
+    |--@WebServlet 相当于在web.xml中配置Servlet<br>
+    |       |<br>
+    |       |--String name() servlet名字<br>
+    |       |<br>
+    |       |--String[] value() 访问地址 value是可以直接赋值 @WebServlet(&quot;/servlet/demo1&quot;)<br>
+    |       |<br>
+    |       |--String[] urlPatterns() 访问地址<br>
+    |       |<br>
+    |       |--WebInitParam[] initParams() 初始化参数<br>
+    |<br>
+    |<br>
+    |<br>
+    |--@WebFilter 相当于在web.xml中配置Servetl<br>
+    |       |<br>
+    |       |--value()和urlPatterns() 过滤地址<br>
+    |<br>
+    |<br>
+    |--@WebListener</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+## 类加载器
+&gt; 类加载器负责将.class文件加载到内存中，并为之生成对象的java.lang.Class对象
+&gt; 当jvm启动时，会形成由三个类加载器组成的初始类加载器层次结构
+</code></pre></div>
+<p>BootStrap引导类加载器，底层是c JRE/lib/rt.jar<br>
+    |<br>
+    |<br>
+    |--ExtClassLoader扩展类加载器 JRE/lib/ext/*.jar<br>
+    |       |<br>
+    |       |<br>
+    |       |--AppClassLoader系统类加载器 CLASSPATH指定的所有jar或目录(lib)<br>
+    |       |       |<br>
+    |       |       |<br>
+    |       |       |--MyClassLoader自定义类加载器 自己指定的特殊目录<br>
+    |</p>
+
+<p>父类委托机制:避免重复加载<br>
+     ↓<br>
+AppClassLoader<br>
+     |<br>
+     |--委托父类查找<br>
+     ↓<br><br>
+ExtClassLoader<br>
+     |<br>
+     |--委托父类查找<br>
+     ↓<br><br>
+BootStrap   → 找到:结束查找 ↗<br>
+     |<br>
+     |--没有找到:子类去找<br><br>
+     ↓<br>
+ExtClassLoader  → 找到:结束查找 ↗<br>
+     |<br>
+     |--没有找到:子类去找<br>
+     ↓<br>
+AppClassLoader  →  找到:结束查找 ↗<br>
+     |<br>
+     |--没有找到<br>
+     ↓<br>
+ClassNotFoundException      </p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>class A extends B{}<br>
+会先找A<br>
+AppClassLoader<br>
+     |<br><br>
+     |--委托父类查找<br><br>
+     ↓<br><br>
+ExtClassLoader<br>
+     |<br>
+     |--委托父类查找<br><br>
+     ↓<br><br>
+BootStrap<br><br>
+     |<br>
+     |--没有找到:子类去找<br><br>
+     ↓<br><br>
+ExtClassLoader  → 找到A<br>
+                    |<br>
+                    |--再找B<br>
+                        |<br>
+                        |--委托父类查找<br><br>
+                        ↓<br><br>
+                    BootStrap  → 找到B,返回<br>
+                        |<br>
+                        |--没有找到:子类去找<br><br>
+                        ↓<br><br>
+                    ExtClassLoader → 找到B,返回<br>
+                         |<br><br>
+                         |--没有找到<br>
+                         ↓<br>
+            不会向下再找，抛出classNotFoundException       </p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>
+<p>public static void main(String[] args) {<br>
+    ClassLoader bootStrup = Class.class.getClassLoader();<br>
+    System.out.println(bootStrup);//bootstrup底层是c<br>
+    ClassLoader extClassLoader = DNSNameService.class.getClassLoader();<br>
+    System.out.println(extClassLoader);<br>
+    ClassLoader appClassLoader = AccountDao.class.getClassLoader();<br>
+    System.out.println(appClassLoader);<br>
+    ClassLoader appClassLoader2 = TestClassLoader.class.getClassLoader();<br>
+    System.out.println(appClassLoader2);<br>
+    /*<em>打印结果<br>
+    null<br>
+    sun.misc.Launcher$ExtClassLoader@6ff3c5b5<br>
+    sun.misc.Launcher$AppClassLoader@14dad5dc<br>
+    sun.misc.Launcher$AppClassLoader@14dad5dc<br>
+    *</em>/<br>
+}</p>
+<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/04/21/%E5%9F%BA%E7%A1%80%E5%8A%A0%E5%BC%BA" data-title="基础加强 | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/04/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD" title="文件上传和下载">
+  <strong>上一篇：</strong><br/>
+  <span>
+  文件上传和下载</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/04/29/Nginx"  title="Nginx">
+ <strong>下一篇：</strong><br/> 
+ <span>Nginx
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+
