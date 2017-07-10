@@ -4,13 +4,808 @@
  <title>zhxiaol</title>
  <link href="" rel="self"/>
  <link href=""/>
- <updated>2017-07-07T15:51:10+08:00</updated>
+ <updated>2017-07-10T20:00:33+08:00</updated>
  <id></id>
  <author>
    <name>zhxiaol</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>EasyUI和Ztree</title>
+   <link href="/java/2017/07/10/EasyUI%E5%92%8CZtree"/>
+   <updated>2017-07-10T00:00:00+08:00</updated>
+   <id>/java/2017/07/10/EasyUI和Ztree</id>
+   <content type="html">&lt;h4 id=&quot;bos-bussiness-operating-system-业务操作系统&quot;&gt;BOS Bussiness Operating System 业务操作系统&lt;/h4&gt;
+
+&lt;h5 id=&quot;常见软件类型&quot;&gt;常见软件类型&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;OA系统
+办公自动化(Office Automation),办公的便捷方便,提高效率&lt;/li&gt;
+&lt;li&gt;CRM系统
+Customer Relationship Management客户关系管理系统,管理与客户的关系&lt;/li&gt;
+&lt;li&gt;ERP系统
+Enterprise Resource Planning企业资源计划,针对物资,人力,财务,信息一体的管理系统&lt;/li&gt;
+&lt;li&gt;CMS
+Content Mangement System 内容管理系统&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;搭建开发环境&quot;&gt;搭建开发环境&lt;/h4&gt;
+
+&lt;h5 id=&quot;数据库环境&quot;&gt;数据库环境&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;c1&quot;&gt;--创建数据库&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;database&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bos19&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;character&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utf8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--创建用户&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xiaoli&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;identified&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'123'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;--授权 all增删改查权限 *表,视图,索引,存储过程...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;grant&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bos19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xiaoli&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;web环境搭建&quot;&gt;web环境搭建&lt;/h5&gt;
+
+&lt;h6 id=&quot;1-创建动态web项目&quot;&gt;1.创建动态web项目&lt;/h6&gt;
+
+&lt;h6 id=&quot;2-导入jar包-ssh-spring依赖-日志-数据库驱动&quot;&gt;2.导入jar包(SSH,Spring依赖,日志,数据库驱动)&lt;/h6&gt;
+
+&lt;h6 id=&quot;3-配置web-xml-struts2的过滤器-spring的监听器-解决hibernate延迟加载问题的过滤器-解决中文乱码的过滤器&quot;&gt;3.配置web.xml(struts2的过滤器,spring的监听器,解决Hibernate延迟加载问题的过滤器,解决中文乱码的过滤器)&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;web-app&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;&lt;/span&gt;
+         &lt;span class=&quot;na&quot;&gt;xmlns:xsi=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/span&gt;
+         &lt;span class=&quot;na&quot;&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;&lt;/span&gt;
+         &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3.1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--解决中文乱码--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;characterEncodingFilter&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-class&amp;gt;&lt;/span&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-class&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;init-param&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;encoding&lt;span class=&quot;nt&quot;&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;UTF-8&lt;span class=&quot;nt&quot;&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/init-param&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-mapping&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;characterEncodingFilter&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/*&lt;span class=&quot;nt&quot;&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-mapping&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--解决hirbernate延迟加载的问题--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;openSession&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-class&amp;gt;&lt;/span&gt;org.springframework.orm.hibernate3.support.OpenSessionInViewFilter&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-class&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-mapping&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;openSession&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/*&lt;span class=&quot;nt&quot;&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-mapping&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--spring配置文件--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;context-param&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;param-name&amp;gt;&lt;/span&gt;contextConfigLocation&lt;span class=&quot;nt&quot;&gt;&amp;lt;/param-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;param-value&amp;gt;&lt;/span&gt;classpath:applicationContext.xml&lt;span class=&quot;nt&quot;&gt;&amp;lt;/param-value&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/context-param&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;listener&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;listener-class&amp;gt;&lt;/span&gt;org.springframework.web.context.ContextLoaderListener&lt;span class=&quot;nt&quot;&gt;&amp;lt;/listener-class&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/listener&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;struts2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-class&amp;gt;&lt;/span&gt;org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-class&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-mapping&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;filter-name&amp;gt;&lt;/span&gt;struts2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-name&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;url-pattern&amp;gt;&lt;/span&gt;/*&lt;span class=&quot;nt&quot;&gt;&amp;lt;/url-pattern&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/filter-mapping&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/web-app&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;4-创建目录结构&quot;&gt;4.创建目录结构&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;com.itheima.bos
+      |
+      |--dao
+      |--domain
+      |--service
+      |--utils
+      |--web
+          |--action
+          |--filter
+          |--interceptor
+          |--listener
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;5-在config目录下提供log4j-struts的配置文件&quot;&gt;5.在config目录下提供log4j,struts的配置文件&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;struts&amp;gt;
+    &amp;lt;constant name=&quot;struts.devMode&quot; value=&quot;true&quot;/&amp;gt;
+    &amp;lt;constant name=&quot;struts.objectFactory&quot; value=&quot;spring&quot;/&amp;gt;
+    &amp;lt;package name=&quot;basicstruts2&quot; extends=&quot;struts-default&quot;&amp;gt;
+        &amp;lt;!--需要进行权限控制的页面访问--&amp;gt;
+        &amp;lt;action name=&quot;page_*_*&quot;&amp;gt;
+            &amp;lt;result type=&quot;dispatcher&quot;&amp;gt;/WEB-INF/pages/{1}/{2}.jsp&amp;lt;/result&amp;gt;
+        &amp;lt;/action&amp;gt;
+    &amp;lt;/package&amp;gt;
+&amp;lt;/struts&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;6-在config目录下提供spring的配置文件applicationcontext-xml&quot;&gt;6.在config目录下提供spring的配置文件applicationContext.xml&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;beans&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.springframework.org/schema/beans&quot;&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;xmlns:xsi=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;xmlns:context=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.springframework.org/schema/context&quot;&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;xmlns:aop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.springframework.org/schema/aop&quot;&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;xmlns:tx=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.springframework.org/schema/tx&quot;&lt;/span&gt;
+       &lt;span class=&quot;na&quot;&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.springframework.org/schema/beans&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/beans/spring-beans.xsd&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/tx&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/tx/spring-tx.xsd&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/aop&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/aop/spring-aop.xsd&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/context&lt;/span&gt;
+                           &lt;span class=&quot;err&quot;&gt;http://www.springframework.org/schema/context/spring-context.xsd&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--加载jdbc属性文件--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;context:property-placeholder&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;location=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;classpath:jdbc.properties&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--数据源--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;bean&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dataSource&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;driverClass&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${driverClass}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;jdbcUrl&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${jdbcUrl}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${user}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${password}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--spring用于整合hibernate的工厂bean--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;bean&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sessionFactory&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.springframework.orm.hibernate3.LocalSessionFactoryBean&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dataSource&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dataSource&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hibernateProperties&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;props&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;prop&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hibernate.dialect&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;org.hibernate.dialect.MySQL5Dialect&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prop&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;prop&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hibernate.show_sql&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prop&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;prop&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hibernate.format_sql&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prop&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;prop&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hibernate.hbm2ddl.auto&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;update&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prop&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/props&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&amp;lt;!--注入映射文件--&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mappingDirectoryLocations&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;list&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;value&amp;gt;&lt;/span&gt;classpath:com/itheima/bos/domain&lt;span class=&quot;nt&quot;&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/list&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--事务管理器--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;bean&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;org.springframework.orm.hibernate3.HibernateTransactionManager&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sessionFactory&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ref=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sessionFactory&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/bean&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--组件扫描--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;context:component-scan&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;base-package=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.itheima.bos&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--引入注解解析器--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;context:annotation-config/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--事务注解--&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;tx:annotation-driven&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;transaction-manager=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/beans&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;7-提供项目所需的资源文件-css-js-image-jsp&quot;&gt;7.提供项目所需的资源文件 css js image jsp&lt;/h6&gt;
+
+&lt;h5 id=&quot;使用svn管理项目代码&quot;&gt;使用svn管理项目代码&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;svn/bos19/conf
+     |
+     |--svnserve.conf
+     |      |
+     |      |--anon-access = none
+     |      |--auth-access = write
+     |      |--password-db = passwd
+     |      |--authz-db = authz
+     |
+     |
+     |--passwd
+     |    |
+     |    |--zhangsan = 123
+     |       lisi = 123
+     |
+     |
+     |--authz
+         |
+         |--[/]
+            zhangsan = rw
+            lisi = r
+            * =
+//启动 svnserve -d -r /zhxiaol/svn/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;easyui&quot;&gt;EasyUI&lt;/h5&gt;
+
+&lt;h6 id=&quot;layout页面布局&quot;&gt;layout页面布局&lt;/h6&gt;
+
+&lt;p&gt;这个布局容器,有五个区域:北,南,东,西和中心,中心面板是必须的,边缘地区可选,每一个边缘可以缩放的拖动其边境&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/html; charset=UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;layout---页面布局&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/icon.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/jquery-1.8.3.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-layout&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%--使用div指定区域--%&amp;gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xx管理系统&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'north'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;height: 100px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;北部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;系统菜单&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'west'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width: 200px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;西部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'center'&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;中心区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'east'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width:100px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;东部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'south'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;height:50px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;南部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;折叠面板&quot;&gt;折叠面板&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;!-- 折叠面板效果 --&amp;gt;
+&amp;lt;div class=&quot;easyui-accordion&quot; data-options=&quot;fit:true&quot;&amp;gt;
+   &amp;lt;!-- 每个子div是其中的一个面板 --&amp;gt;
+   &amp;lt;div title=&quot;面板一&quot;&amp;gt;棉衣一&amp;lt;/div&amp;gt;
+   &amp;lt;div title=&quot;面板二&quot;&amp;gt;test2&amp;lt;/div&amp;gt;
+   &amp;lt;div title=&quot;面板三&quot;&amp;gt;test3&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;选项卡面板&quot;&gt;选项卡面板&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/html; charset=UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;tabs---选项卡面板&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/icon.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/jquery-1.8.3.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-layout&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 使用div指定区域 --&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;XX管理系统&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'north'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;height: 100px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;北部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;系统菜单&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'west'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width: 200px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 折叠面板效果 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-accordion&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fit:true&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 每个子div是其中的一个面板 --&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板一&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-linkbutton&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onclick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;doAdd();&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;百度&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+                  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;doAdd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+                     &lt;span class=&quot;c1&quot;&gt;//动态添加一个选项卡面板&lt;/span&gt;
+                     &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#tt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;tabs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;add&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,{&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'这个可是动态的'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'&amp;lt;iframe frameborder=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot; src=&quot;page_base_staff.action&quot;&amp;gt;&amp;lt;/iframe&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;closable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;iconCls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'icon-search'&lt;/span&gt;
+                     &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+                  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板二&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;test2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板三&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;test3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'center'&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 选项卡面板效果 --&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-tabs&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fit:true&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 每个子div是其中的一个面板 --&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;closable:true,iconCls:'icon-help'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板一&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;棉衣一&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板二&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;test2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;面板三&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;test3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'east'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width: 100px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;东部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;region:'south'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;height: 50px&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;南部区域&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;ztree树形插件&quot;&gt;Ztree树形插件&lt;/h5&gt;
+
+&lt;h6 id=&quot;标准json方式&quot;&gt;标准JSON方式&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;link rel=&quot;stylesheet&quot; href=&quot;${pageContext.request.contextPath }/js/ztree/zTreeStyle.css&quot; type=&quot;text/css&quot;&amp;gt;
+&amp;lt;div title=&quot;面板二&quot;&amp;gt;
+   &amp;lt;ul id=&quot;ztree1&quot; class=&quot;ztree&quot;&amp;gt;&amp;lt;/ul&amp;gt;
+   &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+      $(function () {
+         var setting ={};
+         //构造json数据,json数据加到树上,每个json对象对应一个节点数据
+         var zNodes=[{
+            name:'系统管理'
+         },{
+            name:'用户管理',children:[
+               {name:'用户添加'},
+               {name:'用户修改'}
+            ]
+         },{
+             name:'权限管理'
+         }];
+         $.fn.zTree.init($(&quot;#ztree1&quot;),setting,zNodes)
+                 })
+   &amp;lt;/script&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;简单json方式&quot;&gt;简单JSON方式&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;link rel=&quot;stylesheet&quot; href=&quot;${pageContext.request.contextPath }/js/ztree/zTreeStyle.css&quot; type=&quot;text/css&quot;&amp;gt;
+&amp;lt;div title=&quot;面板三&quot;&amp;gt;
+   &amp;lt;%--简单json数据--%&amp;gt;
+   &amp;lt;ul id=&quot;ztree2&quot; class=&quot;ztree&quot;&amp;gt;&amp;lt;/ul&amp;gt;
+   &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+                 $(function () {
+                     var setting2 ={
+                         data:{
+                             simpleData:{
+                                 enable:true//启用简单数据
+               }
+            }
+         };
+                     //构造json数据,json数据加到树上,每个json对象对应一个节点数据
+                     var zNodes2=[{
+                         id:'1',
+            pId:'0',
+                         name:'系统管理'
+                     },{
+                         id:'2',
+                         pId:'0',
+                         name:'用户管理'
+
+                     },{
+                         id:'21',
+                         pId:'2',
+                         name:'用户添加'
+
+                     },{
+                         id:'22',
+                         pId:'2',
+                         name:'用户修改'
+
+                     },{
+                         id:'3',
+                         pId:'0',
+                         name:'权限管理'
+                     }];
+                     $.fn.zTree.init($(&quot;#ztree2&quot;),setting2,zNodes2)
+                 })
+   &amp;lt;/script&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;发送ajax加载ztree&quot;&gt;发送ajax加载ztree&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;div title=&quot;面板四&quot;&amp;gt;
+   &amp;lt;%--发送ajax请求获取json数据结构的ztree--%&amp;gt;
+    &amp;lt;ul id=&quot;ztree3&quot; class=&quot;ztree&quot;&amp;gt;&amp;lt;/ul&amp;gt;
+   &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+      $(function () {
+         $.post(&quot;${pageContext.request.contextPath}/json/menu.json&quot;,{},function (data) {
+            var setting={data:{
+                simpleData:{enable:true}
+            }}
+            $.fn.zTree.init($(&quot;#ztree3&quot;),setting,data)
+                     },'json')
+                 })
+   &amp;lt;/script&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;为ztree节点绑定事件&quot;&gt;为ztree节点绑定事件&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;div title=&quot;面板四&quot;&amp;gt;
+   &amp;lt;%--发送ajax请求获取json数据结构的ztree--%&amp;gt;
+    &amp;lt;ul id=&quot;ztree3&quot; class=&quot;ztree&quot;&amp;gt;&amp;lt;/ul&amp;gt;
+   &amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+      $(function () {
+         $.post(&quot;${pageContext.request.contextPath}/json/menu.json&quot;,{},function (data3) {
+            var setting3={
+                data:{
+                    simpleData : {
+                        enable:true
+                  }
+               },
+               callback:{
+                    onClick:function(event,treeId,treeNode){
+                        var page =treeNode.page;
+                     if(page != undefined){
+                         //判断当前选项卡是否已经打开
+                        if($(&quot;#tt&quot;).tabs(&quot;exists&quot;,treeNode.name)){
+                            $(&quot;#tt&quot;).tabs(&quot;select&quot;,treeNode.name)
+                        }else {
+                        $(&quot;#tt&quot;).tabs(&quot;add&quot;,{
+                            title:treeNode.name,
+                           content:'&amp;lt;iframe frameborder=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot; src=&quot;'+page+'&quot;&amp;gt;&amp;lt;/iframe&amp;gt;',
+                           closable:true,
+                           iconCls:'icon-edit'
+                          })
+                                         }
+                     }
+                  }
+               }
+            }
+            $.fn.zTree.init($(&quot;#ztree3&quot;),setting3,data3)
+                     },'json')
+                 })
+   &amp;lt;/script&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;uml工具powerdesigner&quot;&gt;UML工具PowerDesigner&lt;/h6&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>BOS登陆</title>
+   <link href="/java/2017/07/09/BOS%E7%99%BB%E9%99%86"/>
+   <updated>2017-07-09T00:00:00+08:00</updated>
+   <id>/java/2017/07/09/BOS登陆</id>
+   <content type="html">&lt;h5 id=&quot;数据库设计&quot;&gt;数据库设计&lt;/h5&gt;
+
+&lt;h6 id=&quot;创建t_user表&quot;&gt;创建t_user表&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;create table t_user(id varchar(32) not null,username varchar(20) not null,
+password varchar(32) not null,salary double,birthday date,gender varchar(10),
+station varchar(40), telephone varchar(11),remark varchar(255),primary key(id));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;生成pojo类&quot;&gt;生成POJO类&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;1.添加DataSource设置
+2.将Hibernate配置文件添加到Facets中
+3.将Spring配置文件添加到Facets中
+4.打开Persistence窗口自动生成User类和Mapping
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;持久层设计&quot;&gt;持久层设计&lt;/h5&gt;
+
+&lt;h6 id=&quot;ibasedao接口&quot;&gt;IBaseDao接口&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;public interface IBaseDao&amp;lt;T&amp;gt; {
+     void save(T entity);
+     void delete(T entity);
+     void update(T entity);
+     T findById(Serializable id);
+     List&amp;lt;T&amp;gt;findAll();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;basedaoimpl实现类&quot;&gt;BaseDaoImpl实现类&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;public class BaseDaoImpl&amp;lt;T&amp;gt; extends HibernateDaoSupport implements IBaseDao&amp;lt;T&amp;gt; {
+    Class&amp;lt;T&amp;gt; entityClass;
+    //在构造方法中动态获得操作的实体类型
+    public BaseDaoImpl() {
+        ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+        entityClass= (Class&amp;lt;T&amp;gt;) genericSuperclass.getActualTypeArguments()[0];
+
+    }
+    //@Autowired Spring提供的方式
+    //@Qualifier(&quot;sessionFactory&quot;) spring指定bean名称
+    @Resource   //(name = &quot;sessionFactory&quot;)不指定名称按类型注入 JDK1.7提供
+    public void setMySessionFactory(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
+    @Override
+    public void save(T entity) {
+        this.getHibernateTemplate().save(entity);
+    }
+
+    @Override
+    public void delete(T entity) {
+        this.getHibernateTemplate().delete(entity);
+    }
+
+    @Override
+    public void update(T entity) {
+        this.getHibernateTemplate().update(entity);
+    }
+
+    @Override
+    public T findById(Serializable id) {
+        this.getHibernateTemplate().get(entityClass,id);
+        return null;
+    }
+
+    @Override
+    public List&amp;lt;T&amp;gt; findAll() {
+        String hql=&quot;FROM &quot;+entityClass.getSimpleName();
+        return this.getHibernateTemplate().find(hql);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;userdaoimpl&quot;&gt;UserDaoImpl&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;public interface IUserDao&amp;lt;User&amp;gt; extends IBaseDao&amp;lt;User&amp;gt; {
+}
+
+@Repository
+//@Scope(&quot;prototype&quot;)
+public class UserDaoImpl extends BaseDaoImpl&amp;lt;User&amp;gt; implements IUserDao&amp;lt;User&amp;gt; {
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;表现层设计&quot;&gt;表现层设计&lt;/h5&gt;
+
+&lt;h6 id=&quot;baseaction&quot;&gt;BaseAction&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;public class BaseAction&amp;lt;T&amp;gt; extends ActionSupport implements ModelDriven&amp;lt;T&amp;gt; {
+    private  T model;
+    //在构造方法中获得实体类型创建对象
+    public BaseAction() {
+        try {
+            ParameterizedType type= (ParameterizedType) this.getClass().getGenericSuperclass();
+            Class&amp;lt;T&amp;gt; clazz = (Class&amp;lt;T&amp;gt;) type.getActualTypeArguments()[0];
+            model=clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public T getModel() {
+        return model;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;用户登陆&quot;&gt;用户登陆&lt;/h5&gt;
+
+&lt;h6 id=&quot;userservice&quot;&gt;UserService&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;public interface IUserService {
+    User login(User model);
+}
+
+@Service
+@Transactional
+public class UserServiceImpl implements IUserService {
+    @Autowired
+    private IUserDao userDao;
+
+    @Override
+    public User login(User user) {
+        String username=user.getUsername();
+        String password=user.getPassword();
+        password=MD5Utils.md5(password);
+        return userDao.findUserByUsernameAndPassword(username,password);
+    }
+
+    public UserServiceImpl setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+        return this;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;useraction&quot;&gt;UserAction&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;@Controller  //默认bean id是类名首字符小写
+@Scope(&quot;prototype&quot;)
+public class UserAction extends BaseAction&amp;lt;User&amp;gt; {
+    //通过属性驱动接受验证码
+    private String checkcode;
+    @Resource
+    private IUserService userService;
+    public String login(){
+        //判断验证码
+        String key = (String) ServletActionContext.getRequest().getSession().getAttribute(&quot;key&quot;);
+        if(StringUtils.isNotBlank(checkcode)&amp;amp;&amp;amp;checkcode.equals(key)){
+            //验证码正确
+            User user=userService.login(model);
+            if(user != null){
+                //登陆成功,将User放入session域,跳转到系统首页
+                ServletActionContext.getRequest().getSession().setAttribute(&quot;loginUser&quot;,user);
+                return &quot;home&quot;;
+            }else{
+                //登陆失败,设置错误提示,跳转到登录页面
+                this.addActionError(this.getText(&quot;loginError&quot;));
+                return &quot;login&quot;;
+            }
+        }else {//验证码错误
+            this.addActionError(this.getText(&quot;validateCodeError&quot;));
+            return &quot;login&quot;;
+        }
+    }
+
+    public UserAction setUserService(IUserService userService) {
+        this.userService = userService;
+        return this;
+    }
+
+    public void setCheckcode(String checkcode) {
+        this.checkcode = checkcode;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;userdao&quot;&gt;UserDao&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;@Repository
+//@Scope(&quot;prototype&quot;)
+public class UserDaoImpl extends BaseDaoImpl&amp;lt;User&amp;gt; implements IUserDao {
+    @Override
+    public User findUserByUsernameAndPassword(String username, String password) {
+        String hql=&quot;FROM User u where u.username = ? and u.password = ?&quot;;
+        List&amp;lt;User&amp;gt; list = this.getHibernateTemplate().find(hql, username, password);
+        if(list!=null&amp;amp;&amp;amp;list.size()&amp;gt;0)
+        return list.get(0);
+        return null;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;easyui-messager&quot;&gt;EasyUI Messager&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;script type=&quot;text/javascript&quot; src=&quot;${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot; src=&quot;${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+    $(function () {
+
+        $.messager.alert(&quot;标题&quot;, &quot;内容信息&quot;, &quot;info&quot;);
+
+        window.setTimeout(function () {
+            $.messager.show({
+                title: '欢迎信息',
+                msg: '欢迎张三登陆系统',
+                timeout: 3000,
+                showType: 'slide'
+            })
+        }, 3000)
+
+        $.messager.confirm(&quot;标题&quot;, &quot;内容:你确定删除当前数据吗&quot;, function (r) {
+            alert(r)
+        });
+
+        $.messager.prompt(&quot;标题&quot;, &quot;内容&quot;, function (data) {
+            alert(data)
+        })
+
+        $.messager.progress();
+        window.setTimeout(function () {
+            $.messager.progress('close')
+        }, 3000)
+
+    })
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;easyui下拉菜单meunbutton&quot;&gt;EasyUI下拉菜单MeunButton&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+         pageEncoding=&quot;UTF-8&quot; %&amp;gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/html; charset=UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;下拉菜单&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/themes/icon.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/jquery-1.8.3.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;iconCls:'icon-help',menu:'#mm'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;easyui-menubutton&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;控制面板&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%--使用div制作下拉菜单选项--%&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mm&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%--使用子div制作具体的选项--%&amp;gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-options=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;iconCls:'icon-edit'&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onclick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;alert('修改密码')&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;修改密码&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;联系管理员&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;menu-sep&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;退出系统&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;退出登录&quot;&gt;退出登录&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;//退出登录
+public String logout(){
+    ServletActionContext.getRequest().getSession().invalidate();
+    return &quot;login&quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h6 id=&quot;自定义拦截器&quot;&gt;自定义拦截器&lt;/h6&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;//定义一个拦截器
+public class BOSLoginInterceptor extends MethodFilterInterceptor {
+    @Override
+    protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute(&quot;loginUser&quot;);
+        if(user == null){
+            return &quot;login&quot;;
+        }
+        return actionInvocation.invoke();
+    }
+}
+
+
+//在struts.xml中注册拦截器
+&amp;lt;package name=&quot;basicstruts2&quot; extends=&quot;struts-default&quot;&amp;gt;
+    &amp;lt;interceptors&amp;gt;
+        &amp;lt;interceptor name=&quot;BOSLoginInterceptor&quot; class=&quot;com.itheima.bos.web.interceptor.BOSLoginInterceptor&quot;&amp;gt;
+            &amp;lt;param name=&quot;excludeMethods&quot;&amp;gt;login&amp;lt;/param&amp;gt;
+        &amp;lt;/interceptor&amp;gt;
+        &amp;lt;interceptor-stack name=&quot;myStack&quot;&amp;gt;
+            &amp;lt;interceptor-ref name=&quot;BOSLoginInterceptor&quot;/&amp;gt;
+            &amp;lt;interceptor-ref name=&quot;defaultStack&quot;/&amp;gt;
+        &amp;lt;/interceptor-stack&amp;gt;
+    &amp;lt;/interceptors&amp;gt;
+    &amp;lt;default-interceptor-ref name=&quot;myStack&quot;/&amp;gt;
+    &amp;lt;global-results&amp;gt;
+        &amp;lt;result name=&quot;login&quot;&amp;gt;/login.jsp&amp;lt;/result&amp;gt;
+    &amp;lt;/global-results&amp;gt;
+&amp;lt;/package&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;基于ajax修改密码&quot;&gt;基于Ajax修改密码&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;lt;!--修改密码窗口--&amp;gt;
+&amp;lt;div id=&quot;editPwdWindow&quot; class=&quot;easyui-window&quot; title=&quot;修改密码&quot; collapsible=&quot;false&quot; minimizable=&quot;false&quot; modal=&quot;true&quot;
+     closed=&quot;true&quot; resizable=&quot;false&quot;
+     maximizable=&quot;false&quot; icon=&quot;icon-save&quot; style=&quot;width: 300px; height: 160px; padding: 5px;
+        background: #fafafa&quot;&amp;gt;
+    &amp;lt;div class=&quot;easyui-layout&quot; fit=&quot;true&quot;&amp;gt;
+        &amp;lt;div region=&quot;center&quot; border=&quot;false&quot; style=&quot;padding: 10px; background: #fff; border: 1px solid #ccc;&quot;&amp;gt;
+            &amp;lt;form id=&quot;editPasswordForm&quot;&amp;gt;
+                &amp;lt;table cellpadding=3&amp;gt;
+                    &amp;lt;tr&amp;gt;
+                        &amp;lt;td&amp;gt;新密码：&amp;lt;/td&amp;gt;
+                        &amp;lt;td&amp;gt;&amp;lt;input id=&quot;txtNewPass&quot; type=&quot;Password&quot; class=&quot;txt01 easyui-validatebox&quot;
+                                   required=&quot;true&quot; data-options=&quot;validType:'length[4,8]'&quot;/&amp;gt;&amp;lt;/td&amp;gt;
+                    &amp;lt;/tr&amp;gt;
+                    &amp;lt;tr&amp;gt;
+                        &amp;lt;td&amp;gt;确认密码：&amp;lt;/td&amp;gt;
+                        &amp;lt;td&amp;gt;&amp;lt;input id=&quot;txtRePass&quot; type=&quot;Password&quot; class=&quot;txt01 easyui-validatebox&quot;
+                                   required=&quot;true&quot; data-options=&quot;validType:'length[4,8]'&quot;/&amp;gt;&amp;lt;/td&amp;gt;
+                    &amp;lt;/tr&amp;gt;
+                &amp;lt;/table&amp;gt;
+            &amp;lt;/form&amp;gt;
+        &amp;lt;/div&amp;gt;
+        &amp;lt;div region=&quot;south&quot; border=&quot;false&quot; style=&quot;text-align: right; height: 30px; line-height: 30px;&quot;&amp;gt;
+            &amp;lt;a id=&quot;btnEp&quot; class=&quot;easyui-linkbutton&quot; icon=&quot;icon-ok&quot; href=&quot;javascript:void(0)&quot;&amp;gt;确定&amp;lt;/a&amp;gt;
+            &amp;lt;a id=&quot;btnCancel&quot; class=&quot;easyui-linkbutton&quot; icon=&quot;icon-cancel&quot; href=&quot;javascript:void(0)&quot;&amp;gt;取消&amp;lt;/a&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+
+//取消按钮
+$(&quot;#btnCancel&quot;).click(function () {
+        $('#editPwdWindow').window('close');
+    });
+    //为确定按钮绑定事件
+    $(&quot;#btnEp&quot;).click(function () {
+        var v=$(&quot;#editPasswordForm&quot;).form(&quot;validate&quot;)
+        if(v){//校验通过了
+            //判断2次密码是否一致
+            var p1=$(&quot;#txtNewPass&quot;).val()
+            var p2=$(&quot;#txtRePass&quot;).val()
+            if(p1 == p2){
+                var url=&quot;${pageContext.request.contextPath}/userAction_editPassword.action&quot;;
+                $.post(url,{&quot;password&quot;:p1},function (data) {
+                    $('#editPwdWindow').window('close');
+                    if(data == &quot;1&quot;){//修改成功
+                            $.messager.alert(&quot;提示信息&quot;,&quot;密码修改成功&quot;,&quot;info&quot;)
+                    }else{
+                            $.messager.alert(&quot;提示信息&quot;,&quot;密码修改失败,请稍后重试&quot;,&quot;error&quot;)
+                    }
+                })
+            }else {
+                $.messager.alert(&quot;提示消息&quot;,&quot;两次输入密码不一致&quot;,&quot;warning&quot;)
+            }
+        }
+
+    });
+});
+
+//UserAction.java
+//修改密码
+public String editPassword() throws IOException {
+    User loginUser = (User) ServletActionContext.getRequest().getSession().getAttribute(&quot;loginUser&quot;);
+    String password = MD5Utils.md5(model.getPassword());
+    String flag=&quot;1&quot;;
+    try {
+        userService.editPassword(password,loginUser.getId());
+    } catch (Exception e) {
+        e.printStackTrace();
+        flag=&quot;0&quot;;
+    }
+    HttpServletResponse resp = ServletActionContext.getResponse();
+    resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+    resp.getWriter().print(flag);
+    return NONE;
+}
+
+
+//User.hbm.xml
+//在class标签外面
+&amp;lt;query name=&quot;editPassword&quot;&amp;gt;
+    update User set password = ? where id =?
+&amp;lt;/query&amp;gt;
+
+//UserServiceImpl
+@Override
+public void editPassword(String password, String id) {
+    userDao.executeUpdate(&quot;editPassword&quot;,password,id);
+}
+
+//UserDaoImpl
+@Override
+public void executeUpdate(String queryName, Object... objects) {
+    Session session = (Session) getSession();
+    Query query = session.getNamedQuery(queryName);
+    int i=0;
+    for (Object object : objects) {
+        query.setParameter(i++,object);
+    }
+    query.executeUpdate();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;解决easyui-window控件bug&quot;&gt;解决EasyUI window控件bug&lt;/h5&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;引入outOfBounds.js&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+ </entry>
  
  <entry>
    <title>项目管理</title>
@@ -10956,1029 +11751,6 @@ public void fun1(){
         &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
- </entry>
- 
- <entry>
-   <title>hibernate对象状态,一级缓存和多表关联</title>
-   <link href="/java/2017/05/18/Hibernate02"/>
-   <updated>2017-05-18T00:00:00+08:00</updated>
-   <id>/java/2017/05/18/Hibernate02</id>
-   <content type="html">&lt;h2 id=&quot;对象状态&quot;&gt;对象状态&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;瞬时状态|临时态
-&amp;gt; 1.没有于Hibernate产生关联 2.与数据的记录没有产生关联(有关联就是与数据库id有对应)&lt;/li&gt;
-&lt;li&gt;持久态
-&amp;gt; 1.于Hibernate有关联，2.与数据库有关联(对象有id对应)&lt;/li&gt;
-&lt;li&gt;游离态|托管态
-&amp;gt; 1.与Hibernate没有关联 2.跟数据库有关联(曾经是持久态)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;对象状态特点&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;session.evict(obj) 移除对象和数据库的关联&lt;/li&gt;
-&lt;li&gt;Hibernate会自动将持久化状态对象的变化同步到数据库中&lt;/li&gt;
-&lt;li&gt;持久态的id是不允许修改的
-```java
-@Test
-public void fun1(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-User u=new User();//瞬时态
-u.setName(&amp;quot;大黄蜂&amp;quot;);//瞬时态
-u.setPassword(&amp;quot;12345&amp;quot;);//瞬时态
-session.save(u);//持久态
-ts.commit();//持久态
-session.close();
-//游离态&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;}&lt;br&gt;
-//瞬时==》持久&lt;br&gt;
-@Test&lt;br&gt;
-public void fun2(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User u=new User();&lt;br&gt;
-    u.setName(&amp;quot;柯镇恶&amp;quot;);&lt;br&gt;
-    u.setPassword(&amp;quot;4567&amp;quot;);&lt;br&gt;
-    /***&lt;br&gt;
-     * save方法会使用主键生成策略，为User指定id,插入数据 打印insert语句&lt;br&gt;
-     * 如果是incrment的策略 会打印select max(id) from  语句&lt;br&gt;
-     * 如果是assigned 报错,save方法之前要手动指定id&lt;br&gt;
-     */&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;session.save(u);
-
-ts.commit();
-session.close();
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;}&lt;br&gt;
-//瞬时==&amp;gt;游离&lt;br&gt;
-//瞬时：没有关联，没有id&lt;br&gt;
-//游离:没有关联，有id&lt;br&gt;
-@Test&lt;br&gt;
-public void fun3(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User u=new User();&lt;br&gt;
-    u.setId(2);&lt;br&gt;
-    ts.commit();&lt;br&gt;
-}&lt;br&gt;
-//持久==&amp;gt;瞬时&lt;br&gt;
-//持久:有关联，有id&lt;br&gt;
-//瞬时:无关联，无id&lt;br&gt;
-public void fun4(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User user = (User) session.get(User.class, 2);&lt;br&gt;
-    session.close();&lt;br&gt;
-    user.setId(null);&lt;br&gt;
-}&lt;br&gt;
-//持久==&amp;gt;瞬时&lt;br&gt;
-//持久:有关联，有id&lt;br&gt;
-//瞬时:无关联，无id&lt;br&gt;
-public void fun5(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User user = (User) session.get(User.class, 2);&lt;br&gt;
-    session.evict(user);&lt;br&gt;
-    user.setId(null);&lt;br&gt;
-    session.save(user);&lt;br&gt;
-    ts.commit();&lt;br&gt;
-    session.close();&lt;br&gt;
-}&lt;br&gt;
-//持久==》游离&lt;br&gt;
-//持久:有关联，有ID&lt;br&gt;
-//游离:无管理，无ID&lt;br&gt;
-public void fun6(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    User u = (User) session.get(User.class, 2);&lt;br&gt;
-    session.evict(u);&lt;br&gt;
-}&lt;br&gt;
-//游离==》瞬时&lt;br&gt;
-public void fun7(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User u = (User) session.get(User.class, 2);&lt;br&gt;
-    u.setId(null);&lt;br&gt;
-    ts.commit();&lt;br&gt;
-    session.close();&lt;br&gt;
-}&lt;br&gt;
-//游离==&amp;gt;持久&lt;br&gt;
-public void fun8(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User u = (User) session.get(User.class, 2);&lt;br&gt;
-    session.evict(u);&lt;br&gt;
-    session.update(u);&lt;br&gt;
-    ts.commit();&lt;br&gt;
-    session.close();&lt;br&gt;
-}&lt;br&gt;
-public void fun9(){&lt;br&gt;
-    Session session = HibernateUtils.openSession();&lt;br&gt;
-    Transaction ts = session.beginTransaction();&lt;br&gt;
-    User user = (User) session.get(User.class, 2);&lt;br&gt;
-    user.setName(&amp;quot;自动同步&amp;quot;);//&lt;br&gt;
-    ts.commit();&lt;br&gt;
-    session.close();&lt;br&gt;
-}&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;## 一级缓存
-缓存:Hibernate中野村缓存，Hibernate中存在的缓存也是用来提高效率的
-Hibernate中存在两种缓存
-1.线程级别缓存 session缓存
-2.进程级别的缓存 Hibernate 二级缓存
-session缓存：就是session对象中存在的缓存，缓存中存在的持久化状态 map&amp;lt;Serializable,Object&amp;gt;
-快照:get方法。数据库取得数据时一式两份 缓存和快照 将缓存返回 当update时候比对快照是否做了修改。如果自己创建的对象， 没有快照 close的时候执行update语句更新
-持久化状态:本质就是存在缓存中的对象，就是持久化状态。
-```java
-public void fun1(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    User u1 = (User) session.get(User.class, 2);
-    User u2 = (User) session.get(User.class, 2);//再次查找不会执行语句，会从缓存中查找
-    User u3 = (User) session.get(User.class, 2);
-    System.out.println(u1==u2);
-    System.out.println(u1==u3);
-    session.getTransaction().commit();
-    session.close();
-}
-@Test
-public void fun2(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    User u1 = (User) session.get(User.class, 2);
-    session.update(u1);
-    ts.commit();
-    session.close();
-}
-@Test
-public void fun3(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    User u1 = new User();
-    u1.setId(2);
-    u1.setName(&quot;擎天柱&quot;);
-    u1.setPassword(&quot;1234&quot;);
-    session.update(u1);
-    ts.commit();
-    session.close();
-}
-public void fun4(){
-    Session session = HibernateUtils.openSession();
-    Transaction ts = session.beginTransaction();
-    User user = (User) session.get(User.class, 2);
-    user.setName(&quot;张三&quot;);
-    session.update(user);
-    user.setName(&quot;李四&quot;);
-    session.update(user);
-    user.setName(&quot;赵六&quot;);
-    session.update(user);
-    ts.commit();
-    session.close();
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h4 id=&quot;一级缓存细节&quot;&gt;一级缓存细节&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;HQL语句批量查询时，查询结果是否进入缓存，再次查询会比对缓存对象是否需要封装成对象&lt;/li&gt;
-&lt;li&gt;SQL查询 如果把查询结果封装到对象中，放入缓存结果了&lt;/li&gt;
-&lt;li&gt;criterira 会将查询结果放入一级缓存，再次查询会比对缓存对象是否需要封装成对象
-&lt;code&gt;java
-//HQL语句批量查询时，查询结果是否进入缓存，不会使用一级缓存
-@Test
-public void fun2(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-List&amp;lt;User&amp;gt; list1 = session.createQuery(&amp;quot;from User&amp;quot;).list();
-List&amp;lt;User&amp;gt; list2 = session.createQuery(&amp;quot;from User&amp;quot;).list();
-List&amp;lt;User&amp;gt; list3 = session.createQuery(&amp;quot;from User&amp;quot;).list();
-ts.commit();
-session.close();
-}
-//HQL语句批量查询时，查询结果是否进入缓存 结果会放入缓存中
-//HQL查询是否会使用一级缓存,HQL不会使用一级缓存
-@Test
-public void fun3(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-List&amp;lt;User&amp;gt; list1 = session.createQuery(&amp;quot;from User&amp;quot;).list();
-User user = (User) session.get(User.class, 2);
-ts.commit();
-session.close();
-}
-//SQL查询 如果把查询结果封装到对象中，放入缓存结果了。
-@Test
-public void fun4(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-List&amp;lt;User&amp;gt; list1 = session.createSQLQuery(&amp;quot;select * from t_user&amp;quot;).addEntity(User.class).list();
-User user = (User) session.get(User.class, 2);
-ts.commit();
-session.close();
-}
-//不封装成对象不会放入一级缓存
-@Test
-public void fun5(){
-Session session = HibernateUtils.openSession();
-Transaction ts = session.beginTransaction();
-List list1 = session.createSQLQuery(&amp;quot;select * from t_user&amp;quot;).list();
-User user = (User) session.get(User.class, 2);
-ts.commit();
-session.close();
-}
-//criterira 会将查询结果放入一级缓存，但是查询不会使用一级缓存
-&lt;/code&gt;
-## 一对多
-```xml
-&amp;lt;!--表达一对多集合--&amp;gt;
-&lt;set name=&quot;orders&quot; inverse=&quot;true&quot;&gt;&amp;lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&amp;gt;
-&lt;key column=&quot;cid&quot;&gt;&lt;/key&gt;&amp;lt;!--外键的值--&amp;gt;
-&lt;one-to-many class=&quot;Order&quot;/&gt;&amp;lt;!--对应关系--&amp;gt;
-&lt;/set&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;many-to-one name=&quot;customer&quot; class=&quot;Customer&quot; column=&quot;cid&quot;/&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;
-```javascript
-//Customer
-public class Customer implements Serializable {
-    private Integer cid;
-    private String name;
-    private Set&amp;lt;Order&amp;gt; orders=new HashSet&amp;lt;&amp;gt;();
-}
-//Customer.hbm.xml
-&amp;lt;hibernate-mapping package=&quot;com.itheima.domain&quot;&amp;gt;
-    &amp;lt;class name=&quot;Customer&quot; table=&quot;t_customer&quot; dynamic-insert=&quot;true&quot; dynamic-update=&quot;true&quot;&amp;gt;
-        &amp;lt;id name=&quot;cid&quot; column=&quot;cid&quot; type=&quot;int&quot;&amp;gt;
-            &amp;lt;generator class=&quot;native&quot;&amp;gt;&amp;lt;/generator&amp;gt;
-        &amp;lt;/id&amp;gt;
-        &amp;lt;property name=&quot;name&quot; column=&quot;name&quot; type=&quot;string&quot;&amp;gt;&amp;lt;/property&amp;gt;
-        &amp;lt;!--表达一对多集合--&amp;gt;
-        &amp;lt;set name=&quot;orders&quot; inverse=&quot;true&quot;&amp;gt;&amp;lt;!--inverse是否将关系的维护反转给对方,true 放弃维护外键--&amp;gt;
-            &amp;lt;key column=&quot;cid&quot;&amp;gt;&amp;lt;/key&amp;gt;&amp;lt;!--外键的值--&amp;gt;
-            &amp;lt;one-to-many class=&quot;Order&quot;/&amp;gt;&amp;lt;!--对应关系--&amp;gt;
-        &amp;lt;/set&amp;gt;
-    &amp;lt;/class&amp;gt;
-&amp;lt;/hibernate-mapping&amp;gt;
-
-
-//Order.java
-public class Order {
-    private Integer id;
-    private String name;
-    private Customer customer=new Customer();
-}
-
-
-//Order.hbm.xml
-&amp;lt;hibernate-mapping package=&quot;com.itheima.domain&quot;&amp;gt;
-    &amp;lt;class name=&quot;Order&quot; table=&quot;t_order&quot;&amp;gt;
-        &amp;lt;id name=&quot;id&quot; column=&quot;id&quot; type=&quot;int&quot;&amp;gt;
-            &amp;lt;generator class=&quot;native&quot; /&amp;gt;
-        &amp;lt;/id&amp;gt;
-        &amp;lt;property name=&quot;name&quot; column=&quot;name&quot; type=&quot;string&quot;/&amp;gt;
-        &amp;lt;many-to-one name=&quot;customer&quot; class=&quot;Customer&quot; column=&quot;cid&quot;/&amp;gt;
-    &amp;lt;/class&amp;gt;
-&amp;lt;/hibernate-mapping&amp;gt;
-
-
-//demo1.java
-public class Demo1 {
-    //指定关系游其中一方来维护，另一方不维护，有外键的一方来维护
-    @Test
-    public void fun1(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c=new Customer();
-        c.setName(&quot;tom&quot;);
-        Order o1=new Order();
-        o1.setName(&quot;肥皂&quot;);
-        Order o2=new Order();
-        o2.setName(&quot;蜡烛&quot;);
-//        c.getOrders().add(o1);//维护关系
-//        c.getOrders().add(o2);//维护关系
-        o1.setCustomer(c);//维护关系
-        o2.setCustomer(c);//维护关系
-        session.save(c);
-        session.save(o1);
-        session.save(o2);
-        ts.commit();
-        session.close();
-    }
-    //删除用户时，会先移除Customer中引用的外键，然后再删除customer
-    //维护一方的对象,会自动维护另一方的关系
-    @Test
-    public void fun2(){
-        Session session = HibernateUtils.openSession();
-        Transaction ts = session.beginTransaction();
-        Customer c = (Customer) session.get(Customer.class, 2);
-        if(c!=null) {
-            Set&amp;lt;Order&amp;gt; orders = c.getOrders();
-            for (Order o : orders) {
-                o.setCustomer(null);
-            }
-            session.delete(c);
-            ts.commit();
-            session.close();
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;表达一对多关系
-    |
-    |--Bean.hbm.xml
-            |
-            |--&lt;span class=&quot;nt&quot;&gt;&amp;lt;set&amp;gt;&amp;lt;/set&amp;gt;&lt;/span&gt;标签
-                 |
-                 |--name:关系的字段名
-                 |--inverse:是否放弃维护外键
-                 |--cascade:
-                 |      |
-                 |      |--save-update:级联保存和修改
-                 |      |--delete:级联删除
-                 |      |--delete-orphan:孤儿删除 当没有任何外键引用Order时，Order 会被删除
-                 |      |--all:save-update和delete整合
-                 |      |--all-delete-orphan:save-update,delete和delete-orphan整合
-                 |
-                 |
-                 |--&lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&amp;lt;/key&amp;gt;&lt;/span&gt;标签
-                 |      |
-                 |      |--cloumn:外键字段
-                 |
-                 |--&lt;span class=&quot;nt&quot;&gt;&amp;lt;one-to-many/&amp;gt;&lt;/span&gt;一对多关系
-                        |
-                        |--class:对应的javaBean
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//Demo2.java&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;//增&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//cascade: save-update&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tom&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;肥皂&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;蜡烛&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//        o1.setCustomer(c);//维护关系&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//        o2.setCustomer(c);//维护关系&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//增&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//我们希望在保存Customer时,自动将未保存的Orders当中的Order保存&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//cascade: save-update&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orders&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;o:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;哇哈哈&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//因为设置级联修改,自动将订单的修改保存到数据&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//cascade: delete&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//删除Customer时 ,会将Customer下的订单一并删除&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//inverse : false   6条sql语句&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//inverse : true    5条sql语句 比上面少一条维护外键&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * cascade:delete
-     * 操作的两方值都为delete
-     * 需要注意:千万不要在两方都配置级删除，删除任何一方，会导致整个关系链对象全部删除
-     */&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//delete删除当前order&lt;/span&gt;
-                          &lt;span class=&quot;c1&quot;&gt;//找到所有关联的Customer 删除&lt;/span&gt;
-                          &lt;span class=&quot;c1&quot;&gt;//删除Customer会删除关联的所有的order再删除Customer&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//demo3.java&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Demo3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//cascade:delete-orphan 孤儿删除 当没有任何外键引用Order时，Order 会被删除&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//获得所有用户下的订单,将订单移出集合 维护关系&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//Demo4.java&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Demo4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//cascade:all-delete-orhan=save-update+delete+delete-orphan&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tom&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;肥皂&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;蜡烛&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fun3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HibernateUtils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Transaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;beginTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Order&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOrders&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()){&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
- </entry>
- 
- <entry>
-   <title>Hibernate配置和api</title>
-   <link href="/java/2017/05/16/Hibernate01"/>
-   <updated>2017-05-16T00:00:00+08:00</updated>
-   <id>/java/2017/05/16/Hibernate01</id>
-   <content type="html">&lt;h2 id=&quot;hibernate&quot;&gt;hibernate&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Hibernate是一个数据持久化层的ORM框架.(持久化把数据保存到数据库或者硬盘 orm 对象关系映射)&lt;br&gt;
-orm元数据:配置文件&lt;/p&gt;
-
-&lt;h6 id=&quot;步骤&quot;&gt;步骤&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;Hibernate3.6.10使用步骤
-    |
-    |--添加jar包
-    |     |
-    |     |--mysql-connector-xx.jar  mysql驱动
-    |     |--Hibernate3.6.10目录
-    |           |   
-    |           |--hibernate3.jar 核心
-    |           |--lib目录
-    |                |--required目录所有jar
-    |                |      |--antlr-xxx.jar 解析框架，hibernate用于解析HQL
-    |                |      |--commons-collections-xx.jar  集合增强包
-    |                |      |--dom4j-xxx.jar 解析xml
-    |                |      |--javassist-xxx.jar 字节码增强(代理)
-    |                |      |--jta-xx.jar java transaction api 事务规范
-    |                |      |--slf4j-api-xx.jar 日志框架(整合log4j)
-    |                |      
-    |                |--jpa目录jar
-    |                       |--hibernate-jpa-xx.jar  jap规范支持
-    |
-    |--添加配置文件
-          |
-          |--编写核心配置文件
-          |     |--hibernate.cfg.xml复制到src目录下，修改配置
-          |             |--hibernate.cfg.xml
-          |                 |
-          |                 |--Hibernate3.6.10目录
-          |                         |--project
-          |                              |--etc 里面          
-          |                                     
-          |
-          |--编写JavaBean+映射配置
-          |         |
-          |         |--格式:JavaBean名称.hbm.xml
-          |                     |
-          |                     |--DTD位置
-          |                         |--hibernate3.jar包名路径下
-          |
-          |--映射添加到核心配置文件
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6 id=&quot;示例&quot;&gt;示例&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//hibernate.cfg.xml&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xml&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0&quot;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DOCTYPE&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hibernate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;configuration&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;PUBLIC&lt;/span&gt;
-   &lt;span class=&quot;s2&quot;&gt;&quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;&lt;/span&gt;
-   &lt;span class=&quot;s2&quot;&gt;&quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;hibernate-configuration&gt;&lt;br&gt;
-   &lt;session-factory &gt;&lt;br&gt;
-      &lt;property name=&quot;hibernate.connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;&lt;br&gt;
-      &lt;property name=&quot;hibernate.connection.username&quot;&gt;root&lt;/property&gt;&lt;br&gt;
-      &lt;property name=&quot;hibernate.connection.password&quot;&gt;root&lt;/property&gt;&lt;br&gt;
-      &lt;property name=&quot;hibernate.connection.url&quot;&gt;jdbc:mysql://localhost:3306/ee19day01?characterEncoding=utf-8&lt;/property&gt;&lt;br&gt;
-      &amp;lt;!--操作数据库会向控制台打印sql语句--&amp;gt;&lt;br&gt;
-      &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;&lt;br&gt;
-      &amp;lt;!--打印sql前,会讲sql格式化--&amp;gt;&lt;br&gt;
-      &lt;property name=&quot;format_sql&quot;&gt;true&lt;/property&gt;&lt;br&gt;
-      &amp;lt;!--hdm2ddl.auto:是否自动生成表结构--&amp;gt;&lt;br&gt;
-      &lt;property name=&quot;hbm2ddl.auto&quot;&gt;update&lt;/property&gt;&lt;br&gt;
-      &lt;property name=&quot;hibernate.connection.autocommit&quot;&gt;true&lt;/property&gt;&lt;br&gt;
-      &lt;mapping resource=&quot;com/itheima/a_hello/User.hbm.xml&quot;/&gt;&lt;br&gt;
-   &lt;/session-factory&gt;&lt;br&gt;
-&lt;/hibernate-configuration&gt;&lt;/p&gt;
-
-&lt;p&gt;//User.java&lt;br&gt;
-public class User {&lt;br&gt;
-    private int id;&lt;br&gt;
-    private String name;&lt;br&gt;
-    private String password;&lt;br&gt;
-}&lt;/p&gt;
-
-&lt;p&gt;//User.hbm.xml&lt;br&gt;
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&lt;br&gt;
-&amp;lt;!DOCTYPE hibernate-mapping PUBLIC&lt;br&gt;
-        &amp;quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&amp;quot;&lt;br&gt;
-        &amp;quot;&lt;a href=&quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd%22%3E&quot;&gt;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&amp;quot;&amp;gt;&lt;/a&gt;&lt;br&gt;
-&lt;hibernate-mapping&gt;&lt;br&gt;
-    &lt;class name=&quot;com.itheima.a_hello.User&quot; table=&quot;t_user&quot;&gt;&lt;br&gt;
-        &lt;id name=&quot;id&quot; column=&quot;id&quot;&gt;&lt;br&gt;
-            &lt;generator class=&quot;native&quot;&gt;&lt;/generator&gt;&lt;br&gt;
-        &lt;/id&gt;&lt;br&gt;
-        &lt;property name=&quot;name&quot; column=&quot;name&quot;&gt;&lt;/property&gt;&lt;br&gt;
-        &lt;property name=&quot;password&quot; column=&quot;password&quot;&gt;&lt;/property&gt;&lt;br&gt;
-    &lt;/class&gt;&lt;br&gt;
-&lt;/hibernate-mapping&gt;&lt;/p&gt;
-
-&lt;p&gt;public class Test01 {&lt;br&gt;
-    @Test&lt;br&gt;
-    public void fun1(){&lt;br&gt;
-        //1.读取配置文件&lt;br&gt;
-        Configuration conf=new Configuration().configure();&lt;br&gt;
-        //2.根据配置创建Factory&lt;br&gt;
-        SessionFactory factory=conf.buildSessionFactory();&lt;br&gt;
-        //3.通过获得操作数据的session对象&lt;br&gt;
-        Session session = factory.openSession();&lt;br&gt;
-        //4.操作数据库&lt;br&gt;
-        User u=new User();&lt;br&gt;
-        u.setName(&amp;quot;张三&amp;quot;);&lt;br&gt;
-        u.setPassword(&amp;quot;1234&amp;quot;);&lt;br&gt;
-        session.save(u);&lt;br&gt;
-        //5.关闭资源&lt;br&gt;
-        session.close();&lt;br&gt;
-        factory.close();&lt;br&gt;
-    }&lt;br&gt;
-}&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;## api
-&amp;gt;      1 load方法.返回一个代理对象,获得其内容时,会查询数据库,是每次访问属性都会查询数据库吗?
-    答:不是每次都查.代理对象中有一个标识是否被初始化的boolean型变量. 记录是否被初始化过.
-    2 代理都是要基于接口的,用load方法返回的代理,就没有实现任何接口?
-    答: java中的动态代理是基于接口.  而 Hibernate 是使用javassist-3.12.0.GA.jar 产生代理对象的.
-    该代理与被代理对象之间的关系是继承关系.与我们学的动态代理不是一种.所以不需要接口.
-|方法|备注|
-|------|-----|
-| conf=new Configuration().configure()|加载配置文件|
-|new Configuration().configure(file)|加载指定位置配置文件|
-|new Configuration().configure(path)|加载指定位置配置文件|
-|conf.addClass(User.class)|加载映射文件(不推荐)推荐使用hibernate.cfg.xml mapping属性引入配置文件|
-|ORM文件规范|1.orm映射文件名与实体的简单名一致,2.orm映射文件和实体类同路径|
-|conf.buildSessionFactory()|创建SessionFactory|
-|factory.openSession()|获得全新的session|
-|factory.getCurrentSession()|获得与当前线程绑定的session(ThreadLocal)|
-|session.save(obj)|保存对象到数据库|
-|session.get(obj.class, 1)|通过主键id查找对象|
-|session.update(user)|修改对象|
-|session.delete(obj)|删除对象，根据对象id删除|
-|session.load(obj.class, 2)|通过主键id查找对象,反射代理延迟加载|
-|session.createSQLQuery(sql)|sql语句操作|
-|uery.addEntity(User.class)|指定结果封装成实体|
-|session.beginTransaction()|打开事务|
-|transaction.commit()|提交事务|
-|transaction.rollback()|回滚事务|
-|session.getTransation()|得到已经打开的事务|
-|session.createQuery(&quot;from 全类名称&quot;)|获得query对象|
-|query.list()|查询所有|
-|query.uniqueResult()|取一个结果|
-|query.setFirstResult(2)|从第几个结果取|
-|query.setMaxResults(3)|取几个结果|
-|session.createCriteria(obj.class)|获得criteria对象|
-|criteria.list()|查询所有|
-|criteria.uniqueResult()|查询单个结果|
-|criteria.setFirstResult(3)|从第几个开始取|
-|criteria.setMaxResults(2)|设置查询多少个|
-|criteria.add(Restrictions)|添加查询条件|
-```java
-public class Configuration_test {
-    @Test
-    public void fun1(){
-        Configuration conf=new Configuration().configure();
-//        Configuration conf=new Configuration().configure(file);
-//        Configuration conf=new Configuration().configure(path);
-        //加载映射文件(不推荐)
-        //推荐使用hibernate.cfg.xml mapping属性引入配置文件
-        //规范orm文件 1.orm映射文件名与实体的简单名一致
-        // 2.orm映射文件和实体类同路径
-
-        conf.addClass(User.class);
-    }
-}
-
-//SeesionFactory
-public class SessionFactory_test {
-    @Test
-    public void fun1(){
-        Configuration conf=new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        factory.openSession();
-        factory.getCurrentSession();
-    }
-}
-
-//Session
-public class Session_test {
-    @Test
-    public void fun1() {
-        //添加
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        User user = new User();
-        user.setName(&quot;景甜&quot;);
-        user.setPassword(&quot;1234&quot;);
-        session.save(user);
-        session.close();
-        factory.close();
-    }
-
-    @Test
-    public void fun2() {
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        User user = (User) session.get(User.class, 1);
-        System.out.println(user);
-        user.setName(&quot;刘亦菲&quot;);
-        session.update(user);
-        ts.commit();
-
-    }
-    @Test
-    public void fun3(){
-        //删除
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        User user = (User) session.get(User.class, 1);
-        session.delete(user);
-        ts.commit();
-        session.close();
-        factory.close();
-    }
-    @Test
-    public void fun4(){
-        //查询
-        //get: get方法被调用时立刻发送sql语句
-        //load: 调用并没有查询数据库，当我们需要使用该对象的时候 查询对象
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        User user = (User) session.load(User.class, 2);
-        System.out.println(user);
-        ts.commit();
-        session.close();
-        factory.close();
-    }
-    @Test
-    public void fun5(){
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        Query query = session.createQuery(&quot;from com.itheima.a_hello.User&quot;);//传入hql语句
-        List&amp;lt;User&amp;gt; list = query.list();
-        System.out.println(list);
-        ts.commit();
-    }
-    @Test
-    public void fun6(){
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        Criteria criteria = session.createCriteria(User.class);
-        List&amp;lt;User&amp;gt; list = criteria.list();
-        System.out.println(list);
-        ts.commit();
-    }
-    @Test
-    public void fun7(){
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        SQLQuery query = session.createSQLQuery(&quot;select * from t_user&quot;);
-        query.addEntity(User.class);
-        List&amp;lt;User&amp;gt; list = query.list();
-        System.out.println(list);
-        ts.commit();
-    }
-
-}
-
-//Query
-public class Query_test {
-    @Test
-    public void fun1(){
-        Configuration config = new Configuration().configure();
-        SessionFactory factory = config.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        //Query对象 封装HQL语句的对象 封装查询细节的方法
-        Query query = session.createQuery(&quot;from com.itheima.a_hello.User&quot;);
-        query.setFirstResult(2);
-        query.setMaxResults(3);
-        List&amp;lt;User&amp;gt; list = query.list();
-        User u  = (User) query.uniqueResult();
-        System.out.println(u);
-        ts.commit();
-    }
-}
-
-//Cretiraira
-public class Cretiraira_test {
-    @Test
-    public void fun1(){
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction ts = session.beginTransaction();
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.setFirstResult(0);
-        criteria.setMaxResults(2);
-        List list = criteria.list();
-        System.out.println(list);
-        criteria=criteria.add(Restrictions.like(&quot;name&quot;,&quot;%周芷若%&quot;));
-        User user = (User) criteria.uniqueResult();
-        System.out.println(user);
-        ts.commit();
-    }
-}
-
-//Transaction
-public class Transaction_test {
-    //封装了事务
-    @Test
-    public void fun1(){
-        Configuration conf = new Configuration().configure();
-        SessionFactory factory = conf.buildSessionFactory();
-        Session session = factory.getCurrentSession();
-        Transaction ts = session.beginTransaction();
-        ts.commit();
-        Session session2 = factory.getCurrentSession();
-        System.out.println(session==session2);
-
-        //事务关闭时，会自动把当前线程关联的session关闭，并删除
-
-        //ts.rollback();
-        //session.close();
-        factory.close();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h6 id=&quot;hibernateutils&quot;&gt;HibernateUtils&lt;/h6&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;HibernateUtils&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SessionFactory&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;Configuration&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;buildSessionFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;Runtime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getRuntime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addShutdownHook&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Thread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Runnable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Override&lt;/span&gt;
-            &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;虚拟机关闭 释放资源&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Session&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getCurrentSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCurrentSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;openSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;hbm2ddl-auto&quot;&gt;hbm2ddl.auto&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;是否自动生成表结构策略&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;update:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;如果当前数据库中不存在表结构 自动创建表结构&lt;/li&gt;
-&lt;li&gt;如果存在表结构，并且表结构与实体一致，那么不在修改&lt;/li&gt;
-&lt;li&gt;如果存在表结构，并且表结构与实体不一致，那么修改表结构，并保留原有字段&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;create:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;无论是否存在表结构，每次启动Hibernate都会重新创建表结构(数据会丢失)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;create-drop:&lt;br&gt;
-1.无论是否存在表结构，每次启动Hibernate都会重新创建表结构，每次Hibernate结束摧毁表&lt;/p&gt;
-
-&lt;p&gt;validate:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;不会自动创建表结构&lt;/li&gt;
-&lt;li&gt;也不会自动维护表结构&lt;/li&gt;
-&lt;li&gt;只负责校验表结构&lt;/li&gt;
-&lt;li&gt;如果表结构不一致抛异常&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;hibernate-dialect&quot;&gt;hibernate.dialect&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;数据库方言配置&lt;br&gt;
-mysql 选择org.hibernate.dialect.MySQLDialect&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;hibernate-中持久类&quot;&gt;Hibernate 中持久类&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;提供一个无參public访问的构造方法&lt;/li&gt;
-&lt;li&gt;提供一个表示属性，映射数据库主键&lt;/li&gt;
-&lt;li&gt;所有属性提供pulbic访问控制符的 set get方法&lt;/li&gt;
-&lt;li&gt;标识属性尽量使用基本数据类型的包装类型&lt;/li&gt;
-&lt;li&gt;不要用final修饰类（将无法生成代理对象进行优化）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;持久化对象的唯一标识-oid&quot;&gt;持久化对象的唯一标识 OID&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Java按地址区分同一个的类的不同对象&lt;/li&gt;
-&lt;li&gt;关系数据库主键区分同一条记录&lt;/li&gt;
-&lt;li&gt;Hibernate使用OID来建立内存中的对象和数据库中的记录的对应关系，应该让Hibernate来个OID赋值&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;区分自然主键和代理主键&quot;&gt;区分自然主键和代理主键&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;主键需要具备:不能为空/不能重复/不能改变&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ol&gt;
-&lt;li&gt;自然主键: 在业务中，某个属性符合主键的三个要求，那么该属性可以做为主键列&lt;/li&gt;
-&lt;li&gt;代理主键: 在业务中,不存在符合以上3个条件的属性。那么就添加一个没有意义的列，作为主键&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;bean-hbm-xml&quot;&gt;Bean.hbm.xml&lt;/h2&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;hibernate-mapping标签
-      |     |
-      |     |--package属性
-      |         |--指定包名，class里面可以使用简单类名
-      |
-      |--class标签(配置与表的关系)
-           |        |
-           |        |--name:实体类完整名称
-           |        |--table:与实体类对应表的名称
-           |        |--dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert
-           |        |--dynamic-update:动态更新 true:没有改动的字段 不参与update
-           |
-           |--id标签(配置主键)
-           |        |   |
-           |        |   |--name:实体类属性名
-           |        |   |--column：主键在表中的名称
-           |        |   |--length: 列的长度
-           |        |   |--unsaved-value(很少用):指定主键为什么值时当做空处理
-           |        |   |--access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set
-           |        |
-           |        |--generator标签(主键生成策略)
-           |             |
-           |             |--increment:数据库自己生成主键，先查询最大主键id值，然后id值+1
-           |             |--identity:依赖数据的主键自增功能
-           |             |--sequence:序列，依赖于数据库中的序列功能(Oracle)
-           |             |--hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)
-           |             |--native:自动根据数据库increment,sequence,hilo三选一
-           |             |--uuid:自动生成32位不重复的字符串
-           |             |--assigned:自己指定主键值，表的主键是自然主键时
-           |
-           |--property标签(实体中属性和表中列的对应)
-                    |
-                    |--name:实体属性名称
-                    |--column:表中列的名称
-                    |--length:数据长度
-                    |--scale:小数有效位数
-                    |--precision:小数点后面长度
-                    |--not-null:指定属性的约束是否使用非空
-                    |--unique:指定属性的约束是否唯一
-                    |--insert(一般不用):该属性是否加入insert语句，插入的不用该属性
-                    |--update(一般不用):update的时候不会管该属性
-                    |--type:表达该属性的类型
-                          |
-                          |--java类型 java.lang.String
-                          |--数据库类型指定 varchar
-                          |--Hibernate类型指定 string
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5 id=&quot;user-hbm-xml&quot;&gt;User.hbm.xml&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE hibernate-mapping PUBLIC
-        &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;
-        &quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;hibernate-mapping&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;package=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.itheima.a_hello&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;&amp;lt;!--
-    class:配置与表的关系
-    name:实体类完整名称
-    table:与实体类对应表的名称
-    dynamic-insert 动态插入 默认值是false true 如果字段为null 不参与insert
-    dynamic-update:动态更新 true:没有改动的字段 不参与update
-    --&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;table=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;t_user&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;dynamic-insert=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;dynamic-update=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;&amp;lt;!--
-        id:配置主键
-        column：主键在表中的名称
-        length: 列的长度
-        unsaved-value(很少用):指定主键为什么值时当做空处理
-        access(强烈推荐不要用):field 通过反射找到字段，赋值。绕过get set
-        --&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;id&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;column=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;length=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;9&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;unsaved-value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;&amp;lt;!--
-            主键生成策略
-            1.increment:数据库自己生成主键，先查询最大主键id值，然后id值+1
-            2.identity:依赖数据的主键自增功能
-            3.sequence:序列，依赖于数据库中的序列功能(Oracle)
-            4.hilo:Hibernate自己实现序列的算法(纯了解，永远用不到)
-            5.native:自动根据数据库increment,sequence,hilo三选一
-            6.uuid:自动生成32位不重复的字符串
-            7.assigned:自己指定主键值，表的主键是自然主键时
-            --&amp;gt;&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;lt;generator&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;increment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/generator&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/id&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;&amp;lt;!--
-        name:实体属性名称
-        column:表中列的名称
-        length:数据长度
-        scale:小数有效位数
-        precision:小数点后面长度
-        insert(一般不用):该属性是否加入insert语句，插入的不用该属性
-        not-null:指定属性的约束是否使用非空
-        unique:指定属性的约束是否唯一
-        update(一般不用):update的时候不会管该属性
-        type:表达该属性的类型
-        java类型 java.lang.String
-        数据库类型指定 varchar
-        Hibernate类型指定 string
-        --&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;column=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;insert=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;not-null=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;unique=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;update=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;java.lang.String&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;column=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sal&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;column=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sal&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;precision=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scale=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/class&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/hibernate-mapping&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
  </entry>
  

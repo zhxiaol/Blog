@@ -97,6 +97,232 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/Blog/java/2017/05/18/Hibernate02" title="hibernate对象状态,一级缓存和多表关联" itemprop="url">hibernate对象状态,一级缓存和多表关联</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-18 00:00:00 +0800" itemprop="datePublished">  2017-05-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="对象状态">对象状态</h2>
+
+<ol>
+<li>瞬时状态|临时态
+&gt; 1.没有于Hibernate产生关联 2.与数据的记录没有产生关联(有关联就是与数据库id有对应)</li>
+<li>持久态
+&gt; 1.于Hibernate有关联，2.与数据库有关联(对象有id对应)</li>
+<li>游离态|托管态
+&gt; 1.与Hibernate没有关联 2.跟数据库有关联(曾经是持久态)</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/Blog/java/2017/05/18/Hibernate02#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/05/16/Hibernate01" title="Hibernate配置和api" itemprop="url">Hibernate配置和api</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-16 00:00:00 +0800" itemprop="datePublished">  2017-05-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="hibernate">hibernate</h2>
+
+<blockquote>
+<p>Hibernate是一个数据持久化层的ORM框架.(持久化把数据保存到数据库或者硬盘 orm 对象关系映射)<br>
+orm元数据:配置文件</p>
+
+<h6 id="步骤">步骤</h6>
+<div class="highlight"><pre><code class="language-html" data-lang="html">Hibernate3.6.10使用步骤
+    |
+    |--添加jar包
+    |     |
+    |     |--mysql-connector-xx.jar  mysql驱动
+    |     |--Hibernate3.6.10目录
+    |           |   
+    |           |--hibernate3.jar 核心
+    |           |--lib目录
+    |                |--required目录所有jar
+    |                |      |--antlr-xxx.jar 解析框架，hibernate用于解析HQL
+    |                |      |--commons-collections-xx.jar  集合增强包
+    |                |      |--dom4j-xxx.jar 解析xml
+    |                |      |--javassist-xxx.jar 字节码增强(代理)
+    |                |      |--jta-xx.jar java transaction api 事务规范
+    |                |      |--slf4j-api-xx.jar 日志框架(整合log4j)
+    |                |      
+    |                |--jpa目录jar
+    |                       |--hibernate-jpa-xx.jar  jap规范支持
+    |
+    |--添加配置文件
+          |
+          |--编写核心配置文件
+          |     |--hibernate.cfg.xml复制到src目录下，修改配置
+          |             |--hibernate.cfg.xml
+          |                 |
+          |                 |--Hibernate3.6.10目录
+          |                         |--project
+          |                              |--etc 里面          
+          |                                     
+          |
+          |--编写JavaBean+映射配置
+          |         |
+          |         |--格式:JavaBean名称.hbm.xml
+          |                     |
+          |                     |--DTD位置
+          |                         |--hibernate3.jar包名路径下
+          |
+          |--映射添加到核心配置文件
+</code></pre></div>
+<h6 id="示例">示例</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//hibernate.cfg.xml</span>
+<span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">hibernate</span><span class="o">-</span><span class="nx">configuration</span> <span class="nx">PUBLIC</span>
+   <span class="s2">"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span>
+   <span class="s2">"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"</span><span class="o">&gt;</span>
+</code></pre></div></blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/Blog/java/2017/05/16/Hibernate01#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/Blog/java/2017/05/13/struts2-ActionContext%E5%92%8CValueStack" title="struts2 ActionContext和ValueStack" itemprop="url">struts2 ActionContext和ValueStack</a>
   </h1>
   <p class="article-author">By
@@ -2233,330 +2459,6 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/Blog/java/2017/03/08/jdbc" title="jdbc" itemprop="url">jdbc</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
-		
-  <p class="article-time">
-    <time datetime="2017-03-08 00:00:00 +0800" itemprop="datePublished">  2017-03-08</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="jdbc">jdbc</h2>
-
-<blockquote>
-<p>java database connectivity<br>
-sun公司提供的一套操作数据库的标准规范</p>
-
-<h2 id="jdbc-规范">jdbc 规范</h2>
-
-<ul>
-<li>DriverManager 用于注册驱动</li>
-<li>Connection 表示与数据库创建的链接</li>
-<li>Statement 操作数据库sql语句的对象</li>
-<li>ResultSet 结果集或者虚拟表
-<code>java
-//注册驱动
-DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-//获取链接Connection
-Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
-//得到执行语句对象statement
-Statement stmt = conn.createStatement();
-//执行sql语句，并返回结果
-ResultSet rs = stmt.executeQuery(&quot;select * from users&quot;);
-//处理结果
-while(rs.next()){
-System.out.println(rs.getObject(1));
-System.out.println(rs.getObject(2));
-System.out.println(rs.getObject(3));
-System.out.println(rs.getObject(4));
-System.out.println(rs.getObject(5));
-System.out.println(&quot;-------------&quot;);
-}
-//关闭资源
-rs.close();
-stmt.close();
-conn.close();
-</code>
-## java.sql.DriverManager
-<code>java
-注册驱动
-DriverManage.registDriver(Driver driver) 不建议使用(1.导致驱动被注册2次,2.强烈依赖jar包)
-加载驱动 Class.froNmae(&quot;com.mysql.jdbc.Driver&quot;); Driver里面有静态代码块注册驱动
-jdbc:mysql://localhost:3306/day06
-协议:子协议://ip:端口/数据库
-oracle:jdbc:oracle:thin:@localhost:1521:sid
-//第二种方式
-Properties info=new Properties();
-info.setProperty(&quot;user&quot;,&quot;root&quot;);
-info.setProperty(&quot;password&quot;,&quot;root&quot;);
-Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, info);
-//第三种方式
-Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06?user=root&amp;password=root&quot;);
-</code>
-## java.sql.Connection
-<code>
-1.接口的实现在数据库驱动中，所有与数据库交互都是基于链接对象
-2.Statement createStatement();
-</code>
-## java.sql.Statement
-<code>
-1. 接口的实现在数据库驱动中。用于执行静态sql语句并返回它所生成结果的对象
-2. ResultSet executeQuery(String sql) 根据查询语句返回结果集，只能执行查询。
-3. int executeUpdate(String sql) 执行insert,delete,update语句返回受影响的行数
-4. boolean execute(String sql) 执行任意sql,仅当执行select语句且有结果返回true ，
-ResultSet getResultSet()。
-</code>
-## java.sql.ResultSet
-<code>java
-封装结果集
-提供一个游标，默认游标在第一行之前
-调用next()方法，游标向下移动一行
-Object getObject(int index)
-Object getObject(String name)
-java的数据类型与数据库类型关系
-int-int folat-float double -double String-char varchar Date-date
-可移动游标的方法
-boolean next()
-boolean previous()
-boolean afterLast()将游标移动到末尾，最后一行之后
-boolean beforeFirst() 移动到开头，第一行之前
-</code>
-<code>java
-Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
-Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
-Statement stmt=conn.createStatement();
-ResultSet rs=stmt.executeQuery(&quot;select * from users&quot;);
-ArrayList&lt;User&gt; users = new ArrayList&lt;&gt;();
-while(rs.next()){
-User user = new User();
-user.setId(rs.getInt(&quot;id&quot;));
-user.setName(rs.getString(&quot;name&quot;));
-user.setPassword(rs.getString(&quot;password&quot;));
-user.setBirthday(rs.getDate(&quot;birthday&quot;));
-user.setEmail(rs.getString(&quot;email&quot;));
-users.add(user);
-}
-System.out.println(users);
-rs.close();
-stmt.close();
-conn.close();
-</code>
-## 释放资源
-<code>java
-Connection conn=null;
-Statement stmt=null;
-ResultSet rs=null;
-try {
-Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
-conn=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;,&quot;root&quot;,&quot;root&quot;);
-stmt=conn.createStatement();
-rs=stmt.executeQuery(&quot;select * from users&quot;);
-} catch (Exception e) {
-e.printStackTrace();
-}finally {
-if(conn!=null){
-    try {
-        conn.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-if(stmt!=null){
-    try {
-        stmt.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-if(rs!=null){
-    try {
-        rs.close();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-}
-</code>
-## CRUD
-```java
-public class DBUtils {
-private static String driverClass;
-private static String url;
-private static String username;
-private static String password;
-static {
-    ResourceBundle rb= ResourceBundle.getBundle(&quot;dbinfo&quot;);
-    driverClass=rb.getString(&quot;driverClass&quot;);
-    url=rb.getString(&quot;url&quot;);
-    username=rb.getString(&quot;username&quot;);
-    password=rb.getString(&quot;password&quot;);
-    try {
-        Class.forName(driverClass);
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-    }
-}
-//得到链接的方法
-public static Connection getConnection()throws Exception{</li>
-</ul>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/Blog/java/2017/03/08/jdbc#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <!--
-  <%- list_categories(item.categories, {
-      show_count: false,
-      class: 'article-category',
-      style: 'none',
-      separator: '►'
-  }) %>
-  -->
-  
-  <a class="article-category-link" href="/Blog/categories/#java">java</a>
-  
-</div>
-
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  <a href="/Blog/tags/#java">java</a>
-  
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-    </article>
-
-
-
-
-
-
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/Blog/2017/02/23/mysql02" title="Mysql02" itemprop="url">Mysql02</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-23 00:00:00 +0800" itemprop="datePublished">  2017-02-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>layout: post<br>
-title: mysql02<br>
-tags:</p>
-
-<ul>
-<li>java</li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/Blog/2017/02/23/mysql02#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <!--
-  <%- list_categories(item.categories, {
-      show_count: false,
-      class: 'article-category',
-      style: 'none',
-      separator: '►'
-  }) %>
-  -->
-  
-</div>
-
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -2606,7 +2508,7 @@ tags:</p>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>64</sup></a></li>
 		  
 		
 		  
@@ -2631,7 +2533,7 @@ tags:</p>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>64</sup></a></li>
 			
 		
 			

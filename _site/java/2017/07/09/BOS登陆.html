@@ -1,0 +1,963 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>BOS登陆 | zhxiaol</title>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="zhxiaol">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+    
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="BOS登陆">
+    <meta property="og:url" content="/Blog/java/2017/07/09/BOS%E7%99%BB%E9%99%86">
+    <meta property="og:site_name" content="zhxiaol">
+    <meta property="og:description" content="BOS登陆">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BOS登陆">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="zhxiaol" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/Blog/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/Blog/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/Blog/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/Blog/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/Blog/assets/css/highlight.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/Blog/"><img src="/Blog/assets/img/logo.png" alt="zhxiaol" title="zhxiaol"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/Blog/" title="zhxiaol">zhxiaol</a></h1>
+				<h2 class="blog-motto">Java大数据 android</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/Blog/">Home</a></li>
+					
+						<li><a href="/Blog/archives">Archives</a></li>
+					
+						<li><a href="/Blog/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:/Blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/java/2017/07/09/BOS%E7%99%BB%E9%99%86" title="BOS登陆" itemprop="url">BOS登陆</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-09 00:00:00 +0800" itemprop="datePublished"> 发表于 2017-07-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<h5 id="数据库设计">数据库设计</h5>
+
+<h6 id="创建t_user表">创建t_user表</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">create table t_user(id varchar(32) not null,username varchar(20) not null,
+password varchar(32) not null,salary double,birthday date,gender varchar(10),
+station varchar(40), telephone varchar(11),remark varchar(255),primary key(id));
+</code></pre></div>
+<h6 id="生成pojo类">生成POJO类</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">1.添加DataSource设置
+2.将Hibernate配置文件添加到Facets中
+3.将Spring配置文件添加到Facets中
+4.打开Persistence窗口自动生成User类和Mapping
+</code></pre></div>
+<h5 id="持久层设计">持久层设计</h5>
+
+<h6 id="ibasedao接口">IBaseDao接口</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public interface IBaseDao&lt;T&gt; {
+     void save(T entity);
+     void delete(T entity);
+     void update(T entity);
+     T findById(Serializable id);
+     List&lt;T&gt;findAll();
+}
+</code></pre></div>
+<h6 id="basedaoimpl实现类">BaseDaoImpl实现类</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public class BaseDaoImpl&lt;T&gt; extends HibernateDaoSupport implements IBaseDao&lt;T&gt; {
+    Class&lt;T&gt; entityClass;
+    //在构造方法中动态获得操作的实体类型
+    public BaseDaoImpl() {
+        ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+        entityClass= (Class&lt;T&gt;) genericSuperclass.getActualTypeArguments()[0];
+
+    }
+    //@Autowired Spring提供的方式
+    //@Qualifier("sessionFactory") spring指定bean名称
+    @Resource   //(name = "sessionFactory")不指定名称按类型注入 JDK1.7提供
+    public void setMySessionFactory(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
+    @Override
+    public void save(T entity) {
+        this.getHibernateTemplate().save(entity);
+    }
+
+    @Override
+    public void delete(T entity) {
+        this.getHibernateTemplate().delete(entity);
+    }
+
+    @Override
+    public void update(T entity) {
+        this.getHibernateTemplate().update(entity);
+    }
+
+    @Override
+    public T findById(Serializable id) {
+        this.getHibernateTemplate().get(entityClass,id);
+        return null;
+    }
+
+    @Override
+    public List&lt;T&gt; findAll() {
+        String hql="FROM "+entityClass.getSimpleName();
+        return this.getHibernateTemplate().find(hql);
+    }
+}
+</code></pre></div>
+<h6 id="userdaoimpl">UserDaoImpl</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public interface IUserDao&lt;User&gt; extends IBaseDao&lt;User&gt; {
+}
+
+@Repository
+//@Scope("prototype")
+public class UserDaoImpl extends BaseDaoImpl&lt;User&gt; implements IUserDao&lt;User&gt; {
+}
+</code></pre></div>
+<h5 id="表现层设计">表现层设计</h5>
+
+<h6 id="baseaction">BaseAction</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public class BaseAction&lt;T&gt; extends ActionSupport implements ModelDriven&lt;T&gt; {
+    private  T model;
+    //在构造方法中获得实体类型创建对象
+    public BaseAction() {
+        try {
+            ParameterizedType type= (ParameterizedType) this.getClass().getGenericSuperclass();
+            Class&lt;T&gt; clazz = (Class&lt;T&gt;) type.getActualTypeArguments()[0];
+            model=clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public T getModel() {
+        return model;
+    }
+}
+</code></pre></div>
+<h5 id="用户登陆">用户登陆</h5>
+
+<h6 id="userservice">UserService</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">public interface IUserService {
+    User login(User model);
+}
+
+@Service
+@Transactional
+public class UserServiceImpl implements IUserService {
+    @Autowired
+    private IUserDao userDao;
+
+    @Override
+    public User login(User user) {
+        String username=user.getUsername();
+        String password=user.getPassword();
+        password=MD5Utils.md5(password);
+        return userDao.findUserByUsernameAndPassword(username,password);
+    }
+
+    public UserServiceImpl setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+        return this;
+    }
+}
+</code></pre></div>
+<h6 id="useraction">UserAction</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">@Controller  //默认bean id是类名首字符小写
+@Scope("prototype")
+public class UserAction extends BaseAction&lt;User&gt; {
+    //通过属性驱动接受验证码
+    private String checkcode;
+    @Resource
+    private IUserService userService;
+    public String login(){
+        //判断验证码
+        String key = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
+        if(StringUtils.isNotBlank(checkcode)&amp;&amp;checkcode.equals(key)){
+            //验证码正确
+            User user=userService.login(model);
+            if(user != null){
+                //登陆成功,将User放入session域,跳转到系统首页
+                ServletActionContext.getRequest().getSession().setAttribute("loginUser",user);
+                return "home";
+            }else{
+                //登陆失败,设置错误提示,跳转到登录页面
+                this.addActionError(this.getText("loginError"));
+                return "login";
+            }
+        }else {//验证码错误
+            this.addActionError(this.getText("validateCodeError"));
+            return "login";
+        }
+    }
+
+    public UserAction setUserService(IUserService userService) {
+        this.userService = userService;
+        return this;
+    }
+
+    public void setCheckcode(String checkcode) {
+        this.checkcode = checkcode;
+    }
+}
+</code></pre></div>
+<h6 id="userdao">UserDao</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">@Repository
+//@Scope("prototype")
+public class UserDaoImpl extends BaseDaoImpl&lt;User&gt; implements IUserDao {
+    @Override
+    public User findUserByUsernameAndPassword(String username, String password) {
+        String hql="FROM User u where u.username = ? and u.password = ?";
+        List&lt;User&gt; list = this.getHibernateTemplate().find(hql, username, password);
+        if(list!=null&amp;&amp;list.size()&gt;0)
+        return list.get(0);
+        return null;
+    }
+}
+</code></pre></div>
+<h5 id="easyui-messager">EasyUI Messager</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+    $(function () {
+
+        $.messager.alert("标题", "内容信息", "info");
+
+        window.setTimeout(function () {
+            $.messager.show({
+                title: '欢迎信息',
+                msg: '欢迎张三登陆系统',
+                timeout: 3000,
+                showType: 'slide'
+            })
+        }, 3000)
+
+        $.messager.confirm("标题", "内容:你确定删除当前数据吗", function (r) {
+            alert(r)
+        });
+
+        $.messager.prompt("标题", "内容", function (data) {
+            alert(data)
+        })
+
+        $.messager.progress();
+        window.setTimeout(function () {
+            $.messager.progress('close')
+        }, 3000)
+
+    })
+&lt;/script&gt;
+</code></pre></div>
+<h5 id="easyui下拉菜单meunbutton">EasyUI下拉菜单MeunButton</h5>
+<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %&gt;
+<span class="cp">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>下拉菜单<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">data-options=</span><span class="s">"iconCls:'icon-help',menu:'#mm'"</span> <span class="na">class=</span><span class="s">"easyui-menubutton"</span><span class="nt">&gt;</span>控制面板<span class="nt">&lt;/a&gt;</span>
+<span class="err">&lt;</span>%--使用div制作下拉菜单选项--%&gt;
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"mm"</span><span class="nt">&gt;</span>
+    <span class="err">&lt;</span>%--使用子div制作具体的选项--%&gt;
+    <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"iconCls:'icon-edit'"</span> <span class="na">onclick=</span><span class="s">"alert('修改密码')"</span><span class="nt">&gt;</span>修改密码<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>联系管理员<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-sep"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>退出系统<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<h6 id="退出登录">退出登录</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">//退出登录
+public String logout(){
+    ServletActionContext.getRequest().getSession().invalidate();
+    return "login";
+}
+</code></pre></div>
+<h6 id="自定义拦截器">自定义拦截器</h6>
+<div class="highlight"><pre><code class="language-" data-lang="">//定义一个拦截器
+public class BOSLoginInterceptor extends MethodFilterInterceptor {
+    @Override
+    protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+        if(user == null){
+            return "login";
+        }
+        return actionInvocation.invoke();
+    }
+}
+
+
+//在struts.xml中注册拦截器
+&lt;package name="basicstruts2" extends="struts-default"&gt;
+    &lt;interceptors&gt;
+        &lt;interceptor name="BOSLoginInterceptor" class="com.itheima.bos.web.interceptor.BOSLoginInterceptor"&gt;
+            &lt;param name="excludeMethods"&gt;login&lt;/param&gt;
+        &lt;/interceptor&gt;
+        &lt;interceptor-stack name="myStack"&gt;
+            &lt;interceptor-ref name="BOSLoginInterceptor"/&gt;
+            &lt;interceptor-ref name="defaultStack"/&gt;
+        &lt;/interceptor-stack&gt;
+    &lt;/interceptors&gt;
+    &lt;default-interceptor-ref name="myStack"/&gt;
+    &lt;global-results&gt;
+        &lt;result name="login"&gt;/login.jsp&lt;/result&gt;
+    &lt;/global-results&gt;
+&lt;/package&gt;
+</code></pre></div>
+<h5 id="基于ajax修改密码">基于Ajax修改密码</h5>
+<div class="highlight"><pre><code class="language-" data-lang="">&lt;!--修改密码窗口--&gt;
+&lt;div id="editPwdWindow" class="easyui-window" title="修改密码" collapsible="false" minimizable="false" modal="true"
+     closed="true" resizable="false"
+     maximizable="false" icon="icon-save" style="width: 300px; height: 160px; padding: 5px;
+        background: #fafafa"&gt;
+    &lt;div class="easyui-layout" fit="true"&gt;
+        &lt;div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;"&gt;
+            &lt;form id="editPasswordForm"&gt;
+                &lt;table cellpadding=3&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;新密码：&lt;/td&gt;
+                        &lt;td&gt;&lt;input id="txtNewPass" type="Password" class="txt01 easyui-validatebox"
+                                   required="true" data-options="validType:'length[4,8]'"/&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;确认密码：&lt;/td&gt;
+                        &lt;td&gt;&lt;input id="txtRePass" type="Password" class="txt01 easyui-validatebox"
+                                   required="true" data-options="validType:'length[4,8]'"/&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;"&gt;
+            &lt;a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)"&gt;确定&lt;/a&gt;
+            &lt;a id="btnCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)"&gt;取消&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+
+//取消按钮
+$("#btnCancel").click(function () {
+        $('#editPwdWindow').window('close');
+    });
+    //为确定按钮绑定事件
+    $("#btnEp").click(function () {
+        var v=$("#editPasswordForm").form("validate")
+        if(v){//校验通过了
+            //判断2次密码是否一致
+            var p1=$("#txtNewPass").val()
+            var p2=$("#txtRePass").val()
+            if(p1 == p2){
+                var url="${pageContext.request.contextPath}/userAction_editPassword.action";
+                $.post(url,{"password":p1},function (data) {
+                    $('#editPwdWindow').window('close');
+                    if(data == "1"){//修改成功
+                            $.messager.alert("提示信息","密码修改成功","info")
+                    }else{
+                            $.messager.alert("提示信息","密码修改失败,请稍后重试","error")
+                    }
+                })
+            }else {
+                $.messager.alert("提示消息","两次输入密码不一致","warning")
+            }
+        }
+
+    });
+});
+
+//UserAction.java
+//修改密码
+public String editPassword() throws IOException {
+    User loginUser = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+    String password = MD5Utils.md5(model.getPassword());
+    String flag="1";
+    try {
+        userService.editPassword(password,loginUser.getId());
+    } catch (Exception e) {
+        e.printStackTrace();
+        flag="0";
+    }
+    HttpServletResponse resp = ServletActionContext.getResponse();
+    resp.setContentType("text/html;charset=utf-8");
+    resp.getWriter().print(flag);
+    return NONE;
+}
+
+
+//User.hbm.xml
+//在class标签外面
+&lt;query name="editPassword"&gt;
+    update User set password = ? where id =?
+&lt;/query&gt;
+
+//UserServiceImpl
+@Override
+public void editPassword(String password, String id) {
+    userDao.executeUpdate("editPassword",password,id);
+}
+
+//UserDaoImpl
+@Override
+public void executeUpdate(String queryName, Object... objects) {
+    Session session = (Session) getSession();
+    Query query = session.getNamedQuery(queryName);
+    int i=0;
+    for (Object object : objects) {
+        query.setParameter(i++,object);
+    }
+    query.executeUpdate();
+}
+</code></pre></div>
+<h5 id="解决easyui-window控件bug">解决EasyUI window控件bug</h5>
+
+<blockquote>
+<p>引入outOfBounds.js</p>
+</blockquote>
+  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="/Blog/java/2017/07/09/BOS%E7%99%BB%E9%99%86" data-title="BOS登陆 | zhxiaol" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/java/2017/07/07/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86" title="项目管理">
+  <strong>上一篇：</strong><br/>
+  <span>
+  项目管理</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/java/2017/07/10/EasyUI%E5%92%8CZtree"  title="EasyUI和Ztree">
+ <strong>下一篇：</strong><br/> 
+ <span>EasyUI和Ztree
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/Blog/categories/#life" title="life">life<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#java" title="java">java<sup>64</sup></a></li>
+		  
+		
+		  
+			<li><a href="/Blog/categories/#english" title="english">english<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Blog/tags/#Jekyll" title="Jekyll">Jekyll<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#life" title="life">life<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#java" title="java">java<sup>64</sup></a></li>
+			
+		
+			
+				<li><a href="/Blog/tags/#english" title="english">english<sup>3</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            <a href="https://coderq.com" target="_blank" title="码农圈">码农圈</a>
+          </li>
+        
+          <li>
+            <a href="http://wuchong.me" target="_blank" title="Jark's Blog">Jark's Blog</a>
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart" style="display:none">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm zhxiaol. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Copyright © 2016 
+		
+		<a href="about" target="_blank" title="zhxiaol">zhxiaol</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/Blog/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/Blog/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/Blog/assets/js/gallery.js"></script>
+<script src="/Blog/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/Blog/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});   
+</script>
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/Blog/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/Blog/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/Blog/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/Blog/assets/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+  </body>
+</html>
+

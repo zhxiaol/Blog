@@ -97,6 +97,330 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/Blog/java/2017/03/08/jdbc" title="jdbc" itemprop="url">jdbc</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-08 00:00:00 +0800" itemprop="datePublished">  2017-03-08</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="jdbc">jdbc</h2>
+
+<blockquote>
+<p>java database connectivity<br>
+sun公司提供的一套操作数据库的标准规范</p>
+
+<h2 id="jdbc-规范">jdbc 规范</h2>
+
+<ul>
+<li>DriverManager 用于注册驱动</li>
+<li>Connection 表示与数据库创建的链接</li>
+<li>Statement 操作数据库sql语句的对象</li>
+<li>ResultSet 结果集或者虚拟表
+<code>java
+//注册驱动
+DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+//获取链接Connection
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
+//得到执行语句对象statement
+Statement stmt = conn.createStatement();
+//执行sql语句，并返回结果
+ResultSet rs = stmt.executeQuery(&quot;select * from users&quot;);
+//处理结果
+while(rs.next()){
+System.out.println(rs.getObject(1));
+System.out.println(rs.getObject(2));
+System.out.println(rs.getObject(3));
+System.out.println(rs.getObject(4));
+System.out.println(rs.getObject(5));
+System.out.println(&quot;-------------&quot;);
+}
+//关闭资源
+rs.close();
+stmt.close();
+conn.close();
+</code>
+## java.sql.DriverManager
+<code>java
+注册驱动
+DriverManage.registDriver(Driver driver) 不建议使用(1.导致驱动被注册2次,2.强烈依赖jar包)
+加载驱动 Class.froNmae(&quot;com.mysql.jdbc.Driver&quot;); Driver里面有静态代码块注册驱动
+jdbc:mysql://localhost:3306/day06
+协议:子协议://ip:端口/数据库
+oracle:jdbc:oracle:thin:@localhost:1521:sid
+//第二种方式
+Properties info=new Properties();
+info.setProperty(&quot;user&quot;,&quot;root&quot;);
+info.setProperty(&quot;password&quot;,&quot;root&quot;);
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, info);
+//第三种方式
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06?user=root&amp;password=root&quot;);
+</code>
+## java.sql.Connection
+<code>
+1.接口的实现在数据库驱动中，所有与数据库交互都是基于链接对象
+2.Statement createStatement();
+</code>
+## java.sql.Statement
+<code>
+1. 接口的实现在数据库驱动中。用于执行静态sql语句并返回它所生成结果的对象
+2. ResultSet executeQuery(String sql) 根据查询语句返回结果集，只能执行查询。
+3. int executeUpdate(String sql) 执行insert,delete,update语句返回受影响的行数
+4. boolean execute(String sql) 执行任意sql,仅当执行select语句且有结果返回true ，
+ResultSet getResultSet()。
+</code>
+## java.sql.ResultSet
+<code>java
+封装结果集
+提供一个游标，默认游标在第一行之前
+调用next()方法，游标向下移动一行
+Object getObject(int index)
+Object getObject(String name)
+java的数据类型与数据库类型关系
+int-int folat-float double -double String-char varchar Date-date
+可移动游标的方法
+boolean next()
+boolean previous()
+boolean afterLast()将游标移动到末尾，最后一行之后
+boolean beforeFirst() 移动到开头，第一行之前
+</code>
+<code>java
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection conn = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;, &quot;root&quot;, &quot;root&quot;);
+Statement stmt=conn.createStatement();
+ResultSet rs=stmt.executeQuery(&quot;select * from users&quot;);
+ArrayList&lt;User&gt; users = new ArrayList&lt;&gt;();
+while(rs.next()){
+User user = new User();
+user.setId(rs.getInt(&quot;id&quot;));
+user.setName(rs.getString(&quot;name&quot;));
+user.setPassword(rs.getString(&quot;password&quot;));
+user.setBirthday(rs.getDate(&quot;birthday&quot;));
+user.setEmail(rs.getString(&quot;email&quot;));
+users.add(user);
+}
+System.out.println(users);
+rs.close();
+stmt.close();
+conn.close();
+</code>
+## 释放资源
+<code>java
+Connection conn=null;
+Statement stmt=null;
+ResultSet rs=null;
+try {
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+conn=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/day06&quot;,&quot;root&quot;,&quot;root&quot;);
+stmt=conn.createStatement();
+rs=stmt.executeQuery(&quot;select * from users&quot;);
+} catch (Exception e) {
+e.printStackTrace();
+}finally {
+if(conn!=null){
+    try {
+        conn.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if(stmt!=null){
+    try {
+        stmt.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if(rs!=null){
+    try {
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+}
+</code>
+## CRUD
+```java
+public class DBUtils {
+private static String driverClass;
+private static String url;
+private static String username;
+private static String password;
+static {
+    ResourceBundle rb= ResourceBundle.getBundle(&quot;dbinfo&quot;);
+    driverClass=rb.getString(&quot;driverClass&quot;);
+    url=rb.getString(&quot;url&quot;);
+    username=rb.getString(&quot;username&quot;);
+    password=rb.getString(&quot;password&quot;);
+    try {
+        Class.forName(driverClass);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+//得到链接的方法
+public static Connection getConnection()throws Exception{</li>
+</ul>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/Blog/java/2017/03/08/jdbc#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+  <a class="article-category-link" href="/Blog/categories/#java">java</a>
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  <a href="/Blog/tags/#java">java</a>
+  
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/Blog/2017/02/23/mysql02" title="Mysql02" itemprop="url">Mysql02</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-23 00:00:00 +0800" itemprop="datePublished">  2017-02-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>layout: post<br>
+title: mysql02<br>
+tags:</p>
+
+<ul>
+<li>java</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/Blog/2017/02/23/mysql02#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/Blog/java/2017/02/22/mysql" title="mysql" itemprop="url">mysql</a>
   </h1>
   <p class="article-author">By
@@ -2146,184 +2470,6 @@ Thank you ,Sir.</p>
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB" title="正则表达式和常用类" itemprop="url">正则表达式和常用类</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
-		
-  <p class="article-time">
-    <time datetime="2016-12-10 00:00:00 +0800" itemprop="datePublished">  2016-12-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="正则表达式">正则表达式</h2>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/Blog/java/2016/12/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%B8%B8%E7%94%A8%E7%B1%BB#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <!--
-  <%- list_categories(item.categories, {
-      show_count: false,
-      class: 'article-category',
-      style: 'none',
-      separator: '►'
-  }) %>
-  -->
-  
-  <a class="article-category-link" href="/Blog/categories/#java">java</a>
-  
-</div>
-
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  <a href="/Blog/tags/#java">java</a>
-  
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-    </article>
-
-
-
-
-
-
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/Blog/java/2016/12/06/Arrays,Integer" title="Arrays,Integer" itemprop="url">Arrays,Integer</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/Blog/about" title="zhxiaol" target="_blank" itemprop="author">zhxiaol</a>
-		
-  <p class="article-time">
-    <time datetime="2016-12-06 00:00:00 +0800" itemprop="datePublished">  2016-12-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="冒泡排序">冒泡排序</h2>
-
-<p>就是找最大值，把最大值放在依次最右边</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span><span class="n">a</span><span class="o">){</span>
-       <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-       <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="o">--</span><span class="n">i</span><span class="o">){</span>
-           <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">){</span>
-               <span class="k">if</span> <span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]){</span>
-                   <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
-                   <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
-                   <span class="n">a</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
-               <span class="o">}</span>
-           <span class="o">}</span>
-       <span class="o">}</span>
-   <span class="o">}</span>
-</code></pre></div>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/Blog/java/2016/12/06/Arrays,Integer#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <!--
-  <%- list_categories(item.categories, {
-      show_count: false,
-      class: 'article-category',
-      style: 'none',
-      separator: '►'
-  }) %>
-  -->
-  
-  <a class="article-category-link" href="/Blog/categories/#java">java</a>
-  
-</div>
-
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  <a href="/Blog/tags/#java">java</a>
-  
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -2373,7 +2519,7 @@ Thank you ,Sir.</p>
 		  
 		
 		  
-			<li><a href="/Blog/categories/#java" title="java">java<sup>62</sup></a></li>
+			<li><a href="/Blog/categories/#java" title="java">java<sup>64</sup></a></li>
 		  
 		
 		  
@@ -2398,7 +2544,7 @@ Thank you ,Sir.</p>
 			
 		
 			
-				<li><a href="/Blog/tags/#java" title="java">java<sup>62</sup></a></li>
+				<li><a href="/Blog/tags/#java" title="java">java<sup>64</sup></a></li>
 			
 		
 			
