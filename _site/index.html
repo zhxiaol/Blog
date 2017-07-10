@@ -208,12 +208,12 @@ Content Mangement System 内容管理系统</li>
         <h5 id="数据库设计">数据库设计</h5>
 
 <h6 id="创建t_user表">创建t_user表</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">create table t_user(id varchar(32) not null,username varchar(20) not null,
-password varchar(32) not null,salary double,birthday date,gender varchar(10),
-station varchar(40), telephone varchar(11),remark varchar(255),primary key(id));
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_user</span><span class="p">(</span><span class="n">id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span><span class="n">username</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+<span class="n">password</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span><span class="n">salary</span> <span class="n">double</span><span class="p">,</span><span class="n">birthday</span> <span class="n">date</span><span class="p">,</span><span class="n">gender</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="n">station</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span> <span class="n">telephone</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="n">remark</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span><span class="k">primary</span> <span class="k">key</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
 </code></pre></div>
 <h6 id="生成pojo类">生成POJO类</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">1.添加DataSource设置
+<div class="highlight"><pre><code class="language-html" data-lang="html">1.添加DataSource设置
 2.将Hibernate配置文件添加到Facets中
 3.将Spring配置文件添加到Facets中
 4.打开Persistence窗口自动生成User类和Mapping

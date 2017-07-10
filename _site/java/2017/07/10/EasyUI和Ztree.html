@@ -194,7 +194,7 @@ Content Mangement System 内容管理系统</li>
 <span class="nt">&lt;/web-app&gt;</span>
 </code></pre></div>
 <h6 id="4-创建目录结构">4.创建目录结构</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">com.itheima.bos
+<div class="highlight"><pre><code class="language-html" data-lang="html">com.itheima.bos
       |
       |--dao
       |--domain
@@ -207,75 +207,75 @@ Content Mangement System 内容管理系统</li>
           |--listener
 </code></pre></div>
 <h6 id="5-在config目录下提供log4j-struts的配置文件">5.在config目录下提供log4j,struts的配置文件</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;struts&gt;
-    &lt;constant name="struts.devMode" value="true"/&gt;
-    &lt;constant name="struts.objectFactory" value="spring"/&gt;
-    &lt;package name="basicstruts2" extends="struts-default"&gt;
-        &lt;!--需要进行权限控制的页面访问--&gt;
-        &lt;action name="page_*_*"&gt;
-            &lt;result type="dispatcher"&gt;/WEB-INF/pages/{1}/{2}.jsp&lt;/result&gt;
-        &lt;/action&gt;
-    &lt;/package&gt;
-&lt;/struts&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">struts</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">constant</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"struts.devMode"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">constant</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"struts.objectFactory"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"spring"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="kr">package</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"basicstruts2"</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">"struts-default"</span><span class="o">&gt;</span>
+        <span class="c">&lt;!--</span><span class="err">需要进行权限控制的页面访问</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"page_*_*"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"dispatcher"</span><span class="o">&gt;</span><span class="sr">/WEB-INF/</span><span class="nx">pages</span><span class="o">/</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span><span class="sr">/</span><span class="se">{2}</span><span class="sr">.jsp&lt;/</span><span class="nx">result</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/package</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/struts</span><span class="err">&gt;
+</span></code></pre></div>
 <h5 id="6-在config目录下提供spring的配置文件applicationcontext-xml">6.在config目录下提供spring的配置文件applicationContext.xml</h5>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
-<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
-       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
-       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
-       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
-       <span class="na">xmlns:tx=</span><span class="s">"http://www.springframework.org/schema/tx"</span>
-       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans</span>
-                           <span class="err">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
-                           <span class="err">http://www.springframework.org/schema/tx</span>
-                           <span class="err">http://www.springframework.org/schema/tx/spring-tx.xsd</span>
-                           <span class="err">http://www.springframework.org/schema/aop</span>
-                           <span class="err">http://www.springframework.org/schema/aop/spring-aop.xsd</span>
-                           <span class="err">http://www.springframework.org/schema/context</span>
-                           <span class="err">http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!--加载jdbc属性文件--&gt;</span>
-    <span class="nt">&lt;context:property-placeholder</span> <span class="na">location=</span><span class="s">"classpath:jdbc.properties"</span><span class="nt">/&gt;</span>
-    <span class="c">&lt;!--数据源--&gt;</span>
-    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"${driverClass}"</span><span class="nt">&gt;&lt;/property&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"${jdbcUrl}"</span><span class="nt">&gt;&lt;/property&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"${user}"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"${password}"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/bean&gt;</span>
-    <span class="c">&lt;!--spring用于整合hibernate的工厂bean--&gt;</span>
-    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"sessionFactory"</span> <span class="na">class=</span><span class="s">"org.springframework.orm.hibernate3.LocalSessionFactoryBean"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernateProperties"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;props&gt;</span>
-                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hibernate.dialect"</span><span class="nt">&gt;</span>org.hibernate.dialect.MySQL5Dialect<span class="nt">&lt;/prop&gt;</span>
-                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hibernate.show_sql"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/prop&gt;</span>
-                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hibernate.format_sql&gt;"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/prop&gt;</span>
-                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hibernate.hbm2ddl.auto"</span><span class="nt">&gt;</span>update<span class="nt">&lt;/prop&gt;</span>
-            <span class="nt">&lt;/props&gt;</span>
-        <span class="nt">&lt;/property&gt;</span>
-        <span class="c">&lt;!--注入映射文件--&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"mappingDirectoryLocations"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;list&gt;</span>
-                <span class="nt">&lt;value&gt;</span>classpath:com/itheima/bos/domain<span class="nt">&lt;/value&gt;</span>
-            <span class="nt">&lt;/list&gt;</span>
-        <span class="nt">&lt;/property&gt;</span>
-    <span class="nt">&lt;/bean&gt;</span>
-    <span class="c">&lt;!--事务管理器--&gt;</span>
-    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"transactionManager"</span> <span class="na">class=</span><span class="s">"org.springframework.orm.hibernate3.HibernateTransactionManager"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"sessionFactory"</span> <span class="na">ref=</span><span class="s">"sessionFactory"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/bean&gt;</span>
-    <span class="c">&lt;!--组件扫描--&gt;</span>
-    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"com.itheima.bos"</span><span class="nt">/&gt;</span>
-    <span class="c">&lt;!--引入注解解析器--&gt;</span>
-    <span class="nt">&lt;context:annotation-config/&gt;</span>
-    <span class="c">&lt;!--事务注解--&gt;</span>
-    <span class="nt">&lt;tx:annotation-driven</span> <span class="na">transaction-manager=</span><span class="s">"transactionManager"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/beans&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="p">?</span><span class="nx">xml</span> <span class="nx">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nx">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">beans</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans"</span>
+       <span class="nl">xmlns</span><span class="p">:</span><span class="nx">xsi</span><span class="o">=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="nl">xmlns</span><span class="p">:</span><span class="nx">context</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/context"</span>
+       <span class="nl">xmlns</span><span class="p">:</span><span class="nx">aop</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/aop"</span>
+       <span class="nl">xmlns</span><span class="p">:</span><span class="nx">tx</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/tx"</span>
+       <span class="nl">xsi</span><span class="p">:</span><span class="nx">schemaLocation</span><span class="o">=</span><span class="s2">"http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd"</span><span class="o">&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">加载</span><span class="nx">jdbc</span><span class="err">属性文件</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">context</span><span class="p">:</span><span class="nx">property</span><span class="o">-</span><span class="nx">placeholder</span> <span class="nx">location</span><span class="o">=</span><span class="s2">"classpath:jdbc.properties"</span><span class="o">/&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">数据源</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">bean</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"dataSource"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"driverClass"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"${driverClass}"</span><span class="o">&gt;&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"jdbcUrl"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"${jdbcUrl}"</span><span class="o">&gt;&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"user"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"${user}"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"password"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"${password}"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/bean</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span><span class="nx">spring</span><span class="err">用于整合</span><span class="nx">hibernate</span><span class="err">的工厂</span><span class="nx">bean</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">bean</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"sessionFactory"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"org.springframework.orm.hibernate3.LocalSessionFactoryBean"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"dataSource"</span> <span class="nx">ref</span><span class="o">=</span><span class="s2">"dataSource"</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"hibernateProperties"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">props</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">prop</span> <span class="nx">key</span><span class="o">=</span><span class="s2">"hibernate.dialect"</span><span class="o">&gt;</span><span class="nx">org</span><span class="p">.</span><span class="nx">hibernate</span><span class="p">.</span><span class="nx">dialect</span><span class="p">.</span><span class="nx">MySQL5Dialect</span><span class="o">&lt;</span><span class="sr">/prop</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">prop</span> <span class="nx">key</span><span class="o">=</span><span class="s2">"hibernate.show_sql"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;</span><span class="sr">/prop</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">prop</span> <span class="nx">key</span><span class="o">=</span><span class="s2">"hibernate.format_sql&gt;"</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;</span><span class="sr">/prop</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">prop</span> <span class="nx">key</span><span class="o">=</span><span class="s2">"hibernate.hbm2ddl.auto"</span><span class="o">&gt;</span><span class="nx">update</span><span class="o">&lt;</span><span class="sr">/prop</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/props</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>        <span class="c">&lt;!--</span><span class="err">注入映射文件</span><span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"mappingDirectoryLocations"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">list</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">value</span><span class="o">&gt;</span><span class="nx">classpath</span><span class="p">:</span><span class="nx">com</span><span class="o">/</span><span class="nx">itheima</span><span class="o">/</span><span class="nx">bos</span><span class="o">/</span><span class="nx">domain</span><span class="o">&lt;</span><span class="sr">/value</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/list</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/property</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/bean</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span><span class="err">事务管理器</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">bean</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"transactionManager"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"org.springframework.orm.hibernate3.HibernateTransactionManager"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">property</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"sessionFactory"</span> <span class="nx">ref</span><span class="o">=</span><span class="s2">"sessionFactory"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="sr">/bean</span><span class="err">&gt;
+</span>    <span class="c">&lt;!--</span><span class="err">组件扫描</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">context</span><span class="err">:</span><span class="nx">component</span><span class="o">-</span><span class="nx">scan</span> <span class="nx">base</span><span class="o">-</span><span class="kr">package</span><span class="o">=</span><span class="s2">"com.itheima.bos"</span><span class="o">/&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">引入注解解析器</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">context</span><span class="err">:</span><span class="nx">annotation</span><span class="o">-</span><span class="nx">config</span><span class="o">/&gt;</span>
+    <span class="c">&lt;!--</span><span class="err">事务注解</span><span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">tx</span><span class="err">:</span><span class="nx">annotation</span><span class="o">-</span><span class="nx">driven</span> <span class="nx">transaction</span><span class="o">-</span><span class="nx">manager</span><span class="o">=</span><span class="s2">"transactionManager"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/beans</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="7-提供项目所需的资源文件-css-js-image-jsp">7.提供项目所需的资源文件 css js image jsp</h6>
 
 <h5 id="使用svn管理项目代码">使用svn管理项目代码</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">svn/bos19/conf
+<div class="highlight"><pre><code class="language-html" data-lang="html">svn/bos19/conf
      |
      |--svnserve.conf
      |      |
@@ -304,59 +304,59 @@ Content Mangement System 内容管理系统</li>
 <h6 id="layout页面布局">layout页面布局</h6>
 
 <p>这个布局容器,有五个区域:北,南,东,西和中心,中心面板是必须的,边缘地区可选,每一个边缘可以缩放的拖动其边境</p>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%&gt;
-<span class="cp">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;title&gt;</span>layout---页面布局<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"easyui-layout"</span><span class="nt">&gt;</span>
-   <span class="err">&lt;</span>%--使用div指定区域--%&gt;
-   <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"xx管理系统"</span> <span class="na">data-options=</span><span class="s">"region:'north'"</span> <span class="na">style=</span><span class="s">"height: 100px"</span><span class="nt">&gt;</span>北部区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"系统菜单"</span> <span class="na">data-options=</span><span class="s">"region:'west'"</span> <span class="na">style=</span><span class="s">"width: 200px"</span><span class="nt">&gt;</span>西部区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'center'"</span><span class="nt">&gt;</span>中心区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'east'"</span> <span class="na">style=</span><span class="s">"width:100px;"</span><span class="nt">&gt;</span>东部区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'south'"</span> <span class="na">style=</span><span class="s">"height:50px;"</span><span class="nt">&gt;</span>南部区域<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span> <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">layout</span><span class="o">---</span><span class="err">页面布局</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-layout"</span><span class="o">&gt;</span>
+   <span class="o">&lt;%--</span><span class="err">使用</span><span class="nx">div</span><span class="err">指定区域</span><span class="o">--%&gt;</span>
+   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"xx管理系统"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'north'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"height: 100px"</span><span class="o">&gt;</span><span class="err">北部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"系统菜单"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'west'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width: 200px"</span><span class="o">&gt;</span><span class="err">西部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'center'"</span><span class="o">&gt;</span><span class="err">中心区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'east'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width:100px;"</span><span class="o">&gt;</span><span class="err">东部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'south'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"height:50px;"</span><span class="o">&gt;</span><span class="err">南部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="折叠面板">折叠面板</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;!-- 折叠面板效果 --&gt;
-&lt;div class="easyui-accordion" data-options="fit:true"&gt;
-   &lt;!-- 每个子div是其中的一个面板 --&gt;
-   &lt;div title="面板一"&gt;棉衣一&lt;/div&gt;
-   &lt;div title="面板二"&gt;test2&lt;/div&gt;
-   &lt;div title="面板三"&gt;test3&lt;/div&gt;
-&lt;/div&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c">&lt;!--</span> <span class="err">折叠面板效果</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-accordion"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"fit:true"</span><span class="o">&gt;</span>
+   <span class="c">&lt;!--</span> <span class="err">每个子</span><span class="nx">div</span><span class="err">是其中的一个面板</span> <span class="o">--&gt;</span>
+   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板一"</span><span class="o">&gt;</span><span class="err">棉衣一</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板二"</span><span class="o">&gt;</span><span class="nx">test2</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板三"</span><span class="o">&gt;</span><span class="nx">test3</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="选项卡面板">选项卡面板</h6>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%&gt;
-<span class="cp">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;title&gt;</span>tabs---选项卡面板<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"easyui-layout"</span><span class="nt">&gt;</span>
-   <span class="c">&lt;!-- 使用div指定区域 --&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"XX管理系统"</span> <span class="na">data-options=</span><span class="s">"region:'north'"</span> <span class="na">style=</span><span class="s">"height: 100px"</span><span class="nt">&gt;</span>北部区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"系统菜单"</span> <span class="na">data-options=</span><span class="s">"region:'west'"</span> <span class="na">style=</span><span class="s">"width: 200px"</span><span class="nt">&gt;</span>
-      <span class="c">&lt;!-- 折叠面板效果 --&gt;</span>
-      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"easyui-accordion"</span> <span class="na">data-options=</span><span class="s">"fit:true"</span><span class="nt">&gt;</span>
-         <span class="c">&lt;!-- 每个子div是其中的一个面板 --&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"面板一"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"easyui-linkbutton"</span> <span class="na">onclick=</span><span class="s">"doAdd();"</span><span class="nt">&gt;</span>百度<span class="nt">&lt;/a&gt;</span>
-            <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span>
+    <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">tabs</span><span class="o">---</span><span class="err">选项卡面板</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-layout"</span><span class="o">&gt;</span>
+   <span class="c">&lt;!--</span> <span class="err">使用</span><span class="nx">div</span><span class="err">指定区域</span> <span class="o">--&gt;</span>
+   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"XX管理系统"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'north'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"height: 100px"</span><span class="o">&gt;</span><span class="err">北部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"系统菜单"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'west'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width: 200px"</span><span class="o">&gt;</span>
+      <span class="c">&lt;!--</span> <span class="err">折叠面板效果</span> <span class="o">--&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-accordion"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"fit:true"</span><span class="o">&gt;</span>
+         <span class="c">&lt;!--</span> <span class="err">每个子</span><span class="nx">div</span><span class="err">是其中的一个面板</span> <span class="o">--&gt;</span>
+         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板一"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">a</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-linkbutton"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"doAdd();"</span><span class="o">&gt;</span><span class="err">百度</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
                   <span class="kd">function</span> <span class="nx">doAdd</span><span class="p">(){</span>
                      <span class="c1">//动态添加一个选项卡面板</span>
                      <span class="nx">$</span><span class="p">(</span><span class="s2">"#tt"</span><span class="p">).</span><span class="nx">tabs</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,{</span>
@@ -366,150 +366,150 @@ Content Mangement System 内容管理系统</li>
                         <span class="na">iconCls</span><span class="p">:</span><span class="s1">'icon-search'</span>
                      <span class="p">});</span>
                   <span class="p">}</span>
-            <span class="nt">&lt;/script&gt;</span>
-         <span class="nt">&lt;/div&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"面板二"</span><span class="nt">&gt;</span>test2<span class="nt">&lt;/div&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"面板三"</span><span class="nt">&gt;</span>test3<span class="nt">&lt;/div&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;/div&gt;</span>
-
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'center'"</span><span class="nt">&gt;</span>
-      <span class="c">&lt;!-- 选项卡面板效果 --&gt;</span>
-      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"easyui-tabs"</span> <span class="na">data-options=</span><span class="s">"fit:true"</span><span class="nt">&gt;</span>
-         <span class="c">&lt;!-- 每个子div是其中的一个面板 --&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"closable:true,iconCls:'icon-help'"</span> <span class="na">title=</span><span class="s">"面板一"</span><span class="nt">&gt;</span>棉衣一<span class="nt">&lt;/div&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"面板二"</span><span class="nt">&gt;</span>test2<span class="nt">&lt;/div&gt;</span>
-         <span class="nt">&lt;div</span> <span class="na">title=</span><span class="s">"面板三"</span><span class="nt">&gt;</span>test3<span class="nt">&lt;/div&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'east'"</span> <span class="na">style=</span><span class="s">"width: 100px"</span><span class="nt">&gt;</span>东部区域<span class="nt">&lt;/div&gt;</span>
-   <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"region:'south'"</span> <span class="na">style=</span><span class="s">"height: 50px"</span><span class="nt">&gt;</span>南部区域<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+            <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板二"</span><span class="o">&gt;</span><span class="nx">test2</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板三"</span><span class="o">&gt;</span><span class="nx">test3</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'center'"</span><span class="o">&gt;</span>
+      <span class="c">&lt;!--</span> <span class="err">选项卡面板效果</span> <span class="o">--&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"tt"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-tabs"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"fit:true"</span><span class="o">&gt;</span>
+         <span class="c">&lt;!--</span> <span class="err">每个子</span><span class="nx">div</span><span class="err">是其中的一个面板</span> <span class="o">--&gt;</span>
+         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"closable:true,iconCls:'icon-help'"</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板一"</span><span class="o">&gt;</span><span class="err">棉衣一</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板二"</span><span class="o">&gt;</span><span class="nx">test2</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>         <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板三"</span><span class="o">&gt;</span><span class="nx">test3</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'east'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width: 100px"</span><span class="o">&gt;</span><span class="err">东部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"region:'south'"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"height: 50px"</span><span class="o">&gt;</span><span class="err">南部区域</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
 <h5 id="ztree树形插件">Ztree树形插件</h5>
 
 <h6 id="标准json方式">标准JSON方式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;link rel="stylesheet" href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css" type="text/css"&gt;
-&lt;div title="面板二"&gt;
-   &lt;ul id="ztree1" class="ztree"&gt;&lt;/ul&gt;
-   &lt;script type="text/javascript"&gt;
-      $(function () {
-         var setting ={};
-         //构造json数据,json数据加到树上,每个json对象对应一个节点数据
-         var zNodes=[{
-            name:'系统管理'
-         },{
-            name:'用户管理',children:[
-               {name:'用户添加'},
-               {name:'用户修改'}
-            ]
-         },{
-             name:'权限管理'
-         }];
-         $.fn.zTree.init($("#ztree1"),setting,zNodes)
-                 })
-   &lt;/script&gt;
-&lt;/div&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/ztree/zTreeStyle.css"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板二"</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"ztree1"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ztree"</span><span class="o">&gt;&lt;</span><span class="sr">/ul</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+      <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">setting</span> <span class="o">=</span><span class="p">{};</span>
+         <span class="c1">//构造json数据,json数据加到树上,每个json对象对应一个节点数据</span>
+         <span class="kd">var</span> <span class="nx">zNodes</span><span class="o">=</span><span class="p">[{</span>
+            <span class="na">name</span><span class="p">:</span><span class="s1">'系统管理'</span>
+         <span class="p">},{</span>
+            <span class="na">name</span><span class="p">:</span><span class="s1">'用户管理'</span><span class="p">,</span><span class="na">children</span><span class="p">:[</span>
+               <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s1">'用户添加'</span><span class="p">},</span>
+               <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s1">'用户修改'</span><span class="p">}</span>
+            <span class="p">]</span>
+         <span class="p">},{</span>
+             <span class="na">name</span><span class="p">:</span><span class="s1">'权限管理'</span>
+         <span class="p">}];</span>
+         <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">zTree</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#ztree1"</span><span class="p">),</span><span class="nx">setting</span><span class="p">,</span><span class="nx">zNodes</span><span class="p">)</span>
+                 <span class="p">})</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="简单json方式">简单JSON方式</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;link rel="stylesheet" href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css" type="text/css"&gt;
-&lt;div title="面板三"&gt;
-   &lt;%--简单json数据--%&gt;
-   &lt;ul id="ztree2" class="ztree"&gt;&lt;/ul&gt;
-   &lt;script type="text/javascript"&gt;
-                 $(function () {
-                     var setting2 ={
-                         data:{
-                             simpleData:{
-                                 enable:true//启用简单数据
-               }
-            }
-         };
-                     //构造json数据,json数据加到树上,每个json对象对应一个节点数据
-                     var zNodes2=[{
-                         id:'1',
-            pId:'0',
-                         name:'系统管理'
-                     },{
-                         id:'2',
-                         pId:'0',
-                         name:'用户管理'
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/ztree/zTreeStyle.css"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板三"</span><span class="o">&gt;</span>
+   <span class="o">&lt;%--</span><span class="err">简单</span><span class="nx">json</span><span class="err">数据</span><span class="o">--%&gt;</span>
+   <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"ztree2"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ztree"</span><span class="o">&gt;&lt;</span><span class="sr">/ul</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+                 <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                     <span class="kd">var</span> <span class="nx">setting2</span> <span class="o">=</span><span class="p">{</span>
+                         <span class="na">data</span><span class="p">:{</span>
+                             <span class="na">simpleData</span><span class="p">:{</span>
+                                 <span class="na">enable</span><span class="p">:</span><span class="kc">true</span><span class="c1">//启用简单数据</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">};</span>
+                     <span class="c1">//构造json数据,json数据加到树上,每个json对象对应一个节点数据</span>
+                     <span class="kd">var</span> <span class="nx">zNodes2</span><span class="o">=</span><span class="p">[{</span>
+                         <span class="na">id</span><span class="p">:</span><span class="s1">'1'</span><span class="p">,</span>
+            <span class="na">pId</span><span class="p">:</span><span class="s1">'0'</span><span class="p">,</span>
+                         <span class="na">name</span><span class="p">:</span><span class="s1">'系统管理'</span>
+                     <span class="p">},{</span>
+                         <span class="na">id</span><span class="p">:</span><span class="s1">'2'</span><span class="p">,</span>
+                         <span class="na">pId</span><span class="p">:</span><span class="s1">'0'</span><span class="p">,</span>
+                         <span class="na">name</span><span class="p">:</span><span class="s1">'用户管理'</span>
 
-                     },{
-                         id:'21',
-                         pId:'2',
-                         name:'用户添加'
+                     <span class="p">},{</span>
+                         <span class="na">id</span><span class="p">:</span><span class="s1">'21'</span><span class="p">,</span>
+                         <span class="na">pId</span><span class="p">:</span><span class="s1">'2'</span><span class="p">,</span>
+                         <span class="na">name</span><span class="p">:</span><span class="s1">'用户添加'</span>
 
-                     },{
-                         id:'22',
-                         pId:'2',
-                         name:'用户修改'
+                     <span class="p">},{</span>
+                         <span class="na">id</span><span class="p">:</span><span class="s1">'22'</span><span class="p">,</span>
+                         <span class="na">pId</span><span class="p">:</span><span class="s1">'2'</span><span class="p">,</span>
+                         <span class="na">name</span><span class="p">:</span><span class="s1">'用户修改'</span>
 
-                     },{
-                         id:'3',
-                         pId:'0',
-                         name:'权限管理'
-                     }];
-                     $.fn.zTree.init($("#ztree2"),setting2,zNodes2)
-                 })
-   &lt;/script&gt;
-&lt;/div&gt;
-</code></pre></div>
+                     <span class="p">},{</span>
+                         <span class="na">id</span><span class="p">:</span><span class="s1">'3'</span><span class="p">,</span>
+                         <span class="na">pId</span><span class="p">:</span><span class="s1">'0'</span><span class="p">,</span>
+                         <span class="na">name</span><span class="p">:</span><span class="s1">'权限管理'</span>
+                     <span class="p">}];</span>
+                     <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">zTree</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#ztree2"</span><span class="p">),</span><span class="nx">setting2</span><span class="p">,</span><span class="nx">zNodes2</span><span class="p">)</span>
+                 <span class="p">})</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="发送ajax加载ztree">发送ajax加载ztree</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;div title="面板四"&gt;
-   &lt;%--发送ajax请求获取json数据结构的ztree--%&gt;
-    &lt;ul id="ztree3" class="ztree"&gt;&lt;/ul&gt;
-   &lt;script type="text/javascript"&gt;
-      $(function () {
-         $.post("${pageContext.request.contextPath}/json/menu.json",{},function (data) {
-            var setting={data:{
-                simpleData:{enable:true}
-            }}
-            $.fn.zTree.init($("#ztree3"),setting,data)
-                     },'json')
-                 })
-   &lt;/script&gt;
-&lt;/div&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板四"</span><span class="o">&gt;</span>
+   <span class="o">&lt;%--</span><span class="err">发送</span><span class="nx">ajax</span><span class="err">请求获取</span><span class="nx">json</span><span class="err">数据结构的</span><span class="nx">ztree</span><span class="o">--%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"ztree3"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ztree"</span><span class="o">&gt;&lt;</span><span class="sr">/ul</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+      <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+         <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"${pageContext.request.contextPath}/json/menu.json"</span><span class="p">,{},</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">setting</span><span class="o">=</span><span class="p">{</span><span class="na">data</span><span class="p">:{</span>
+                <span class="na">simpleData</span><span class="p">:{</span><span class="na">enable</span><span class="p">:</span><span class="kc">true</span><span class="p">}</span>
+            <span class="p">}}</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">zTree</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#ztree3"</span><span class="p">),</span><span class="nx">setting</span><span class="p">,</span><span class="nx">data</span><span class="p">)</span>
+                     <span class="p">},</span><span class="s1">'json'</span><span class="p">)</span>
+                 <span class="p">})</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="为ztree节点绑定事件">为ztree节点绑定事件</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;div title="面板四"&gt;
-   &lt;%--发送ajax请求获取json数据结构的ztree--%&gt;
-    &lt;ul id="ztree3" class="ztree"&gt;&lt;/ul&gt;
-   &lt;script type="text/javascript"&gt;
-      $(function () {
-         $.post("${pageContext.request.contextPath}/json/menu.json",{},function (data3) {
-            var setting3={
-                data:{
-                    simpleData : {
-                        enable:true
-                  }
-               },
-               callback:{
-                    onClick:function(event,treeId,treeNode){
-                        var page =treeNode.page;
-                     if(page != undefined){
-                         //判断当前选项卡是否已经打开
-                        if($("#tt").tabs("exists",treeNode.name)){
-                            $("#tt").tabs("select",treeNode.name)
-                        }else {
-                        $("#tt").tabs("add",{
-                            title:treeNode.name,
-                           content:'&lt;iframe frameborder="0" width="100%" height="100%" src="'+page+'"&gt;&lt;/iframe&gt;',
-                           closable:true,
-                           iconCls:'icon-edit'
-                          })
-                                         }
-                     }
-                  }
-               }
-            }
-            $.fn.zTree.init($("#ztree3"),setting3,data3)
-                     },'json')
-                 })
-   &lt;/script&gt;
-&lt;/div&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"面板四"</span><span class="o">&gt;</span>
+   <span class="o">&lt;%--</span><span class="err">发送</span><span class="nx">ajax</span><span class="err">请求获取</span><span class="nx">json</span><span class="err">数据结构的</span><span class="nx">ztree</span><span class="o">--%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"ztree3"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"ztree"</span><span class="o">&gt;&lt;</span><span class="sr">/ul</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+      <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+         <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"${pageContext.request.contextPath}/json/menu.json"</span><span class="p">,{},</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">setting3</span><span class="o">=</span><span class="p">{</span>
+                <span class="na">data</span><span class="p">:{</span>
+                    <span class="na">simpleData</span> <span class="p">:</span> <span class="p">{</span>
+                        <span class="na">enable</span><span class="p">:</span><span class="kc">true</span>
+                  <span class="p">}</span>
+               <span class="p">},</span>
+               <span class="na">callback</span><span class="p">:{</span>
+                    <span class="na">onClick</span><span class="p">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">treeId</span><span class="p">,</span><span class="nx">treeNode</span><span class="p">){</span>
+                        <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span><span class="nx">treeNode</span><span class="p">.</span><span class="nx">page</span><span class="p">;</span>
+                     <span class="k">if</span><span class="p">(</span><span class="nx">page</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">){</span>
+                         <span class="c1">//判断当前选项卡是否已经打开</span>
+                        <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#tt"</span><span class="p">).</span><span class="nx">tabs</span><span class="p">(</span><span class="s2">"exists"</span><span class="p">,</span><span class="nx">treeNode</span><span class="p">.</span><span class="nx">name</span><span class="p">)){</span>
+                            <span class="nx">$</span><span class="p">(</span><span class="s2">"#tt"</span><span class="p">).</span><span class="nx">tabs</span><span class="p">(</span><span class="s2">"select"</span><span class="p">,</span><span class="nx">treeNode</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+                        <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">$</span><span class="p">(</span><span class="s2">"#tt"</span><span class="p">).</span><span class="nx">tabs</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,{</span>
+                            <span class="na">title</span><span class="p">:</span><span class="nx">treeNode</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+                           <span class="na">content</span><span class="p">:</span><span class="s1">'&lt;iframe frameborder="0" width="100%" height="100%" src="'</span><span class="o">+</span><span class="nx">page</span><span class="o">+</span><span class="s1">'"&gt;&lt;/iframe&gt;'</span><span class="p">,</span>
+                           <span class="na">closable</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+                           <span class="na">iconCls</span><span class="p">:</span><span class="s1">'icon-edit'</span>
+                          <span class="p">})</span>
+                                         <span class="p">}</span>
+                     <span class="p">}</span>
+                  <span class="p">}</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">zTree</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#ztree3"</span><span class="p">),</span><span class="nx">setting3</span><span class="p">,</span><span class="nx">data3</span><span class="p">)</span>
+                     <span class="p">},</span><span class="s1">'json'</span><span class="p">)</span>
+                 <span class="p">})</span>
+   <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="uml工具powerdesigner">UML工具PowerDesigner</h6>
   
 	</div>

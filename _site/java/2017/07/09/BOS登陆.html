@@ -118,12 +118,12 @@
 		<h5 id="数据库设计">数据库设计</h5>
 
 <h6 id="创建t_user表">创建t_user表</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">create table t_user(id varchar(32) not null,username varchar(20) not null,
-password varchar(32) not null,salary double,birthday date,gender varchar(10),
-station varchar(40), telephone varchar(11),remark varchar(255),primary key(id));
+<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_user</span><span class="p">(</span><span class="n">id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span><span class="n">username</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+<span class="n">password</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span><span class="n">salary</span> <span class="n">double</span><span class="p">,</span><span class="n">birthday</span> <span class="n">date</span><span class="p">,</span><span class="n">gender</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+<span class="n">station</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span> <span class="n">telephone</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="n">remark</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span><span class="k">primary</span> <span class="k">key</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
 </code></pre></div>
 <h6 id="生成pojo类">生成POJO类</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">1.添加DataSource设置
+<div class="highlight"><pre><code class="language-html" data-lang="html">1.添加DataSource设置
 2.将Hibernate配置文件添加到Facets中
 3.将Spring配置文件添加到Facets中
 4.打开Persistence窗口自动生成User类和Mapping
@@ -131,367 +131,367 @@ station varchar(40), telephone varchar(11),remark varchar(255),primary key(id));
 <h5 id="持久层设计">持久层设计</h5>
 
 <h6 id="ibasedao接口">IBaseDao接口</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface IBaseDao&lt;T&gt; {
-     void save(T entity);
-     void delete(T entity);
-     void update(T entity);
-     T findById(Serializable id);
-     List&lt;T&gt;findAll();
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IBaseDao</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+     <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">);</span>
+     <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">);</span>
+     <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">);</span>
+     <span class="n">T</span> <span class="nf">findById</span><span class="o">(</span><span class="n">Serializable</span> <span class="n">id</span><span class="o">);</span>
+     <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="n">findAll</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="basedaoimpl实现类">BaseDaoImpl实现类</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class BaseDaoImpl&lt;T&gt; extends HibernateDaoSupport implements IBaseDao&lt;T&gt; {
-    Class&lt;T&gt; entityClass;
-    //在构造方法中动态获得操作的实体类型
-    public BaseDaoImpl() {
-        ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
-        entityClass= (Class&lt;T&gt;) genericSuperclass.getActualTypeArguments()[0];
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BaseDaoImpl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">HibernateDaoSupport</span> <span class="kd">implements</span> <span class="n">IBaseDao</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">entityClass</span><span class="o">;</span>
+    <span class="c1">//在构造方法中动态获得操作的实体类型</span>
+    <span class="kd">public</span> <span class="nf">BaseDaoImpl</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">ParameterizedType</span> <span class="n">genericSuperclass</span> <span class="o">=</span> <span class="o">(</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getGenericSuperclass</span><span class="o">();</span>
+        <span class="n">entityClass</span><span class="o">=</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">genericSuperclass</span><span class="o">.</span><span class="na">getActualTypeArguments</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
 
-    }
-    //@Autowired Spring提供的方式
-    //@Qualifier("sessionFactory") spring指定bean名称
-    @Resource   //(name = "sessionFactory")不指定名称按类型注入 JDK1.7提供
-    public void setMySessionFactory(SessionFactory sessionFactory){
-        super.setSessionFactory(sessionFactory);
-    }
-    @Override
-    public void save(T entity) {
-        this.getHibernateTemplate().save(entity);
-    }
+    <span class="o">}</span>
+    <span class="c1">//@Autowired Spring提供的方式</span>
+    <span class="c1">//@Qualifier("sessionFactory") spring指定bean名称</span>
+    <span class="nd">@Resource</span>   <span class="c1">//(name = "sessionFactory")不指定名称按类型注入 JDK1.7提供</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMySessionFactory</span><span class="o">(</span><span class="n">SessionFactory</span> <span class="n">sessionFactory</span><span class="o">){</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">setSessionFactory</span><span class="o">(</span><span class="n">sessionFactory</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">save</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void delete(T entity) {
-        this.getHibernateTemplate().delete(entity);
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">delete</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public void update(T entity) {
-        this.getHibernateTemplate().update(entity);
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    @Override
-    public T findById(Serializable id) {
-        this.getHibernateTemplate().get(entityClass,id);
-        return null;
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">findById</span><span class="o">(</span><span class="n">Serializable</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="n">entityClass</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    @Override
-    public List&lt;T&gt; findAll() {
-        String hql="FROM "+entityClass.getSimpleName();
-        return this.getHibernateTemplate().find(hql);
-    }
-}
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">hql</span><span class="o">=</span><span class="s">"FROM "</span><span class="o">+</span><span class="n">entityClass</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">();</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">find</span><span class="o">(</span><span class="n">hql</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="userdaoimpl">UserDaoImpl</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface IUserDao&lt;User&gt; extends IBaseDao&lt;User&gt; {
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IUserDao</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">IBaseDao</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="o">}</span>
 
-@Repository
-//@Scope("prototype")
-public class UserDaoImpl extends BaseDaoImpl&lt;User&gt; implements IUserDao&lt;User&gt; {
-}
+<span class="nd">@Repository</span>
+<span class="c1">//@Scope("prototype")</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDaoImpl</span> <span class="kd">extends</span> <span class="n">BaseDaoImpl</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">IUserDao</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="表现层设计">表现层设计</h5>
 
 <h6 id="baseaction">BaseAction</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public class BaseAction&lt;T&gt; extends ActionSupport implements ModelDriven&lt;T&gt; {
-    private  T model;
-    //在构造方法中获得实体类型创建对象
-    public BaseAction() {
-        try {
-            ParameterizedType type= (ParameterizedType) this.getClass().getGenericSuperclass();
-            Class&lt;T&gt; clazz = (Class&lt;T&gt;) type.getActualTypeArguments()[0];
-            model=clazz.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    @Override
-    public T getModel() {
-        return model;
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BaseAction</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">ActionSupport</span> <span class="kd">implements</span> <span class="n">ModelDriven</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span>  <span class="n">T</span> <span class="n">model</span><span class="o">;</span>
+    <span class="c1">//在构造方法中获得实体类型创建对象</span>
+    <span class="kd">public</span> <span class="nf">BaseAction</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ParameterizedType</span> <span class="n">type</span><span class="o">=</span> <span class="o">(</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getGenericSuperclass</span><span class="o">();</span>
+            <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">clazz</span> <span class="o">=</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">type</span><span class="o">.</span><span class="na">getActualTypeArguments</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">clazz</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">getModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="用户登陆">用户登陆</h5>
 
 <h6 id="userservice">UserService</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">public interface IUserService {
-    User login(User model);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IUserService</span> <span class="o">{</span>
+    <span class="n">User</span> <span class="nf">login</span><span class="o">(</span><span class="n">User</span> <span class="n">model</span><span class="o">);</span>
+<span class="o">}</span>
 
-@Service
-@Transactional
-public class UserServiceImpl implements IUserService {
-    @Autowired
-    private IUserDao userDao;
+<span class="nd">@Service</span>
+<span class="nd">@Transactional</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserServiceImpl</span> <span class="kd">implements</span> <span class="n">IUserService</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">IUserDao</span> <span class="n">userDao</span><span class="o">;</span>
 
-    @Override
-    public User login(User user) {
-        String username=user.getUsername();
-        String password=user.getPassword();
-        password=MD5Utils.md5(password);
-        return userDao.findUserByUsernameAndPassword(username,password);
-    }
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">login</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">username</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">password</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="na">getPassword</span><span class="o">();</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">MD5Utils</span><span class="o">.</span><span class="na">md5</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findUserByUsernameAndPassword</span><span class="o">(</span><span class="n">username</span><span class="o">,</span><span class="n">password</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public UserServiceImpl setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-        return this;
-    }
-}
+    <span class="kd">public</span> <span class="n">UserServiceImpl</span> <span class="nf">setUserDao</span><span class="o">(</span><span class="n">IUserDao</span> <span class="n">userDao</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userDao</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="useraction">UserAction</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Controller  //默认bean id是类名首字符小写
-@Scope("prototype")
-public class UserAction extends BaseAction&lt;User&gt; {
-    //通过属性驱动接受验证码
-    private String checkcode;
-    @Resource
-    private IUserService userService;
-    public String login(){
-        //判断验证码
-        String key = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
-        if(StringUtils.isNotBlank(checkcode)&amp;&amp;checkcode.equals(key)){
-            //验证码正确
-            User user=userService.login(model);
-            if(user != null){
-                //登陆成功,将User放入session域,跳转到系统首页
-                ServletActionContext.getRequest().getSession().setAttribute("loginUser",user);
-                return "home";
-            }else{
-                //登陆失败,设置错误提示,跳转到登录页面
-                this.addActionError(this.getText("loginError"));
-                return "login";
-            }
-        }else {//验证码错误
-            this.addActionError(this.getText("validateCodeError"));
-            return "login";
-        }
-    }
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Controller</span>  <span class="c1">//默认bean id是类名首字符小写</span>
+<span class="nd">@Scope</span><span class="o">(</span><span class="s">"prototype"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserAction</span> <span class="kd">extends</span> <span class="n">BaseAction</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="c1">//通过属性驱动接受验证码</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">checkcode</span><span class="o">;</span>
+    <span class="nd">@Resource</span>
+    <span class="kd">private</span> <span class="n">IUserService</span> <span class="n">userService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">login</span><span class="o">(){</span>
+        <span class="c1">//判断验证码</span>
+        <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"key"</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">checkcode</span><span class="o">)&amp;&amp;</span><span class="n">checkcode</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">key</span><span class="o">)){</span>
+            <span class="c1">//验证码正确</span>
+            <span class="n">User</span> <span class="n">user</span><span class="o">=</span><span class="n">userService</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">user</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="c1">//登陆成功,将User放入session域,跳转到系统首页</span>
+                <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getSession</span><span class="o">().</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"loginUser"</span><span class="o">,</span><span class="n">user</span><span class="o">);</span>
+                <span class="k">return</span> <span class="s">"home"</span><span class="o">;</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="c1">//登陆失败,设置错误提示,跳转到登录页面</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">addActionError</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getText</span><span class="o">(</span><span class="s">"loginError"</span><span class="o">));</span>
+                <span class="k">return</span> <span class="s">"login"</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span><span class="c1">//验证码错误</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">addActionError</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getText</span><span class="o">(</span><span class="s">"validateCodeError"</span><span class="o">));</span>
+            <span class="k">return</span> <span class="s">"login"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    public UserAction setUserService(IUserService userService) {
-        this.userService = userService;
-        return this;
-    }
+    <span class="kd">public</span> <span class="n">UserAction</span> <span class="nf">setUserService</span><span class="o">(</span><span class="n">IUserService</span> <span class="n">userService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">userService</span> <span class="o">=</span> <span class="n">userService</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public void setCheckcode(String checkcode) {
-        this.checkcode = checkcode;
-    }
-}
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCheckcode</span><span class="o">(</span><span class="n">String</span> <span class="n">checkcode</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">checkcode</span> <span class="o">=</span> <span class="n">checkcode</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="userdao">UserDao</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">@Repository
-//@Scope("prototype")
-public class UserDaoImpl extends BaseDaoImpl&lt;User&gt; implements IUserDao {
-    @Override
-    public User findUserByUsernameAndPassword(String username, String password) {
-        String hql="FROM User u where u.username = ? and u.password = ?";
-        List&lt;User&gt; list = this.getHibernateTemplate().find(hql, username, password);
-        if(list!=null&amp;&amp;list.size()&gt;0)
-        return list.get(0);
-        return null;
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Repository</span>
+<span class="c1">//@Scope("prototype")</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDaoImpl</span> <span class="kd">extends</span> <span class="n">BaseDaoImpl</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">IUserDao</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">User</span> <span class="nf">findUserByUsernameAndPassword</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">,</span> <span class="n">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">hql</span><span class="o">=</span><span class="s">"FROM User u where u.username = ? and u.password = ?"</span><span class="o">;</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getHibernateTemplate</span><span class="o">().</span><span class="na">find</span><span class="o">(</span><span class="n">hql</span><span class="o">,</span> <span class="n">username</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">!=</span><span class="kc">null</span><span class="o">&amp;&amp;</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()&gt;</span><span class="mi">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
 <h5 id="easyui-messager">EasyUI Messager</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript"&gt;
-    $(function () {
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 
-        $.messager.alert("标题", "内容信息", "info");
+        <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">"标题"</span><span class="p">,</span> <span class="s2">"内容信息"</span><span class="p">,</span> <span class="s2">"info"</span><span class="p">);</span>
 
-        window.setTimeout(function () {
-            $.messager.show({
-                title: '欢迎信息',
-                msg: '欢迎张三登陆系统',
-                timeout: 3000,
-                showType: 'slide'
-            })
-        }, 3000)
+        <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">show</span><span class="p">({</span>
+                <span class="na">title</span><span class="p">:</span> <span class="s1">'欢迎信息'</span><span class="p">,</span>
+                <span class="na">msg</span><span class="p">:</span> <span class="s1">'欢迎张三登陆系统'</span><span class="p">,</span>
+                <span class="na">timeout</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
+                <span class="na">showType</span><span class="p">:</span> <span class="s1">'slide'</span>
+            <span class="p">})</span>
+        <span class="p">},</span> <span class="mi">3000</span><span class="p">)</span>
 
-        $.messager.confirm("标题", "内容:你确定删除当前数据吗", function (r) {
-            alert(r)
-        });
+        <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"标题"</span><span class="p">,</span> <span class="s2">"内容:你确定删除当前数据吗"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+        <span class="p">});</span>
 
-        $.messager.prompt("标题", "内容", function (data) {
-            alert(data)
-        })
+        <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">prompt</span><span class="p">(</span><span class="s2">"标题"</span><span class="p">,</span> <span class="s2">"内容"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+        <span class="p">})</span>
 
-        $.messager.progress();
-        window.setTimeout(function () {
-            $.messager.progress('close')
-        }, 3000)
+        <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">progress</span><span class="p">();</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">progress</span><span class="p">(</span><span class="s1">'close'</span><span class="p">)</span>
+        <span class="p">},</span> <span class="mi">3000</span><span class="p">)</span>
 
-    })
-&lt;/script&gt;
-</code></pre></div>
+    <span class="p">})</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div>
 <h5 id="easyui下拉菜单meunbutton">EasyUI下拉菜单MeunButton</h5>
-<div class="highlight"><pre><code class="language-" data-lang=""><span class="err">&lt;</span>%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %&gt;
-<span class="cp">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;title&gt;</span>下拉菜单<span class="nt">&lt;/title&gt;</span>
-    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-<span class="nt">&lt;a</span> <span class="na">data-options=</span><span class="s">"iconCls:'icon-help',menu:'#mm'"</span> <span class="na">class=</span><span class="s">"easyui-menubutton"</span><span class="nt">&gt;</span>控制面板<span class="nt">&lt;/a&gt;</span>
-<span class="err">&lt;</span>%--使用div制作下拉菜单选项--%&gt;
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"mm"</span><span class="nt">&gt;</span>
-    <span class="err">&lt;</span>%--使用子div制作具体的选项--%&gt;
-    <span class="nt">&lt;div</span> <span class="na">data-options=</span><span class="s">"iconCls:'icon-edit'"</span> <span class="na">onclick=</span><span class="s">"alert('修改密码')"</span><span class="nt">&gt;</span>修改密码<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div&gt;</span>联系管理员<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-sep"</span><span class="nt">&gt;&lt;/div&gt;</span>
-    <span class="nt">&lt;div&gt;</span>退出系统<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">page</span> <span class="nx">language</span><span class="o">=</span><span class="s2">"java"</span> <span class="nx">contentType</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span>
+         <span class="nx">pageEncoding</span><span class="o">=</span><span class="s2">"UTF-8"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span> <span class="nx">PUBLIC</span> <span class="s2">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/loose.dtd"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nx">content</span><span class="o">=</span><span class="s2">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">下拉菜单</span><span class="o">&lt;</span><span class="sr">/title</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/default/easyui.css"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/css"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/themes/icon.css"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/jquery-1.8.3.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/js/easyui/locale/easyui-lang-zh_CN.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath }/js/easyui/jquery.easyui.min.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/head</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"iconCls:'icon-help',menu:'#mm'"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-menubutton"</span><span class="o">&gt;</span><span class="err">控制面板</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span><span class="o">&lt;%--</span><span class="err">使用</span><span class="nx">div</span><span class="err">制作下拉菜单选项</span><span class="o">--%&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"mm"</span><span class="o">&gt;</span>
+    <span class="o">&lt;%--</span><span class="err">使用子</span><span class="nx">div</span><span class="err">制作具体的选项</span><span class="o">--%&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"iconCls:'icon-edit'"</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">"alert('修改密码')"</span><span class="o">&gt;</span><span class="err">修改密码</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">联系管理员</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"menu-sep"</span><span class="o">&gt;&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="err">退出系统</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/body</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/html</span><span class="err">&gt;
+</span></code></pre></div>
 <h6 id="退出登录">退出登录</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//退出登录
-public String logout(){
-    ServletActionContext.getRequest().getSession().invalidate();
-    return "login";
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//退出登录</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">logout</span><span class="o">(){</span>
+    <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getSession</span><span class="o">().</span><span class="na">invalidate</span><span class="o">();</span>
+    <span class="k">return</span> <span class="s">"login"</span><span class="o">;</span>
+<span class="o">}</span>
 </code></pre></div>
 <h6 id="自定义拦截器">自定义拦截器</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//定义一个拦截器
-public class BOSLoginInterceptor extends MethodFilterInterceptor {
-    @Override
-    protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
-        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
-        if(user == null){
-            return "login";
-        }
-        return actionInvocation.invoke();
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//定义一个拦截器</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BOSLoginInterceptor</span> <span class="kd">extends</span> <span class="n">MethodFilterInterceptor</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="n">String</span> <span class="nf">doIntercept</span><span class="o">(</span><span class="n">ActionInvocation</span> <span class="n">actionInvocation</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">User</span><span class="o">)</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getSession</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"loginUser"</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">user</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="s">"login"</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">actionInvocation</span><span class="o">.</span><span class="na">invoke</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-//在struts.xml中注册拦截器
-&lt;package name="basicstruts2" extends="struts-default"&gt;
-    &lt;interceptors&gt;
-        &lt;interceptor name="BOSLoginInterceptor" class="com.itheima.bos.web.interceptor.BOSLoginInterceptor"&gt;
-            &lt;param name="excludeMethods"&gt;login&lt;/param&gt;
+<span class="c1">//在struts.xml中注册拦截器</span>
+<span class="o">&lt;</span><span class="kn">package</span> <span class="n">name</span><span class="o">=</span><span class="s">"basicstruts2"</span> <span class="kd">extends</span><span class="o">=</span><span class="s">"struts-default"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">interceptors</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">interceptor</span> <span class="n">name</span><span class="o">=</span><span class="s">"BOSLoginInterceptor"</span> <span class="kd">class</span><span class="err">="</span><span class="nc">com</span><span class="o">.</span><span class="na">itheima</span><span class="o">.</span><span class="na">bos</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">interceptor</span><span class="o">.</span><span class="na">BOSLoginInterceptor</span><span class="s">"&gt;
+            &lt;param name="</span><span class="n">excludeMethods</span><span class="s">"&gt;login&lt;/param&gt;
         &lt;/interceptor&gt;
-        &lt;interceptor-stack name="myStack"&gt;
-            &lt;interceptor-ref name="BOSLoginInterceptor"/&gt;
-            &lt;interceptor-ref name="defaultStack"/&gt;
+        &lt;interceptor-stack name="</span><span class="n">myStack</span><span class="s">"&gt;
+            &lt;interceptor-ref name="</span><span class="n">BOSLoginInterceptor</span><span class="s">"/&gt;
+            &lt;interceptor-ref name="</span><span class="n">defaultStack</span><span class="s">"/&gt;
         &lt;/interceptor-stack&gt;
     &lt;/interceptors&gt;
-    &lt;default-interceptor-ref name="myStack"/&gt;
+    &lt;default-interceptor-ref name="</span><span class="n">myStack</span><span class="s">"/&gt;
     &lt;global-results&gt;
-        &lt;result name="login"&gt;/login.jsp&lt;/result&gt;
-    &lt;/global-results&gt;
-&lt;/package&gt;
+        &lt;result name="</span><span class="n">login</span><span class="err">"</span><span class="o">&gt;/</span><span class="n">login</span><span class="o">.</span><span class="na">jsp</span><span class="o">&lt;/</span><span class="n">result</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">global</span><span class="o">-</span><span class="n">results</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="kn">package</span><span class="o">&gt;</span>
 </code></pre></div>
 <h5 id="基于ajax修改密码">基于Ajax修改密码</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;!--修改密码窗口--&gt;
-&lt;div id="editPwdWindow" class="easyui-window" title="修改密码" collapsible="false" minimizable="false" modal="true"
-     closed="true" resizable="false"
-     maximizable="false" icon="icon-save" style="width: 300px; height: 160px; padding: 5px;
-        background: #fafafa"&gt;
-    &lt;div class="easyui-layout" fit="true"&gt;
-        &lt;div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;"&gt;
-            &lt;form id="editPasswordForm"&gt;
-                &lt;table cellpadding=3&gt;
-                    &lt;tr&gt;
-                        &lt;td&gt;新密码：&lt;/td&gt;
-                        &lt;td&gt;&lt;input id="txtNewPass" type="Password" class="txt01 easyui-validatebox"
-                                   required="true" data-options="validType:'length[4,8]'"/&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-                    &lt;tr&gt;
-                        &lt;td&gt;确认密码：&lt;/td&gt;
-                        &lt;td&gt;&lt;input id="txtRePass" type="Password" class="txt01 easyui-validatebox"
-                                   required="true" data-options="validType:'length[4,8]'"/&gt;&lt;/td&gt;
-                    &lt;/tr&gt;
-                &lt;/table&gt;
-            &lt;/form&gt;
-        &lt;/div&gt;
-        &lt;div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;"&gt;
-            &lt;a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)"&gt;确定&lt;/a&gt;
-            &lt;a id="btnCancel" class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)"&gt;取消&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c">&lt;!--</span><span class="err">修改密码窗口</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"editPwdWindow"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-window"</span> <span class="nx">title</span><span class="o">=</span><span class="s2">"修改密码"</span> <span class="nx">collapsible</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">minimizable</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">modal</span><span class="o">=</span><span class="s2">"true"</span>
+     <span class="nx">closed</span><span class="o">=</span><span class="s2">"true"</span> <span class="nx">resizable</span><span class="o">=</span><span class="s2">"false"</span>
+     <span class="nx">maximizable</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">icon</span><span class="o">=</span><span class="s2">"icon-save"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"width: 300px; height: 160px; padding: 5px;
+        background: #fafafa"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-layout"</span> <span class="nx">fit</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">region</span><span class="o">=</span><span class="s2">"center"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"padding: 10px; background: #fff; border: 1px solid #ccc;"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"editPasswordForm"</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">table</span> <span class="nx">cellpadding</span><span class="o">=</span><span class="mi">3</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="err">新密码：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"txtNewPass"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"Password"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"txt01 easyui-validatebox"</span>
+                                   <span class="nx">required</span><span class="o">=</span><span class="s2">"true"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"validType:'length[4,8]'"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="err">确认密码：</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;&lt;</span><span class="nx">input</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"txtRePass"</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"Password"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"txt01 easyui-validatebox"</span>
+                                   <span class="nx">required</span><span class="o">=</span><span class="s2">"true"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"validType:'length[4,8]'"</span><span class="o">/&gt;&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="sr">/tr</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="sr">/table</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">region</span><span class="o">=</span><span class="s2">"south"</span> <span class="nx">border</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"text-align: right; height: 30px; line-height: 30px;"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"btnEp"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-linkbutton"</span> <span class="nx">icon</span><span class="o">=</span><span class="s2">"icon-ok"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"javascript:void(0)"</span><span class="o">&gt;</span><span class="err">确定</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"btnCancel"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-linkbutton"</span> <span class="nx">icon</span><span class="o">=</span><span class="s2">"icon-cancel"</span> <span class="nx">href</span><span class="o">=</span><span class="s2">"javascript:void(0)"</span><span class="o">&gt;</span><span class="err">取消</span><span class="o">&lt;</span><span class="sr">/a</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+
+<span class="c1">//取消按钮</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#btnCancel"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">'#editPwdWindow'</span><span class="p">).</span><span class="nb">window</span><span class="p">(</span><span class="s1">'close'</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="c1">//为确定按钮绑定事件</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#btnEp"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">v</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#editPasswordForm"</span><span class="p">).</span><span class="nx">form</span><span class="p">(</span><span class="s2">"validate"</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="c1">//校验通过了</span>
+            <span class="c1">//判断2次密码是否一致</span>
+            <span class="kd">var</span> <span class="nx">p1</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#txtNewPass"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+            <span class="kd">var</span> <span class="nx">p2</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#txtRePass"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">p1</span> <span class="o">==</span> <span class="nx">p2</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">url</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/userAction_editPassword.action"</span><span class="p">;</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span><span class="s2">"password"</span><span class="p">:</span><span class="nx">p1</span><span class="p">},</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="s1">'#editPwdWindow'</span><span class="p">).</span><span class="nb">window</span><span class="p">(</span><span class="s1">'close'</span><span class="p">);</span>
+                    <span class="k">if</span><span class="p">(</span><span class="nx">data</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">){</span><span class="c1">//修改成功</span>
+                            <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">"提示信息"</span><span class="p">,</span><span class="s2">"密码修改成功"</span><span class="p">,</span><span class="s2">"info"</span><span class="p">)</span>
+                    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                            <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">"提示信息"</span><span class="p">,</span><span class="s2">"密码修改失败,请稍后重试"</span><span class="p">,</span><span class="s2">"error"</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+            <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">messager</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">"提示消息"</span><span class="p">,</span><span class="s2">"两次输入密码不一致"</span><span class="p">,</span><span class="s2">"warning"</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">//UserAction.java</span>
+<span class="c1">//修改密码</span>
+<span class="kr">public</span> <span class="nb">String</span> <span class="nx">editPassword</span><span class="p">()</span> <span class="kr">throws</span> <span class="nx">IOException</span> <span class="p">{</span>
+    <span class="nx">User</span> <span class="nx">loginUser</span> <span class="o">=</span> <span class="p">(</span><span class="nx">User</span><span class="p">)</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getRequest</span><span class="p">().</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"loginUser"</span><span class="p">);</span>
+    <span class="nb">String</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">MD5Utils</span><span class="p">.</span><span class="nx">md5</span><span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">getPassword</span><span class="p">());</span>
+    <span class="nb">String</span> <span class="nx">flag</span><span class="o">=</span><span class="s2">"1"</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">userService</span><span class="p">.</span><span class="nx">editPassword</span><span class="p">(</span><span class="nx">password</span><span class="p">,</span><span class="nx">loginUser</span><span class="p">.</span><span class="nx">getId</span><span class="p">());</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Exception</span> <span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">printStackTrace</span><span class="p">();</span>
+        <span class="nx">flag</span><span class="o">=</span><span class="s2">"0"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">HttpServletResponse</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getResponse</span><span class="p">();</span>
+    <span class="nx">resp</span><span class="p">.</span><span class="nx">setContentType</span><span class="p">(</span><span class="s2">"text/html;charset=utf-8"</span><span class="p">);</span>
+    <span class="nx">resp</span><span class="p">.</span><span class="nx">getWriter</span><span class="p">().</span><span class="nx">print</span><span class="p">(</span><span class="nx">flag</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">NONE</span><span class="p">;</span>
+<span class="p">}</span>
 
 
-//取消按钮
-$("#btnCancel").click(function () {
-        $('#editPwdWindow').window('close');
-    });
-    //为确定按钮绑定事件
-    $("#btnEp").click(function () {
-        var v=$("#editPasswordForm").form("validate")
-        if(v){//校验通过了
-            //判断2次密码是否一致
-            var p1=$("#txtNewPass").val()
-            var p2=$("#txtRePass").val()
-            if(p1 == p2){
-                var url="${pageContext.request.contextPath}/userAction_editPassword.action";
-                $.post(url,{"password":p1},function (data) {
-                    $('#editPwdWindow').window('close');
-                    if(data == "1"){//修改成功
-                            $.messager.alert("提示信息","密码修改成功","info")
-                    }else{
-                            $.messager.alert("提示信息","密码修改失败,请稍后重试","error")
-                    }
-                })
-            }else {
-                $.messager.alert("提示消息","两次输入密码不一致","warning")
-            }
-        }
+<span class="c1">//User.hbm.xml</span>
+<span class="c1">//在class标签外面</span>
+<span class="o">&lt;</span><span class="nx">query</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"editPassword"</span><span class="o">&gt;</span>
+    <span class="nx">update</span> <span class="nx">User</span> <span class="nx">set</span> <span class="nx">password</span> <span class="o">=</span> <span class="p">?</span> <span class="nx">where</span> <span class="nx">id</span> <span class="o">=</span><span class="p">?</span>
+<span class="o">&lt;</span><span class="sr">/query</span><span class="err">&gt;
+</span>
+<span class="c1">//UserServiceImpl</span>
+<span class="err">@</span><span class="nx">Override</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">editPassword</span><span class="p">(</span><span class="nb">String</span> <span class="nx">password</span><span class="p">,</span> <span class="nb">String</span> <span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">userDao</span><span class="p">.</span><span class="nx">executeUpdate</span><span class="p">(</span><span class="s2">"editPassword"</span><span class="p">,</span><span class="nx">password</span><span class="p">,</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">}</span>
 
-    });
-});
-
-//UserAction.java
-//修改密码
-public String editPassword() throws IOException {
-    User loginUser = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
-    String password = MD5Utils.md5(model.getPassword());
-    String flag="1";
-    try {
-        userService.editPassword(password,loginUser.getId());
-    } catch (Exception e) {
-        e.printStackTrace();
-        flag="0";
-    }
-    HttpServletResponse resp = ServletActionContext.getResponse();
-    resp.setContentType("text/html;charset=utf-8");
-    resp.getWriter().print(flag);
-    return NONE;
-}
-
-
-//User.hbm.xml
-//在class标签外面
-&lt;query name="editPassword"&gt;
-    update User set password = ? where id =?
-&lt;/query&gt;
-
-//UserServiceImpl
-@Override
-public void editPassword(String password, String id) {
-    userDao.executeUpdate("editPassword",password,id);
-}
-
-//UserDaoImpl
-@Override
-public void executeUpdate(String queryName, Object... objects) {
-    Session session = (Session) getSession();
-    Query query = session.getNamedQuery(queryName);
-    int i=0;
-    for (Object object : objects) {
-        query.setParameter(i++,object);
-    }
-    query.executeUpdate();
-}
+<span class="c1">//UserDaoImpl</span>
+<span class="err">@</span><span class="nx">Override</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">executeUpdate</span><span class="p">(</span><span class="nb">String</span> <span class="nx">queryName</span><span class="p">,</span> <span class="nb">Object</span><span class="p">...</span> <span class="nx">objects</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Session</span> <span class="nx">session</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Session</span><span class="p">)</span> <span class="nx">getSession</span><span class="p">();</span>
+    <span class="nx">Query</span> <span class="nx">query</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">getNamedQuery</span><span class="p">(</span><span class="nx">queryName</span><span class="p">);</span>
+    <span class="kr">int</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nb">Object</span> <span class="nx">object</span> <span class="p">:</span> <span class="nx">objects</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">query</span><span class="p">.</span><span class="nx">setParameter</span><span class="p">(</span><span class="nx">i</span><span class="o">++</span><span class="p">,</span><span class="nx">object</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">query</span><span class="p">.</span><span class="nx">executeUpdate</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div>
 <h5 id="解决easyui-window控件bug">解决EasyUI window控件bug</h5>
 

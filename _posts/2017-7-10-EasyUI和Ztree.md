@@ -80,7 +80,7 @@ grant all on bos19.* to xiaoli;
 </web-app>
 ```
 ###### 4.创建目录结构
-```
+```html
 com.itheima.bos
 	  |
 	  |--dao
@@ -94,7 +94,7 @@ com.itheima.bos
 	  	  |--listener
 ```
 ###### 5.在config目录下提供log4j,struts的配置文件
-```
+```javascript
 <struts>
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring"/>
@@ -107,7 +107,7 @@ com.itheima.bos
 </struts>
 ```
 ##### 6.在config目录下提供spring的配置文件applicationContext.xml
-```
+```javascript
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -165,7 +165,7 @@ com.itheima.bos
 ###### 7.提供项目所需的资源文件 css js image jsp
 
 ##### 使用svn管理项目代码
-```
+```html
 svn/bos19/conf
 	 |
 	 |--svnserve.conf
@@ -194,7 +194,7 @@ svn/bos19/conf
 ##### EasyUI
 ###### layout页面布局
 这个布局容器,有五个区域:北,南,东,西和中心,中心面板是必须的,边缘地区可选,每一个边缘可以缩放的拖动其边境
-```
+```javascript
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -218,7 +218,7 @@ svn/bos19/conf
 ```
 
 ###### 折叠面板
-```
+```javascript
 <!-- 折叠面板效果 -->
 <div class="easyui-accordion" data-options="fit:true">
    <!-- 每个子div是其中的一个面板 -->
@@ -228,7 +228,7 @@ svn/bos19/conf
 </div>
 ```
 ###### 选项卡面板
-```
+```javascript
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -285,7 +285,7 @@ svn/bos19/conf
 ##### Ztree树形插件
 
 ###### 标准JSON方式
-```
+```javascript
 <link rel="stylesheet" href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css" type="text/css">
 <div title="面板二">
    <ul id="ztree1" class="ztree"></ul>
@@ -310,7 +310,7 @@ svn/bos19/conf
 ```
 
 ###### 简单JSON方式
-```
+```javascript
 <link rel="stylesheet" href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css" type="text/css">
 <div title="面板三">
    <%--简单json数据--%>
@@ -356,7 +356,7 @@ svn/bos19/conf
 ```
 
 ###### 发送ajax加载ztree
-```
+```javascript
 <div title="面板四">
    <%--发送ajax请求获取json数据结构的ztree--%>
     <ul id="ztree3" class="ztree"></ul>
@@ -374,7 +374,7 @@ svn/bos19/conf
 ```
 
 ###### 为ztree节点绑定事件
-```
+```javascript
 <div title="面板四">
    <%--发送ajax请求获取json数据结构的ztree--%>
     <ul id="ztree3" class="ztree"></ul>
