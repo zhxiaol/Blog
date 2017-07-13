@@ -38,7 +38,7 @@ description: ocload,poi,pin4j
 ```
 
 ###### region.jsp
-```
+```javascript
 //导入ocupload.js
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ocupload-1.1.2.js"></script>
 // 收派标准数据表格
@@ -61,7 +61,7 @@ $(function () {
 
 ##### Apache POI
 > Apache POI提供API给Java程式对Microsoft Office格式档案读和写的功能
-```
+```java
 //导入poi-xxx.jar
 public class POITest {
     //使用POI解析Excel
@@ -83,7 +83,7 @@ public class POITest {
 
 ##### pinyin4j
 > 汉字转换为拼音
-```
+```java
 //1.导入pinyin4j.jar
 //2.导入PinYin4jUtils
 
@@ -113,7 +113,7 @@ public class Pinyin4JTest {
 ```
 
 ###### 批量导入regionAction
-```
+```java
 private File myFile;//用来接收文件上传
 public String importXls() throws IOException {
     String flag="1";
@@ -157,7 +157,7 @@ public String importXls() throws IOException {
 ```
 
 ###### 批量导入 RegionServiceImpl
-```
+```java
 @Service
 @Transactional
 public class RegionServiceImpl implements IRegionService {
@@ -173,7 +173,7 @@ public class RegionServiceImpl implements IRegionService {
 ```
 
 ###### 区域分页查询
-```
+```java
 //RegionAction.java
 //分页查询
 public String pageQuery() throws IOException {
@@ -218,7 +218,7 @@ public void writePageBean2Json(String[] excludes)throws IOException{
 
 ##### 添加分区
 ##### EasyUI combobox 下拉框
-```
+```javascript
 <select class="easyui-combobox">
     <option>北京</option>
     <option>上海</option>
@@ -229,7 +229,7 @@ public void writePageBean2Json(String[] excludes)throws IOException{
 ```
 
 ###### 添加分区--选择区域
-```
+```javascript
 //subarea.jsp
 <td>选择区域</td>
 <td>
@@ -281,7 +281,7 @@ public String getName(){
 ```
 
 ###### 添加分区--subarea.jsp
-```
+```javascript
 //添加分区
 $("#save").click(function () {
    var v=$("#addSubareaForm").form("validate");
@@ -293,7 +293,7 @@ $("#save").click(function () {
 </form>
 ```
 ###### 添加分区--struts.xml
-```
+```javascript
 <!--分区管理-->
 <action name="subareaAction_*" class="subareaAction" method="{1}">
     <result name="list">/WEB-INF/pages/base/subarea.jsp</result>
@@ -301,7 +301,7 @@ $("#save").click(function () {
 ```
 
 ###### 添加分区--SubareaAction.java
-```
+```java
 public String add(){
     System.out.println(model);
     subareaService.save(model);
@@ -309,7 +309,7 @@ public String add(){
 }
 ```
 ###### 添加分区--SubareaServiceImpl.java
-```
+```java
 @Resource
 private ISubareaDao subareaDao;
 
@@ -321,7 +321,7 @@ public void save(Subarea model) {
 
 ##### 分区--分页查询
 ###### 分页查询--subarea.jsp
-```
+```javascript
 <script type="text/javascript">
    //将指定表单数据序列化成json
                       $.fn.serializeJson=function(){
@@ -357,7 +357,7 @@ $('#grid').datagrid( {
 ```
 
 ###### 分页查询--SubareaAction.java
-```
+```java
 public String pageQuery()throws IOException{
     //在查询之前封装条件
     DetachedCriteria detachedCriteria = pageBaen.getDetachedCriteria();
@@ -388,7 +388,7 @@ public String pageQuery()throws IOException{
 ```
 
 ###### 分页查询 subarea.hbm.xml
-```
+```javascript
 <!--关闭懒加载 解决json序列化问题 -->
 <many-to-one lazy="false" name="region" class="com.itheima.bos.domain.Region" fetch="select">
     <column name="region_id" length="32" />
@@ -397,14 +397,14 @@ public String pageQuery()throws IOException{
 
 ##### 分区数据导出功能
 ###### 分区导出--subarea.jsp
-```
+```javascript
 //导出文件 发起一次请求 不能使用ajax 要同步提交
 function doExport(){
     window.location.href="${pageContext.request.contextPath}/subareaAction_exportXls.action";
 }
 ```
 ###### 分区导出--SubareaAction.java
-```
+```java
 //使用POI写入Excel文件,提供下载
 public String exportXls() throws Exception {
     List<Subarea> list = subareaService.findAll();

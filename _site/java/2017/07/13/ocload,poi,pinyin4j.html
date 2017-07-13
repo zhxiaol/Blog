@@ -147,54 +147,54 @@ ajax不能做文件上传,既可以不跳页面还不跳页面</p>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div>
 <h6 id="region-jsp">region.jsp</h6>
-<div class="highlight"><pre><code class="language-" data-lang="">//导入ocupload.js
-&lt;script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ocupload-1.1.2.js"&gt;&lt;/script&gt;
-// 收派标准数据表格
-$('#grid').datagrid({
-    toolbar:[ {   //工具栏
-    id: 'button-import',
-    text: '导入',
-    iconCls: 'icon-redo'
-}]});
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//导入ocupload.js</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/js/jquery.ocupload-1.1.2.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="c1">// 收派标准数据表格</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#grid'</span><span class="p">).</span><span class="nx">datagrid</span><span class="p">({</span>
+    <span class="na">toolbar</span><span class="p">:[</span> <span class="p">{</span>   <span class="c1">//工具栏</span>
+    <span class="na">id</span><span class="p">:</span> <span class="s1">'button-import'</span><span class="p">,</span>
+    <span class="na">text</span><span class="p">:</span> <span class="s1">'导入'</span><span class="p">,</span>
+    <span class="na">iconCls</span><span class="p">:</span> <span class="s1">'icon-redo'</span>
+<span class="p">}]});</span>
 
-var toolbar =
-//绑定一键上传
-$(function () {
-    $("#button-import").upload({
-        action:'${pageContext.request.contextPath}/regionAction_importXls.action',
-        name:'myFile'
-    })
-})
+<span class="kd">var</span> <span class="nx">toolbar</span> <span class="o">=</span>
+<span class="c1">//绑定一键上传</span>
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#button-import"</span><span class="p">).</span><span class="nx">upload</span><span class="p">({</span>
+        <span class="na">action</span><span class="p">:</span><span class="s1">'${pageContext.request.contextPath}/regionAction_importXls.action'</span><span class="p">,</span>
+        <span class="na">name</span><span class="p">:</span><span class="s1">'myFile'</span>
+    <span class="p">})</span>
+<span class="p">})</span>
 </code></pre></div>
 <h5 id="apache-poi">Apache POI</h5>
 
 <blockquote>
 <p>Apache POI提供API给Java程式对Microsoft Office格式档案读和写的功能</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//导入poi-xxx.jar
-public class POITest {
-    //使用POI解析Excel
-    @Test
-    public void test1() throws IOException {
-        HSSFWorkbook workbook =new HSSFWorkbook(new FileInputStream(new File("/zhxiaol/aaa.xls")));
-        HSSFSheet sheet=workbook.getSheetAt(0);//取出第一个sheet
-        for (Row row : sheet) {//取出第一行
-            String v1 = row.getCell(0).getStringCellValue();//第一个单元格
-            String v2 = row.getCell(1).getStringCellValue();
-            String v3 = row.getCell(2).getStringCellValue();
-            String v4 = row.getCell(3).getStringCellValue();
-            String v5 = row.getCell(4).getStringCellValue();
-            System.out.println(v1+"\t"+v2+"\t"+v3+"\t"+v4+"\t"+v5);
-        }
-    }
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//导入poi-xxx.jar</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">POITest</span> <span class="o">{</span>
+    <span class="c1">//使用POI解析Excel</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test1</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">HSSFWorkbook</span> <span class="n">workbook</span> <span class="o">=</span><span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">"/zhxiaol/aaa.xls"</span><span class="o">)));</span>
+        <span class="n">HSSFSheet</span> <span class="n">sheet</span><span class="o">=</span><span class="n">workbook</span><span class="o">.</span><span class="na">getSheetAt</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span><span class="c1">//取出第一个sheet</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Row</span> <span class="n">row</span> <span class="o">:</span> <span class="n">sheet</span><span class="o">)</span> <span class="o">{</span><span class="c1">//取出第一行</span>
+            <span class="n">String</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getStringCellValue</span><span class="o">();</span><span class="c1">//第一个单元格</span>
+            <span class="n">String</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getStringCellValue</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="na">getStringCellValue</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">v4</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="mi">3</span><span class="o">).</span><span class="na">getStringCellValue</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">v5</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="mi">4</span><span class="o">).</span><span class="na">getStringCellValue</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">v1</span><span class="o">+</span><span class="s">"\t"</span><span class="o">+</span><span class="n">v2</span><span class="o">+</span><span class="s">"\t"</span><span class="o">+</span><span class="n">v3</span><span class="o">+</span><span class="s">"\t"</span><span class="o">+</span><span class="n">v4</span><span class="o">+</span><span class="s">"\t"</span><span class="o">+</span><span class="n">v5</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></blockquote>
 
 <h5 id="pinyin4j">pinyin4j</h5>
 
 <blockquote>
 <p>汉字转换为拼音</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//1.导入pinyin4j.jar
-//2.导入PinYin4jUtils
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//1.导入pinyin4j.jar</span>
+<span class="c1">//2.导入PinYin4jUtils</span>
 </code></pre></div></blockquote>
 
 <p>public class Pinyin4JTest {<br>
@@ -222,322 +222,312 @@ public class POITest {
 <p>}</p>
 <div class="highlight"><pre><code class="language-" data-lang="">
 ###### 批量导入regionAction
+```java
+private File myFile;//用来接收文件上传
+public String importXls() throws IOException {
+    String flag="1";
+    try {
+        //使用POI解析Excel文件
+        HSSFWorkbook workbook=new HSSFWorkbook(new FileInputStream(myFile));
+        HSSFSheet sheet = workbook.getSheetAt(0);//获得第一个sheet页
+        ArrayList&lt;Region&gt; list = new ArrayList&lt;&gt;();
+        for (Row row : sheet) {
+            int rowNum = row.getRowNum();
+            if(rowNum&gt;0){//第一行标题忽略
+                String id = row.getCell(0).getStringCellValue();
+                String province = row.getCell(1).getStringCellValue();
+                String city = row.getCell(2).getStringCellValue();
+                String district = row.getCell(3).getStringCellValue();
+                String postcode = row.getCell(4).getStringCellValue();
+                //城市编码--&gt;shijiazhuang
+                city =city.substring(0,city.length()-1);
+                String[] arrcity = PinYin4jUtils.stringToPinyin(city);
+                String citycode = StringUtils.join(arrcity, "");
+                //简码--HBSJZCA
+                province=province.substring(0,province.length()-1);
+                district=district.substring(0,district.length()-1);
+                String info=province+city+district;
+                String[] arrcode = PinYin4jUtils.getHeadByString(info);
+                String shortcode = StringUtils.join(arrcode, "");
+                Region region=new Region(id,province,city,district,postcode,shortcode,citycode);
+                list.add(region);
+            }
+        }
+        service.saveBatch(list);
+    } catch (Exception e) {
+        e.printStackTrace();
+        flag="0";
+    }
+    HttpServletResponse resp = ServletActionContext.getResponse();
+    resp.setContentType("text/html;charset=UTF-8");
+    resp.getWriter().print(flag);
+    return NONE;
+}
 </code></pre></div>
-<p>private File myFile;//用来接收文件上传<br>
-public String importXls() throws IOException {<br>
-    String flag=&quot;1&quot;;<br>
-    try {<br>
-        //使用POI解析Excel文件<br>
-        HSSFWorkbook workbook=new HSSFWorkbook(new FileInputStream(myFile));<br>
-        HSSFSheet sheet = workbook.getSheetAt(0);//获得第一个sheet页<br>
-        ArrayList<Region> list = new ArrayList&lt;&gt;();<br>
-        for (Row row : sheet) {<br>
-            int rowNum = row.getRowNum();<br>
-            if(rowNum&gt;0){//第一行标题忽略<br>
-                String id = row.getCell(0).getStringCellValue();<br>
-                String province = row.getCell(1).getStringCellValue();<br>
-                String city = row.getCell(2).getStringCellValue();<br>
-                String district = row.getCell(3).getStringCellValue();<br>
-                String postcode = row.getCell(4).getStringCellValue();<br>
-                //城市编码--&gt;shijiazhuang<br>
-                city =city.substring(0,city.length()-1);<br>
-                String[] arrcity = PinYin4jUtils.stringToPinyin(city);<br>
-                String citycode = StringUtils.join(arrcity, &quot;&quot;);<br>
-                //简码--HBSJZCA<br>
-                province=province.substring(0,province.length()-1);<br>
-                district=district.substring(0,district.length()-1);<br>
-                String info=province+city+district;<br>
-                String[] arrcode = PinYin4jUtils.getHeadByString(info);<br>
-                String shortcode = StringUtils.join(arrcode, &quot;&quot;);<br>
-                Region region=new Region(id,province,city,district,postcode,shortcode,citycode);<br>
-                list.add(region);<br>
-            }<br>
-        }<br>
-        service.saveBatch(list);<br>
-    } catch (Exception e) {<br>
-        e.printStackTrace();<br>
-        flag=&quot;0&quot;;<br>
-    }<br>
-    HttpServletResponse resp = ServletActionContext.getResponse();<br>
-    resp.setContentType(&quot;text/html;charset=UTF-8&quot;);<br>
-    resp.getWriter().print(flag);<br>
-    return NONE;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 批量导入 RegionServiceImpl
+<h6 id="批量导入-regionserviceimpl">批量导入 RegionServiceImpl</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Service</span>
+<span class="nd">@Transactional</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RegionServiceImpl</span> <span class="kd">implements</span> <span class="n">IRegionService</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">IRegionDao</span> <span class="n">dao</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveBatch</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Region</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Region</span> <span class="n">region</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">dao</span><span class="o">.</span><span class="na">saveOrUpdate</span><span class="o">(</span><span class="n">region</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>@Service<br>
-@Transactional<br>
-public class RegionServiceImpl implements IRegionService {<br>
-    @Autowired<br>
-    private IRegionDao dao;<br>
-    @Override<br>
-    public void saveBatch(List<Region> list) {<br>
-        for (Region region : list) {<br>
-            dao.saveOrUpdate(region);<br>
-        }<br>
-    }<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 区域分页查询
-</code></pre></div>
-<p>//RegionAction.java<br>
-//分页查询<br>
-public String pageQuery() throws IOException {<br>
-    service.pageQuery(pageBaen);<br>
-    this.writePageBean2Json(new String[]{&quot;currentPage&quot;,&quot;detachedCriteria&quot;,&quot;pageSize&quot;});<br>
-    return NONE;<br>
-}</p>
+<h6 id="区域分页查询">区域分页查询</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//RegionAction.java</span>
+<span class="c1">//分页查询</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">pageQuery</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">pageQuery</span><span class="o">(</span><span class="n">pageBaen</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">writePageBean2Json</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"currentPage"</span><span class="o">,</span><span class="s">"detachedCriteria"</span><span class="o">,</span><span class="s">"pageSize"</span><span class="o">});</span>
+    <span class="k">return</span> <span class="n">NONE</span><span class="o">;</span>
+<span class="o">}</span>
 
-<p>//BaseAction.java<br>
-public BaseAction() {<br>
-    try {<br>
-        ParameterizedType type= (ParameterizedType) this.getClass().getGenericSuperclass();<br>
-        Class<T> clazz = (Class<T>) type.getActualTypeArguments()[0];<br>
-        detachedCriteria=DetachedCriteria.forClass(clazz);<br>
-        pageBaen.setDetachedCriteria(detachedCriteria);<br>
-        model=clazz.newInstance();<br>
-    } catch (Exception e) {<br>
-        e.printStackTrace();<br>
-    }<br>
-}</p>
+<span class="c1">//BaseAction.java</span>
+<span class="kd">public</span> <span class="nf">BaseAction</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">ParameterizedType</span> <span class="n">type</span><span class="o">=</span> <span class="o">(</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getGenericSuperclass</span><span class="o">();</span>
+        <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">clazz</span> <span class="o">=</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">type</span><span class="o">.</span><span class="na">getActualTypeArguments</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="n">detachedCriteria</span><span class="o">=</span><span class="n">DetachedCriteria</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="n">clazz</span><span class="o">);</span>
+        <span class="n">pageBaen</span><span class="o">.</span><span class="na">setDetachedCriteria</span><span class="o">(</span><span class="n">detachedCriteria</span><span class="o">);</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">clazz</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<p>protected PageBaen pageBaen = new PageBaen();<br>
-DetachedCriteria detachedCriteria =null;<br>
-public void setPage(int page) {<br>
-    pageBaen.setCurrentPage(page);<br>
-}</p>
+<span class="kd">protected</span> <span class="n">PageBaen</span> <span class="n">pageBaen</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PageBaen</span><span class="o">();</span>
+<span class="n">DetachedCriteria</span> <span class="n">detachedCriteria</span> <span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPage</span><span class="o">(</span><span class="kt">int</span> <span class="n">page</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">pageBaen</span><span class="o">.</span><span class="na">setCurrentPage</span><span class="o">(</span><span class="n">page</span><span class="o">);</span>
+<span class="o">}</span>
 
-<p>public void setRows(int rows) {<br>
-    pageBaen.setPageSize(rows);<br>
-}</p>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRows</span><span class="o">(</span><span class="kt">int</span> <span class="n">rows</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">pageBaen</span><span class="o">.</span><span class="na">setPageSize</span><span class="o">(</span><span class="n">rows</span><span class="o">);</span>
+<span class="o">}</span>
 
-<p>public void writePageBean2Json(String[] excludes)throws IOException{<br>
-    JsonConfig jsonConfig = new JsonConfig();<br>
-    jsonConfig.setExcludes(excludes);<br>
-    JSONObject jsonObject=JSONObject.fromObject(pageBaen,jsonConfig);<br>
-    String json = jsonObject.toString();<br>
-    HttpServletResponse resp = ServletActionContext.getResponse();<br>
-    resp.setContentType(&quot;text/json;charset=UTF-8&quot;);<br>
-    resp.getWriter().print(json);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-##### 添加分区
-##### EasyUI combobox 下拉框
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">writePageBean2Json</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">excludes</span><span class="o">)</span><span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+    <span class="n">JsonConfig</span> <span class="n">jsonConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JsonConfig</span><span class="o">();</span>
+    <span class="n">jsonConfig</span><span class="o">.</span><span class="na">setExcludes</span><span class="o">(</span><span class="n">excludes</span><span class="o">);</span>
+    <span class="n">JSONObject</span> <span class="n">jsonObject</span><span class="o">=</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">fromObject</span><span class="o">(</span><span class="n">pageBaen</span><span class="o">,</span><span class="n">jsonConfig</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="n">HttpServletResponse</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getResponse</span><span class="o">();</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"text/json;charset=UTF-8"</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">getWriter</span><span class="o">().</span><span class="na">print</span><span class="o">(</span><span class="n">json</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
-<p><select class="easyui-combobox"><br>
-    <option>北京</option><br>
-    <option>上海</option><br>
-    <option>天津</option><br>
-</select></p>
+<h5 id="添加分区">添加分区</h5>
 
-<p><input class="easyui-combobox" data-options="url:'/json/data.json',valueField:'id',textField:'name'"></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 添加分区--选择区域
+<h5 id="easyui-combobox-下拉框">EasyUI combobox 下拉框</h5>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">select</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-combobox"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="err">北京</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="err">上海</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="err">天津</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/select</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-combobox"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"url:'/json/data.json',valueField:'id',textField:'name'"</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>//subarea.jsp<br>
-<td>选择区域</td><br>
-<td><br>
-   <input class="easyui-combobox" name="region.id"  <br>
-               data-options="valueField:'id',textField:'name',mode:'remote'<br>
-               ,url:'${pageContext.request.contextPath}/regionAction_listajax.action'" /><br>
-</td><br>
-//RegionAction.java<br>
-//查询所有的区域数据 返回json<br>
-public String listajax()throws IOException{<br>
-    List<Region> list;<br>
-    if(StringUtils.isNotBlank(q)){<br>
-        list=regionService.findByQ(q);<br>
-    }else {<br>
-        list=regionService.findAll();<br>
-    }</p>
-<div class="highlight"><pre><code class="language-" data-lang="">String[]excludes=new String[]{"subareas"};
-this.WriteList2Json(list,excludes);
-return NONE;
-</code></pre></div>
-<p>}</p>
+<h6 id="添加分区-选择区域">添加分区--选择区域</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//subarea.jsp</span>
+<span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="err">选择区域</span><span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"easyui-combobox"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"region.id"</span>  
+               <span class="nx">data</span><span class="o">-</span><span class="nx">options</span><span class="o">=</span><span class="s2">"valueField:'id',textField:'name',mode:'remote'
+               ,url:'${pageContext.request.contextPath}/regionAction_listajax.action'"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/td</span><span class="err">&gt;
+</span><span class="c1">//RegionAction.java</span>
+<span class="c1">//查询所有的区域数据 返回json</span>
+<span class="kr">public</span> <span class="nb">String</span> <span class="nx">listajax</span><span class="p">()</span><span class="kr">throws</span> <span class="nx">IOException</span><span class="p">{</span>
+    <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Region</span><span class="o">&gt;</span> <span class="nx">list</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">StringUtils</span><span class="p">.</span><span class="nx">isNotBlank</span><span class="p">(</span><span class="nx">q</span><span class="p">)){</span>
+        <span class="nx">list</span><span class="o">=</span><span class="nx">regionService</span><span class="p">.</span><span class="nx">findByQ</span><span class="p">(</span><span class="nx">q</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+        <span class="nx">list</span><span class="o">=</span><span class="nx">regionService</span><span class="p">.</span><span class="nx">findAll</span><span class="p">();</span>
+    <span class="p">}</span>
 
-<p>//RegionDaoImpl.java<br>
-@Repository<br>
-public class RegionDaoImpl extends BaseDaoImpl<Region> implements IRegionDao {<br>
-    @Override<br>
-    public List<Region> findByQ(String q) {<br>
-        String hql=&quot;FROM Region WHERE province LIKE ? OR city LIKE ? OR district LIKE ?&quot;;<br>
-        return this.getHibernateTemplate().find(hql,&quot;%&quot;+q+&quot;%&quot;,&quot;%&quot;+q+&quot;%&quot;,&quot;%&quot;+q+&quot;%&quot;);<br>
-    }<br>
-}</p>
+    <span class="nb">String</span><span class="p">[]</span><span class="nx">excludes</span><span class="o">=</span><span class="k">new</span> <span class="nb">String</span><span class="p">[]{</span><span class="s2">"subareas"</span><span class="p">};</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">WriteList2Json</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span><span class="nx">excludes</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">NONE</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>//BaseAction.java<br>
-public void WriteList2Json(List list, String[] excludes) throws IOException {<br>
-    JsonConfig jsonConfig = new JsonConfig();<br>
-    jsonConfig.setExcludes(excludes);<br>
-    JSONArray jsonObject= JSONArray.fromObject(list,jsonConfig);<br>
-    String json = jsonObject.toString();<br>
-    System.out.println(json);<br>
-    HttpServletResponse resp = ServletActionContext.getResponse();<br>
-    resp.setContentType(&quot;text/json;charset=UTF-8&quot;);<br>
-    resp.getWriter().print(json);<br>
-}</p>
+<span class="c1">//RegionDaoImpl.java</span>
+<span class="err">@</span><span class="nx">Repository</span>
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">RegionDaoImpl</span> <span class="kr">extends</span> <span class="nx">BaseDaoImpl</span><span class="o">&lt;</span><span class="nx">Region</span><span class="o">&gt;</span> <span class="kr">implements</span> <span class="nx">IRegionDao</span> <span class="p">{</span>
+    <span class="err">@</span><span class="nx">Override</span>
+    <span class="kr">public</span> <span class="nx">List</span><span class="o">&lt;</span><span class="nx">Region</span><span class="o">&gt;</span> <span class="nx">findByQ</span><span class="p">(</span><span class="nb">String</span> <span class="nx">q</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">String</span> <span class="nx">hql</span><span class="o">=</span><span class="s2">"FROM Region WHERE province LIKE ? OR city LIKE ? OR district LIKE ?"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">getHibernateTemplate</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="nx">hql</span><span class="p">,</span><span class="s2">"%"</span><span class="o">+</span><span class="nx">q</span><span class="o">+</span><span class="s2">"%"</span><span class="p">,</span><span class="s2">"%"</span><span class="o">+</span><span class="nx">q</span><span class="o">+</span><span class="s2">"%"</span><span class="p">,</span><span class="s2">"%"</span><span class="o">+</span><span class="nx">q</span><span class="o">+</span><span class="s2">"%"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-<p>//Region.java<br>
-public String getName(){<br>
-    return province+city+district;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 添加分区--subarea.jsp
-</code></pre></div>
-<p>//添加分区<br>
-$(&quot;#save&quot;).click(function () {<br>
-   var v=$(&quot;#addSubareaForm&quot;).form(&quot;validate&quot;);<br>
-   if(v){<br>
-       $(&quot;#addSubareaForm&quot;).submit();<br>
-   }<br>
-      })</p>
+<span class="c1">//BaseAction.java</span>
+<span class="kr">public</span> <span class="k">void</span> <span class="nx">WriteList2Json</span><span class="p">(</span><span class="nx">List</span> <span class="nx">list</span><span class="p">,</span> <span class="nb">String</span><span class="p">[]</span> <span class="nx">excludes</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">IOException</span> <span class="p">{</span>
+    <span class="nx">JsonConfig</span> <span class="nx">jsonConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JsonConfig</span><span class="p">();</span>
+    <span class="nx">jsonConfig</span><span class="p">.</span><span class="nx">setExcludes</span><span class="p">(</span><span class="nx">excludes</span><span class="p">);</span>
+    <span class="nx">JSONArray</span> <span class="nx">jsonObject</span><span class="o">=</span> <span class="nx">JSONArray</span><span class="p">.</span><span class="nx">fromObject</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span><span class="nx">jsonConfig</span><span class="p">);</span>
+    <span class="nb">String</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">jsonObject</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="nx">System</span><span class="p">.</span><span class="nx">out</span><span class="p">.</span><span class="nx">println</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+    <span class="nx">HttpServletResponse</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">ServletActionContext</span><span class="p">.</span><span class="nx">getResponse</span><span class="p">();</span>
+    <span class="nx">resp</span><span class="p">.</span><span class="nx">setContentType</span><span class="p">(</span><span class="s2">"text/json;charset=UTF-8"</span><span class="p">);</span>
+    <span class="nx">resp</span><span class="p">.</span><span class="nx">getWriter</span><span class="p">().</span><span class="nx">print</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+<span class="p">}</span>
 
-<form id="addSubareaForm" action="${pageContext.request.contextPath}/subareaAction_add.action" method="post">
-</form>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 添加分区--struts.xml
+<span class="c1">//Region.java</span>
+<span class="kr">public</span> <span class="nb">String</span> <span class="nx">getName</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="nx">province</span><span class="o">+</span><span class="nx">city</span><span class="o">+</span><span class="nx">district</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
-<!--分区管理-->
+<h6 id="添加分区-subarea-jsp">添加分区--subarea.jsp</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//添加分区</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#save"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">v</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#addSubareaForm"</span><span class="p">).</span><span class="nx">form</span><span class="p">(</span><span class="s2">"validate"</span><span class="p">);</span>
+   <span class="k">if</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span>
+       <span class="nx">$</span><span class="p">(</span><span class="s2">"#addSubareaForm"</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+   <span class="p">}</span>
+      <span class="p">})</span>
+<span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"addSubareaForm"</span> <span class="nx">action</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/subareaAction_add.action"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"post"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="sr">/form</span><span class="err">&gt;
+</span></code></pre></div>
+<h6 id="添加分区-struts-xml">添加分区--struts.xml</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c">&lt;!--</span><span class="err">分区管理</span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">action</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"subareaAction_*"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"subareaAction"</span> <span class="nx">method</span><span class="o">=</span><span class="s2">"{1}"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">result</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"list"</span><span class="o">&gt;</span><span class="sr">/WEB-INF/</span><span class="nx">pages</span><span class="o">/</span><span class="nx">base</span><span class="o">/</span><span class="nx">subarea</span><span class="p">.</span><span class="nx">jsp</span><span class="o">&lt;</span><span class="sr">/result</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/action</span><span class="err">&gt;
+</span></code></pre></div>
+<h6 id="添加分区-subareaaction-java">添加分区--SubareaAction.java</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">String</span> <span class="nf">add</span><span class="o">(){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+    <span class="n">subareaService</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">"list"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="添加分区-subareaserviceimpl-java">添加分区--SubareaServiceImpl.java</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Resource</span>
+<span class="kd">private</span> <span class="n">ISubareaDao</span> <span class="n">subareaDao</span><span class="o">;</span>
 
-<p><action name="subareaAction_*" class="subareaAction" method="{1}"><br>
-    <result name="list">/WEB-INF/pages/base/subarea.jsp</result><br>
-</action></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 添加分区--SubareaAction.java
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">save</span><span class="o">(</span><span class="n">Subarea</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">subareaDao</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
-<p>public String add(){<br>
-    System.out.println(model);<br>
-    subareaService.save(model);<br>
-    return &quot;list&quot;;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 添加分区--SubareaServiceImpl.java
-</code></pre></div>
-<p>@Resource<br>
-private ISubareaDao subareaDao;</p>
+<h5 id="分区-分页查询">分区--分页查询</h5>
 
-<p>@Override<br>
-public void save(Subarea model) {<br>
-    subareaDao.save(model);<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-##### 分区--分页查询
-###### 分页查询--subarea.jsp
+<h6 id="分页查询-subarea-jsp">分页查询--subarea.jsp</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+   <span class="c1">//将指定表单数据序列化成json</span>
+                      <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">serializeJson</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+                          <span class="kd">var</span> <span class="nx">serializeObj</span><span class="o">=</span><span class="p">{};</span>
+                          <span class="kd">var</span> <span class="nx">array</span><span class="o">=</span><span class="k">this</span><span class="p">.</span><span class="nx">serializeArray</span><span class="p">();</span>
+                          <span class="nx">$</span><span class="p">(</span><span class="nx">array</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                              <span class="k">if</span><span class="p">(</span><span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">]){</span>
+                                  <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">])){</span>
+                                      <span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+                                  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                      <span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">],</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">];</span>
+                                  <span class="p">}</span>
+                              <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                  <span class="nx">serializeObj</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span><span class="o">=</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+                              <span class="p">}</span>
+                          <span class="p">});</span>
+                          <span class="k">return</span> <span class="nx">serializeObj</span><span class="p">;</span>
+                      <span class="p">};</span>
+                      <span class="c1">//绑定事件</span>
+                      <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                          <span class="nx">$</span><span class="p">(</span><span class="s2">"#btn"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                              <span class="kd">var</span> <span class="nx">json</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="s2">"#searchForm"</span><span class="p">).</span><span class="nx">serializeJson</span><span class="p">();</span><span class="c1">//{id:xx,name:xxx}</span>
+                              <span class="nx">$</span><span class="p">(</span><span class="s2">"#grid"</span><span class="p">).</span><span class="nx">datagrid</span><span class="p">(</span><span class="s2">"load"</span><span class="p">,</span><span class="nx">json</span><span class="p">);</span><span class="c1">//重新发送ajax请求提交参数</span>
+                              <span class="nx">$</span><span class="p">(</span><span class="s2">"#searchWindow"</span><span class="p">).</span><span class="nb">window</span><span class="p">(</span><span class="s2">"close"</span><span class="p">);</span><span class="c1">//关闭窗口</span>
+                          <span class="p">});</span>
+                      <span class="p">})</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="c1">// 收派标准数据表格</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#grid'</span><span class="p">).</span><span class="nx">datagrid</span><span class="p">(</span> <span class="p">{</span>
+   <span class="na">url</span> <span class="p">:</span> <span class="s2">"${pageContext.request.contextPath}/subareaAction_pageQuery.action"</span>
+<span class="p">});</span>
 </code></pre></div>
-<script type="text/javascript">
-   //将指定表单数据序列化成json
-                      $.fn.serializeJson=function(){
-                          var serializeObj={};
-                          var array=this.serializeArray();
-                          $(array).each(function(){
-                              if(serializeObj[this.name]){
-                                  if($.isArray(serializeObj[this.name])){
-                                      serializeObj[this.name].push(this.value);
-                                  }else{
-                                      serializeObj[this.name]=[serializeObj[this.name],this.value];
-                                  }
-                              }else{
-                                  serializeObj[this.name]=this.value;
-                              }
-                          });
-                          return serializeObj;
-                      };
-                      //绑定事件
-                      $(function () {
-                          $("#btn").click(function(){
-                              var json=$("#searchForm").serializeJson();//{id:xx,name:xxx}
-                              $("#grid").datagrid("load",json);//重新发送ajax请求提交参数
-                              $("#searchWindow").window("close");//关闭窗口
-                          });
-                      })
-</script>
+<h6 id="分页查询-subareaaction-java">分页查询--SubareaAction.java</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">String</span> <span class="nf">pageQuery</span><span class="o">()</span><span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+    <span class="c1">//在查询之前封装条件</span>
+    <span class="n">DetachedCriteria</span> <span class="n">detachedCriteria</span> <span class="o">=</span> <span class="n">pageBaen</span><span class="o">.</span><span class="na">getDetachedCriteria</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">addresskey</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="na">getAddresskey</span><span class="o">();</span>
+    <span class="n">Region</span> <span class="n">region</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="na">getRegion</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">addresskey</span><span class="o">)){</span><span class="c1">//按照地址模糊查询</span>
+        <span class="n">detachedCriteria</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">like</span><span class="o">(</span><span class="s">"addressKey"</span><span class="o">,</span><span class="n">addresskey</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">region</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+        <span class="n">detachedCriteria</span><span class="o">.</span><span class="na">createAlias</span><span class="o">(</span><span class="s">"region"</span><span class="o">,</span><span class="s">"r"</span><span class="o">);</span><span class="c1">//创建别名 用于多表关联查询</span>
+        <span class="n">String</span> <span class="n">province</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="na">getProvince</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">city</span> <span class="o">=</span><span class="n">region</span><span class="o">.</span><span class="na">getCity</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">district</span><span class="o">=</span><span class="n">region</span><span class="o">.</span><span class="na">getDistrict</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">province</span><span class="o">)){</span><span class="c1">//按照省份模糊查询</span>
+            <span class="n">detachedCriteria</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">like</span><span class="o">(</span><span class="s">"r.province"</span><span class="o">,</span><span class="s">"%"</span><span class="o">+</span><span class="n">province</span><span class="o">+</span><span class="s">"%"</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">city</span><span class="o">)){</span><span class="c1">//按照城市模糊查询</span>
+            <span class="n">detachedCriteria</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">like</span><span class="o">(</span><span class="s">"r.city"</span><span class="o">,</span><span class="s">"%"</span><span class="o">+</span><span class="n">city</span><span class="o">+</span><span class="s">"%"</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">district</span><span class="o">)){</span><span class="c1">//按照市区模糊查询</span>
+            <span class="n">detachedCriteria</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">like</span><span class="o">(</span><span class="s">"r.district"</span><span class="o">,</span><span class="s">"%"</span><span class="o">+</span><span class="n">district</span><span class="o">+</span><span class="s">"%"</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">subareaService</span><span class="o">.</span><span class="na">pageQuery</span><span class="o">(</span><span class="n">pageBaen</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">writePageBean2Json</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"currentPage"</span><span class="o">,</span><span class="s">"pageSize"</span><span class="o">,</span><span class="s">"detachedCriteria"</span><span class="o">,</span><span class="s">"decidedzone"</span><span class="o">,</span><span class="s">"subareas"</span><span class="o">});</span>
+    <span class="k">return</span> <span class="n">NONE</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div>
+<h6 id="分页查询-subarea-hbm-xml">分页查询 subarea.hbm.xml</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c">&lt;!--</span><span class="err">关闭懒加载</span> <span class="err">解决</span><span class="nx">json</span><span class="err">序列化问题</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">many</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">one</span> <span class="nx">lazy</span><span class="o">=</span><span class="s2">"false"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"region"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"com.itheima.bos.domain.Region"</span> <span class="nx">fetch</span><span class="o">=</span><span class="s2">"select"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">column</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"region_id"</span> <span class="nx">length</span><span class="o">=</span><span class="s2">"32"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/many-to-one</span><span class="err">&gt;
+</span></code></pre></div>
+<h5 id="分区数据导出功能">分区数据导出功能</h5>
 
-<p>// 收派标准数据表格<br>
-$(&#39;#grid&#39;).datagrid( {<br>
-   url : &quot;${pageContext.request.contextPath}/subareaAction_pageQuery.action&quot;<br>
-});</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 分页查询--SubareaAction.java
+<h6 id="分区导出-subarea-jsp">分区导出--subarea.jsp</h6>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//导出文件 发起一次请求 不能使用ajax 要同步提交</span>
+<span class="kd">function</span> <span class="nx">doExport</span><span class="p">(){</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">"${pageContext.request.contextPath}/subareaAction_exportXls.action"</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>public String pageQuery()throws IOException{<br>
-    //在查询之前封装条件<br>
-    DetachedCriteria detachedCriteria = pageBaen.getDetachedCriteria();<br>
-    String addresskey = model.getAddresskey();<br>
-    Region region = model.getRegion();<br>
-    if(StringUtils.isNotBlank(addresskey)){//按照地址模糊查询<br>
-        detachedCriteria.add(Restrictions.like(&quot;addressKey&quot;,addresskey));<br>
-    }<br>
-    if(region!=null){<br>
-        detachedCriteria.createAlias(&quot;region&quot;,&quot;r&quot;);//创建别名 用于多表关联查询<br>
-        String province = region.getProvince();<br>
-        String city =region.getCity();<br>
-        String district=region.getDistrict();<br>
-        if(StringUtils.isNotBlank(province)){//按照省份模糊查询<br>
-            detachedCriteria.add(Restrictions.like(&quot;r.province&quot;,&quot;%&quot;+province+&quot;%&quot;));<br>
-        }<br>
-        if(StringUtils.isNotBlank(city)){//按照城市模糊查询<br>
-            detachedCriteria.add(Restrictions.like(&quot;r.city&quot;,&quot;%&quot;+city+&quot;%&quot;));<br>
-        }<br>
-        if(StringUtils.isNotBlank(district)){//按照市区模糊查询<br>
-            detachedCriteria.add(Restrictions.like(&quot;r.district&quot;,&quot;%&quot;+district+&quot;%&quot;));<br>
-        }<br>
-    }<br>
-    subareaService.pageQuery(pageBaen);<br>
-    this.writePageBean2Json(new String[]{&quot;currentPage&quot;,&quot;pageSize&quot;,&quot;detachedCriteria&quot;,&quot;decidedzone&quot;,&quot;subareas&quot;});<br>
-    return NONE;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-###### 分页查询 subarea.hbm.xml
-</code></pre></div>
-<!--关闭懒加载 解决json序列化问题 -->
-
-<p><many-to-one lazy="false" name="region" class="com.itheima.bos.domain.Region" fetch="select"><br>
-    <column name="region_id" length="32" /><br>
-</many-to-one></p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-##### 分区数据导出功能
-###### 分区导出--subarea.jsp
-</code></pre></div>
-<p>//导出文件 发起一次请求 不能使用ajax 要同步提交<br>
-function doExport(){<br>
-    window.location.href=&quot;${pageContext.request.contextPath}/subareaAction_exportXls.action&quot;;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang="">###### 分区导出--SubareaAction.java
-</code></pre></div>
-<p>//使用POI写入Excel文件,提供下载<br>
-public String exportXls() throws Exception {<br>
-    List<Subarea> list = subareaService.findAll();<br>
-    //在内存中创建一个Excel文件,通过输出流写入到客户端<br>
-    HSSFWorkbook workbook = new HSSFWorkbook();<br>
-    //创建一个sheet页<br>
-    HSSFSheet sheet = workbook.createSheet(&quot;分区数据&quot;);<br>
-    //创建标题行<br>
-    HSSFRow headRow = sheet.createRow(0);<br>
-    headRow.createCell(0).setCellValue(&quot;分区编号&quot;);<br>
-    headRow.createCell(1).setCellValue(&quot;区域编号&quot;);<br>
-    headRow.createCell(2).setCellValue(&quot;地址关键字&quot;);<br>
-    headRow.createCell(3).setCellValue(&quot;省市区&quot;);<br>
-    for (Subarea subarea : list) {<br>
-        HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);<br>
-        row.createCell(0).setCellValue(subarea.getId());<br>
-        row.createCell(1).setCellValue(subarea.getRegion().getId());<br>
-        row.createCell(2).setCellValue(subarea.getAddresskey());<br>
-        Region region = subarea.getRegion();<br>
-        row.createCell(3).setCellValue(region.getProvince() + region.getCity() + region.getDistrict());<br>
-    }<br>
-    HttpServletResponse resp = ServletActionContext.getResponse();<br>
-    //一个流两个头<br>
-    String agent = ServletActionContext.getRequest().getHeader(&quot;User-Agent&quot;);<br>
-    String filename = &quot;分区数据.xls&quot;;<br>
-    filename = FileUtils.encodeDownloadFilename(filename, agent);<br>
-    String type = ServletActionContext.getServletContext().getMimeType(filename);<br>
-    resp.setContentType(type);<br>
-    resp.setHeader(&quot;content-disposition&quot;, &quot;attachment;filename=&quot; + filename);<br>
-    ServletOutputStream out = resp.getOutputStream();<br>
-    workbook.write(out);<br>
-    return NONE;<br>
-}</p>
-<div class="highlight"><pre><code class="language-" data-lang=""></code></pre></div>  
+<h6 id="分区导出-subareaaction-java">分区导出--SubareaAction.java</h6>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//使用POI写入Excel文件,提供下载</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">exportXls</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Subarea</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">subareaService</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="c1">//在内存中创建一个Excel文件,通过输出流写入到客户端</span>
+    <span class="n">HSSFWorkbook</span> <span class="n">workbook</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">();</span>
+    <span class="c1">//创建一个sheet页</span>
+    <span class="n">HSSFSheet</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">workbook</span><span class="o">.</span><span class="na">createSheet</span><span class="o">(</span><span class="s">"分区数据"</span><span class="o">);</span>
+    <span class="c1">//创建标题行</span>
+    <span class="n">HSSFRow</span> <span class="n">headRow</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="na">createRow</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">headRow</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="s">"分区编号"</span><span class="o">);</span>
+    <span class="n">headRow</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="s">"区域编号"</span><span class="o">);</span>
+    <span class="n">headRow</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="s">"地址关键字"</span><span class="o">);</span>
+    <span class="n">headRow</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">3</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="s">"省市区"</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Subarea</span> <span class="n">subarea</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HSSFRow</span> <span class="n">row</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="na">createRow</span><span class="o">(</span><span class="n">sheet</span><span class="o">.</span><span class="na">getLastRowNum</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="n">row</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="n">subarea</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+        <span class="n">row</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="n">subarea</span><span class="o">.</span><span class="na">getRegion</span><span class="o">().</span><span class="na">getId</span><span class="o">());</span>
+        <span class="n">row</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="n">subarea</span><span class="o">.</span><span class="na">getAddresskey</span><span class="o">());</span>
+        <span class="n">Region</span> <span class="n">region</span> <span class="o">=</span> <span class="n">subarea</span><span class="o">.</span><span class="na">getRegion</span><span class="o">();</span>
+        <span class="n">row</span><span class="o">.</span><span class="na">createCell</span><span class="o">(</span><span class="mi">3</span><span class="o">).</span><span class="na">setCellValue</span><span class="o">(</span><span class="n">region</span><span class="o">.</span><span class="na">getProvince</span><span class="o">()</span> <span class="o">+</span> <span class="n">region</span><span class="o">.</span><span class="na">getCity</span><span class="o">()</span> <span class="o">+</span> <span class="n">region</span><span class="o">.</span><span class="na">getDistrict</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="n">HttpServletResponse</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getResponse</span><span class="o">();</span>
+    <span class="c1">//一个流两个头</span>
+    <span class="n">String</span> <span class="n">agent</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"User-Agent"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">"分区数据.xls"</span><span class="o">;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">FileUtils</span><span class="o">.</span><span class="na">encodeDownloadFilename</span><span class="o">(</span><span class="n">filename</span><span class="o">,</span> <span class="n">agent</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">type</span> <span class="o">=</span> <span class="n">ServletActionContext</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">().</span><span class="na">getMimeType</span><span class="o">(</span><span class="n">filename</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+    <span class="n">resp</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"content-disposition"</span><span class="o">,</span> <span class="s">"attachment;filename="</span> <span class="o">+</span> <span class="n">filename</span><span class="o">);</span>
+    <span class="n">ServletOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+    <span class="n">workbook</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">out</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">NONE</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div>  
 	</div>
 	<footer class="article-footer clearfix">
 <div class="article-catetags">
